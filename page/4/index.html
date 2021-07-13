@@ -1,0 +1,2441 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="烫">
+<meta property="og:url" content="https://hulinhong.com/page/4/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="烫">
+<meta name="twitter:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>烫 - 烫烫烫烫烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/02/26/quic_intro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/02/26/quic_intro/" itemprop="url">QUIC原理与KCP会话握手借鉴</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-26T18:08:06+00:00">
+                2021-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NP/" itemprop="url" rel="index">
+                    <span itemprop="name">NP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <p>参考: </p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/142794794" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/142794794</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/32553477" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/32553477</a></li>
+</ul>
+<p>本文主要介绍 QUIC 协议产生的背景和核心特性。</p>
+<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>如果你的 App，在不需要任何修改的情况下就能提升 15% 以上的访问速度。特别是弱网络的时候能够提升 20% 以上的访问速度。</p>
+<p>如果你的 App，在频繁切换 4G 和 WIFI 网络的情况下，不会断线，不需要重连，用户无任何感知。如果你的 App，既需要 TLS 的安全，也想实现 HTTP2 多路复用的强大。</p>
+<p>如果你刚刚才听说 HTTP2 是下一代互联网协议，如果你刚刚才关注到 TLS1.3 是一个革命性具有里程碑意义的协议，但是这两个协议却一直在被另一个更新兴的协议所影响和挑战。</p>
+<p>如果这个新兴的协议，它的名字就叫做 “快”，并且正在标准化为新一代的互联网传输协议。</p>
+<p>你愿意花一点点时间了解这个协议吗？你愿意投入精力去研究这个协议吗？你愿意全力推动业务来使用这个协议吗？</p>
+<h1 id="QUIC-概述"><a href="#QUIC-概述" class="headerlink" title="QUIC 概述"></a>QUIC 概述</h1><p>Quic 全称 quick udp internet connection [1]，“快速 UDP 互联网连接”，（和英文 quick 谐音，简称 “快”）是由 google 提出的使用 udp 进行多路并发传输的协议。</p>
+<p>Quic 相比现在广泛应用的 http2+tcp+tls 协议有如下优势 [2]：</p>
+<ol>
+<li>减少了 TCP 三次握手及 TLS 握手时间。</li>
+<li>改进的拥塞控制。</li>
+<li>避免队头阻塞的多路复用。</li>
+<li>连接迁移。</li>
+<li>前向冗余纠错。</li>
+</ol>
+<h1 id="TCP的缺陷"><a href="#TCP的缺陷" class="headerlink" title="TCP的缺陷"></a>TCP的缺陷</h1><p>从上个世纪 90 年代互联网开始兴起一直到现在，大部分的互联网流量传输只使用了几个网络协议。使用 IPv4 进行路由，使用 TCP 进行连接层面的流量控制，使用 SSL/TLS 协议实现传输安全，使用 DNS 进行域名解析，使用 HTTP 进行应用数据的传输。</p>
+<p>而且近三十年来，这几个协议的发展都非常缓慢。TCP 主要是拥塞控制算法的改进，SSL/TLS 基本上停留在原地，几个小版本的改动主要是密码套件的升级，TLS1.3[3] 是一个飞跃式的变化，但截止到今天，还没有正式发布。IPv4 虽然有一个大的进步，实现了 IPv6，DNS 也增加了一个安全的 DNSSEC，但和 IPv6 一样，部署进度较慢。</p>
+<p>随着移动互联网快速发展以及物联网的逐步兴起，网络交互的场景越来越丰富，网络传输的内容也越来越庞大，用户对网络传输效率和 WEB 响应速度的要求也越来越高。</p>
+<p>一方面是历史悠久使用广泛的古老协议，另外一方面用户的使用场景对传输性能的要求又越来越高。如下几个由来已久的问题和矛盾就变得越来越突出。</p>
+<ol>
+<li>协议历史悠久导致中间设备僵化。</li>
+<li>依赖于操作系统的实现导致协议本身僵化。</li>
+<li>建立连接的握手延迟大。</li>
+<li>队头阻塞。</li>
+</ol>
+<p>这里分小节简单说明一下：</p>
+<h2 id="中间设备的僵化"><a href="#中间设备的僵化" class="headerlink" title="中间设备的僵化"></a>中间设备的僵化</h2><p>可能是 TCP 协议使用得太久，也非常可靠。所以我们很多中间设备，包括防火墙、NAT 网关，整流器等出现了一些约定俗成的动作。</p>
+<p>比如有些防火墙只允许通过 80 和 443，不放通其他端口。NAT 网关在转换网络地址时重写传输层的头部，有可能导致双方无法使用新的传输格式。整流器和中间代理有时候出于安全的需要，会删除一些它们不认识的选项字段。</p>
+<p>TCP 协议本来是支持端口、选项及特性的增加和修改。但是由于 TCP 协议和知名端口及选项使用的历史太悠久，中间设备已经依赖于这些潜规则，所以对这些内容的修改很容易遭到中间环节的干扰而失败。</p>
+<p>而这些干扰，也导致很多在 TCP 协议上的优化变得小心谨慎，步履维艰。</p>
+<h2 id="依赖于操作系统的实现导致协议僵化"><a href="#依赖于操作系统的实现导致协议僵化" class="headerlink" title="依赖于操作系统的实现导致协议僵化"></a>依赖于操作系统的实现导致协议僵化</h2><p>TCP 是由操作系统在内核西方栈层面实现的，应用程序只能使用，不能直接修改。虽然应用程序的更新迭代非常快速和简单。但是 TCP 的迭代却非常缓慢，原因就是操作系统升级很麻烦。</p>
+<p>现在移动终端更加流行，但是移动端部分用户的操作系统升级依然可能滞后数年时间。PC 端的系统升级滞后得更加严重，windows xp 现在还有大量用户在使用，尽管它已经存在快 20 年。</p>
+<p>服务端系统不依赖用户升级，但是由于操作系统升级涉及到底层软件和运行库的更新，所以也比较保守和缓慢。</p>
+<p>这也就意味着即使 TCP 有比较好的特性更新，也很难快速推广。比如 TCP Fast Open。它虽然 2013 年就被提出了，但是 Windows 很多系统版本依然不支持它。</p>
+<h2 id="建立连接的握手延迟大"><a href="#建立连接的握手延迟大" class="headerlink" title="建立连接的握手延迟大"></a>建立连接的握手延迟大</h2><p>不管是 HTTP1.0/1.1 还是 HTTPS，HTTP2，都使用了 TCP 进行传输。HTTPS 和 HTTP2 还需要使用 TLS 协议来进行安全传输。这就出现了两个握手延迟：</p>
+<p>1.TCP 三次握手导致的 TCP 连接建立的延迟。</p>
+<p>2.TLS 完全握手需要至少 2 个 RTT 才能建立，简化握手需要 1 个 RTT 的握手延迟。</p>
+<p>对于很多短连接场景，这样的握手延迟影响很大，且无法消除。</p>
+<h2 id="队头阻塞"><a href="#队头阻塞" class="headerlink" title="队头阻塞"></a>队头阻塞</h2><p>队头阻塞主要是 TCP 协议的可靠性机制引入的。TCP 使用序列号来标识数据的顺序，数据必须按照顺序处理，如果前面的数据丢失，后面的数据就算到达了也不会通知应用层来处理。</p>
+<p>另外 TLS 协议层面也有一个队头阻塞，因为 TLS 协议都是按照 record 来处理数据的，如果一个 record 中丢失了数据，也会导致整个 record 无法正确处理。</p>
+<p>概括来讲，TCP 和 TLS1.2 之前的协议存在着结构性的问题，如果继续在现有的 TCP、TLS 协议之上实现一个全新的应用层协议，依赖于操作系统、中间设备还有用户的支持。部署成本非常高，阻力非常大。</p>
+<p>所以 QUIC 协议选择了 UDP，因为 UDP 本身没有连接的概念，不需要三次握手，优化了连接建立的握手延迟，同时在应用程序层面实现了 TCP 的可靠性，TLS 的安全性和 HTTP2 的并发性，只需要用户端和服务端的应用程序支持 QUIC 协议，完全避开了操作系统和中间设备的限制。</p>
+<h1 id="0RTT建立连接"><a href="#0RTT建立连接" class="headerlink" title="0RTT建立连接"></a>0RTT建立连接</h1><p>现如今，高速且安全的网络接入服务已经成为人们的必须。传统 TCP+TLS 构建的安全互联服务，升级与补丁更新时有提出（如 TCP Fastopen，新的 TLS 1.3），但是由于基础设施僵化，升级与应用困难。为解决这个问题，Google 另辟蹊径在 UDP 的基础上实现了带加密的更好的 TCP–QUIC（Quick UDP Internet Connection), 一种基于 UDP 的低时延的互联网传输层协议。近期成立了 Working Group 也将 QUIC 作为制定 HTTP 3.0 的标准的基础, 说明 QUIC 的应用前景美好。本文单独就网络传输的建连问题展开了分析, 浅析了建连时间对传输的影响, 以及 QUIC 的 0-RTT 建连是如何解决建连耗时长的问题的。在此基础上, 结合 QUIC 的源码, 浅析了 QUIC 的基本实现, 并描述一种可供参考的分布式环境下的 0-RTT 的落地实践方案。</p>
+<p>以一次简单的 HTTPS 请求（example.com）为例（假设访问 example.com 时返回的内容较小，server 端可以在一个数据包里返回响应），为获取请求资源。需要经过以下 4 个步骤：</p>
+<ol>
+<li>DNS 查询 example.com 获取 IP。DNS 服务一般默认是由你的 ISP 提供，ISP 通常都会有缓存的，这部分时间能适当减少；</li>
+<li>TCP 握手，我们熟悉的 TCP 三次握手需要需要 1 个 RTT；</li>
+<li>TLS 握手，以目前应用最广泛的 TLS 1.2 而言，需要 2 个 RTT。对于非首次建连, 可以选择启用会话重用 (Session Resumption)，则可缩小握手时间到 1 个 RTT；</li>
+<li>HTTP 业务数据交互，假设 example.com 的数据在一次交互就能取回来。那么业务数据的交互需要 1 个 RTT； 经过上面的过程分析可知，要完成一次简短的 HTTPS 业务数据交互，需要经历：</li>
+</ol>
+<ul>
+<li>新连接：4RTT + DNS。</li>
+<li>会话重用：3RTT + DNS</li>
+</ul>
+<p>尤其对于小数据量的交互而言，抛开 DNS 查询时间, 建连时间占剩下的总时间的 2/3 至 3/4 不等，影响不可小觑。加之如果用户网络不好，RTT 延时大的话，建连时间可能耗费数百毫秒至数秒不等，这将极大的影响用户体验。究其原因一方面是 TCP 和 TLS 分层设计导致的：分层的设计需要每个逻辑层次分别建立自己的连接状态。另一方面是 TLS 的握手阶段复杂的密钥协商机制导致的。要降低建连耗时，需要从这两方面着手。</p>
+<p>针对 TLS 的握手阶段复杂的密钥协商机问题, TLS 1.3 精简了握手交互过程, 实现了 1-RTT 握手。在会话重用类似的理念的基础上, 对非首次握手会话, 可以进一步实现 0-RTT 握手 (在刚开始 TLS 密钥协商的时候，就能附送一部分经过加密的数据传递给对方)。由于 TLS 是建立在 TCP 之上的, 0-RTT 没有计算 TCP 层的握手开销, 因而对用户来说, 发送数据之前还是要经历 TCP 层的 1RTT 握手, 因而不是真正的 0-RTT 握手。</p>
+<blockquote>
+<p>TLS 1.3 为实现 0-RTT，需要双方在刚开始建立连接的时候就已经持有一个对称密钥，这个密钥在 TLS 1.3 中称为 PSK（Pre-Shared-Key）。PSK 是 TLS 1.2 中的会话重用 (Session Resumption) 机制的一个升级，TLS 1.3 握手结束后，服务器可以发送一个 NST（New-Session-Ticket）的报文给客户端，该报文中记录 PSK 的值、名字和有效期等信息，双方下一次建立连接可以使用该 PSK 值作为初始密钥材料。因为 PSK 是从以前建立的安全信道中获得的，只要证明了双方都持有相同的 PSK，不再需要证书认证，就可以证明双方的身份(因此 PSK 也是一种身份认证机制)。TLS 1.3 新加了 Early Data 类型的报文, 用于在 0-RTT 的握手阶段传递应用层数据, 实现了握手的同时就能附带加密的应用层数据从而实现 0-RTT。</p>
+<p>TLS 1.3 的 0-RTT 特性不能防止重放攻击, 需要业务在使用时评估是否有重放攻击风险。如有相关风险的话, 可能需要酌情考虑禁用 0-RTT 特性。</p>
+</blockquote>
+<p>下图对比了 TLS 各版本与场景下的延时对比:<br><img src="/img/quic_intro/quic_intro_1.jpg" alt></p>
+<p>TLS 各版本与场景下的耗时</p>
+<p>从对比我们可以看到, 即使用上了 TLS 1.3, 精简了握手过程, 最快能做到 0-RTT 握手 (首次是 1-RTT), 但是对用户感知而言, 还要加上 1RTT 的 TCP 握手开销。 Google 有提出 Fastopen 的方案来使得 TCP 非首次握手就能附带用户数据, 但是由于 TCP 实现僵化, 无法升级应用, 相关 RFC 到现今都是 experimental 状态。这种分层设计带来的延时, 有没有办法进一步降低呢? QUIC 通过合并加密与连接管理解决了这个问题, 我们来看看其是如何实现真正意义上的 0-RTT 的握手, 让与 server 进行第一个数据包的交互就能带上用户数据。</p>
+<p>QUIC 为规避 TCP 协议僵化的问题，将 QUIC 协议建立在了 UDP 之上。考虑到安全性是网络的必备选项，加密在 QUIC 里强制的。传输方面参考 TCP 并充分优化了 TCP 多年发现的缺陷和不足, 实现了一套端到端的可靠加密传输。通过将加密和连接管理两层合二为一，消除了当前 TCP+TLS 的分层设计传输引入的时延。</p>
+<p>同 TLS 的握手一样, QUIC 的加密握手的核心在于协商出一个加密会话数据的对称密钥。QUIC 的握手使用了 DH 密钥协商算法来协商一个对称密钥。DH 密钥协商算法简单来讲, 需要通信双方各自生成自己的非对称公私钥对, 双发各自保留自己的私钥, 将公钥发给对方, 利用对方的公钥和自己的私钥可以运算出同一个对称密钥。详细的原理这里不展开叙述, 有专业的<a href="https://book.douban.com/subject/19986936/" target="_blank" rel="noopener">密码学书籍</a>对其原理有详细的论述, 网上也有很多好的教程对其由深入浅出的总结, 如<a href="https://labuladong.gitbook.io/algo/di-wu-zhang-ji-suan-ji-ji-shu/mi-ma-ji-shu" target="_blank" rel="noopener">这一篇</a>。</p>
+<p>如上所述, DH 密钥协商需要通行双方各自生成自己的非对称公私钥对。server 端与客户端的关系是 1 对 N 的关系, 明显 server 端生成一份公私钥对, 让 N 个客户端公用, 能明显减少生成开销, 降低管理的成本。server 端的这份公私钥对就是专门用于握手使用的, 客户端一经获取, 就可以缓存下来后续建连时继续使用, 这个就是达成 0-RTT 握手的关键, 因此 server 生成的这份公钥称为 0-RTT 握手公钥。真正的握手过程是这样 (简化了实现细节):</p>
+<ol>
+<li>server 端在握手开始前，server 端需要首先生成 (或加载使用上次保存下来的) 握手公私钥对, 该份公私钥对是所有客户端共享的。</li>
+<li>client 端首次握手时, client 对 server 一无所知, 需要 1 个 RTT 来询问 server 端的握手公钥 (实际的握手交互还会发送诸如版本等其他数据) 并缓存下来。本步骤只在首次建连时发生(0-RTT 握手公钥的过期也会导致需要重走这一步), 但这种情况很少发生, 影响很小(也没办法避免)。</li>
+<li>client 收到 server 端返回这份握手公钥后，生成自己的临时公私钥对后, 计算出共享的对称密钥后, 加密好数据, 并连同 client 的公钥一并发给 server 端。照 DH 密钥协商的原理, 此处已经可以协商出每条会话不一样的会话密钥了 (因为每个 client 生成的公私钥是不同的), 是不是拿这个来加密会话数据就行了呢? 真实的情况不是这样的!</li>
+<li>server 端会再次生成一份临时的公私钥对，使用这份临时的私钥与客户端的公钥运算出最终的会话对称密钥。接下来 server 会拿这个最终的会话密钥加密应用层数据, 连同这份临时的 server 端公钥一并发给 client 端, client 端收到后可以按照 DH 的原理依瓢画葫会恢复出最终的会话对称密钥。后续所有的数据都是用最终的会话对称密钥进行加密。server 侧这个动作是不是多此一举呢? 不是的, 这么做的目的是为了获取所谓的前向安全特性: 因为 server 端的后面生成的这份公私钥是临时生成的, 不会保存下来，也就杜绝了密钥泄漏导致会话数据被恶意收集后的被解密掉的风险。</li>
+</ol>
+<p>首次握手要多一个 RTT 询问 server 端的 0-RTT 握手公钥, 此询问过程不携带任何应用层数据, 因此是 1-RTT 握手。在首次握手完成后, client 端可以缓存下第一次询问获知的 server 端的公钥信息, 后续的连接过程可以跳过询问，直接使用缓存的 server 端的公钥。公钥信息在 QUIC 的实现里是保存在握手数据包里的 SCFG 中的 (Server Config), 获取 0-RTT 握手公钥就是要获取 SCFG, 后续均以获取 SCFG 代替。详细的握手过程, 可以参见 <a href="https://blog.csdn.net/dog250/article/details/80935534" target="_blank" rel="noopener">dog250</a> 博客文章的详细叙述。</p>
+<blockquote>
+<p>从上面的分析可知，0-RTT 握手的首次交互，server 端使用的是保存下来的握手密钥，因而没有无法做到前向安全，不能防止重放攻击, 需要业务在使用时评估是否有重放攻击风险。</p>
+</blockquote>
+<p><img src="/img/quic_intro/quic_intro_1_2.jpg" alt></p>
+<p>QUIC 0-RTT 握手</p>
+<p>上文简述了 QUIC 握手的密钥协商过程，首次需要询问一次 Server 以获取 SCFG, 从而获取存储于其中的 0-RTT 握手公钥。这一交互过程中 client 和 server 在 QUIC 的握手协议发送的报文中分别叫 Inchoate Client hello message (inchoate CHLO) 和 Rejection message (REJ)。因而包含 server 端的握手公钥的 SCFG 是在 REJ 报文中发给客户端的。有了 SCFG，接下来就能发起 0-RTT 握手。这一过程中 client 和 server 端在 QUIC 的握手协议发送的报文中分别叫 Full Client Hello message (full CHLO) 和 Server Hello message (SHLO)。下图摘自 Google QUIC 握手协议的官方文档，详细叙述了握手过程 client 侧的处理流程：</p>
+<p>QUIC 握手客户端侧处理流程<br><img src="/img/quic_intro/quic_intro_1_3.jpg" alt></p>
+<h2 id="0RTT的重放攻击风险"><a href="#0RTT的重放攻击风险" class="headerlink" title="0RTT的重放攻击风险"></a>0RTT的重放攻击风险</h2><p>0-RTT连接恢复并非那么简单，它会带来许多意外风险及警告，这正是为什么有些默认程序不启用0-RTT连接恢复的原因。用户必须提前考虑所涉及的风险，并做出决定是否使用此功能。可以在应用程序层面使用预防措施来减轻这种情况。</p>
+<p>首先，0-RTT连接恢复是不提供forwardsecrecy的，针对连接的secret parameters的妥协将微不足道地允许恢复新连接0-RTT阶段期间，发送applicationdata 进行特定的妥协。</p>
+<p>在0-RTT阶段之后、或握手之后发送的数据，仍然是安全的。这是因为TLS1.3 (及QUIC)还是会对handshakecompletion之后发送的数据执行normal key exchange algorithm (这是forwardsecret) 。</p>
+<p>值得注意的是，在0-RTT期间发送的applicationdata 可以被路径上的on-path attacker 捕获，然后多次重播到同一个服务器。这个在大部分情况下也许不是问题，因为attacker无法解密数据，0-RTT连接恢复还是非常有用的。在其他的情况下，这可能会引起出乎意料的风险。</p>
+<p>举个比例，假设一家银行允许authenticated user (e.g using HTTPcookie, 或其他HTTP身份验证机制)通过specificAPI endpoint发出HTTP请求将资金从其账户发送到另一个用户。</p>
+<p>如果attacker能够在使用0-RTT连接恢复时捕获该请求，他们将无法看到plaintext并且获取用户的凭据，原因是因为他们不知道用于加密数据的secretkey；但是他们仍然有可能一直散发重复性地请求，耗尽该用户的银行账户里的钱。</p>
+<p><img src="/img/quic_intro/quic_intro_1_4.jpg" alt></p>
+<h1 id="改进的拥塞控制"><a href="#改进的拥塞控制" class="headerlink" title="改进的拥塞控制"></a>改进的拥塞控制</h1><p>TCP 的拥塞控制实际上包含了四个算法：慢启动，拥塞避免，快速重传，快速恢复 [22]。</p>
+<p>QUIC 协议当前默认使用了 TCP 协议的 Cubic 拥塞控制算法 [6]，同时也支持 CubicBytes, Reno, RenoBytes, BBR, PCC 等拥塞控制算法。</p>
+<p>从拥塞算法本身来看，QUIC 只是按照 TCP 协议重新实现了一遍，那么 QUIC 协议到底改进在哪些方面呢？主要有如下几点：</p>
+<h1 id="可插拔"><a href="#可插拔" class="headerlink" title="可插拔"></a>可插拔</h1><p>什么叫可插拔呢？就是能够非常灵活地生效，变更和停止。体现在如下方面：</p>
+<ol>
+<li>应用程序层面就能实现不同的拥塞控制算法，不需要操作系统，不需要内核支持。这是一个飞跃，因为传统的 TCP 拥塞控制，必须要端到端的网络协议栈支持，才能实现控制效果。而内核和操作系统的部署成本非常高，升级周期很长，这在产品快速迭代，网络爆炸式增长的今天，显然有点满足不了需求。</li>
+<li>即使是单个应用程序的不同连接也能支持配置不同的拥塞控制。就算是一台服务器，接入的用户网络环境也千差万别，结合大数据及人工智能处理，我们能为各个用户提供不同的但又更加精准更加有效的拥塞控制。比如 BBR 适合，Cubic 适合。</li>
+<li>应用程序不需要停机和升级就能实现拥塞控制的变更，我们在服务端只需要修改一下配置，reload 一下，完全不需要停止服务就能实现拥塞控制的切换。</li>
+</ol>
+<p>STGW 在配置层面进行了优化，我们可以针对不同业务，不同网络制式，甚至不同的 RTT，使用不同的拥塞控制算法。</p>
+<h1 id="单调递增的-Packet-Number"><a href="#单调递增的-Packet-Number" class="headerlink" title="单调递增的 Packet Number"></a>单调递增的 Packet Number</h1><p>TCP 为了保证可靠性，使用了基于字节序号的 Sequence Number 及 Ack 来确认消息的有序到达。</p>
+<p>QUIC 同样是一个可靠的协议，它使用 Packet Number 代替了 TCP 的 sequence number，并且每个 Packet Number 都严格递增，也就是说就算 Packet N 丢失了，重传的 Packet N 的 Packet Number 已经不是 N，而是一个比 N 大的值。而 TCP 呢，重传 segment 的 sequence number 和原始的 segment 的 Sequence Number 保持不变，也正是由于这个特性，引入了 Tcp 重传的歧义问题。</p>
+<p><img src="/img/quic_intro/quic_intro_2.jpg" alt></p>
+<p>如上图所示，超时事件 RTO 发生后，客户端发起重传，然后接收到了 Ack 数据。由于序列号一样，这个 Ack 数据到底是原始请求的响应还是重传请求的响应呢？不好判断。</p>
+<p>如果算成原始请求的响应，但实际上是重传请求的响应（上图左），会导致采样 RTT 变大。如果算成重传请求的响应，但实际上是原始请求的响应，又很容易导致采样 RTT 过小。</p>
+<p>由于 Quic 重传的 Packet 和原始 Packet 的 Pakcet Number 是严格递增的，所以很容易就解决了这个问题。</p>
+<p><img src="/img/quic_intro/quic_intro_3.jpg" alt></p>
+<p>如上图所示，RTO 发生后，根据重传的 Packet Number 就能确定精确的 RTT 计算。如果 Ack 的 Packet Number 是 N+M，就根据重传请求计算采样 RTT。如果 Ack 的 Pakcet Number 是 N，就根据原始请求的时间计算采样 RTT，没有歧义性。</p>
+<p>但是单纯依靠严格递增的 Packet Number 肯定是无法保证数据的顺序性和可靠性。QUIC 又引入了一个 Stream Offset 的概念。</p>
+<p>即一个 Stream 可以经过多个 Packet 传输，Packet Number 严格递增，没有依赖。但是 Packet 里的 Payload 如果是 Stream 的话，就需要依靠 Stream 的 Offset 来保证应用数据的顺序。如错误! 未找到引用源。所示，发送端先后发送了 Pakcet N 和 Pakcet N+1，Stream 的 Offset 分别是 x 和 x+y。</p>
+<p>假设 Packet N 丢失了，发起重传，重传的 Packet Number 是 N+2，但是它的 Stream 的 Offset 依然是 x，这样就算 Packet N + 2 是后到的，依然可以将 Stream x 和 Stream x+y 按照顺序组织起来，交给应用程序处理。</p>
+<p><img src="/img/quic_intro/quic_intro_4.jpg" alt></p>
+<h1 id="不允许-Reneging"><a href="#不允许-Reneging" class="headerlink" title="不允许 Reneging"></a>不允许 Reneging</h1><p>什么叫 Reneging 呢？就是接收方丢弃已经接收并且上报给 SACK 选项的内容 [8]。TCP 协议不鼓励这种行为，但是协议层面允许这样的行为。主要是考虑到服务器资源有限，比如 Buffer 溢出，内存不够等情况。</p>
+<p>Reneging 对数据重传会产生很大的干扰。因为 Sack 都已经表明接收到了，但是接收端事实上丢弃了该数据。</p>
+<p>QUIC 在协议层面禁止 Reneging，一个 Packet 只要被 Ack，就认为它一定被正确接收，减少了这种干扰。</p>
+<h1 id="更多的-Ack-块"><a href="#更多的-Ack-块" class="headerlink" title="更多的 Ack 块"></a>更多的 Ack 块</h1><p>TCP 的 Sack 选项能够告诉发送方已经接收到的连续 Segment 的范围，方便发送方进行选择性重传。</p>
+<p>由于 TCP 头部最大只有 60 个字节，标准头部占用了 20 字节，所以 Tcp Option 最大长度只有 40 字节，再加上 Tcp Timestamp option 占用了 10 个字节 [25]，所以留给 Sack 选项的只有 30 个字节。</p>
+<p>每一个 Sack Block 的长度是 8 个，加上 Sack Option 头部 2 个字节，也就意味着 Tcp Sack Option 最大只能提供 3 个 Block。</p>
+<p>但是 Quic Ack Frame 可以同时提供 256 个 Ack Block，在丢包率比较高的网络下，更多的 Sack Block 可以提升网络的恢复速度，减少重传量。</p>
+<h1 id="Ack-Delay-时间"><a href="#Ack-Delay-时间" class="headerlink" title="Ack Delay 时间"></a>Ack Delay 时间</h1><p>Tcp 的 Timestamp 选项存在一个问题 [25]，它只是回显了发送方的时间戳，但是没有计算接收端接收到 segment 到发送 Ack 该 segment 的时间。这个时间可以简称为 Ack Delay。</p>
+<p>这样就会导致 RTT 计算误差。如下图：</p>
+<p><img src="/img/quic_intro/quic_intro_5.jpg" alt></p>
+<ul>
+<li>可以认为 TCP 的 RTT 计算：<code>RTT = timestamp2 - timestamp1</code></li>
+<li>而 Quic 计算如下：<code>RTT = timestamp2 - timestamp1 - AckDelay</code></li>
+</ul>
+<p><img src="/img/quic_intro/quic_intro_3.jpg" alt></p>
+<p>当然 RTT 的具体计算没有这么简单，需要采样，参考历史数值进行平滑计算，参考如下公式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SRTT = SRTT + α(RTT - SRTT)</span><br><span class="line">RTO = μ * SRTT + δ*DevRTT</span><br></pre></td></tr></table></figure></p>
+<h1 id="基于-stream-和-connecton-级别的流量控制"><a href="#基于-stream-和-connecton-级别的流量控制" class="headerlink" title="基于 stream 和 connecton 级别的流量控制"></a>基于 stream 和 connecton 级别的流量控制</h1><p>QUIC 的流量控制 [22] 类似 HTTP2，即在 Connection 和 Strea6 级别提供了两种流量控制。为什么需要两类流量控制呢？主要是因为 QUIC 支持多路复用。</p>
+<ol>
+<li>Stream 可以认为就是一条 HTTP 请求。</li>
+<li>Connection 可以类比一条 TCP 连接。多路复用意味着在一7 Connetion 上会同时存在多条 Stream。既需要对单个 Stream 进行控制，又需要针对所有 Stream 进行总体控制。</li>
+</ol>
+<p>QUIC 实现流量控制的原理比较简单：</p>
+<p>通过 window_update 帧告诉对端自己可以接收的字节数，这样发送方就不会发送超过这个数量的数据。</p>
+<p>通过 BlockFrame 告诉对端由于流量控制被阻塞了，无法发送数据。</p>
+<p>QUIC 的流量控制和 TCP 有点区别，TCP 为了保证可靠性，窗口左边沿向右滑动时的长度取决于已经确认的字节数。如果中间出现丢包，就算接收到了更大序号的 Segment，窗口也无法超过这个序列号。</p>
+<p>但 QUIC 不同，就算此前有些 packet 没有接收到，它的滑动只取决于接收到的最大偏移字节数。</p>
+<p><img src="/img/quic_intro/quic_intro_6.jpg" alt></p>
+<ul>
+<li>针对 Stream：<code>可用窗口 = 最大窗口数 - 接收到的最大偏移数</code></li>
+<li>针对 Connection：<code>可用窗口 = stream1可用窗口 + stream2可用窗口 + ... + streamN可用窗口</code></li>
+</ul>
+<p>同样地，STGW 也在连接和 Stream 级别设置了不同的窗口数。</p>
+<p>最重要的是，我们可以在内存不足或者上游处理性能出现问题时，通过流量控制来限制传输速率，保障服务可用性。</p>
+<h1 id="没有队头阻塞的多路复用"><a href="#没有队头阻塞的多路复用" class="headerlink" title="没有队头阻塞的多路复用"></a>没有队头阻塞的多路复用</h1><p>QUIC 的多路复用和 HTTP2 类似。在一条 QUIC 连接上可以并发发送多个 HTTP 请求 (stream)。但是 QUIC 的多路复用相比 HTTP2 有一个很大的优势。</p>
+<p>QUIC 一个连接上的多个 stream 之间没有依赖。这样假如 stream2 丢了一个 udp packet，也只会影响 stream2 的处理。不会影响 stream2 之前及之后的 stream 的处理。</p>
+<p>这也就在很大程度上缓解甚至消除了队头阻塞的影响。</p>
+<p>多路复用是 HTTP2 最强大的特性 [7]，能够将多条请求在一条 TCP 连接上同时发出去。但也恶化了 TCP 的一个问题，队头阻塞 [11]，如下图示：</p>
+<p><img src="/img/quic_intro/quic_intro_7.jpg" alt></p>
+<p>HTTP2 在一个 TCP 连接上同时发送 4 个 Stream。其中 Stream1 已经正确到达，并被应用层读取。但是 Stream2 的第三个 tcp segment 丢失了，TCP 为了保证数据的可靠性，需要发送端重传第 3 个 segment 才能通知应用层读取接下去的数据，虽然这个时候 Stream3 和 Stream4 的全部数据已经到达了接收端，但都被阻塞住了。</p>
+<p>不仅如此，由于 HTTP2 强制使用 TLS，还存在一个 TLS 协议层面的队头阻塞 [12]。</p>
+<p><img src="/img/quic_intro/quic_intro_8.jpg" alt></p>
+<p>Record 是 TLS 协议处理的最小单位，最大不能超过 16K，一些服务器比如 Nginx 默认的大小就是 16K。由于一个 record 必须经过数据一致性校验才能进行加解密，所以一个 16K 的 record，就算丢了一个字节，也会导致已经接收到的 15.99K 数据无法处理，因为它不完整。</p>
+<p>那 QUIC 多路复用为什么能避免上述问题呢？</p>
+<ol>
+<li>QUIC 最基本的传输单元是 Packet，不会超过 MTU 的大小，整个加密和认证过程都是基于 Packet 的，不会跨越多个 Packet。这样就能避免 TLS 协议存在的队头阻塞。</li>
+<li>Stream 之间相互独立，比如 Stream2 丢了一个 Pakcet，不会影响 Stream3 和 Stream4。不存在 TCP 队头阻塞。</li>
+</ol>
+<p><img src="/img/quic_intro/quic_intro_9.jpg" alt></p>
+<p>当然，并不是所有的 QUIC 数据都不会受到队头阻塞的影响，比如 QUIC 当前也是使用 Hpack 压缩算法 [10]，由于算法的限制，丢失一个头部数据时，可能遇到队头阻塞。</p>
+<p>总体来说，QUIC 在传输大量数据时，比如视频，受到队头阻塞的影响很小。</p>
+<h1 id="加密认证的报文"><a href="#加密认证的报文" class="headerlink" title="加密认证的报文"></a>加密认证的报文</h1><p>TCP 协议头部没有经过任何加密和认证，所以在传输过程中很容易被中间网络设备篡改，注入和窃听。比如修改序列号、滑动窗口。这些行为有可能是出于性能优化，也有可能是主动攻击。</p>
+<p>但是 QUIC 的 packet 可以说是武装到了牙齿。除了个别报文比如 PUBLIC_RESET 和 CHLO，所有报文头部都是经过认证的，报文 Body 都是经过加密的。</p>
+<p>这样只要对 QUIC 报文任何修改，接收端都能够及时发现，有效地降低了安全风险。</p>
+<p>如下图所示，红色部分是 Stream Frame 的报文头部，有认证。绿色部分是报文内容，全部经过加密。</p>
+<p><img src="/img/quic_intro/quic_intro_10.jpg" alt></p>
+<h1 id="连接迁移"><a href="#连接迁移" class="headerlink" title="连接迁移"></a>连接迁移</h1><p>一条 TCP 连接 [17] 是由四元组标识的（源 IP，源端口，目的 IP，目的端口）。什么叫连接迁移呢？就是当其中任何一个元素发生变化时，这条连接依然维持着，能够保持业务逻辑不中断。当然这里面主要关注的是客户端的变化，因为客户端不可控并且网络环境经常发生变化，而服务端的 IP 和端口一般都是固定的。</p>
+<p>比如大家使用手机在 WIFI 和 4G 移动网络切换时，客户端的 IP 肯定会发生变化，需要重新建立和服务端的 TCP 连接。</p>
+<p>又比如大家使用公共 NAT 出口时，有些连接竞争时需要重新绑定端口，导致客户端的端口发生变化，同样需要重新建立 TCP 连接。</p>
+<p>针对 TCP 的连接变化，MPTCP[5] 其实已经有了解决方案，但是由于 MPTCP 需要操作系统及网络协议栈支持，部署阻力非常大，目前并不适用。</p>
+<p>所以从 TCP 连接的角度来讲，这个问题是无解的。</p>
+<p>那 QUIC 是如何做到连接迁移呢？很简单，任何一条 QUIC 连接不再以 IP 及端口四元组标识，而是以一个 64 位的随机数作为 ID 来标识，这样就算 IP 或者端口发生变化时，只要 ID 不变，这条连接依然维持着，上层业务逻辑感知不到变化，不会中断，也就不需要重连。</p>
+<p>由于这个 ID 是客户端随机产生的，并且长度有 64 位，所以冲突概率非常低。</p>
+<h1 id="其他亮点"><a href="#其他亮点" class="headerlink" title="其他亮点"></a>其他亮点</h1><p>此外，QUIC 还能实现前向冗余纠错，在重要的包比如握手消息发生丢失时，能够根据冗余信息还原出握手消息。</p>
+<p>QUIC 还能实现证书压缩，减少证书传输量，针对包头进行验证等。</p>
+<p>限于篇幅，本文不再详细介绍，有兴趣的可以参考文档 [23] 和文档 [4] 和文档 [26]。</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/02/16/self_cultivation_tcp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/02/16/self_cultivation_tcp/" itemprop="url">服务器开发自我修养专栏-TCP详解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-16T19:08:06+00:00">
+                2021-02-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self-cultivation/" itemprop="url" rel="index">
+                    <span itemprop="name">Self-cultivation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h1><p>包头长度 20个字节</p>
+<h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><p><img src="/img/noodle_plan/tcp/tcp_3_handshake.jpg" alt></p>
+<h3 id="如果第三次握手的ack丢失了咋办"><a href="#如果第三次握手的ack丢失了咋办" class="headerlink" title="如果第三次握手的ack丢失了咋办"></a>如果第三次握手的ack丢失了咋办</h3><p>当客户端收到服务端的SYNACK应答后，其状态变为ESTABLISHED，并会发送ACK包给服务端，准备发送数据了。如果此时ACK在网络中丢失（如上图所示），过了超时计时器后，那么服务端会重新发送SYNACK包，重传次数根据/proc/sys/net/ipv4/tcp_synack_retries来指定，默认是5次。如果重传指定次数到了后，仍然未收到ACK应答，那么一段时间后，Server自动关闭这个连接。</p>
+<p>问题就在这里，客户端已经认为连接建立，而服务端则可能处在SYN-RCVD或者CLOSED，接下来我们需要考虑这两种情况下服务端的应答：</p>
+<ul>
+<li>服务端处于CLOSED，当接收到连接已经关闭的请求时，服务端会返回RST 报文，客户端接收到后就会关闭连接，如果需要的话则会重连，那么那就是另一个三次握手了。</li>
+<li>服务端处于SYN-RCVD，此时如果接收到正常的ACK 报文，那么很好，连接恢复，继续传输数据；如果接收到写入数据等请求呢？注意了，此时写入数据等请求也是带着ACK 报文的，实际上也能恢复连接，使服务器恢复到ESTABLISHED状态，继续传输数据。</li>
+</ul>
+<h3 id="SYN-Flood与SYN-Cookie"><a href="#SYN-Flood与SYN-Cookie" class="headerlink" title="SYN-Flood与SYN-Cookie"></a>SYN-Flood与SYN-Cookie</h3><p>所谓SYN-Flood(SYN 洪泛攻击)，就是利用SYNACK 报文的时候，服务器会为客户端请求分配缓存，那么黑客（攻击者），就可以使用一批虚假的ip向服务器大量地发建立TCP 连接的请求，服务器为这些虚假ip分配了缓存后，处在SYN_RCVD状态，存放在半连接队列中；另外，服务器发送的请求又不可能得到回复（ip都是假的，能回复就有鬼了），只能不断地重发请求，直到达到设定的时间/次数后，才会关闭。</p>
+<p>服务器不断为这些半开连接分配资源，导致服务器的连接资源被消耗殆尽，不过所幸，我们可以使用SYN Cookie进行稍微的防御一下。</p>
+<p>所谓的<strong>SYN Cookie防御系统</strong>，与前面接收到SYN 报文就分配缓存不同，此时暂不分配资源；同时利用SYN 报文的源和目的地IP和端口，以及服务器存储的一个秘密数，使用它们进行散列，得到server_isn作为服务端的初始 TCP 序号，也就是所谓的SYN cookie, 然后将SYNACK 报文中发送给客户端，接下来就是对ACK 报文进行判断，如果其返回的ack里的确认号正好等于server_isn + 1，说明这是一个合法的ACK，那么服务器才会为其生成一个具有套接字的全开的连接。(有点类似于<a href="#JWT">JWT</a>那一套机制哈)</p>
+<p>缺点: </p>
+<ul>
+<li>增加了密码学运算, 增大了cpu消耗</li>
+<li>因为没有保存半连接状态, 所以无法存储一些比如大窗口/sack等信息</li>
+</ul>
+<h2 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h2><p><img src="/img/noodle_plan/tcp/tcp_4_handshake.jpg" alt></p>
+<h3 id="timewait的意义"><a href="#timewait的意义" class="headerlink" title="timewait的意义"></a>timewait的意义</h3><ul>
+<li>2msl之后网络中的数据分节全部消失, 防止影响到复用了原端口ip的新连接</li>
+<li>如果b没收到最后一个ack, b就会重发fin, a如果不维护一个timewait却收到了一个fin会感觉莫名其妙然后响应一个rst, 然后b就会解释为一个错误</li>
+</ul>
+<h2 id="timewait和closewait太多咋办"><a href="#timewait和closewait太多咋办" class="headerlink" title="timewait和closewait太多咋办"></a>timewait和closewait太多咋办</h2><ul>
+<li>timewait太多咋办? <ul>
+<li>net.ipv4.tcp_tw_reuse = 1 表示开启重用。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭；</li>
+<li>net.ipv4.tcp_tw_recycle = 1 表示开启TCP连接中TIME-WAIT sockets的快速回收，默认为0，表示关闭。</li>
+<li>net.ipv4.tcp_fin_timeout这个时间可以减少在异常情况下服务器从FIN-WAIT-2转到TIME_WAIT的时间。 </li>
+</ul>
+</li>
+<li>closewait太多咋办?<ul>
+<li>解决方案只有: 查代码. 因为如果一直保持在CLOSE_WAIT状态，那么只有一种情况，就是在对方关闭连接之后服务器程序自己没有进一步发出fin信号。换句话说，就是在对方连接关闭之后，程序里没有检测到，或者由于什么逻辑bug导致服务端没有主动发起close, 或者程序压根就忘记了这个时候需要关闭连接，于是这个资源就一直被程序占着。</li>
+</ul>
+</li>
+</ul>
+<h2 id="tcp拥塞控制"><a href="#tcp拥塞控制" class="headerlink" title="tcp拥塞控制"></a>tcp拥塞控制</h2><p><img src="/img/noodle_plan/tcp/tcp_congestion_control.png" alt></p>
+<ul>
+<li>快速重传:<br>  报文段1成功接收并被确认ACK 2，接收端的期待序号为2，当报文段2丢失，报文段3失序到来，与接收端的期望不匹配，接收端重复发送冗余ACK 2。这样，如果在超时重传定时器溢出之前，接收到连续的三个重复冗余ACK（其实是收到4个同样的ACK，第一个是正常的，后三个才是冗余的），发送端便知晓哪个报文段在传输过程中丢失了，于是重发该报文段，不需要等待超时重传定时器溢出，大大提高了效率。这便是快速重传机制。</li>
+<li>快速恢复</li>
+<li>慢启动</li>
+<li>拥塞避免</li>
+</ul>
+<h2 id="tcp滑动窗口"><a href="#tcp滑动窗口" class="headerlink" title="tcp滑动窗口"></a>tcp滑动窗口</h2><p><img src="/img/noodle_plan/tcp/tcp_sliding_window1.png" alt></p>
+<p>每个TCP连接的两端都维护一组窗口：发送窗口结构（send window structure）和接收窗口结构（receive window structure）。TCP以字节为单位维护其窗口结构。TCP头部中的窗口大小字段相对ACK号有一个字节的偏移量。发送端计算其可用窗口，即它可以立即发送的数据量。可用窗口（允许发送但还未发送）计算值为提供窗口（即由接收端通告的窗口）大小减去在传（已发送但未得到确认）的数据量。图中P1、P2、P3分别记录了窗口的左边界、下次发送的序列号、右边界。</p>
+<p><img src="/img/noodle_plan/tcp/tcp_sliding_window2.png" alt></p>
+<p>如上图所示， 随着发送端接收到返回的数据ACK，滑动窗口也随之右移。发送端根据接收端返回的ACK可以得到两个重要的信息：一是接收端期望收到的下一个字节序号；二是当前的窗口大小（再结合发送端已有的其他信息可以得出还能发送多少字节数据）。</p>
+<p>需要注意的是：发送窗口的左边界只能右移，因为它控制的是已发送并受到确认的数据，具有累积性，不能返回；右边界可以右移也可以左移（能左移的右边界会带来一些缺陷，下文会讲到）。</p>
+<p>接收端也维护一个窗口结构，但比发送窗口简单（只有左边界和右边界）。该窗口结构记录了已接收并确认的数据，以及它能够接收的最大序列号，该窗口能保证接收数据的正确性（避免存储重复的已接收和确认的数据，以及避免存储不应接收的数据）。由于TCP的累积ACK特性，只有当到达数据序列号等于左边界时，窗口才能向前滑动。</p>
+<h3 id="零窗口与TCP持续计时器"><a href="#零窗口与TCP持续计时器" class="headerlink" title="零窗口与TCP持续计时器"></a>零窗口与TCP持续计时器</h3><p><img src="/img/noodle_plan/tcp/tcp_sliding_window3.png" alt></p>
+<p>Zero Window  </p>
+<p>上图，我们可以看到一个处理缓慢的Server（接收端）是怎么把Client（发送端）的TCP Sliding Window给降成0的。此时，你一定会问，如果Window变成0了，TCP会怎么样？是不是发送端就不发数据了？是的，发送端就不发数据了，你可以想像成“Window Closed”，那你一定还会问，如果发送端不发数据了，接收方一会儿Window size 可用了，怎么通知发送端呢？</p>
+<p>解决这个问题，TCP使用了<strong>Zero Window Probe技术</strong>，缩写为ZWP，也就是说，发送端在窗口变成0后，会发ZWP的包给接收方，让接收方来ack他的Window尺寸，一般这个值会设置成3次，第次大约30-60秒（不同的实现可能会不一样）。如果3次过后还是0的话，有的TCP实现就会发RST把链接断了。</p>
+<h2 id="ACK延迟确认机制"><a href="#ACK延迟确认机制" class="headerlink" title="ACK延迟确认机制"></a>ACK延迟确认机制</h2><p>接收方在收到数据后，并不会立即回复ACK,而是延迟一定时间。一般ACK延迟发送的时间为200ms，但这个200ms并非收到数据后需要延迟的时间。系统有一个固定的定时器每隔200ms会来检查是否需要发送ACK包。这样做有两个目的。</p>
+<ul>
+<li>这样做的目的是ACK是可以合并的，也就是指如果连续收到两个TCP包，并不一定需要ACK两次，只要回复最终的ACK就可以了，可以降低网络流量。</li>
+<li>如果接收方有数据要发送，那么就会在发送数据的TCP数据包里，带上ACK信息。这样做，可以避免大量的ACK以一个单独的TCP包发送，减少了网络流量。</li>
+</ul>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/02/06/self_cultivation_linux_timer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/02/06/self_cultivation_linux_timer/" itemprop="url">服务器开发自我修养专栏-Linux高低精度定时器实现原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-06T13:08:06+00:00">
+                2021-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self-cultivation/" itemprop="url" rel="index">
+                    <span itemprop="name">Self-cultivation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="Linux定时器实现原理"><a href="#Linux定时器实现原理" class="headerlink" title="Linux定时器实现原理"></a>Linux定时器实现原理</h1><h2 id="时间轮定时器-低分辨率实现"><a href="#时间轮定时器-低分辨率实现" class="headerlink" title="时间轮定时器-低分辨率实现"></a>时间轮定时器-低分辨率实现</h2><p>Linux 2.6.16之前，内核只支持低精度时钟，内核定时器的<strong>工作方式</strong>：  </p>
+<ol>
+<li>系统启动后，会读取时钟源设备(RTC,HPET，PIT…)，初始化当前系统时间。</li>
+<li>内核会根据HZ(系统定时器频率，节拍率)参数值，设置时钟事件设备，启动tick(节拍)中断。HZ表示1秒种产生多少个时钟硬件中断，tick就表示连续两个中断的间隔时间。</li>
+<li>设置时钟事件设备后，时钟事件设备会定时产生一个tick中断，触发时钟中断处理函数，更新系统时钟,并检测timer wheel，进行超时事件的处理。</li>
+</ol>
+<p>在上面工作方式下，Linux 2.6.16 之前，内核软件定时器采用timer wheel多级时间轮的实现机制，维护操作系统的所有定时事件。timer wheel的触发是基于系统tick周期性中断。所以说这之前，linux只能支持ms级别的时钟，随着时钟源硬件设备的精度提高和软件高精度计时的需求，有了高精度时钟的内核设计。</p>
+<p>所谓低分辨率定时器，是指这种定时器的计时单位基于jiffies值的计数，也就是说，它的精度只有1HZ，假如你的内核配置的HZ是1000，那意味着系统中的低分辨率定时器的精度就是1ms。早期的内核版本中，内核并不支持高精度定时器，理所当然只能使用这种低分辨率定时器, 后来随着时钟源硬件设备的精度提高和软件高精度计时的需求，才有了<a href="#红黑树定时器-高精度实现">高精度时钟的内核设计</a></p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/01/24/self_cultivation_mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/01/24/self_cultivation_mysql/" itemprop="url">服务器开发自我修养专栏-MySQL原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-24T19:08:06+00:00">
+                2021-01-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self-cultivation/" itemprop="url" rel="index">
+                    <span itemprop="name">Self-cultivation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><h2 id="参考网址"><a href="#参考网址" class="headerlink" title="参考网址"></a>参考网址</h2><ul>
+<li><a href="https://chenjiabing666.github.io/2020/04/20/Mysql%E6%9C%80%E5%85%A8%E9%9D%A2%E8%AF%95%E6%8C%87%E5%8D%97/" target="_blank" rel="noopener">https://chenjiabing666.github.io/2020/04/20/Mysql%E6%9C%80%E5%85%A8%E9%9D%A2%E8%AF%95%E6%8C%87%E5%8D%97/</a></li>
+<li><a href="https://blog.csdn.net/qq_41011723/article/details/105953813" target="_blank" rel="noopener">https://blog.csdn.net/qq_41011723/article/details/105953813</a></li>
+<li><a href="https://blog.csdn.net/qq_41011723/article/details/106028153" target="_blank" rel="noopener">https://blog.csdn.net/qq_41011723/article/details/106028153</a></li>
+<li><a href="https://www.jianshu.com/p/18bad43446d1" target="_blank" rel="noopener">MySQL、MongoDB、Redis 数据库之间的区别</a></li>
+</ul>
+<h2 id="mysql一条语句的执行过程"><a href="#mysql一条语句的执行过程" class="headerlink" title="mysql一条语句的执行过程"></a>mysql一条语句的执行过程</h2><p>速记: 连/分/优/执/存</p>
+<img src="http://www.plantuml.com/plantuml/svg/ZLBBJi9G4DttAsvOmo-OI731WXLBmm9jGPAcZOX6OaWK4r8YB-KH20Y24Z6chKOIDK3u6Uw3l_3YvN7RIkAgCtFkd9bpEeUoUYg22m60VMZqaFQ9NysGa184CPm87uHF9E0A98F7ikltJKILHIaEN44fVYR5uNkQbMapcRPHeGyRWn3BKQTFp1uUbw5UNvQWba7jqkR9R5o7kHhNadqctTmcjr2ckEa-BzXJeZ55uXVmAuhgyovR0qb_S3UmcglNONe0nrLKBfmpBggFamiydXtBE2vcc5MD0-QKSV6VhNQOCu6BbwqRGxYOOIkv3c0btG7OR104HKr881wB7YM06h7PZOqkBcLOoGtG_VMyKIB64p6l14aHmQBLGM3vlyJCeuygAxbffg-pxGJscu6tazcN3hK6RWxf7cHQWSqs7fLHksKdaQK8ux0S5RE065setU5A1sbq5JpiKG_cbrbqyxALnNAAg9oVJLhCE2hbFriuJcvHADPGzGtb3UhdmpVz4dC4Cus5vyN7DTCF">
+<h2 id="char和varchar的区别是什么"><a href="#char和varchar的区别是什么" class="headerlink" title="char和varchar的区别是什么"></a>char和varchar的区别是什么</h2><ul>
+<li>char(n) ：固定长度类型，比如订阅 char(10)，当你输入”abc”三个字符的时候，它们占的空间还是 10 个字节，其他 7 个是空字节。<ul>
+<li>chat 优点：效率高；缺点：占用空间；适用场景：存储密码的 md5 值，固定长度的，使用 char 非常合适。</li>
+</ul>
+</li>
+<li>varchar(n) ：可变长度，存储的值是每个值占用的字节再加上一个用来记录其长度的字节的长度。</li>
+</ul>
+<p>所以，从空间上考虑 varcahr 比较合适；从效率上考虑 char 比较合适，二者使用需要权衡。</p>
+<h2 id="redo-log与binlog与undo-log的区别"><a href="#redo-log与binlog与undo-log的区别" class="headerlink" title="redo log与binlog与undo log的区别"></a>redo log与binlog与undo log的区别</h2><p>参考 <a href="https://www.cnblogs.com/Java3y/p/12453755.html" target="_blank" rel="noopener">https://www.cnblogs.com/Java3y/p/12453755.html</a> , 写的非常好<br>也可参考 <a href="https://www.jianshu.com/p/68d5557c65be" target="_blank" rel="noopener">https://www.jianshu.com/p/68d5557c65be</a></p>
+<h3 id="redo-log"><a href="#redo-log" class="headerlink" title="redo log"></a>redo log</h3><p>redo log 存在于InnoDB 引擎中，InnoDB引擎是以插件形式引入Mysql的，redo log的引入主要是为了实现Mysql的crash-safe能力。<br>实际上Mysql的基本存储结构是页(记录都存在页里边)，所以MySQL是先把这条记录所在的页找到，然后把该页加载到内存中，将对应记录进行修改。<br>现在就可能存在一个问题：如果在内存中把数据改了，还没来得及落磁盘，而此时的数据库挂了怎么办？显然这次更改就丢了。</p>
+<p>如果每个请求都需要将数据立马落磁盘之后，那速度会很慢，MySQL可能也顶不住。所以MySQL是怎么做的呢？<br>MySQL引入了redo log，<strong>内存写完了，然后会写一份redo log，这份redo log记载着这次在某个页上做了什么修改.其实写redo log的时候，也会有buffer，是先写buffer，再真正落到磁盘中的。</strong>至于从buffer什么时候落磁盘，会有配置供我们配置。</p>
+<p>写redo log也是需要写磁盘的，但它的好处就是顺序IO（我们都知道顺序IO比随机IO快非常多）。</p>
+<p>所以，<strong>redo log的存在为了：当我们修改的时候，写完内存了，但数据还没真正写到磁盘的时候。此时我们的数据库挂了，我们可以根据redo log来对数据进行恢复</strong>。因为redo log是顺序IO，所以写入的速度很快，并且redo log记载的是物理变化（xxxx页做了xxx修改），文件的体积很小，恢复速度很快</p>
+<h3 id="binlog"><a href="#binlog" class="headerlink" title="binlog"></a>binlog</h3><p>binlog记录了数据库表结构和表数据变更，比如update/delete/insert/truncate/create。它不会记录select（因为这没有对表没有进行变更）<br><strong>binlog我们可以简单理解为：存储着每条变更的SQL语句</strong>  </p>
+<h3 id="undo-log"><a href="#undo-log" class="headerlink" title="undo log"></a>undo log</h3><p>undo log主要有两个作用：</p>
+<ul>
+<li>回滚</li>
+<li>多版本控制(MVCC)</li>
+</ul>
+<p>在数据修改的时候，不仅记录了redo log，还记录undo log，如果因为某些原因导致事务失败或回滚了，可以用undo log进行回滚<br>undo log主要存储的也是逻辑日志，比如我们要insert一条数据了，那undo log会记录的一条对应的delete日志。我们要update一条记录时，它会记录一条对应相反的update记录。</p>
+<p>这也应该容易理解，毕竟回滚嘛，跟需要修改的操作相反就好，这样就能达到回滚的目的。因为支持回滚操作，所以我们就能保证：“一个事务包含多个操作，这些操作要么全部执行，要么全都不执行”。【原子性】</p>
+<p>因为undo log存储着修改之前的数据，相当于一个前版本，MVCC实现的是读写不阻塞，读的时候只要返回前一个版本的数据就行了。</p>
+<h3 id="undolog和binlog和redolog不同之处总结"><a href="#undolog和binlog和redolog不同之处总结" class="headerlink" title="undolog和binlog和redolog不同之处总结"></a>undolog和binlog和redolog不同之处总结</h3><ul>
+<li>参考 <a href="https://www.jianshu.com/p/68d5557c65be" target="_blank" rel="noopener">https://www.jianshu.com/p/68d5557c65be</a></li>
+<li>redo log: 只存在于innodb引擎中<br> 物理格式的日志，记录的是物理数据页面的修改的信息（数据库中每个页的修改），面向的是表空间、数据文件、数据页、偏移量等。</li>
+<li>undo log<br> 逻辑格式的日志，在执行undo的时候，仅仅是将数据从逻辑上恢复至事务之前的状态，而不是从物理页面上操作实现的，与redo log不同。</li>
+<li>binlog<ul>
+<li>逻辑格式的日志，可以简单认为就是执行过的事务中的sql语句。</li>
+<li>但又不完全是sql语句这么简单，而是包括了执行的sql语句（增删改）反向的信息。比如delete操作的话，就对应着delete本身和其反向的insert/update操作的话，就对应着update执行前后的版本的信息；insert操作则对应着delete和insert本身的信息。</li>
+<li>因此可以基于binlog做到闪回功能。</li>
+</ul>
+</li>
+<li>binlog可以作为恢复数据使用，主从复制搭建，redo log作为异常宕机或者介质故障后的数据恢复使用。</li>
+<li>redo log是在InnoDB存储引擎层产生，而binlog是MySQL数据库的上层产生的，并且binlog日志不仅仅针对INNODB存储引擎，MySQL数据库中的任何存储引擎对于数据库的更改都会产生binlog日志。</li>
+<li>两种日志记录的内容形式不同。MySQL的binlog是逻辑日志，可以简单认为记录的就是sql语句。而innodb存储引擎层面的redo日志是物理日志, 是数据页面的修改之后的物理记录。</li>
+<li>关于事务提交时，redo log和binlog的写入顺序，为了保证主从复制时候的主从一致（当然也包括使用binlog进行基于时间点还原的情况），是要严格一致的，MySQL通过两阶段提交过程来完成事务的一致性的，也即redo log和binlog的一致性的，理论上是先写redo log，再写binlog，两个日志都提交成功（刷入磁盘），事务才算真正的完成。因此redo日志的写盘，并不一定是随着事务的提交才写入redo日志文件的，而是随着事务的开始，逐步开始的。那么当我执行一条 update 语句时，redo log 和 binlog 是在什么时候被写入的呢？这就有了我们常说的「两阶段提交」：<ul>
+<li>写入：redo log（prepare）</li>
+<li>写入：binlog</li>
+<li>写入：redo log（commit）</li>
+</ul>
+</li>
+<li>两种日志与记录写入磁盘的时间点不同，binlog日志只在事务提交完成后进行一次写入。而innodb存储引擎的redo日志在事务进行中不断地被写入，并日志不是随事务提交的顺序进行写入的。</li>
+<li>binlog日志仅在事务提交时记录，并且对于每一个事务，仅在事务提交时记录，并且对于每一个事务，仅包含对应事务的一个日志。而对于innodb存储引擎的redo日志，由于其记录是物理操作日志，因此每个事务对应多个日志条目，并且事务的redo日志写入是并发的，并非在事务提交时写入，其在文件中记录的顺序并非是事务开始的顺序。</li>
+<li>binlog不是循环使用，在写满或者重启之后，会生成新的binlog文件，redo log是循环使用。</li>
+<li>binlog 日志是 master 推的还是 salve 来拉的？slave来拉的, 因为每一个slave都是完全独立的个体，所以slave完全依据自己的节奏去处理同步，</li>
+</ul>
+<h2 id="二阶段提交"><a href="#二阶段提交" class="headerlink" title="二阶段提交"></a>二阶段提交</h2><p>redo log 保证的是数据库的 crash-safe 能力。采用的策略就是常说的“两阶段提交”。</p>
+<p>一条update的SQL语句是按照这样的流程来执行的：<br><strong>将数据页加载到内存 → 修改数据 → 更新数据 → 写redo log（状态为prepare） → 写binlog → 提交事务(数据写入成功后将redo log状态改为commit)</strong></p>
+<p>只有当两个日志都提交成功（刷入磁盘），事务才算真正的完成。一旦发生系统故障（不管是宕机、断电、重启等等），都可以配套使用 redo log 与 binlog 做数据修复。</p>
+<h3 id="两阶段提交机制的必要性"><a href="#两阶段提交机制的必要性" class="headerlink" title="两阶段提交机制的必要性"></a>两阶段提交机制的必要性</h3><ul>
+<li>binlog 存在于Mysql Server层中，主要用于数据恢复；当数据被误删时，可以通过上一次的全量备份数据加上某段时间的binlog将数据恢复到指定的某个时间点的数据。  </li>
+<li>redo log 存在于InnoDB 引擎中，InnoDB引擎是以插件形式引入Mysql的，redo log的引入主要是为了实现Mysql的crash-safe能力。</li>
+</ul>
+<p>假设redo log和binlog分别提交，可能会造成用日志恢复出来的数据和原来数据不一致的情况。</p>
+<ul>
+<li>假设先写redo log再写binlog，即redo log没有prepare阶段，写完直接置为commit状态，然后再写binlog。那么如果写完redo log后Mysql宕机了，重启后系统自动用redo log 恢复出来的数据就会比binlog记录的数据多出一些数据，这就会造成磁盘上数据库数据页和binlog的不一致，下次需要用到binlog恢复误删的数据时，就会发现恢复后的数据和原来的数据不一致。</li>
+<li>假设先写binlog再写redolog。如果写完binlog后Mysql宕机了，那么binlog上的记录就会比磁盘上数据页的记录多出一些数据出来，下次用binlog恢复数据，就会发现恢复后的数据和原来的数据不一致。</li>
+</ul>
+<p>由此可见，redo log和binlog的两阶段提交是非常必要的。</p>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><ul>
+<li>聚集索引(也叫聚簇索引)是啥<ul>
+<li>聚簇索引：将数据存储与索引放到了一块，找到索引也就找到了数据</li>
+<li>非聚簇索引：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，这也就是为什么索引不在key buffer命中时，速度慢的原因。</li>
+</ul>
+</li>
+<li>外键是啥: 比如在students表中，通过class_id的字段，可以把数据与另一张表关联起来，这种列称为外键(一般不用外键, 因为会降低数据库性能)</li>
+<li>mysql 索引在什么情况下会失效<ul>
+<li><a href="https://database.51cto.com/art/201912/607742.htm" target="_blank" rel="noopener">https://database.51cto.com/art/201912/607742.htm</a></li>
+<li>查询条件包含or，可能导致索引失效</li>
+<li>如何字段类型是字符串，where时一定用引号括起来，否则索引失效</li>
+<li>like通配符可能导致索引失效。</li>
+<li>联合索引，查询时的条件列不是联合索引中的第一个列，索引失效。</li>
+<li>在索引列上使用mysql的内置函数，索引失效</li>
+<li>对索引列运算（如，+、-、*、/），索引失效。</li>
+<li>索引字段上使用（！= 或者 &lt; &gt;，not in）时，可能会导致索引失效。</li>
+<li>索引字段上使用is null， is not null，可能导致索引失效。</li>
+<li>左连接查询或者右连接查询查询关联的字段编码格式不一样，可能导致索引失效。</li>
+<li>mysql估计使用全表扫描要比使用索引快,则不使用索引。</li>
+</ul>
+</li>
+<li>mysql 的索引模型:<br>在MySQL中使用较多的索引有Hash索引，B+树索引等，而我们经常使用的InnoDB存储引擎的默认索引实现为：B+树索引。对于哈希索引来说，底层的数据结构就是哈希表，因此在绝大多数需求为单条记录查询的时候，可以选择哈希索引，查询性能最快；其余大部分场景，建议选择BTree索引。</li>
+</ul>
+<h3 id="为什么说B类树更适合数据库索引"><a href="#为什么说B类树更适合数据库索引" class="headerlink" title="为什么说B类树更适合数据库索引"></a>为什么说B类树更适合数据库索引</h3><p><a href="/2018/10/23/algo_newbie/#为什么说B类树更适合数据库索引">为什么说B类树更适合数据库索引</a></p>
+<h2 id="mysql全文索引-pending-fin"><a href="#mysql全文索引-pending-fin" class="headerlink" title="mysql全文索引 pending_fin"></a>mysql全文索引 pending_fin</h2><h2 id="mysql-有那些存储引擎，有哪些区别"><a href="#mysql-有那些存储引擎，有哪些区别" class="headerlink" title="mysql 有那些存储引擎，有哪些区别"></a>mysql 有那些存储引擎，有哪些区别</h2><ul>
+<li>innodb是 MySQL 默认的事务型存储引擎，只有在需要它不支持的特性时，才考虑使用其它存储引擎。实现了四个标准的隔离级别，默认级别是可重复读（REPEATABLE READ）。在可重复读隔离级别下，通过多版本并发控制（MVCC）+ Next-Key Locking 防止幻影读。主索引是聚簇索引，在索引中保存了数据，从而避免直接读取磁盘，因此对查询性能有很大的提升。</li>
+<li>MyISAM类型不支持事务处理等高级处理，而InnoDB类型支持。</li>
+<li>MyISAM类型的表强调的是性能，其执行速度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供事务支持以及外部键等高级数据库功能。</li>
+<li>现在一般都是选用InnoDB了，InnoDB支持行锁, 而MyISAM的全表锁，myisam的读写串行问题，并发效率锁表，效率低，MyISAM对于读写密集型应用一般是不会去选用的</li>
+<li>memory引擎一般用于临时表, 使用表级锁，没有事务机制, 虽然内存访问快，但如果频繁的读写，表级锁会成为瓶颈, 且内存昂贵..满了就亏了</li>
+<li>InnoDB是聚集索引，使用B+Tree作为索引结构，数据文件是和（主键）索引绑在一起的（表数据文件本身就是按B+Tree组织的一个索引结构），必须要有主键，通过主键索引效率很高。MyISAM是非聚集索引，也是使用B+Tree作为索引结构，索引和数据文件是分离的，索引保存的是数据文件的指针。主键索引和辅助索引是独立的。</li>
+</ul>
+<p>综上所述, <strong>如果表的读操作远远多于写操作时，并且不需要事务的支持的，可以将 MyIASM 作为数据库引擎的首选</strong></p>
+<h2 id="mysql-主从同步分哪几个过程"><a href="#mysql-主从同步分哪几个过程" class="headerlink" title="mysql 主从同步分哪几个过程"></a>mysql 主从同步分哪几个过程</h2><p><img src="/img/noodle_plan/mysql/mysql_master_slave_sync.jpg" alt><br>复制的基本过程如下：</p>
+<ol>
+<li>从节点上的I/O 线程连接主节点，并请求从指定日志文件的指定位置（或者从最开始的日志）之后的日志内容；</li>
+<li>主节点接收到来自从节点的I/O请求后，通过负责复制的I/O线程根据请求信息读取指定日志指定位置之后的日志信息，返回给从节点。返回信息中除了日志所包含的信息之外，还包括本次返回的信息的bin-log file 的以及bin-log position；从节点的I/O线程接收到内容后，将接收到的日志内容更新到本机的relay log中，并将读取到的binary log文件名和位置保存到master-info 文件中，以便在下一次读取的时候能够清楚的告诉Master“我需要从某个bin-log 的哪个位置开始往后的日志内容，请发给我”；</li>
+<li>Slave 的 SQL线程检测到relay-log 中新增加了内容后，会将relay-log的内容解析成在主节点上实际执行过的操作，并在本数据库中执行。</li>
+</ol>
+<h2 id="主从同步延迟与同步数据丢失问题"><a href="#主从同步延迟与同步数据丢失问题" class="headerlink" title="主从同步延迟与同步数据丢失问题"></a>主从同步延迟与同步数据丢失问题</h2><p>主库将变更写binlog日志，然后从库连接到主库之后，从库有一个IO线程，将主库的binlog日志拷贝到自己本地，写入一个中继日志中。接着从库中有一个SQL线程会从中继日志读取binlog，然后执行binlog日志中的内容，也就是在自己本地再次执行一遍SQL，这样就可以保证自己跟主库的数据是一样的。</p>
+<p>这里有一个非常重要的一点，就是从库同步主库数据的过程是串行化的，也就是说主库上并行的操作，在从库上会串行执行。所以这就是一个非常重要的点了，由于从库从主库拷贝日志以及串行执行SQL的特点，在高并发场景下，从库的数据一定会比主库慢一些，是有延时的。所以经常出现，刚写入主库的数据可能是读不到的，要过几十毫秒，甚至几百毫秒才能读取到。</p>
+<p>而且这里还有另外一个问题，就是如果主库突然宕机，然后恰好数据还没同步到从库，那么有些数据可能在从库上是没有的，有些数据可能就丢失了。<br>所以mysql实际上在这一块有两个机制:</p>
+<ul>
+<li>一个是半同步复制，用来解决主库数据丢失问题</li>
+<li>一个是并行复制，用来解决主从同步延时问题(实在解决不了只能强制读主库)。</li>
+</ul>
+<h3 id="半同步复制（Semisynchronous-replication）"><a href="#半同步复制（Semisynchronous-replication）" class="headerlink" title="半同步复制（Semisynchronous replication）"></a>半同步复制（Semisynchronous replication）</h3><ul>
+<li><strong>逻辑上</strong>: 是介于全同步复制与全异步复制之间的一种，主库只需要等待至少一个从库节点收到并且 Flush Binlog 到 Relay Log 文件即可，主库不需要等待所有从库给主库反馈。同时，这里只是一个收到的反馈，而不是已经完全完成并且提交的反馈，如此，节省了很多时间。</li>
+<li><strong>技术上</strong>: 介于异步复制和全同步复制之间，<strong>主库在执行完客户端提交的事务后不是立刻返回给客户端，而是等待至少一个从库接收到并写到relay log中才返回给客户端</strong>。相对于异步复制，半同步复制提高了数据的安全性，同时它也造成了一定程度的延迟，这个延迟最少是一个TCP/IP往返的时间。所以，半同步复制最好在低延时的网络中使用。</li>
+</ul>
+<h3 id="库并行复制"><a href="#库并行复制" class="headerlink" title="库并行复制"></a>库并行复制</h3><p>所谓并行复制，指的是从库开启多个线程，并行读取relay log中不同库的日志，然后并行重放不同库的日志，<strong>这是库级别的并行。</strong></p>
+<h3 id="异步复制（Asynchronous-replication）"><a href="#异步复制（Asynchronous-replication）" class="headerlink" title="异步复制（Asynchronous replication）"></a>异步复制（Asynchronous replication）</h3><ul>
+<li><strong>逻辑上</strong>: MySQL默认的复制即是异步的，主库在执行完客户端提交的事务后会立即将结果返给给客户端，并不关心从库是否已经接收并处理，这样就会有一个问题，主如果crash掉了，此时主上已经提交的事务可能并没有传到从库上，如果此时，强行将从提升为主，可能导致新主上的数据不完整。</li>
+<li><strong>技术上</strong>: 主库将事务 Binlog 事件写入到 Binlog 文件中，此时主库只会通知一下 Dump 线程发送这些新的 Binlog，然后主库就会继续处理提交操作，而此时不会保证这些 Binlog 传到任何一个从库节点上。</li>
+</ul>
+<h3 id="全同步复制（Fully-synchronous-replication）"><a href="#全同步复制（Fully-synchronous-replication）" class="headerlink" title="全同步复制（Fully synchronous replication）"></a>全同步复制（Fully synchronous replication）</h3><ul>
+<li><strong>逻辑上</strong>: 指当主库执行完一个事务，所有的从库都执行了该事务才返回给客户端。因为需要等待所有从库执行完该事务才能返回，所以全同步复制的性能必然会收到严重的影响。</li>
+<li><strong>技术上</strong>: <strong>当主库提交事务之后，所有的从库节点必须收到、APPLY并且提交这些事务，然后主库线程才能继续做后续操作</strong>。但缺点是，主库完成一个事务的时间会被拉长，性能降低。</li>
+</ul>
+<h2 id="乐观锁与悲观锁的区别？"><a href="#乐观锁与悲观锁的区别？" class="headerlink" title="乐观锁与悲观锁的区别？"></a>乐观锁与悲观锁的区别？</h2><ul>
+<li>悲观锁：认为数据随时会被修改，因此每次读取数据之前都会上锁，防止其它事务读取或修改数据；应用于数据更新比较频繁的场景；</li>
+<li>乐观锁：操作数据时不会上锁，但是更新时会判断在此期间有没有别的事务更新这个数据，若被更新过，则失败重试；适用于读多写少的场景。</li>
+</ul>
+<p>乐观锁怎么实现:  </p>
+<ul>
+<li>加版本号</li>
+<li>cas</li>
+</ul>
+<h2 id="实现事务采取了哪些技术以及思想？"><a href="#实现事务采取了哪些技术以及思想？" class="headerlink" title="实现事务采取了哪些技术以及思想？"></a>实现事务采取了哪些技术以及思想？</h2><ul>
+<li>★ a原子性：使用 undo log ，从而达到回滚</li>
+<li>★ d持久性：使用 redo log，从而达到故障后恢复</li>
+<li>★ i隔离性：使用锁以及MVCC,运用的优化思想有读写分离，读读并行，读写并行</li>
+<li>★ c一致性：通过回滚，以及恢复，和在并发环境下的隔离做到一致性。</li>
+</ul>
+<h2 id="mysql四个事务隔离级别"><a href="#mysql四个事务隔离级别" class="headerlink" title="mysql四个事务隔离级别"></a>mysql四个事务隔离级别</h2><p><a href="https://developer.aliyun.com/article/743691" target="_blank" rel="noopener">四个隔离级别的区别以及每个级别可能产生的问题以及实现原理</a><br>MySQL 的事务隔离是在 MySQL. ini 配置文件里添加的，在文件的最后添加：<code>transaction-isolation = REPEATABLE-READ</code><br>可用的配置值：<code>READ-UNCOMMITTED</code>、<code>READ-COMMITTED</code>、<code>REPEATABLE-READ</code>、<code>SERIALIZABLE</code>。</p>
+<p>MySQL的事务隔离级别一共有四个，分别是</p>
+<ul>
+<li>读未提交</li>
+<li>读已提交</li>
+<li>可重复读</li>
+<li>可串行化</li>
+</ul>
+<p>MySQL的隔离级别的作用就是让事务之间互相隔离，互不影响，这样可以保证事务的一致性。</p>
+<ul>
+<li>隔离级别比较：可串行化&gt;可重复读&gt;读已提交&gt;读未提交</li>
+<li>隔离级别对性能的影响比较：可串行化&gt;可重复读&gt;读已提交&gt;读未提交</li>
+</ul>
+<p>由此看出，隔离级别越高，所需要消耗的MySQL性能越大（如事务并发严重性），为了平衡二者，一般建议设置的隔离级别为可重复读，MySQL默认的隔离级别也是可重复读。</p>
+<h3 id="事务并发可能出现的情况"><a href="#事务并发可能出现的情况" class="headerlink" title="事务并发可能出现的情况"></a>事务并发可能出现的情况</h3><ul>
+<li>脏读（Dirty Read）<ul>
+<li>一个事务读到了另一个未提交事务修改过的数据</li>
+<li>会话B开启一个事务，把id=1的name为武汉市修改成温州市，此时另外一个会话A也开启一个事务，读取id=1的name，此时的查询结果为温州市，会话B的事务最后回滚了刚才修改的记录，这样会话A读到的数据是不存在的，这个现象就是脏读。（脏读只在读未提交隔离级别才会出现）</li>
+</ul>
+</li>
+<li>不可重复读（Non-Repeatable Read）<ul>
+<li>一个事务只能读到另一个已经提交的事务修改过的数据，并且其他事务每对该数据进行一次修改并提交后，该事务都能查询得到最新值。（不可重复读在读未提交和读已提交隔离级别都可能会出现）</li>
+<li>会话A开启一个事务，查询id=1的结果，此时查询的结果name为武汉市。接着会话B把id=1的name修改为温州市（隐式事务，因为此时的autocommit为1，每条SQL语句执行完自动提交），此时会话A的事务再一次查询id=1的结果，读取的结果name为温州市。会话B再此修改id=1的name为杭州市，会话A的事务再次查询id=1，结果name的值为杭州市，这种现象就是不可重复读。</li>
+</ul>
+</li>
+<li>幻读（Phantom）<ul>
+<li>一个事务先根据某些条件查询出一些记录，之后另一个事务又向表中插入了符合这些条件的记录，原先的事务再次按照该条件查询时，能把另一个事务插入的记录也读出来。（幻读在读未提交、读已提交、可重复读隔离级别都可能会出现）</li>
+<li>会话A开启一个事务，查询id&gt;0的记录，此时会查到name=武汉市的记录。接着会话B插入一条name=温州市的数据（隐式事务，因为此时的autocommit为1，每条SQL语句执行完自动提交），这时会话A的事务再以刚才的查询条件（id&gt;0）再一次查询，此时会出现两条记录（name为武汉市和温州市的记录），这种现象就是幻读。</li>
+</ul>
+</li>
+</ul>
+<h3 id="各个隔离级别的详细说明"><a href="#各个隔离级别的详细说明" class="headerlink" title="各个隔离级别的详细说明"></a>各个隔离级别的详细说明</h3><ul>
+<li>读未提交（READ UNCOMMITTED）<ul>
+<li>在读未提交隔离级别下，事务A可以读取到事务B修改过但未提交的数据。</li>
+<li>可能发生脏读、不可重复读和幻读问题，一般很少使用此隔离级别。</li>
+</ul>
+</li>
+<li>读已提交（READ COMMITTED）<ul>
+<li>在读已提交隔离级别下，事务B只能在事务A修改过并且已提交后才能读取到事务B修改的数据。</li>
+<li>读已提交隔离级别解决了脏读的问题，但可能发生不可重复读和幻读问题，一般很少使用此隔离级别。</li>
+</ul>
+</li>
+<li>可重复读（REPEATABLE READ）<ul>
+<li>在可重复读隔离级别下，事务B只能在事务A修改过数据并提交后，自己也提交事务后，才能读取到事务B修改的数据。</li>
+<li>可重复读隔离级别解决了脏读和不可重复读的问题，但可能发生幻读问题。</li>
+<li>提问：为什么上了写锁（写操作），别的事务还可以读操作？因为InnoDB有MVCC机制（多版本并发控制），可以使用快照读，而不会被阻塞。</li>
+</ul>
+</li>
+<li>可串行化（SERIALIZABLE）<ul>
+<li>各种问题（脏读、不可重复读、幻读）都不会发生，通过加锁实现（读锁和写锁）。</li>
+</ul>
+</li>
+</ul>
+<h2 id="mvcc是啥"><a href="#mvcc是啥" class="headerlink" title="mvcc是啥"></a>mvcc是啥</h2><p>mvcc必看文章: </p>
+<ul>
+<li><a href="https://www.jianshu.com/p/f692d4f8a53e" target="_blank" rel="noopener">mysql mvcc实现原理</a>  </li>
+<li><a href="https://chenjiayang.me/2019/06/22/mysql-innodb-mvcc/" target="_blank" rel="noopener">https://chenjiayang.me/2019/06/22/mysql-innodb-mvcc/</a></li>
+</ul>
+<p>MVCC (Multiversion Concurrency Control) 中文全程叫<strong>多版本并发控制</strong>，是现代数据库（包括 MySQL、Oracle、PostgreSQL 等）引擎实现中常用的处理读写冲突的手段，目的在于提高数据库高并发场景下的吞吐性能。MVCC 的每一个写操作都会创建一个新版本的数据，读操作会从有限多个版本的数据中挑选一个最合适（要么是最新版本，要么是指定版本）的结果直接返回 。通过这种方式，我们就不需要关注读写操作之间的数据冲突</p>
+<p><strong>每条记录在更新的时候都会同时记录一条回滚操作（回滚操作日志undo log）。同一条记录在系统中可以存在多个版本，这就是数据库的多版本并发控制（MVCC）。即通过回滚（rollback操作），可以回到前一个状态的值。InnoDB 为了解决这个问题，设计了 ReadView（可读视图）的概念.</strong></p>
+<p>如此一来不同的事务在并发过程中，SELECT 操作可以不加锁而是通过 MVCC 机制读取指定的版本历史记录，并通过一些手段保证保证读取的记录值符合事务所处的隔离级别，从而解决并发场景下的读写冲突。</p>
+<p>mysql把每个操作都定义成一个事务，每开启一个事务，系统的事务版本号自动递增。每行记录都有两个隐藏列：创建版本号和删除版本号</p>
+<h3 id="ReadView"><a href="#ReadView" class="headerlink" title="ReadView"></a>ReadView</h3><ul>
+<li>系统版本号 SYS_ID：是一个递增的数字，每开始一个新的事务，系统版本号就会自动递增。</li>
+<li>事务版本号 TRX_ID ：事务开始时的系统版本号。</li>
+</ul>
+<p>MVCC 维护了一个 ReadView 结构，主要包含了当前系统未提交的事务列表 TRX_IDs {TRX_ID_1, TRX_ID_2, …}，还有该列表的最小值 TRX_ID_MIN 和 TRX_ID_MAX。</p>
+<p><img src="/img/noodle_plan/mysql/readview.jpg" alt></p>
+<p>在进行 SELECT 操作时，根据数据行快照的 TRX_ID 与 TRX_ID_MIN 和 TRX_ID_MAX 之间的关系，从而判断数据行快照是否可以使用：</p>
+<ul>
+<li>TRX_ID &lt; TRX_ID_MIN，表示该数据行快照时在当前所有未提交事务之前进行更改的，因此可以使用。</li>
+<li>TRX_ID &gt; TRX_ID_MAX，表示该数据行快照是在事务启动之后被更改的，因此不可使用。</li>
+<li>TRX_ID_MIN &lt;= TRX_ID &lt;= TRX_ID_MAX，需要根据隔离级别再进行判断：<ul>
+<li>提交读：如果 TRX_ID 在 TRX_IDs 列表中，表示该数据行快照对应的事务还未提交，则该快照不可使用。否则表示已经提交，可以使用。</li>
+<li>可重复读：都不可以使用。因为如果可以使用的话，那么其它事务也可以读到这个数据行快照并进行修改，那么当前事务再去读这个数据行得到的值就会发生改变，也就是出现了不可重复读问题。</li>
+</ul>
+</li>
+</ul>
+<p>在数据行快照不可使用的情况下，需要沿着 Undo Log 的回滚指针 ROLL_PTR 找到下一个快照，再进行上面的判断。</p>
+<h2 id="mysql在可重复读RR的隔离级别下如何避免幻读的"><a href="#mysql在可重复读RR的隔离级别下如何避免幻读的" class="headerlink" title="mysql在可重复读RR的隔离级别下如何避免幻读的"></a>mysql在可重复读RR的隔离级别下如何避免幻读的</h2><p>参考:  </p>
+<ul>
+<li>next-key锁: <a href="https://juejin.im/post/6844903997090824200" target="_blank" rel="noopener">mysql 排它锁之行锁、间隙锁、后码锁</a></li>
+<li>mvcc: <ul>
+<li><a href="https://www.jianshu.com/p/f692d4f8a53e" target="_blank" rel="noopener">mysql mvcc实现原理</a></li>
+<li><a href="https://blog.csdn.net/DILIGENT203/article/details/100751755" target="_blank" rel="noopener">https://blog.csdn.net/DILIGENT203/article/details/100751755</a></li>
+</ul>
+</li>
+</ul>
+<p>知识点:</p>
+<ul>
+<li><code>Record Lock</code>：行锁, 锁直接加在索引记录上面，锁住的是key。当需要对表中的某条数据进行写操作（insert、update、delete、select for update）时，需要先获取记录的排他锁（X锁），这个就称为行锁。</li>
+<li><code>Gap Lock</code>：间隙锁，锁定索引记录间隙，确保索引记录的间隙不变。间隙锁是针对事务隔离级别为可重复读或以上级别而设计的。GAP锁的目的，是为了防止同一事务的两次当前读，出现幻读的情况。例如当一个事务执行语句<code>SELECT c FROM t WHERE c BETWEEN 10 and 20 FOR UPDATE;</code>，则其它事务就不能在 t.c 中插入 15。</li>
+<li><code>Next-Key Lock</code> = <code>Record Lock</code> + <code>Gap Lock</code> ， 它是 Record Locks 和 Gap Locks 的结合，不仅锁定一个记录上的索引，也锁定索引之间的间隙。它锁定一个前开后闭区间，例如一个索引包含以下值：10, 11, 13, and 20，那么就需要锁定以下区间：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(-∞, 10]</span><br><span class="line">(10, 11]</span><br><span class="line">(11, 13]</span><br><span class="line">(13, 20]</span><br><span class="line">(20, +∞)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>默认情况下，InnoDB工作在可重复读隔离级别下，并且会以<code>Next-Key Lock</code>的方式对数据行进行加锁，这样可以有效防止幻读的发生。<code>Next-Key Lock</code>是行锁和间隙锁的组合，当InnoDB扫描索引记录的时候，会首先对索引记录加上Record Lock，再对索引记录两边的间隙加上间隙锁（Gap Lock）。加上间隙锁之后，其他事务就不能在这个间隙修改或者插入记录。</p>
+<ul>
+<li><strong>快照读</strong>：简单的select操作，属于快照读，不加锁。(当然，也有例外，下面会分析)<br>  <code>select * from table where ?;</code></li>
+<li><strong>当前读</strong>：特殊的读操作，插入/更新/删除操作，属于当前读，需要加锁。<ul>
+<li><code>select * from table where ? lock in share mode;</code></li>
+<li><code>select * from table where ? for update;</code></li>
+<li><code>insert into table values (…);</code></li>
+<li><code>update table set ? where ?;</code></li>
+<li><code>delete from table where ?;</code></li>
+</ul>
+</li>
+</ul>
+<p>在MySQL中select称为快照读，不需要锁，而insert、update、delete、select for update则称为当前读，需要给数据加锁，<strong>幻读中的“读”即是针对当前读</strong>。<br>RR事务隔离级别允许存在幻读，但InnoDB RR级别却通过Gap锁避免了幻读</p>
+<p><strong>mysql如何实现避免幻读</strong>:  </p>
+<ol>
+<li>在快照读读情况下，mysql通过mvcc来避免幻读。</li>
+<li>在当前读读情况下，mysql通过<code>next-key lock</code>来避免幻读。</li>
+</ol>
+<h3 id="正确理解InnoDB引擎RR隔离级别解决了幻读这件事"><a href="#正确理解InnoDB引擎RR隔离级别解决了幻读这件事" class="headerlink" title="正确理解InnoDB引擎RR隔离级别解决了幻读这件事"></a>正确理解InnoDB引擎RR隔离级别解决了幻读这件事</h3><p>Mysql官方给出的幻读解释是：只要在一个事务中，第二次select多出了row就算幻读。</p>
+<p>先看问题:<br>a事务先select，b事务insert确实会加一个gap锁，但是如果b事务commit，这个gap锁就会释放（释放后a事务可以随意dml操作），a事务再select出来的结果在MVCC下还和第一次select一样，接着a事务不加条件地update，这个update会作用在所有行上（包括b事务新加的），a事务再次select就会出现b事务中的新行，并且这个新行已经被update修改了，实测在RR级别下确实如此。</p>
+<p><strong>如果这样理解的话，Mysql的RR级别确实防不住幻读, 但是我们不能向上面这样理解, 我们得如下理解:</strong></p>
+<ul>
+<li><code>select * from t where a=1;</code>属于快照读</li>
+<li><code>select * from t where a=1 lock in share mode;</code>属于当前读</li>
+<li>不能把快照读和当前读得到的结果不一样这种情况认为是幻读，这是两种不同的使用。所以mysql的rr级别是解决了幻读的。</li>
+<li>如上面问题所说，T1 select 之后 update，会将 T2 中 insert 的数据一起更新，那么认为多出来一行，所以防不住幻读。看着说法无懈可击，但是其实是错误的，InnoDB 中设置了快照读和当前读两种模式，如果只有快照读，那么自然没有幻读问题，但是如果将语句提升到当前读，那么 T1 在 select 的时候需要用如下语法： select * from t for update (lock in share mode) 进入当前读，那么自然没有 T2 可以插入数据这一回事儿了。</li>
+</ul>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/01/12/self_cultivation_http/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/01/12/self_cultivation_http/" itemprop="url">服务器开发自我修养专栏-HTTP深入浅出</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-12T19:08:06+00:00">
+                2021-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self-cultivation/" itemprop="url" rel="index">
+                    <span itemprop="name">Self-cultivation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="HTTP与HTTPS"><a href="#HTTP与HTTPS" class="headerlink" title="HTTP与HTTPS"></a>HTTP与HTTPS</h1><p>HTTP 协议考察 HTTP 协议的返回码、HTTP 的方法等。需要特别指出的是 HTTPS 加密的详细过程要非常透彻，不然容易产生一种感觉好像都清楚了，但是一问就有点说不清楚。</p>
+<p>下面实例是一点典型的使用GET来传递数据的实例,<br>客户端请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GET /hello.txt HTTP/1.1</span><br><span class="line">User-Agent: curl/7.16.3 libcurl/7.16.3 OpenSSL/0.9.7l zlib/1.2.3</span><br><span class="line">Host: www.example.com</span><br><span class="line">Accept-Language: en, mi</span><br></pre></td></tr></table></figure></p>
+<p>服务端响应:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Date: Mon, 27 Jul 2009 12:28:53 GMT</span><br><span class="line">Server: Apache</span><br><span class="line">Last-Modified: Wed, 22 Jul 2009 19:15:56 GMT</span><br><span class="line">ETag: &quot;34aa387-d-1568eb00&quot;</span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line">Content-Length: 51</span><br><span class="line">Vary: Accept-Encoding</span><br><span class="line">Content-Type: text/plain</span><br></pre></td></tr></table></figure></p>
+<p>输出结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello World! My payload includes a trailing CRLF.</span><br></pre></td></tr></table></figure></p>
+<h2 id="客户端请求消息"><a href="#客户端请求消息" class="headerlink" title="客户端请求消息"></a>客户端请求消息</h2><p>客户端发送一个HTTP请求到服务器的请求消息包括以下格式:  </p>
+<ul>
+<li>请求行（request line）</li>
+<li>请求头部（header）</li>
+<li>空行</li>
+<li>请求数据</li>
+</ul>
+<p>由四个部分组成，下图给出了请求报文的一般格式。<br><img src="/img/noodle_plan/http/client_request_header.png" alt></p>
+<h2 id="服务器响应消息"><a href="#服务器响应消息" class="headerlink" title="服务器响应消息"></a>服务器响应消息</h2><p>HTTP响应也由四个部分组成，分别是:  </p>
+<ul>
+<li>状态行</li>
+<li>消息报头</li>
+<li>空行</li>
+<li>响应正文</li>
+</ul>
+<p><img src="/img/noodle_plan/http/server_response_header.jpg" alt></p>
+<h2 id="https"><a href="#https" class="headerlink" title="https"></a>https</h2><p>HTTPS 协议（HyperText Transfer Protocol over Secure Socket Layer）：一般理解为HTTP+SSL/TLS，通过 SSL证书来验证服务器的身份，并为浏览器和服务器之间的通信进行加密。</p>
+<p>那么SSL/TLS又是什么？</p>
+<ul>
+<li>SSL（Secure Socket Layer，安全套接字层）：1994年为 Netscape 所研发，SSL 协议位于 TCP/IP 协议与各种应用层协议之间，为数据通讯提供安全支持。</li>
+<li>TLS（Transport Layer Security，传输层安全）：其前身是 SSL，它最初的几个版本（SSL 1.0、SSL 2.0、SSL 3.0）由网景公司开发，1999年从 3.1 开始被 IETF 标准化并改名，发展至今已经有 TLS 1.0、TLS 1.1、TLS 1.2 三个版本。SSL3.0和TLS1.0由于存在安全漏洞，已经很少被使用到。TLS 1.3 改动会比较大，目前还在草案阶段，目前使用最广泛的是TLS 1.1、TLS 1.2。</li>
+</ul>
+<p>https 不是一种新的协议，只是 http 的通信接口部分使用了 ssl 和 tsl 协议替代，加入了加密、证书、完整性保护的功能，下面解释一下加密和证书，如下图所示<br><img src="/img/noodle_plan/http/https_ssl.png" alt></p>
+<h3 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h3><p>也叫<strong>共享密钥加密</strong>, 加密和解密公用一套秘钥，这样就会产生问题，已共享秘钥加密方式必须将秘钥传送给对方，但如果通信被监听，那么秘钥可能会被泄漏产生危险。<br>常见对称加密算法有des, aes</p>
+<h3 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h3><p>也叫<strong>公开秘钥加密</strong>, 使用一种非对称加密的算法，使用一对非对称的秘钥，一把叫做公有秘钥，一把叫做私有秘钥，在加密的时候，通信的一方使用公有秘钥进行加密，通信的另一方使用私有秘钥进行解密，利用这种方式不需要发送私有秘钥，也就不存在泄漏的风险了。<br>常见非对称加密算法有rsa</p>
+<h3 id="https-加密方式"><a href="#https-加密方式" class="headerlink" title="https 加密方式"></a>https 加密方式</h3><p>因为公开秘钥加密的方式比共享秘钥加密的方式钥消耗 cpu 资源，https 采取了混合加密的方式，来结合两者的优点。</p>
+<p>在秘钥交换阶段使用公开加密的方式，之后建立连接后使用共享秘钥加密方式进行加密，如下图。</p>
+<p><img src="/img/noodle_plan/http/https_proc.png" alt></p>
+<h3 id="为什么要使用证书"><a href="#为什么要使用证书" class="headerlink" title="为什么要使用证书"></a>为什么要使用证书</h3><p>因为公开加密还存在一些问题就是无法证明公开秘钥的正确性(有可能被黑客中间替换成了黑客自己的公钥, 然后黑客伪装成服务器/客户端做中间转发)，为了解决这个问题，https 采取了有数字证实认证机构和其相关机构颁发的公开秘钥证书，通信过程如下图所示。</p>
+<p><img src="/img/noodle_plan/http/https_ca.png" alt></p>
+<p>解释一下上图的步骤：  </p>
+<ol>
+<li>服务器将自己的公开秘钥传到数字证书认证机构  </li>
+<li>数字证书认证机构使用自己的秘钥来对传来的服务器公钥进行加密，并颁发数字证书  </li>
+<li>服务器将传回的公钥证书发送给客户端，客户端使用数字机构颁发的公开秘钥来验证证书的有效性，以及公开秘钥的真实性<ul>
+<li><img src="/img/noodle_plan/linux/https_pub_key_credential_verify.jpg" alt></li>
+<li>证书签名是先将证书信息（证书机构名称、有效期、拥有者、拥有者公钥）进行hash，再用CA的私有密钥对hash值加密而生成的。</li>
+<li>所以拦截者虽然可以拦截并篡改证书信息（主要是拥有者和拥有者的公钥），但是由于拦截者没有CA的私钥，所以无法生成正确的签名，从而导致客户端拿到签名后，用CA公有密钥对证书签名解密后值与用证书计算出来的实际hash值不一样，从而得不到客户端信任。(其实这个ca公钥和私钥也就是非对称加密的思想了)</li>
+</ul>
+</li>
+<li>客户端使用服务器的公开秘钥进行消息加密，后发送给服务器。  </li>
+<li>服务器使用私有秘钥进行解密。</li>
+</ol>
+<p>浏览器在安装的时候会内置可信的数字证书机构的公开秘钥，如下图所示。</p>
+<p><img src="/img/noodle_plan/http/https_browser_ca.png" alt></p>
+<p>这就是为什么我们使用自己生成的证书的时候会产生安全警告的原因。</p>
+<p>再附一张 https 的具体通信步骤和图解。</p>
+<p><img src="/img/noodle_plan/http/https_hand_shake2.png" alt></p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><p>服务器发送的响应报文包含 Set-Cookie 首部字段，客户端得到响应报文后把 Cookie 内容保存到浏览器中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.0 200 OK</span><br><span class="line">Content-type: text/html</span><br><span class="line">Set-Cookie: yummy_cookie=choco</span><br><span class="line">Set-Cookie: tasty_cookie=strawberry</span><br></pre></td></tr></table></figure></p>
+<p>客户端之后对同一个服务器发送请求时，会从浏览器中取出 Cookie 信息并通过 Cookie 请求首部字段发送给服务器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET /sample_page.html HTTP/1.1</span><br><span class="line">Host: www.example.org</span><br><span class="line">Cookie: yummy_cookie=choco; tasty_cookie=strawberry</span><br></pre></td></tr></table></figure></p>
+<p>Domain 标识指定了哪些主机可以接受 Cookie。如果不指定，默认为当前文档的主机（不包含子域名）。如果指定了 Domain，则一般包含子域名。例如，如果设置 Domain=mozilla.org，则 Cookie 也包含在子域名中（如 developer.mozilla.org）。</p>
+<p>Path 标识指定了主机下的哪些路径可以接受 Cookie（该 URL 路径必须存在于请求 URL 中）。以字符 %x2F (“/“) 作为路径分隔符，子路径也会被匹配。例如，设置 Path=/docs，则以下地址都会匹配：</p>
+<ul>
+<li><code>/docs</code></li>
+<li><code>/docs/Web/</code></li>
+<li><code>/docs/Web/HTTP</code></li>
+</ul>
+<h2 id="session如何保存较好"><a href="#session如何保存较好" class="headerlink" title="session如何保存较好"></a>session如何保存较好</h2><p><img src="/img/noodle_plan/http/session_server.jpg" alt></p>
+<p>一个用户的 Session 信息如果存储在一个服务器上，那么当负载均衡器把用户的下一个请求转发到另一个服务器，由于服务器没有用户的 Session 信息，那么该用户就需要重新进行登录等操作..有什么好的解决方案呢?<br>Session Server使用一个单独的服务器存储 Session 数据，可以使用传统的 MySQL，也使用 Redis 或者 Memcached 这种内存型数据库。  </p>
+<ul>
+<li>优点：<br>  为了使得大型网站具有伸缩性，集群中的应用服务器通常需要保持无状态，那么应用服务器不能存储用户的会话信息。Session Server 将用户的会话信息单独进行存储，从而保证了应用服务器的无状态。</li>
+<li>缺点：<br>  需要去实现存取 Session 的代码</li>
+</ul>
+<h2 id="cookie和session和token的区别"><a href="#cookie和session和token的区别" class="headerlink" title="cookie和session和token的区别"></a>cookie和session和token的区别</h2><p><img src="/img/noodle_plan/http/cookie_session.png" alt></p>
+<ul>
+<li><strong>由于HTTP协议是无状态的协议，所以服务端需要记录用户的状态时，就需要用某种机制来识具体的用户，这个机制就是Session</strong>.典型的场景比如购物车，当你点击下单按钮时，由于HTTP协议无状态，所以并不知道是哪个用户操作的，所以服务端要为特定的用户创建了特定的Session，用用于标识这个用户，并且跟踪用户，这样才知道购物车里面有几本书。这个Session是保存在服务端的，有一个唯一标识。在服务端保存Session的方法很多，内存、数据库、文件都有。集群的时候也要考虑Session的转移，在大型的网站，一般会有专门的Session服务器集群，用来保存用户会话，这个时候 Session 信息都是放在内存的，使用一些缓存服务比如Memcached之类的来放 Session。</li>
+<li><strong>思考一下服务端如何识别特定的客户？这个时候Cookie就登场了</strong>。每次HTTP请求的时候，客户端都会发送相应的Cookie信息到服务端。实际上大多数的应用都是用 Cookie 来实现Session跟踪的，第一次创建Session的时候，服务端会在HTTP协议中告诉客户端，需要在 Cookie 里面记录一个Session ID，以后每次请求把这个会话ID发送到服务器，我就知道你是谁了。有人问，如果客户端的浏览器禁用了 Cookie 怎么办？一般这种情况下，会使用一种叫做URL重写的技术来进行会话跟踪，即每次HTTP交互，URL后面都会被附加上一个诸如 sid=xxxxx 这样的参数，服务端据此来识别用户。</li>
+<li><strong>Cookie其实还可以用在一些方便用户的场景下</strong>，设想你某次登陆过一个网站，下次登录的时候不想再次输入账号了，怎么办？这个信息可以写到Cookie里面，访问网站的时候，网站页面的脚本可以读取这个信息，就自动帮你把用户名给填了，能够方便一下用户。这也是Cookie名称的由来，给用户的一点甜头。所以，总结一下：Session是在服务端保存的一个数据结构，用来跟踪用户的状态，这个数据可以保存在集群、数据库、文件中；Cookie是客户端保存用户信息的一种机制，用来记录用户的一些信息，也是实现Session的一种方式。</li>
+<li><strong>为什么需要token来替代session机制? 因为session的存储对服务器说是一个巨大的开销</strong>， 严重的限制了服务器扩展能力， 比如说我用两个机器组成了一个集群， 小 F 通过机器 A 登录了系统， 那 session id 会保存在机器 A 上， 假设小 F 的下一次请求被转发到机器 B 怎么办？ 机器 B 可没有小 F 的 session id 啊。有时候会采用一点小伎俩： session sticky ， 就是让小 F 的请求一直粘连在机器 A 上， 但是这也不管用， 要是机器 A 挂掉了， 还得转到机器 B 去。 </li>
+</ul>
+<p>接下来我们介绍事实上的token标准<a href="#JWT">JWT</a></p>
+<h3 id="JWT"><a href="#JWT" class="headerlink" title="JWT"></a>JWT</h3><p>sessionId 的方式本质是把用户状态信息维护在 server 端，token 的方式就是把用户的状态信息加密成一串 token 传给前端，然后每次发请求时把 token 带上，传回给服务器端；服务器端收到请求之后，解析 token 并且验证相关信息(用jwt的header里的加密方式然后根据自己的不公开的密钥把jwt中的payload用加密一下得到一个签名 s, 然后用s对比看看是不是跟jwt里的signature相等, 相等则说明token对了)；</p>
+<p>备注: 对于数据校验，专门的消息认证码生成算法, HMAC - 一种使用单向散列函数构造消息认证码的方法，其过程是不可逆的、唯一确定的，并且使用密钥来生成认证码，其目的是防止数据在传输过程中被篡改或伪造。将原始数据与认证码一起传输，数据接收端将原始数据使用相同密钥和相同算法再次生成认证码，与原有认证码进行比对，校验数据的合法性。</p>
+<p>所以跟第一种登录方式最本质的区别是：通过解析 token 的计算时间换取了 session 的存储空间</p>
+<p>业界通用的加密方式是 jwt, jwt 的具体格式如图：<br><img src="/img/noodle_plan/http/jwt1.png" alt><br>简单的介绍一下 jwt，它主要由 3 部分组成：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">header 头部</span><br><span class="line">&#123;</span><br><span class="line">  &quot;alg&quot;: &quot;HS256&quot;,</span><br><span class="line">  &quot;typ&quot;: &quot;JWT&quot;</span><br><span class="line">&#125;</span><br><span class="line">payload 负载</span><br><span class="line">&#123;</span><br><span class="line">  &quot;sub&quot;: &quot;1234567890&quot;,</span><br><span class="line">  &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">  &quot;iat&quot;: 1516239022,</span><br><span class="line">  &quot;exp&quot;: 1555341649998</span><br><span class="line">&#125;</span><br><span class="line">signature 签名</span><br><span class="line">&#123;</span><br><span class="line">  HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  your-256-bit-secret</span><br><span class="line">  ) secret base64 encoded</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>header<br>  header 里面描述加密算法和 token 的类型，类型一般都是 JWT；</li>
+<li>payload<br>  里面放的是用户的信息，也就是第一种登录方式中需要维护在服务器端 session 中的信息；</li>
+<li>signature<br>  是对前两部分的签名，也可以理解为加密；实现需要一个密钥（secret），这个 secret 只有服务器才知道，然后使用 header 里面的算法按照如下方法来加密：  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">base64UrlEncode(header) + <span class="string">"."</span> +</span><br><span class="line">base64UrlEncode(payload),</span><br><span class="line">secret)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>总之，最后的 <code>jwt = base64url(header) + &quot;.&quot; + base64url(payload) + &quot;.&quot; + signature</code><br>jwt 可以放在 response 中返回，也可以放在 cookie 中返回，这都是具体的返回方式，并不重要。<br>客户端发起请求时，官方推荐放在 HTTP header 中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这样子确实也可以解决 cookie 跨域(比如移动平台上对cookie支持不好)的问题，不过具体放在哪儿还是根据业务场景来定，并没有一定之规。</p>
+<h4 id="jwt过期了如何刷新"><a href="#jwt过期了如何刷新" class="headerlink" title="jwt过期了如何刷新"></a>jwt过期了如何刷新</h4><p><strong>前面讲的 Token，都是 Access Token，也就是访问资源接口时所需要的 Token，还有另外一种 Token，Refresh Token，</strong>通常情况下，Refresh Token 的有效期会比较长，而 Access Token 的有效期比较短，当 Access Token 由于过期而失效时，使用 Refresh Token 就可以获取到新的 Access Token，如果 Refresh Token 也失效了，用户就只能重新登录了。</p>
+<p>在 JWT 的实践中，引入 Refresh Token，将会话管理流程改进如下:</p>
+<ol>
+<li>客户端使用用户名密码进行认证</li>
+<li>服务端生成有效时间较短的 Access Token（例如 10 分钟），和有效时间较长的 Refresh Token（例如 7 天）</li>
+<li>客户端访问需要认证的接口时，携带 Access Token</li>
+<li>如果 Access Token 没有过期，服务端鉴权后返回给客户端需要的数据</li>
+<li>如果携带 Access Token 访问需要认证的接口时鉴权失败（例如返回 401 错误），则客户端使用 Refresh Token 向刷新接口申请新的 Access Token</li>
+<li>如果 Refresh Token 没有过期，服务端向客户端下发新的 Access Token</li>
+<li>客户端使用新的 Access Token 访问需要认证的接口</li>
+</ol>
+<h2 id="常见的HTTP相应状态码"><a href="#常见的HTTP相应状态码" class="headerlink" title="常见的HTTP相应状态码"></a>常见的HTTP相应状态码</h2><p>总之：(一般标准用法是这样用哈, 但是真的写代码的时候其实跟get/post/put一样, 想怎么用全看自己, 前后端开发人员协商好就行)</p>
+<ul>
+<li>1XX：消息</li>
+<li>2XX：成功</li>
+<li>3XX：重定向</li>
+<li>4XX：请求错误</li>
+<li>5XX、6XX：服务器错误</li>
+</ul>
+<p>常见状态代码、状态描述的说明如下:</p>
+<ul>
+<li>200 OK:<br>请求已成功，请求所希望的响应头或数据体将随此响应返回。实际的响应将取决于所使用的请求方法。在GET请求中，响应将包含与请求的资源相对应的实体。在POST请求中，响应将包含描述或操作结果的实体。[7]</li>
+<li>301 Moved Permanently:<br>被请求的资源已永久移动到新位置，并且将来任何对此资源的引用都应该使用本响应返回的若干个URI之一。如果可能，拥有链接编辑功能的客户端应当自动把请求的地址修改为从服务器反馈回来的地址。[19]除非额外指定，否则这个响应也是可缓存的。<br>新的永久性的URI应当在响应的Location域中返回。除非这是一个HEAD请求，否则响应的实体中应当包含指向新的URI的超链接及简短说明。<br>如果这不是一个GET或者HEAD请求，那么浏览器禁止自动进行重定向，除非得到用户的确认，因为请求的条件可能因此发生变化。<br>注意：对于某些使用HTTP/1.0协议的浏览器，当它们发送的POST请求得到了一个301响应的话，接下来的重定向请求将会变成GET方式。</li>
+<li>400 Bad Request<br>由于明显的客户端错误（例如，格式错误的请求语法，太大的大小，无效的请求消息或欺骗性路由请求），服务器不能或不会处理该请求。[31]</li>
+<li>401 Unauthorized（RFC 7235）<br>参见：HTTP基本认证、HTTP摘要认证<br>类似于403 Forbidden，401语义即“未认证”，即用户没有必要的凭据。[32]该状态码表示当前请求需要用户验证。该响应必须包含一个适用于被请求资源的WWW-Authenticate信息头用以询问用户信息。客户端可以重复提交一个包含恰当的Authorization头信息的请求。[33]如果当前请求已经包含了Authorization证书，那么401响应代表着服务器验证已经拒绝了那些证书。如果401响应包含了与前一个响应相同的身份验证询问，且浏览器已经至少尝试了一次验证，那么浏览器应当向用户展示响应中包含的实体信息，因为这个实体信息中可能包含了相关诊断信息。<br>注意：当网站（通常是网站域名）禁止IP地址时，有些网站状态码显示的401，表示该特定地址被拒绝访问网站。</li>
+<li>403 Forbidden<br>主条目：HTTP 403<br>服务器已经理解请求，但是拒绝执行它。与401响应不同的是，身份验证并不能提供任何帮助，而且这个请求也不应该被重复提交。如果这不是一个HEAD请求，而且服务器希望能够讲清楚为何请求不能被执行，那么就应该在实体内描述拒绝的原因。当然服务器也可以返回一个404响应，假如它不希望让客户端获得任何信息。</li>
+<li>404 Not Found<br>主条目：HTTP 404<br>请求失败，请求所希望得到的资源未被在服务器上发现，但允许用户的后续请求。[35]没有信息能够告诉用户这个状况到底是暂时的还是永久的。假如服务器知道情况的话，应当使用410状态码来告知旧资源因为某些内部的配置机制问题，已经永久的不可用，而且没有任何可以跳转的地址。404这个状态码被广泛应用于当服务器不想揭示到底为何请求被拒绝或者没有其他适合的响应可用的情况下。</li>
+<li>500 Internal Server Error<br>通用错误消息，服务器遇到了一个未曾预料的状况，导致了它无法完成对请求的处理。没有给出具体错误信息。[59]</li>
+<li>503 Service Unavailable<br>由于临时的服务器维护或者过载，服务器当前无法处理请求。这个状况是暂时的，并且将在一段时间以后恢复。[62]如果能够预计延迟时间，那么响应中可以包含一个Retry-After头用以标明这个延迟时间。如果没有给出这个Retry-After信息，那么客户端应当以处理500响应的方式处理它。</li>
+</ul>
+<h2 id="get和post的本质区别"><a href="#get和post的本质区别" class="headerlink" title="get和post的本质区别"></a>get和post的本质区别</h2><p>从设计初衷上来说，GET 用来实现从服务端取数据，POST 用来实现向服务端提出请求对数据做某些修改，也因此如果你向nginx用post请求静态文件，nginx会直接返回 405 not allowed，但是服务端毕竟是人实现的，你可以让 POST 做 GET 相同的事情</p>
+<p>get请求的参数一般放在url中，但是浏览器和服务器程序对url长度还是有限制的。<br>post请求的参数一般放在body，你硬要放到url中也可以。</p>
+<p>在RESTful风格中，get用于从服务器获获取数据，而post用于创建数据</p>
+<h2 id="Connection-keep-alive"><a href="#Connection-keep-alive" class="headerlink" title="Connection: keep-alive"></a>Connection: keep-alive</h2><p>在早期的HTTP/1.0中，每次http请求都要创建一个连接，而创建连接的过程需要消耗资源和时间，为了减少资源消耗，缩短响应时间，就需要重用连接。在后来的HTTP/1.0中以及HTTP/1.1中，引入了重用连接的机制，就是在http请求头中加入Connection: keep-alive来告诉对方这个请求响应完成后不要关闭，下一次咱们还用这个请求继续交流。协议规定HTTP/1.0如果想要保持长连接，需要在请求头中加上Connection: keep-alive，而HTTP/1.1默认是支持长连接的，有没有这个请求头都行。</p>
+<p>要实现长连接很简单，只要客户端和服务端都保持这个http长连接即可。但问题的关键在于保持长连接后，浏览器如何知道服务器已经响应完成？在使用短连接的时候，服务器完成响应后即关闭http连接，这样浏览器就能知道已接收到全部的响应，同时也关闭连接（TCP连接是双向的）。</p>
+<p>在使用长连接的时候，响应完成后服务器是不能关闭连接的，那么它就要在响应头中加上特殊标志告诉浏览器已响应完成。一般情况下这个特殊标志就是Content-Length，来指明响应体的数据大小，比如Content-Length: 120表示响应体内容有120个字节，这样浏览器接收到120个字节的响应体后就知道了已经响应完成。</p>
+<p>由于Content-Length字段必须真实反映响应体长度，但实际应用中，有些时候响应体长度并没那么好获得，例如响应体来自于网络文件，或者由动态语言生成。这时候要想准确获取长度，只能先开一个足够大的内存空间，等内容全部生成好再计算。但这样做一方面需要更大的内存开销，另一方面也会让客户端等更久。这时候Transfer-Encoding: chunked响应头就派上用场了，该响应头表示响应体内容用的是分块传输，此时服务器可以将数据一块一块地分块响应给浏览器而不必一次性全部响应，待浏览器接收到全部分块后就表示响应结束。</p>
+<p>以分块传输一段文本内容：“人的一生总是在追求自由的一生 So easy”来说明分块传输的过程，如下图所示:<br><img src="/img/noodle_plan/http/http_alive.png" alt></p>
+<h2 id="url编码urlencode是什么"><a href="#url编码urlencode是什么" class="headerlink" title="url编码urlencode是什么"></a>url编码urlencode是什么</h2><p>RFC3986文档规定，Url中只允许包含英文字母（a-zA-Z）、数字（0-9）、-_.~4个特殊字符以及所有保留字符。<br>那如何对Url中的非法字符进行编码呢?<br>  <br><strong>Url编码通常也被称为百分号编码（Url Encoding，also known as percent-encoding），是因为它的编码方式非常简单，使用%百分号加上两位的字符——0123456789ABCDEF——代表一个字节的十六进制形式</strong>。Url编码默认使用的字符集是US-ASCII。例如a在US-ASCII码中对应的字节是0x61，那么Url编码之后得到的就是%61，我们在地址栏上输入<a href="http://g.cn/search?q=%61%62%63，" target="_blank" rel="noopener">http://g.cn/search?q=%61%62%63，</a></p>
+<p>实际上就等同于在google上搜索abc了。又如@符号在ASCII字符集中对应的字节为0x40，经过Url编码之后得到的是%40。<br>  <br>  对于非ASCII字符，需要使用ASCII字符集的超集进行编码得到相应的字节，然后对每个字节执行百分号编码。对于Unicode字符，RFC文档建议使用utf-8对其进行编码得到相应的字节，然后对每个字节执行百分号编码。如”中文”使用UTF-8字符集得到的字节为0xE4 0xB8 0xAD 0xE6 0x96 0x87，经过Url编码之后得到”%E4%B8%AD%E6%96%87”。<br>  <br>  如果某个字节对应着ASCII字符集中的某个非保留字符，则此字节无需使用百分号表示。例如”Url编码”，使用UTF-8编码得到的字节是0x55 0x72 0x6C 0xE7 0xBC 0x96 0xE7 0xA0 0x81，由于前三个字节对应着ASCII中的非保留字符”Url”，因此这三个字节可以用非保留字符”Url”表示。最终的Url编码可以简化成”Url%E7%BC%96%E7%A0%81” ，当然，如果你用”%55%72%6C%E7%BC%96%E7%A0%81”也是可以的。</p>
+<p>很多HTTP监视工具或者浏览器地址栏等在显示Url的时候会自动将Url进行一次解码（使用UTF-8字符集），这就是为什么当你在Firefox中访问Google搜索中文的时候，地址栏显示的Url包含中文的缘故。但实际上发送给服务端的原始Url还是经过编码的。</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

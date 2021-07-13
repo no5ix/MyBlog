@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="GafferOnGames,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="自我总结帧同步要点如下 :   确定性 : 去除随机数 缓冲 : 因为数据包并不是均匀地到达, 所以要做一个缓冲区, 然后再均匀地取出 不用TCP : 因为我们的数据对时间非常敏感, 不接受到第n个输入包就无法继续模拟第n帧, 而TCP的确认机制以及重传机制当我们丢包时, 我们只能暂停等待它重发造成卡顿 用UDP : 发送冗余数据 : 因为帧同步只发送玩家input数据, 而input包是很小的,">
+<meta name="keywords" content="GafferOnGames">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络物理模拟三之具有确定性的帧同步">
+<meta property="og:url" content="https://hulinhong.com/2017/01/22/deterministic_lockstep/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="自我总结帧同步要点如下 :   确定性 : 去除随机数 缓冲 : 因为数据包并不是均匀地到达, 所以要做一个缓冲区, 然后再均匀地取出 不用TCP : 因为我们的数据对时间非常敏感, 不接受到第n个输入包就无法继续模拟第n帧, 而TCP的确认机制以及重传机制当我们丢包时, 我们只能暂停等待它重发造成卡顿 用UDP : 发送冗余数据 : 因为帧同步只发送玩家input数据, 而input包是很小的,">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.046Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络物理模拟三之具有确定性的帧同步">
+<meta name="twitter:description" content="自我总结帧同步要点如下 :   确定性 : 去除随机数 缓冲 : 因为数据包并不是均匀地到达, 所以要做一个缓冲区, 然后再均匀地取出 不用TCP : 因为我们的数据对时间非常敏感, 不接受到第n个输入包就无法继续模拟第n帧, 而TCP的确认机制以及重传机制当我们丢包时, 我们只能暂停等待它重发造成卡顿 用UDP : 发送冗余数据 : 因为帧同步只发送玩家input数据, 而input包是很小的,">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>网络物理模拟三之具有确定性的帧同步 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/01/22/deterministic_lockstep/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">网络物理模拟三之具有确定性的帧同步</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-22T11:13:35+00:00">
+                2017-01-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GS/" itemprop="url" rel="index">
+                    <span itemprop="name">GS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/GafferOnGames/" rel="tag"><i class="fa fa-tag"></i> GafferOnGames</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/21/网络物理模拟二之网络物理部分的视频演示/" rel="next" title="网络物理模拟二之网络物理部分的视频演示">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  网络物理模拟二之网络物理部分的视频演示
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/23/snapshot_interpolation/" rel="prev" title="网络物理模拟四之快照插值">
+              <p class="post-nav-pre-next-title">
+                  网络物理模拟四之快照插值
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="自我总结"><a href="#自我总结" class="headerlink" title="自我总结"></a>自我总结</h1><p>帧同步要点如下 : </p>
+<ul>
+<li><strong>确定性</strong> : 去除随机数</li>
+<li><strong>缓冲</strong> : 因为数据包并不是均匀地到达, 所以要做一个缓冲区, 然后再均匀地取出</li>
+<li><strong>不用TCP</strong> : 因为我们的数据对时间非常敏感, 不接受到第n个输入包就无法继续模拟第n帧, 而TCP的确认机制以及重传机制当我们丢包时, 我们只能暂停等待它重发造成卡顿</li>
+<li><strong>用UDP</strong> :<ul>
+<li><strong>发送冗余数据</strong> : 因为帧同步只发送玩家input数据, 而input包是很小的, 所以发冗余也不会很大</li>
+<li><strong>增量包</strong> : 加一个bit来标志跟上一个包的比较结果, 如果这个包跟上个包一致则只发送一个1, 如果不一致则发送0和这个包的完整数据</li>
+</ul>
+</li>
+<li><strong>帧同步的缺点</strong> : <ul>
+<li><strong>等的人太多</strong> : 因为你要收到所有玩家对应帧的输入才能对这一帧进行模拟.在实践中，这意味着每个人必须等待最滞后的那个玩家.人越多等得越久, 所以帧同步不适合mmo.</li>
+<li><strong>比较耗性能</strong> : 因为帧同步技术的话, 在客户端中，每个对象都要执行所有的物理之类的运算; 而状态同步可以只同步当前玩家周围对象的状态, 不需要同步所有对象</li>
+</ul>
+</li>
+</ul>
+<p><strong>. . .</strong><a id="more"></a></p>
+<h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><!-- <h1 id="Deterministic-Lockstep">Deterministic Lockstep</h1> -->
+<p><a href="https://gafferongames.com/post/deterministic_lockstep/" target="_blank" rel="noopener">原文出处</a></p>
+<p>原文标题 : <strong>Deterministic Lockstep</strong> (<em>Keeping simulations in sync by sending only inputs</em>)</p>
+<hr>
+<div class="container"><br><div class="row"><br><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><br><h2 id="introduction">Introduction</h2><br><p>Hi, I&rsquo;m <a href="https://gafferongames.com/about" target="_blank" rel="noopener">Glenn Fiedler</a> and welcome to <strong><a href="https://gafferongames.com/categories/networked-physics/" target="_blank" rel="noopener">Networked Physics</a></strong>.</p><br><p>In the <a href="https://gafferongames.com/post/introduction_to_networked_physics/" target="_blank" rel="noopener">previous article</a> we explored the physics simulation we&rsquo;re going to network in this article series. In this article specifically, we&rsquo;re going to network this physics simulation using <strong>deterministic lockstep</strong>.</p><br><p>Deterministic lockstep is a method of networking a system from one computer to another by sending only the <em>inputs</em> that control that system, rather than the <em>state</em> of that system. In the context of networking a physics simulation, this means we send across a small amount of input, while avoiding sending state like position, orientation, linear velocity and angular velocity per-object.</p><br><p>The benefit is that bandwidth is proportional to the size of the input, not the number of objects in the simulation. Yes, with deterministic lockstep you can network a physics simulation of one million objects with the same bandwidth as just one.</p><br><p>While this sounds great in theory, in practice it&rsquo;s difficult to implement deterministic lockstep because most physics simulations are not deterministic. Differences in floating point behavior between compilers, OS&rsquo;s and even instruction sets make it almost impossible to guarantee determinism for floating point calculations.</p><br><h2 id="determinism">Determinism</h2><br><p>Determinism means that given the same initial condition and the same set of inputs your simulation gives exactly the same result. And I do mean <em>exactly</em> the same result.</p><br><p>Not close. Not near enough. <strong>Exactly the same</strong>. Exact down to the bit-level. So exact, you could take a checksum of your entire physics state at the end of each frame and it would be identical.</p><br><video preload="auto" autoplay="autoplay" loop="loop" width="100%" controls="controls"><br><source src="/img/deterministic_lockstep_1.mp4" type="video/mp4"><br></video><br><p>Above you can see a simulation that is <em>almost</em> deterministic. The simulation on the left is controlled by the player. The simulation on the right has exactly the same inputs applied with a two second delay starting from the same initial condition. Both simulations step forward with the same delta time (a necessary precondition to ensure exactly the same result) and both simulations apply the same inputs. Notice how after the smallest divergence the simulation gets further and further out of sync. This simulation is <strong>non-deterministic</strong>.</p><br><p>What&rsquo;s going on is that the physics engine I&rsquo;m using (<a href="http://www.ode.org/" target="_blank" rel="noopener">Open Dynamics Engine</a>) uses a random number generator inside its solver to randomize the order of constraint processing to improve stability. It&rsquo;s open source. Take a look and see! Unfortunately this breaks determinism because the simulation on the left processes constraints in a different order to the simulation on the right, leading to slightly different results.</p><br><p>Luckily all that is required to make ODE deterministic on the same machine, with the same complied binary and on the same OS (is that enough qualifications?) is to set its internal random seed to the current frame number before running the simulation via dSetRandomSeed. Once this is done ODE gives exactly the same result and the left and right simulations stay in sync.</p><br><video preload="auto" autoplay="autoplay" loop="loop" width="100%" controls="controls"><br><source src="/img/deterministic_lockstep_2.mp4" type="video/mp4"><br></video><br><p>And now a word of warning. Even though the simulation above is deterministic on the same machine, that does <em>not</em> necessarily mean it would also be deterministic across different compilers, a different OS or different machine architectures (eg. PowerPC vs. Intel). In fact, it&rsquo;s probably not even deterministic between debug and release builds due to floating point optimizations.</p><br><p>Floating point determinism is a complicated subject and there&rsquo;s no silver bullet.</p><br><p>For more information please refer to this <a href="https://gafferongames.com/post/floating_point_determinism/" target="_blank" rel="noopener">article</a>.</p><br><h2 id="networking-inputs">Networking Inputs</h2><br><p>Now let&rsquo;s get down to implementation.</p><br><p>Our example physics simulation is driven by keyboard input: arrow keys apply forces to make the player cube move, holding space lifts the cube up and blows other cubes around, and holding &lsquo;z&rsquo; enables katamari mode.</p><br><p>How can we network these inputs? Must we send the entire state of the keyboard? No. It&rsquo;s not necessary to send the entire keyboard state, only the state of the keys that affect the simulation. What about key press and release events then? No. This is also not a good strategy. We need to ensure that exactly the same input is applied on the right side, at exactly the same time, so we can&rsquo;t just send &lsquo;key pressed&rsquo;, and &lsquo;key released&rsquo; events over TCP.</p><br><p>What we do instead is represent the input with a struct and at the beginning of each simulation frame on the left side, sample this struct from the keyboard:</p><br><pre><code>    struct Input<br>    {<br>        bool left;<br>        bool right;<br>        bool up;<br>        bool down;<br>        bool space;<br>        bool z;<br>    };<br></code></pre><br><p>Next we send that input from the left simulation to the right simulation in a way that the simulation on the right side knows that the input belongs to frame n.</p><br><p>And here&rsquo;s the key part: the simulation on the right can only simulate frame n when it has the input for that frame. If it doesn&rsquo;t have the input, it has to wait.</p><br><p>For example, if you were sending across using TCP you could simply send the inputs and nothing else, and on the other side you could read the packets coming in, and each input received corresponds to one frame for the simulation to step forward. If no input arrives for a given render frame, the right side can&rsquo;t advance forward, it has to wait for the next input to arrive.</p><br><p>So let&rsquo;s move forward with TCP, you&rsquo;ve disabled <a href="https://en.wikipedia.org/wiki/Nagle's_algorithm" target="_blank" rel="noopener">Nagle&rsquo;s Algorithm</a>, and you&rsquo;re sending inputs from the left to the right simulation once per-frame (60 times per-second).</p><br><p>Here it gets a little complicated. Since we can&rsquo;t simulate forward unless we have the input for the next frame, it&rsquo;s not enough to just take whatever inputs arrive over the network and then run the simulation on inputs as they arrive because the result would be very jittery. Data sent across the network at 60HZ doesn&rsquo;t typically arrive nicely spaced, 1/60th of a second between each packet.</p><br><p>If you want this sort of behavior, you have to implement it yourself.</p><br><h2 id="playout-delay-buffer">Playout Delay Buffer</h2><br><p>Such a device is called a playout delay buffer.</p><br><p>Unfortunately, the subject of playout delay buffers is a patent minefield. I would not advise searching for &ldquo;playout delay buffer&rdquo; or &ldquo;adaptive playout delay&rdquo; while at work. But in short, what you want to do is buffer packets for a short amount of time so they <em>appear</em> to be arriving at a steady rate even though in reality they arrive somewhat jittered.</p><br><p>What you&rsquo;re doing here is similar to what Netflix does when you stream a video. You pause a little bit initially so you have a buffer in case some packets arrive late and then once the delay has elapsed video frames are presented spaced the correct time apart. If your buffer isn&rsquo;t large enough then the video playback will be hitchy. With deterministic lockstep your simulation behaves exactly the same way: showing hitches when the buffer isn&rsquo;t large enough to smooth out the jitter. Of course, the cost of increasing the buffer size is additional latency, so you can&rsquo;t just buffer your way out of all problems. At some point the user says enough! That&rsquo;s too much latency added. No sir, I will <em>not</em> play your game with 1 second of extra delay :)</p><br><p>My playout delay buffer implementation is really simple. You add inputs to it indexed by frame, and when the very first input is received, it stores the current local time on the receiver machine and from that point on delivers packets assuming they should play at that time + 100ms. You&rsquo;ll likely need to something more complex for a real world situation, perhaps something that handles clock drift, and detecting when the simulation should slightly speed up or slow down to maintain a nice amount of buffering safety (being &ldquo;adaptive&rdquo;) while minimizing overall latency, but this is reasonably complicated and probably worth an article in itself.</p><br><p>The goal is that under average conditions the playout delay buffer provides a steady stream of inputs for frame n, n+1, n+2 and so on, nicely spaced 1/60th of a second apart with no drama. In the worst case the time arrives for frame n and the input hasn&rsquo;t arrived yet it returns null and the simulation is forced to wait. If packets get bunched up and delivered late, it&rsquo;s possibly to have multiple inputs ready to dequeue per-frame. In this case I limit to 4 simulated frames per-render frame so the simulation has a chance to catch up, but doesn&rsquo;t simulate for so long that it falls further behind, aka. the &ldquo;spiral of death&rdquo;.</p><br><h2 id="is-tcp-good-enough">Is TCP good enough?</h2><br><p>Using this playout buffer strategy and sending inputs across TCP we ensure that all inputs arrive reliably and in-order. This is convenient, and after all, TCP is designed for exactly this situation: reliable-ordered data.</p><br><p>In fact, It&rsquo;s a common thing out there on the Internet for pundits to say stuff like:</p><br><ul><br><li><p><a href="https://www.reddit.com/r/gamedev/comments/1tvbe0/is_it_just_me_or_is_networking_really_hard/" target="_blank" rel="noopener">If you need reliable-ordered, you can&rsquo;t do better than TCP!</a></p></li><br><li><p><a href="https://thoughtstreams.io/glyph/your-game-doesnt-need-udp-yet/" target="_blank" rel="noopener">Your game doesn&rsquo;t need UDP (yet)</a></p></li><br></ul><br><p>But I&rsquo;m here to tell you this kind of thinking is <strong>dead wrong</strong>.</p><br><video autoplay preload="auto" loop="true" width="100%" controls="controls"><br><source src="/img/deterministic_lockstep_3.mp4" type="video/mp4"><br></video><br><p>Above you can see the simulation networked using deterministic lockstep over TCP at 100ms latency and 1% packet loss. If you look closely on the right side you can see hitches every few seconds. What&rsquo;s happening here is that each time a packet is lost, TCP has to wait RTT*2 while it is resent (actually it can be much worse, but I&rsquo;m being generous&hellip;). The hitches happen because with deterministic lockstep the right simulation can&rsquo;t simulate frame n without input n, so it has to pause to wait for input n to be resent!</p><br><p>That&rsquo;s not all. It gets significantly worse as latency and packet loss increase. Here is the same simulation networked using deterministic lockstep over TCP at 250ms latency and 5% packet loss:</p><br><video autoplay preload="auto" loop="true" width="100%" controls="controls"><br><source src="/img/deterministic_lockstep_4.mp4" type="video/mp4"><br></video><br><p>Now I will concede that if you have no packet loss and/or a very small amount of latency then you very well may get acceptable results with TCP. But please be aware that if you use TCP it behaves <em>terribly</em> under bad network conditions.</p><br><h2 id="can-we-do-better-than-tcp">Can we do better than TCP?</h2><br><p>Can we beat TCP at its own game. Reliable-ordered delivery?</p><br><p>The answer is an emphatic <b>YES</b>. But <em>only</em> if we change the rules of the game.</p><br><p>Here&rsquo;s the trick. We need to ensure that all inputs arrive reliably and in order. But if we send inputs in UDP packets, some of those packets will be lost. What if, instead of detecting packet loss after the fact and resending lost packets, we redundantly include <em>all inputs</em> in each UDP packet until we know for sure the other side has received them?</p><br><p>Inputs are very small (6 bits). Let&rsquo;s say we&rsquo;re sending 60 inputs per-second (60fps simulation) and round trip time we know is going the be somewhere in 30-250ms range. Let&rsquo;s say just for fun that it could be up to 2 seconds worst case and at this point we&rsquo;ll time out the connection (screw that guy). This means that on average we only need to include between 2-15 frames of input and worst case we&rsquo;ll need 120 inputs. Worst case is 120 x 6 = 720 bits. That&rsquo;s only 90 bytes of input! That&rsquo;s totally reasonable.</p><br><p>We can do even better. It&rsquo;s not common for inputs to change every frame. What if when we send our packet instead we start with the sequence number of the most recent input, and the 6 bits of the first (oldest) input, and the number of un-acked inputs. Then as we iterate across these inputs to write them to the packet we can write a single bit (1) if the next input is different to the previous, and (0) if the input is the same. So if the input is different from the previous frame we write 7 bits (rare). If the input is identical we write just one (common). Where inputs change infrequently this is a big win and in the worst case this really isn&rsquo;t that bad. 120 bits of extra data sent. Just 15 bytes overhead worst case.</p><br><p>Of course another packet is required from the right simulation to the left so the left side knows which inputs have been received. Each frame the right simulation reads input packets from the network before adding them to the playout delay buffer and keeps track of the most recent input it has received and sends this back to the left as an &ldquo;ack&rdquo; or acknowledgment for inputs.</p><br><p>When the left side receives this ack it discards any inputs older than the most recent received input. This way we have only a small number of inputs in flight proportional to the round trip time between the two simulations.</p><br><h2 id="flawless-victory">Flawless Victory</h2><br><p>We have beaten TCP by changing the rules of the game.</p><br><p>Instead of &ldquo;implementing 95% of TCP on top of UDP&rdquo; we have implemented something <em>totally different</em> and better suited to our requirements. A protocol that redundantly sends inputs because we know they are small, so we never have to wait for retransmission.</p><br><p>So exactly how much better is this approach than sending inputs over TCP?</p><br><p>Let&rsquo;s take a look&hellip;</p><br><video autoplay preload="auto" loop="true" width="100%" controls="controls"><br><source src="/img/deterministic_lockstep_5.mp4" type="video/mp4"><br></video><br><p>The video above shows deterministic lockstep synchronized over UDP using this technique with <strong>2 seconds</strong> of latency and <strong>25% packet loss</strong>. Imagine how awful TCP would look under these conditions.</p><br><p>So in conclusion, even where TCP should have the most advantage, in the only networking model that relies on reliable-ordered data, we can still easily whip its ass with a simple protocol built on top of UDP.</p><br><br><br><h1 id="译文">译文</h1><br><br><a href="http://gad.qq.com/program/translateview/7164497" target="_blank" rel="noopener">译文出处</a><br><br><br><div class="WordSection1"><b><span style="font-family:微软雅黑;font-size:medium;"><span style="color: rgb(58, 58, 58);">翻译：</span></span><span style="color: rgb(58, 58, 58); font-family: 微软雅黑; font-size: medium;">张乾光</span><span style="font-family: 微软雅黑; font-size: medium; color: rgb(58, 58, 58);">（</span><span style="font-family: 微软雅黑; font-size: medium; color: rgb(58, 58, 58); text-decoration: none;"><a href="http://gad.qq.com/user/index?id=423474" style="font-family: 微软雅黑; font-size: medium;" target="_blank" rel="noopener">星际迷航</a></span><span style="color: rgb(58, 58, 58); font-family: 微软雅黑; font-size: medium;">） 审校：</span><span style="color:#3a3a3a;font-family:微软雅黑;font-size:medium;">陈敬凤(nunu)</span></b><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><br><h2 id="介绍">介绍</h2><br><span style="font-family:微软雅黑;font-size:medium;">大家好，我是格伦·菲德勒。欢迎大家阅读系列教程《网络物理仿真》，这个系列教程的目的是将物理仿真的状态通过网络进行广播。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">在之前的文章中，我们讨论了物理仿真需要在网络上进行广播的各种属性。在这篇文章中，我们将使用具有确定性的帧同步技术来将物理仿真通过网络进行传递和广播。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">具有确定性的帧同步是一种用来在一台电脑和其他电脑之间进行同步的方法，这种方法发送的是控制仿真状态变化的输入，而不是像其他方法那样发送的是仿真过程中物体的状态变化。这种方法的背后思想是给定一个初始状态，不妨设为<span>S(n)</span>，我们通过使用输入信息<span>I(n)</span>来运行仿真就能得到<span>S(n+1)</span>这个状态。然后我们可以通过<span>S(n+1)</span>这个状态和输入信息<span>I(n+1)</span>来运行仿真就能得到<span>S(n+2)</span>这个状态，我们可以一直重复这个过程得到<span>S(n+3)</span>、<span>S(n+4)</span>以及其后的各个状态。这看上去有点像是数学归纳法，我们可以只通过输入信息和之前的仿真状态就能得到后面的仿真状态<span>-</span>而且得到的仿真状态是高度一致，并且也不需要发送任何状态方面的同步。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">这个网络模型的主要优点是所需的带宽仅仅用来传递输入信息，而输入信息所占的带宽其实是与仿真中物体的数目是完全无关的。你可以通过网络来对一百万个物体进行物理仿真，它所需的带宽会跟只对一个物体进行物理仿真所需的带宽完全相同。可以很容易的看到物理物体的状态通常是包含位置、方向、线性速度和角速度（如果是未压缩的话，这些状态一共需要<span>52</span>字节，在这里面假设方向使用的是四元数而其他所有的变量都是用<span>vec3</span>来表示），所以当你有大量的物体需要进行物理仿真的时候，这是一个非常具有吸引力的方案。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><br><h2 id="确定性">确定性</h2><br><span style="font-family:微软雅黑;font-size:medium;">如果要采用具有确定性的帧同步这个方案来将物理仿真网络化，首先要做的第一件事就是要确保你的仿真具有确定性。在这个上下文中，确定性其实和自由意志之类的没有关系。它只是意味着给定相同的初始条件和相同的一组输入，仿真能够给出完全相同的结果。而且我在这里要着重强调下是完全相同的结果。而不是说的什么在在浮点数容忍度内足够接近。这种精确是精确到比特位的。所以这种精确性使得你可以在每帧的末尾对整个物理状态做一个校验和，不同机器上面同一帧得到的校验和是完全一致的。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><br><br><video autoplay preload="auto" loop="true" width="100%" controls="controls"><br><source src="/img/deterministic_lockstep_1.mp4" type="video/mp4"><br></video><br><br><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">从上面的图中可以看到，这里面的仿真几乎是具有确定性的，但是不完全具有确定性。左边的仿真由玩家进行控制，而右边的仿真有完全一致的初始状态，输入信息也和左边完全相同，但是要有<span>2</span>秒钟的延迟。这两个仿真使用相同的间隔时间进行更新（使用相同的间隔时间进行更新也是确保得到完全一致结果的一个必要前提条件），并且在每一帧前对相同的输入信息进行相应。你可以注意到随着仿真的进行，那些一开始很微小的差异是如何一点点被扩大，最后导致两个仿真完全不同步。所以说这个仿真其实不具有确定性。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">上面到底发生了什么<span>?</span>最后会导致两个仿真的结果差的这么大？这是因为我使用的物理引擎（<span>ODE</span>）在它的内部使用了一个随机数生成器来对约束处理的顺序进行随机化来提高稳定性。这个物理引擎是完全开源的，所以可以看看它的内部实现！不幸的是，由于左边的仿真处理约束的顺序和右边的仿真处理约束的顺序不同，这导致有一些轻微不同的结果。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">幸运的是我们还是能找到让<span>ODE</span>这个物理引擎具有确定性的条件：要在同一台机器上、使用同一个编译好的二进制文件、并且在完全相同的操作系统上运行（这是必要的限制条件么？），还有就是在运行仿真之前通过<span>dSetRandomSeed</span>把随机数的种子设为当前帧的帧数。一旦满足这些条件的话，<span>ODE</span>这个物理引擎能够给出完全相同的结果，并且左边和右边的仿真能够保持高度一致的同步。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><br><br><video autoplay preload="auto" loop="true" width="100%" controls="controls"><br><source src="/img/deterministic_lockstep_2.mp4" type="video/mp4"><br></video><br><br><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">现在让我们针对上面这个情况给出一个警告。即使<span>ODE</span>这个物理引擎能够在相同的机器上得到确定性的结果，但是这并不一定意味着在不同编译器、不同的操作系统甚至不同的机器架构上（比如说在<span>PowerPC</span>架构上和在<span>Intel</span>架构上）它能够得到确定性的结果。事实上，由于浮点数的优化，在程序的<span>debug</span>版本和<span>release</span>版本之间可能都没有办法得到确定性的结果。浮点数的确定性是一个非常复杂的问题，而且这个问题没有银弹（意味着这个问题没有什么简单可行的解决办法）。要了解更多这方面的信息，请参考<a href="http://gad.qq.com/college/articledetail/7165586" target="_blank" rel="noopener">这篇文章</a>。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><br><h2 id="网络输入">网络输入 Inputs</h2><br><span style="font-family:微软雅黑;font-size:medium;">让我们讨论下具有确定性的帧同步的具体实现方法。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">你可能想知道在我们这个示例仿真中输入信息到底是啥，以及我们该如何吧这些输入信息进行网络化。我们这个示例仿真是由键盘输入进行驱动的：方向键会给代表玩家的立方体施加一个力让他进行移动、按下空格键会把代表玩家的立方体提起来并把碰到的立方体四处滚落、按下<span>‘z’</span>键会启动<span>katamari</span>模式。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">但是我们该如何对这些输入信息进行网络化呢？我们需要把整个键盘的状态在网络上进行传输么？在这些键被按下和释放的时候我们要发送这些事件么？不，整个键盘的状态不需要在网络上进行传输，我们只需要传输那些会影响仿真的按键。那么被按下和释放的键的事件需要在网络上进行传输么？不，这也不是一个好的策略。我们需要确保的是在仿真第<span>n</span>帧的时候右边的仿真能够应用完全相同的输入信息，所以我们不能仅仅是通过<span>TCP</span>来发送“按键按下”和“按键释放”的事件，因为这些事件到达网络的另外一侧的时间如果早于或者晚于第<span>n</span>帧的时候都会给仿真造成偏差。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">相反我们做的事情是用一个结构来表示整个输入信息，并且在左边一侧仿真开始的时候，通过键盘的访问来填充这个结构并把填充好的结构放到一个滑动窗口中，我们在后面可以根据帧号来对这个输入进行访问。</span></span></p><div><div id="highlighter_221182" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp keyword bold">struct</code> <code class="cpp plain">Input</code></div><div class="line number2 index1 alt1"><code class="cpp plain">{</code></div><div class="line number3 index2 alt2"><code class="cpp spaces">    </code><code class="cpp color1 bold">bool</code> <code class="cpp plain">left;</code></div><div class="line number4 index3 alt1"><code class="cpp spaces">    </code><code class="cpp color1 bold">bool</code> <code class="cpp plain">right;</code></div><div class="line number5 index4 alt2"><code class="cpp spaces">    </code><code class="cpp color1 bold">bool</code> <code class="cpp plain">up;</code></div><div class="line number6 index5 alt1"><code class="cpp spaces">    </code><code class="cpp color1 bold">bool</code> <code class="cpp plain">down;</code></div><div class="line number7 index6 alt2"><code class="cpp spaces">    </code><code class="cpp color1 bold">bool</code> <code class="cpp plain">space;</code></div><div class="line number8 index7 alt1"><code class="cpp spaces">    </code><code class="cpp color1 bold">bool</code> <code class="cpp plain">z;</code></div><div class="line number9 index8 alt2"><code class="cpp plain">};</code></div></div></td></tr></table></div></div><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><br></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">现在我们就可以通过上面的方法来把左边仿真的输入信息发送到右边仿真中去，这样右边的仿真就知道属于第<span>n</span>帧的输入信息到底是怎么样的。举个简单的例子来说，如果你在通过<span>TCP</span>进行发送的话，你可以简单的只发送输入信息而不发送其他的内容，而发送的输入信息的顺序隐含着帧号<span>N</span>。而在网络的另外一侧，你可以读取传送过来的数据包，并且对输入信息进行处理并把输入信息应用到仿真中去。我不推荐这种方法，但我们可以从这里开始，然后再向你展示如何把这种方法变得更好。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">在进一步对这个方法进行优化之前，让我们先统一下使用的网络环境，让我们假设下我们是通过<span>TCP</span>进行数据传输，已经禁止了<span>Nagle</span>算法并且每帧都会从左边的仿真向右边的仿真发送一次输入信息（频率是每秒<span>60</span>次）。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">这里面有一个问题会变得比较复杂。把左边仿真发生的输入信息通过网络进行传输，然后右边仿真并没有足够的时间来从网络上收到输入信息并利用这些到达的输入信息来模拟仿真，因为这个过程需要一定的时间。你不能按照某个频率在网络上发送信息并且期望它们能够按照完全相同一致的频率到达网络的另外一侧<span>(</span>比如说，每六十分之一秒到达一个数据包<span>)</span>。互联网并不是按照这个方式工作的。根本就没有这样的保证。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><br><h2 id="播放延迟缓冲区">播放延迟缓冲区</h2><br><span style="font-family:微软雅黑;font-size:medium;">如果你想要做到这一点的话，你必须实现一个叫做播放延迟缓冲区的东西。不幸的是，播放延迟缓冲区收到了专利保护，也就是一个专利雷区。我不建议读者在实际使用确定性的帧同步模型的时候搜索“播放延迟缓冲区”或者是“自适应性延迟缓冲区”。但简而言之，你所需要做的事情是缓存收到的数据包一小段时间以便让这些数据包表现的像是以一个稳定的速度到达那样，即使实际上它们的到达时间是充满抖动的。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">你现在所做的事情就跟你在看一个视频流的时候，<span>Netflix</span>所做的事情是很类似的。你在最初开始的时候停顿了一下以便你可以拥有一个缓冲区，这样即使一些数据包的到达时间有点晚，但是这种延迟不会对视频帧按正确时间间距的表现有什么影响，视频帧仍然会按照正确的时间间隔一帧帧的播放。当然如果你的缓冲区没有足够大的话，那么这些视频帧的播放可能还是会充满一些抖动。有了确定性的帧同步机制，你的模拟仿真将会以完全相同的方式执行。我建议在播放的时候最好在一开始有<span>100</span>毫秒<span>-250</span>毫秒的延迟。在下面的例子中，我使用的是<span>100</span>毫秒的延迟，这是因为我让延迟最小化来增强响应性。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;font-size:medium;"><span style="color: rgb(34, 34, 34);">我的</span><span style="color: rgb(34, 34, 34);">播放延迟缓冲区的实现非常的简单。是将输入信息按照帧序号进行添加，当收到第一个输入信息的时候，它保存了接收方机器上的当前本地时间，并且从那一个时刻起假设所有到达的数据包都会带上<span>100</span>毫秒的延迟。你可能需要一些更加复杂的机制来适应真实世界的情况，比如说可能需要处理时钟漂移、检测在什么时候应该适当的加速或者减慢模拟的速度来让缓冲区的大小在能够保证整体延迟最小的情况下保持在一个适度的情形（这就是所谓的“自适应”），但是这些内容可能会相当的复杂并且可能需要一整篇文章来专门对这些情况进行专门论述。而且如前所述，这些内容还涉及到了专利保护方面的内容，所以这些内容我就不详细展开了，把如何处理这些东西全部托付给你自己实现。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;font-size:medium;"><span style="color: rgb(34, 34, 34);"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">在平均情况下，播放延迟缓冲区给帧<span>n</span>、<span>n+1</span>、<span>n+2</span>以及后续的帧提供了一个稳定的输入信息流，非常完美的以六十分之一秒的间隔依次到达。在最坏的情况下，就是已经该执行第<span>N</span>帧的模拟仿真了，但是这一帧的输入信息还没有到达，那么它就会返回一个空指针，这样整个模拟仿真就必须在那里进行等待了。如果数据包被集中起来发送并且到达接收方的时候已经比预期时间延迟了，这可能会导致多个帧的输入信息同时准备好等待出列进行计算。如果是这种情况的话，我会限制在一个渲染帧的时间最多只能进行<span>4</span>次模拟仿真，这样给模拟仿真一个追上来的机会。如果你把这个值设置的更高的话，那么可能会引起更多其他的问题，比如卡顿，因为你可能需要超过六十分之一秒的时间来运行这些帧（这可能会造成一个非常不好的反馈体验）。总而言之，重要的是确保你的模拟仿真在使用确定性的帧同步这个方案的时候性能不是在中央处理器这一端受限的，否则的话，你在运行更多的模拟帧来追上正常的模拟速度的时候会遇到很多麻烦。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><br><h2 id="TCP足够好了吗">TCP足够好了吗</h2><br><span style="font-family:微软雅黑;font-size:medium;">通过使用这种延迟缓冲区的策略以及通过<span>TCP</span>协议来发送输入信息，我们可以很轻松的确保所有的输入信息会有序的到达并且传输是可信赖的。这就是一开始<span>TCP</span>协议在设计的时候希望达到的目标。实际上，下面这些东西就是互联网的专家常说的一些东西：</span></span></p><p class="MsoListParagraph" align="left" style="margin-left: 36pt; text-indent: -18pt; line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;font-size:medium;"><span style="color: rgb(34, 34, 34);">·<span style="font-variant-numeric: normal; font-stretch: normal; line-height: normal;"> </span></span><span style="color: rgb(34, 34, 34);">如果你需要一个可以信赖的有序的发送信息的方法，你不可能找到一种比通过<span>TCP</span>协议进行传输更好的方法！</span></span></p><p class="MsoListParagraph" align="left" style="margin-left: 36pt; text-indent: -18pt; line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;font-size:medium;"><span style="color: rgb(34, 34, 34);">·<span style="font-variant-numeric: normal; font-stretch: normal; line-height: normal;"> </span></span><span style="color: rgb(34, 34, 34);">你的游戏根本就不会需要<span>UDP</span>协议。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">我在这里将告诉你上面这些想法都是大错特错的。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><br><br><video autoplay preload="auto" loop="true" width="100%" controls="controls"><br><source src="/img/deterministic_lockstep_3.mp4" type="video/mp4"><br></video><br><br><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">在上面的视频中，你可以看到如果网络同步模型使用基于<span>TCP</span>协议的确定性的帧同步模型的话，模拟仿真的网络延迟大概是<span>100</span>毫秒，并且有百分之一的丢包率。如果你仔细看右边的话，你可以每隔几秒就会出现一些抖动。如果你在两边都出现这种的情况，那么很抱歉这意味着你的电脑的性能对于播放这些视频而言可能有些艰难。如果是这种情况的话，我建议下载这个视频然后离线观看。无论如何，这里所发生的事情是当一个数据包丢失的时候，<span>TCP</span>协议需要等待至少２个往返时延才会重新发送这个数据包（实际上这里面的等待时间可能会更糟，但是我很慷慨的设定了一个非常理想的情况。。。）。所以上面发生的抖动原因是确定性的帧同步模型要求右边的模拟仿真在没有第<span>n</span>帧的输入信息的时候不能执行第<span>N</span>帧的模拟仿真计算，所以整个模拟仿真就停下来等待对应帧的输入信息的到达<span>!</span></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><span><br></span></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">这还不是全部！随着延迟时间的增大和丢包率的增加，整个情况会变得更加的糟糕。这是在<span>250</span>毫秒延迟和百分之五丢包率的情况下，使用基于<span>TCP</span>协议的确定性的帧同步模型进行相同的仿真模拟运算导致的结果：</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><br><br><video autoplay preload="auto" loop="true" width="100%" controls="controls"><br><source src="/img/deterministic_lockstep_4.mp4" type="video/mp4"><br></video><br><br><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">现在我要承认一个事情，如果延迟时间设置的非常低的话同时不存在丢包的情况下，那么使用<span>TCP</span>协议进行输入信息的传输会是一个非常可以接受的结果。但是请注意，如果你使用<span>TCP</span>协议来发送时间敏感的数据的话，随着延迟时间的增大和丢包率的增加，整个结果会急剧恶化。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><br><h2 id="我们能比TCP做得更好吗">我们能比TCP做得更好吗</h2><br><span style="font-family:微软雅黑;font-size:medium;">我们可以做得更好吗<span>?</span>我们能在自己的游戏里面找到一种比使用<span>TCP</span>协议更好的办法。同时还能实现可信赖的有序传递？</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">答案是肯定的。但前提是我们需要改变游戏的规则。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">下面将具体描述下我们将使用的技巧。我们需要确保所有的输入信息能够可靠地按顺序到达。但是如果我们只发送<span>UDP</span>数据包输入。但是如果我们只使用<span>UDP</span>数据包来发送输入信息的话，这里面的一些数据包会丢失。那么如果我们不采用事后检测的方法来判断哪些数据包丢失并发送这些丢失的数据包的话，我们采用另外一种方法，只是把我们有的所有输入信息都冗余的发送直到我们知道这些输入信息成功的到达另外一侧怎么样？</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">输入信息都非常非常的小（只有<span>6</span>比特这么大）。让我们假设下我们在每秒需要发送<span>60</span>个输入信息（因为模拟仿真的频率是<span>60fps </span>），而且我们知道一个往返的时间大概是在<span>30</span>毫秒到<span>250</span>毫秒之间。纯粹为了好玩，让我们假设下载最糟糕的情况下，一个往返的时间可以高达<span>2</span>秒，如果出现这种情况的话，那么整个连接就会超时。这意味着在平均情况我们只需要包括大概<span>2</span>到<span>15</span>帧的输入信息，而在最坏情况下，我们大概需要<span>120</span>帧的输入信息。那么最坏情况下，输入信息的大小是<span>120 x 6 = 720</span>比特。这只是<span>90</span>字节的输入信息<span>!</span>这是安全合理的。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">我们还能做的更好。在每一帧中都出现输入信息的变化是非常不常见的。我们可以用最近的那个input的序列号和第一个input的<span>6</span>比特还有所有未被确认的输入信息的数目来做一些事。然后，当我们对这些输入信息进行遍历将它们写入数据包的时候，如果发现这一帧的输入信息如果和之前帧的输入信息不同的话，我们可以写入一个单独的比特位（<span>1</span>），如果发现这一帧的输入信息如果和之前帧的输入信息相同的话，我们可以写入一个单独的比特位（<span>0</span>）。所以这一帧的输入信息如果和之前帧的输入信息不同的话（这种情况比较少），我们需要写入<span>7</span>个比特位，这一帧的输入信息如果和之前帧的输入信息相同的话（这种情况其实非常常见），我们只需要写入<span>1</span>个比特位。在输入信息很少发生变化的情况，这是一个重大的胜利，而在最坏的情况下出现的情况也不会非常糟糕。只需要发送额外<span>120</span>个比特的数据，也就是说在最坏情况下，也只有<span>15</span>字节的额外开销.</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">当然在这种情况下，需要从右边的模拟仿真中发送一个数据包到左边的模拟仿真中去，这样左边的模拟仿真才知道哪些输入信息被成功收到了。在每一帧，右边的模拟仿真都会从网络中读取输入的数据包，然后才会把这些数据包添加到延迟播放缓冲区，并且通过帧号记录它已经收到的最近那一帧的输入信息，或者如果你想容易一点处理这个问题的话，那么使用一个<span>16</span>比特的序列号就能很好的包装这个信息。在所有的输入数据包都被处理以后，如果右边的模拟仿真收到任何帧的输入信息以后都会回复一个数据包给左边的模拟仿真，告诉它最近收到的最新序列号是多少，这基本就是一个“<span>ack</span>”包，也就是确认包。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">当左边的模拟仿真收到这个“<span>ack</span>”包，也就是确认包以后，它会滑动输入信息窗口并且丢弃比已经确认的序列号还老的输入信息包。已经没有必要再发送这些输入信息包给右边的模拟仿真了，因为已经知道右边的模拟仿真成功的接受到了这些输入信息包。通过这种方式，我们通常只有少量的输入信息正在传输过程中，而且这个数量还是与数据包的往返时间成正比的。</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><br></p><h2 id="完美胜利">完美胜利</h2><br><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">我们通过改变游戏的规则成功了找到了一种比<span>TCP</span>协议更好的办法。我们并不是通过在<span>UDP</span>协议纸上构建了实现<span>TCP</span>协议百分之九十五的功能的新协议，而是实现了一种完全不同的方法，而且更加适合我们的要求：数据对时间非常敏感。我们开发了一个自定义的协议，可以冗余的发送input，因为我们知道这些input非常小, 所以我们不必去等待重传它们。</span></span><p></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family: 微软雅黑; font-size: medium; color: rgb(34, 34, 34);">所以这种方法到底比通过</span><span style="font-family: 微软雅黑; font-size: medium; color: rgb(34, 34, 34);">TCP</span><span style="font-family: 微软雅黑; font-size: medium; color: rgb(34, 34, 34);">协议来发送数据好多少呢？</span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family: 微软雅黑; font-size: medium; color: rgb(34, 34, 34);">让我们通过一个例子来看一下。</span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><br><br><video autoplay preload="auto" loop="true" width="100%" controls="controls"><br><source src="/img/deterministic_lockstep_5.mp4" type="video/mp4"><br></video><br><br><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">上面的视频是基于<span>UDP</span>协议来使用具有确定性的帧同步模型，延迟时间是２秒，并且有百分之二十五的丢包率。想象下如果我们是使用基于<span>TCP</span>协议的具有确定性的帧同步模型，我们该看到多么可怕的场景！</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">所以最后我们能得到这么一个结论：即使这是一个<span>TCP</span>协议最具有优势的情况下，这是唯一一个依赖可靠性、有序性数据传输的网络模型，我们还是可以很容易的通过一个自定义的协议基于<span>UDP</span>来发送我们的数据包，并且得到的效果更好。</span></span></p><p class="MsoNormal" align="left"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 18pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">【版权声明】</span></span></p><p class="MsoNormal"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">原文作者未做权利声明，视为共享知识产权进入公共领域，自动获得授权。</span></span></p><p class="MsoNormal"><span><span style="font-family:微软雅黑;font-size:medium;"> </span></span></p></div>                    </div><br>                </div>
+</div>
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/GafferOnGames/" rel="tag"><i class="fa fa-tag"></i> GafferOnGames</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2017/01/21/网络物理模拟二之网络物理部分的视频演示/" rel="next" title="网络物理模拟二之网络物理部分的视频演示">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    网络物理模拟二之网络物理部分的视频演示
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2017/01/23/snapshot_interpolation/" rel="prev" title="网络物理模拟四之快照插值">
+                <p class="post-nav-pre-next-title">
+                    网络物理模拟四之快照插值
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自我总结"><span class="nav-number">1.</span> <span class="nav-text">自我总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原文"><span class="nav-number">2.</span> <span class="nav-text">原文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">2.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#determinism"><span class="nav-number">2.2.</span> <span class="nav-text">Determinism</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#networking-inputs"><span class="nav-number">2.3.</span> <span class="nav-text">Networking Inputs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#playout-delay-buffer"><span class="nav-number">2.4.</span> <span class="nav-text">Playout Delay Buffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-tcp-good-enough"><span class="nav-number">2.5.</span> <span class="nav-text">Is TCP good enough?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#can-we-do-better-than-tcp"><span class="nav-number">2.6.</span> <span class="nav-text">Can we do better than TCP?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flawless-victory"><span class="nav-number">2.7.</span> <span class="nav-text">Flawless Victory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#译文"><span class="nav-number">3.</span> <span class="nav-text">译文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">3.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确定性"><span class="nav-number">3.2.</span> <span class="nav-text">确定性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络输入"><span class="nav-number">3.3.</span> <span class="nav-text">网络输入 Inputs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#播放延迟缓冲区"><span class="nav-number">3.4.</span> <span class="nav-text">播放延迟缓冲区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP足够好了吗"><span class="nav-number">3.5.</span> <span class="nav-text">TCP足够好了吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我们能比TCP做得更好吗"><span class="nav-number">3.6.</span> <span class="nav-text">我们能比TCP做得更好吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完美胜利"><span class="nav-number">3.7.</span> <span class="nav-text">完美胜利</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

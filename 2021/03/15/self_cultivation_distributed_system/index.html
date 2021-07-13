@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Self-cultivation,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="分布式系统分布式系统的就准备:    CAP理论 BASE理论 分布式事务 分布式锁 限流 熔断 一致性选举算法 主从架构 集群架构 异地多活 负载均衡 分层架构 微服务, 服务治理 …  共识consensus 准确的翻译是共识，即多个提议者达成共识的过程，例如 Paxos，Raft 就是共识算法，paxos 是一种共识理论，分布式系统是他的场景，一致性是他的目标。 一致性（Consistenc">
+<meta name="keywords" content="Self-cultivation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器开发自我修养专栏-分布式系统">
+<meta property="og:url" content="https://hulinhong.com/2021/03/15/self_cultivation_distributed_system/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="分布式系统分布式系统的就准备:    CAP理论 BASE理论 分布式事务 分布式锁 限流 熔断 一致性选举算法 主从架构 集群架构 异地多活 负载均衡 分层架构 微服务, 服务治理 …  共识consensus 准确的翻译是共识，即多个提议者达成共识的过程，例如 Paxos，Raft 就是共识算法，paxos 是一种共识理论，分布式系统是他的场景，一致性是他的目标。 一致性（Consistenc">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hulinhong.com/img/cache_db_consistency/cache_db_consistency_3.png">
+<meta property="og:image" content="https://hulinhong.com/img/cache_db_consistency/cache_db_consistency_4.png">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/distributed/consistency/consistency_1.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/cache_db_consistency/cache_db_consistency_3.png">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/distributed/soa_governance_1.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/distributed/distributed_lock.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/distributed/transaction/XA-first.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/distributed/transaction/XA-second.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/distributed/transaction/tcc.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/distributed/transaction/native-message.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/distributed/transaction/bank-transfer.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/distributed/transaction/mq-message.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/distributed/transaction/notify-callback.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/etcd/service_discovery.png">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/etcd/1beabef5a1168cdc43766903e65f907d.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/etcd/e7d6918c1c9b7c9f2829779966ffb5d8.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/distributed/721ceeff.png">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.070Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="服务器开发自我修养专栏-分布式系统">
+<meta name="twitter:description" content="分布式系统分布式系统的就准备:    CAP理论 BASE理论 分布式事务 分布式锁 限流 熔断 一致性选举算法 主从架构 集群架构 异地多活 负载均衡 分层架构 微服务, 服务治理 …  共识consensus 准确的翻译是共识，即多个提议者达成共识的过程，例如 Paxos，Raft 就是共识算法，paxos 是一种共识理论，分布式系统是他的场景，一致性是他的目标。 一致性（Consistenc">
+<meta name="twitter:image" content="https://hulinhong.com/img/cache_db_consistency/cache_db_consistency_3.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>服务器开发自我修养专栏-分布式系统 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/03/15/self_cultivation_distributed_system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">服务器开发自我修养专栏-分布式系统</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-15T19:08:06+00:00">
+                2021-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self-cultivation/" itemprop="url" rel="index">
+                    <span itemprop="name">Self-cultivation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Self-cultivation/" rel="tag"><i class="fa fa-tag"></i> Self-cultivation</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/03/13/self_cultivation_cpp/" rel="next" title="服务器开发自我修养专栏-CPP要点">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  服务器开发自我修养专栏-CPP要点
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/03/17/coroutine_illustrated/" rel="prev" title="基于ucontext实现协程">
+              <p class="post-nav-pre-next-title">
+                  基于ucontext实现协程
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="分布式系统"><a href="#分布式系统" class="headerlink" title="分布式系统"></a>分布式系统</h1><p>分布式系统的就准备:  </p>
+<ul>
+<li>CAP理论</li>
+<li>BASE理论</li>
+<li><a href="#分布式事务">分布式事务</a></li>
+<li><a href="#分布式锁">分布式锁</a></li>
+<li>限流</li>
+<li>熔断</li>
+<li>一致性选举算法</li>
+<li>主从架构</li>
+<li>集群架构</li>
+<li>异地多活</li>
+<li>负载均衡</li>
+<li>分层架构</li>
+<li>微服务, 服务治理</li>
+<li>…</li>
+</ul>
+<h2 id="共识"><a href="#共识" class="headerlink" title="共识"></a>共识</h2><p>consensus 准确的翻译是共识，即多个提议者达成共识的过程，例如 Paxos，Raft 就是共识算法，paxos 是一种共识理论，分布式系统是他的场景，一致性是他的目标。</p>
+<p>一致性（Consistency）的含义比共识（consensus）要宽泛，一致性指的是多个副本对外呈现的状态。包括顺序一致性、线性一致性、最终一致性等。而共识特指达成一致的过程，但注意，共识并不意味着实现了一致性，一些情况下他是做不到的。</p>
+<h2 id="一致性的类别"><a href="#一致性的类别" class="headerlink" title="一致性的类别"></a>一致性的类别</h2><p>提到分布式架构就一定绕不开 “一致性” 问题，而 “一致性” 其实又包含了<strong>数据一致性</strong>和<strong>事务一致性</strong>两种情况，本节主要讨论<strong>数据一致性</strong>（事务一致性指 ACID）。<strong>复制</strong>是导致出现<strong>数据一致性</strong>问题的唯一原因。</p>
+<p>关于强和弱的定义，可以参考剑桥大学的 <a href="https://www.cl.cam.ac.uk/teaching/0910/ConcDistS/11a-cons-tx.pdf" target="_blank" rel="noopener">slide</a>.</p>
+<ul>
+<li>Strong consistency – ensures that only consistent state can be seen: <ul>
+<li>All replicas return the same value when queried for the attribute of an object * All replicas return the same value when queried for the attribute of an object. This may be achieved at a cost – high latency.</li>
+</ul>
+</li>
+<li>Weak consistency – for when the “fast access” requirement dominates:  <ul>
+<li>update some replica, e.g. the closest or some designated replica</li>
+<li>the updated replica sends up date messages to all other replicas.</li>
+<li>different replicas can return different values for the queried attribute of the object the value should be returned, or “not known”, with a timestamp</li>
+<li>in the long term all updates must propagate to all replicas …….</li>
+</ul>
+</li>
+</ul>
+<p>一致性的详细分类:  </p>
+<ul>
+<li>强一致性<br>  强一致性集群中，对任何一个节点发起请求都会得到相同的回复，但可能会产生相对高的延迟<ul>
+<li><a href="#线性一致性">线性一致性(Linearizability consistency, 也叫原子一致性, <strong>大多数时候我们说强一致性其实是指线性一致性</strong>)</a></li>
+<li><a href="#顺序一致性">顺序一致性(Sequential consistency, 比线性一致性稍弱, 但也算是强一致性的一种)</a></li>
+</ul>
+</li>
+<li>弱一致性<br>  弱一致性具有更低的响应延迟，但可能会回复过期的数据, 导致各个节点拿到的数据不一致。<ul>
+<li>最终一致性(Eventual consistency)<ul>
+<li>含义: 系统会保证在一定时间内，能够达到一个数据一致的状态。这里之所以将最终一致性单独提出来，是因为它是弱一致性中非常推崇的一种一致性模型，也是业界在大型分布式系统的数据一致性上比较推崇的模型。</li>
+</ul>
+</li>
+<li>因果一致性(Causal consistency)<ul>
+<li>含义: 如果一系列写入按某个逻辑顺序发生，那么任何人读取这些写入时，会看见它们以正确的逻辑顺序出现。</li>
+<li>实现: 一种方案是应用保证将问题和对应的回答写入相同的分区</li>
+</ul>
+</li>
+<li>读写一致性:<ul>
+<li>含义: 它可以保证，如果用户刷新页面，他们总会看到自己刚提交的任何更新。它不会对其他用户的写入做出承诺，其他用户的更新可能稍等才会看到，但它保证用户自己提交的数据能马上被自己看到。</li>
+</ul>
+</li>
+<li>单调读: <ul>
+<li>含义: 如果先前读取到较新的数据，后续读取不会得到更旧的数据.</li>
+<li>实现: 实现单调读取的一种方式是<strong>确保每个用户总是从同一个节点进行读取</strong>（不同的用户可以从不同的节点读取），比如可以基于用户 ID 的哈希值来选择节点，而不是随机选择节点。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="线性一致性"><a href="#线性一致性" class="headerlink" title="线性一致性"></a>线性一致性</h3><p><a href="#etcd">etcd</a> 读写都做了线性一致，即 etcd 是标准的强一致性保证。</p>
+<p>线性一致性又被称为强一致性、严格一致性、原子一致性。是程序能实现的最高的一致性模型，也是分布式系统用户最期望的一致性。CAP 中的 C 一般就指它<br>顺序一致性中进程只关心大家认同的顺序一样就行，不需要与全局时钟一致，线性就更严格，从这种偏序（partial order）要达到全序（total order）</p>
+<p>要求是：  </p>
+<ul>
+<li>任何一次读都能读到某个数据的最近一次写的数据。</li>
+<li>系统中的所有进程，看到的操作顺序，都与全局时钟下的顺序一致。</li>
+</ul>
+<p>以下图讨论,<br><img src="/img/cache_db_consistency/cache_db_consistency_3.png" alt>  </p>
+<p>B1 看到 x 的新值，C1 反而看到的是旧值。即对用户来说，x 的值发生了回跳。</p>
+<p>在线性一致的系统中，如果 B1 看到的 x 值为 1，则 C1 看到的值也一定为 1。任何操作在该系统生效的时刻都对应时间轴上的一个点。如果我们把这些时刻连接起来，如下图中紫线所示，则这条线会一直沿时间轴向前，不会反向回跳。所以任何操作都需要互相比较决定，谁发生在前，谁发生在后。例如 B1 发生在 A0 前，C1 发生在 A0 后。而在前面顺序一致性模型中，我们无法比较诸如 B1 和 A0 的先后关系。<br><img src="/img/cache_db_consistency/cache_db_consistency_4.png" alt>  </p>
+<h3 id="顺序一致性"><a href="#顺序一致性" class="headerlink" title="顺序一致性"></a>顺序一致性</h3><h4 id="举例说明1"><a href="#举例说明1" class="headerlink" title="举例说明1"></a>举例说明1</h4><p>下面的图满足了顺序一致，但不满足线性一致。<br><img src="/img/noodle_plan/distributed/consistency/consistency_1.jpg" alt>  </p>
+<ul>
+<li>x 和 y 的初始值为 0</li>
+<li>Write(x,4) 代表写入 x=4，Read(y,2) 为读取 y =2</li>
+</ul>
+<p>从图上看，进程 P1，P2 的一致性并没有冲突。因为从这两个进程的角度来看，顺序应该是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Write(y,2), Read(x,0), Write(x,4), Read(y,2)</span><br></pre></td></tr></table></figure></p>
+<p>这个顺序对于两个进程内部的读写顺序都是合理的，只是这个顺序与全局时钟下看到的顺序并不一样。在全局时钟的观点来看，P2 进程对变量 X 的读操作在 P1 进程对变量 X 的写操作之后，然而 P2 读出来的却是旧的数据 0</p>
+<h4 id="举例说明2"><a href="#举例说明2" class="headerlink" title="举例说明2"></a>举例说明2</h4><p>假设我们有个分布式 KV 系统，以下是四个进程 对其的操作顺序和结果:<br><code>--</code> 表示持续的时间，因为一次写入或者读取，客户端从发起到响应是有时间的，发起早的客户端，不一定拿到数据就早，有可能因为网络延迟反而会更晚。<br>情况 1：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A: --W(x,1)----------------------</span><br><span class="line">B:  --W(x,2)----------------------</span><br><span class="line">C:                      -R(x,1)-   --R(x,2)-</span><br><span class="line">D:                 -R(x,1)-      --R(x,2)--</span><br></pre></td></tr></table></figure></p>
+<p>情况 2：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A: --W(x,1)----------------------</span><br><span class="line">B:  --W(x,2)----------------------</span><br><span class="line">C:                      -R(x,2)-   --R(x,1)-</span><br><span class="line">D:                 -R(x,2)-      --R(x,1)--</span><br></pre></td></tr></table></figure></p>
+<p>上面情况 1 和 2 都是满足顺序一致性的，C 和 D 拿的顺序都是 1-2，或 2-1，只要 CD 的顺序一致，就是满足顺序一致性。只是从全局看来，情况 1 更真实，情况 2 就显得” 错误 “了，因为情况 2 是这样的顺序<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">B W(x,2) -&gt; A W(x,1) -&gt; C R(x,2) -&gt; D R(x,2) -&gt; C R(x,1) -&gt; D R(x,1)</span><br></pre></td></tr></table></figure></p>
+<p><strong>不过一致性不保证正确性，所以这仍然是一个顺序一致</strong>。再加一种情况 3：<br>情况 3：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A: --W(x,1)----------------------</span><br><span class="line">B:  --W(x,2)----------------------</span><br><span class="line">C:                      -R(x,2)-   --R(x,1)-</span><br><span class="line">D:                 -R(x,1)-      --R(x,2)--</span><br></pre></td></tr></table></figure></p>
+<p>情况 3 就不属于顺序一致了，因为 C 和 D 两个进程的读取顺序不同了。</p>
+<h4 id="举例说明3"><a href="#举例说明3" class="headerlink" title="举例说明3"></a>举例说明3</h4><p><img src="/img/cache_db_consistency/cache_db_consistency_3.png" alt><br>这也是顺序一致的, 但是可能不满足产品经理要求.  </p>
+<p>从时间轴上可以看到，B0 发生在 A0 之前，读取到的 x 值为 0。B2 发生在 A0 之后，读取到的 x 值为 1。而读操作 B1，C0，C1 与写操作 A0 在时间轴上有重叠，因此他们可能读取到旧的值 0，也可能读取到新的值 1。注意，C1 发生在 B1 之后（二者在时间轴上没有重叠），但是 B1 看到 x 的新值，C1 反而看到的是旧值。即对用户来说，x 的值发生了回跳。</p>
+<h2 id="CAP理论"><a href="#CAP理论" class="headerlink" title="CAP理论"></a>CAP理论</h2><p>一个分布式系统不可能同时满足以下三个基本需求，最多只能同时满足其中两项:</p>
+<ul>
+<li><p>一致性（C：Consistency, <strong>CAP的C指的是强一致性</strong>）<br>  在分布式环境下，一致性是指数据在多个副本之间能否保持一致的特性。在一致性的需求下，当一个系统在数据一致的状态下执行更新操作后，应该保证系统的数据仍然处于一致的状态。</p>
+<p>  对于一个将数据副本分布在不同分布式节点上的系统来说，如果对第一个节点的数据进行了更新操作并且更新成功后，却没有使得第二个节点上的数据得到相应的更新，于是在对第二个节点的数据进行读取操作时，获取的依然是老数据（或称为脏数据），这就是典型的分布式数据不一致的情况。在分布式系统中，如果能够做到针对一个数据项的更新操作执行成功后，所有的用户都可以读取到其最新的值，那么这样的系统就被认为具有强一致性。</p>
+</li>
+<li><p>可用性（A：Availability）<br>可用性是指系统提供的服务必须一直处于可用的状态，对于用户的每一个操作请求总是能够在有限的时间内返回结果。这里的重点是 “有限时间内” 和 “返回结果”。</p>
+<p>“有限时间内” 是指，对于用户的一个操作请求，系统必须能够在指定的时间内返回对应的处理结果，如果超过了这个时间范围，那么系统就被认为是不可用的。另外，”有限的时间内” 是指系统设计之初就设计好的运行指标，通常不同系统之间有很大的不同，无论如何，对于用户请求，系统必须存在一个合理的响应时间，否则用户便会对系统感到失望。</p>
+<p>“返回结果” 是可用性的另一个非常重要的指标，它要求系统在完成对用户请求的处理后，返回一个正常的响应结果。正常的响应结果通常能够明确地反映出队请求的处理结果，即成功或失败，而不是一个让用户感到困惑的返回结果。</p>
+</li>
+<li><p>分区容错性（P：Partition tolerance）<br>系统应该能持续提供服务，即使系统内部有消息丢失（分区）。</p>
+<p>网络分区是指在分布式系统中，不同的节点分布在不同的子网络（机房或异地网络）中，由于一些特殊的原因导致这些子网络出现网络不连通的状况，但各个子网络的内部网络是正常的，从而导致整个系统的网络环境被切分成了若干个孤立的区域。 需要注意的是，组成一个分布式系统的每个节点的加入与退出都可以看作是一个特殊的网络分区。</p>
+</li>
+</ul>
+<h3 id="cap通俗而精准的解释"><a href="#cap通俗而精准的解释" class="headerlink" title="cap通俗而精准的解释"></a>cap通俗而精准的解释</h3><p>一个分布式系统里面，节点组成的网络本来应该是连通的。然而可能因为一些故障，使得有些节点之间不连通了，整个网络就分成了几块区域。数据就散布在了这些不连通的区域中。这就叫分区。</p>
+<p>当你一个数据项只在一个节点中保存，那么分区出现后，和这个节点不连通的部分就访问不到这个数据了。这时分区就是无法容忍的。</p>
+<p>提高分区容忍性的办法就是一个数据项复制到多个节点上，那么出现分区之后，这一数据项就可能分布到各个区里。容忍性就提高了。</p>
+<p>然而，要把数据复制到多个节点，就会带来一致性的问题，就是多个节点上面的数据可能是不一致的。要保证一致，每次写操作就都要等待全部节点写成功，而这等待又会带来可用性的问题。总的来说就是，数据存在的节点越多，分区容忍性越高，但要复制更新的数据就越多，一致性就越难保证。为了保证一致性，更新所有节点数据所需要的时间就越长，可用性就会降低。</p>
+<h3 id="cap的一些组合例子"><a href="#cap的一些组合例子" class="headerlink" title="cap的一些组合例子"></a>cap的一些组合例子</h3><p>既然一个分布式系统无法同时满足一致性、可用性、分区容错性三个特点，所以我们就需要抛弃一个：</p>
+<table>
+<thead>
+<tr>
+<th>选择</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA</td>
+<td>放弃分区容错性，加强一致性和可用性，其实就是传统的单机数据库的选择</td>
+</tr>
+<tr>
+<td>AP</td>
+<td>放弃一致性（<strong>这里说的一致性是强一致性</strong>），追求分区容错性和可用性，这是很多分布式系统设计时的选择，例如很多 NoSQL 系统就是如此</td>
+</tr>
+<tr>
+<td>CP</td>
+<td>放弃可用性，追求一致性和分区容错性，基本不会选择，网络问题会直接让整个系统不可用, 例如 zookeeper和 etcd都是cp的</td>
+</tr>
+</tbody>
+</table>
+<p>需要明确的一点是，<strong>对于一个分布式系统而言，分区容错性是一个最基本的要求</strong>。因为既然是一个分布式系统，那么分布式系统中的组件必然需要被部署到不同的节点，否则也就无所谓分布式系统了，因此必然出现子网络。而对于分布式系统而言，网络问题又是一个必定会出现的异常情况，因此分区容错性也就成为了一个分布式系统必然需要面对和解决的问题。<strong>因此系统架构师往往需要把精力花在如何根据业务特点在 C（一致性）和 A（可用性）之间寻求平衡。</strong></p>
+<h2 id="BASE-理论"><a href="#BASE-理论" class="headerlink" title="BASE 理论"></a>BASE 理论</h2><p>BASE 是  </p>
+<ul>
+<li>Basically Available（基本可用）</li>
+<li>Soft state（软状态, 即中间状态)</li>
+<li>Eventually consistent（最终一致性）</li>
+</ul>
+<p>三个短语的缩写。BASE 理论是对 CAP 中一致性和可用性权衡的结果，其来源于对大规模互联网系统分布式实践的总结， 是基于 CAP 定理逐步演化而来的。BASE 理论的核心思想是：即使无法做到强一致性，但每个应用都可以根据自身业务特点，采用适当的方式来使系统达到最终一致性。接下来看一下 BASE 中的三要素：  </p>
+<ul>
+<li>基本可用<br>  基本可用是指分布式系统在出现不可预知故障的时候，允许损失部分可用性。注意，这绝不等价于系统不可用。比如：<ul>
+<li>响应时间上的损失。正常情况下，一个在线搜索引擎需要在 0.5 秒之内返回给用户相应的查询结果，但由于出现故障，查询结果的响应时间增加了 1~2 秒</li>
+<li>系统功能上的损失：正常情况下，在一个电子商务网站上进行购物的时候，消费者几乎能够顺利完成每一笔订单，但是在一些节日大促购物高峰的时候，由于消费者的购物行为激增，为了保护购物系统的稳定性，部分消费者可能会被引导到一个降级页面。</li>
+</ul>
+</li>
+<li>软状态<br>  软状态指允许系统中的数据存在中间状态，并认为该中间状态的存在不会影响系统的整体可用性，即允许系统在不同节点的数据副本之间进行数据同步的过程存在延时。</li>
+<li>最终一致性<br>  最终一致性强调的是所有的数据副本，在经过一段时间的同步之后，最终都能够达到一个一致的状态。因此，最终一致性的本质是需要系统保证最终数据能够达到一致，而不需要实时保证系统数据的强一致性。</li>
+</ul>
+<p>总的来说，BASE 理论面向的是大型高可用可扩展的分布式系统，和传统的事物 ACID 特性是相反的，它完全不同于 ACID 的强一致性模型，而是通过牺牲强一致性来获得可用性，并允许数据在一段时间内是不一致的，但最终达到一致状态。但同时，在实际的分布式场景中，不同业务单元和组件对数据一致性的要求是不同的，因此在具体的分布式系统架构设计过程中，ACID 特性和 BASE 理论往往又会结合在一起。</p>
+<h2 id="服务治理"><a href="#服务治理" class="headerlink" title="服务治理"></a>服务治理</h2><p>服务治理主要包括:  </p>
+<ul>
+<li>服务注册发现</li>
+<li>限流</li>
+<li>监控</li>
+<li>网关</li>
+<li>负载均衡</li>
+<li>日志采集</li>
+<li>链路追踪</li>
+</ul>
+<p>详细如下图:<br><img src="/img/noodle_plan/distributed/soa_governance_1.jpg" alt></p>
+<h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><p><img src="/img/noodle_plan/distributed/distributed_lock.jpg" alt></p>
+<p>主要有:  </p>
+<ul>
+<li><a href="#基于etcd的分布式锁">etcd/zookeeper(严谨)</a></li>
+<li><a href="#基于redis的分布式锁">redis(遭到质疑, 极限情况有可能有问题, 但因为性能较高且极限情况不容易发生, 也有人用)</a></li>
+</ul>
+<h3 id="分布式锁过期时间到了但业务没执行完怎么办"><a href="#分布式锁过期时间到了但业务没执行完怎么办" class="headerlink" title="分布式锁过期时间到了但业务没执行完怎么办"></a>分布式锁过期时间到了但业务没执行完怎么办</h3><p>注册一个定时任务，每隔一定时间就去延长锁超时时间</p>
+<h3 id="基于etcd的分布式锁"><a href="#基于etcd的分布式锁" class="headerlink" title="基于etcd的分布式锁"></a>基于etcd的分布式锁</h3><p>因为 etcd 使用 Raft 算法保持了数据的强一致性，某次操作存储到集群中的值必然是全局一致的，所以很容易实现分布式锁。锁服务有两种使用方式，一是保持独占，二是控制时序。  </p>
+<p>保持独占即所有获取锁的用户最终只有一个可以得到。etcd 为此提供了一套实现分布式锁原子操作 CAS（CompareAndSwap）的 API。通过设置prevExist值，可以保证在多个节点同时去创建某个目录时，只有一个成功。而创建成功的用户就可以认为是获得了锁。</p>
+<h3 id="基于redis的分布式锁"><a href="#基于redis的分布式锁" class="headerlink" title="基于redis的分布式锁"></a>基于redis的分布式锁</h3><ul>
+<li>利用setnx+expire命令 (错误的做法): setnx和expire是分开的两步操作，不具有原子性</li>
+<li>使用Lua脚本（包含setnx和expire两条指令）</li>
+<li>使用 set key value [EX seconds][PX milliseconds][NX|XX] 命令 (<strong>正确做法, 接下来介绍这种</strong>)</li>
+</ul>
+<p>Redis 在 2.6.12 版本开始，为 SET 命令增加一系列选项：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET key value\[EX seconds\]\[PX milliseconds\]\[NX|XX\]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>EX seconds: 设定过期时间，单位为秒</li>
+<li>PX milliseconds: 设定过期时间，单位为毫秒</li>
+<li>NX: 仅当 key 不存在时设置值</li>
+<li>XX: 仅当 key 存在时设置值</li>
+</ul>
+<p>value 必须要具有唯一性，我们可以用 UUID 来做，设置随机字符串保证唯一性，至于为什么要保证唯一性？假如 value 不是随机字符串，而是一个固定值，那么就可能存在下面的<strong>问题</strong>：</p>
+<p>1. 客户端 1 获取锁成功<br>2. 客户端 1 在某个操作上阻塞了太长时间<br>3. 设置的 key 过期了，锁自动释放了<br>4. 客户端 2 获取到了对应同一个资源的锁<br>5. 客户端 1 从阻塞中恢复过来，因为 value 值一样，所以执行释放锁操作时就会释放掉客户端 2 持有的锁，这样就会造成问题</p>
+<p>所以通常来说，在<strong>释放锁</strong>时，我们需要对 value 进行验证</p>
+<p>释放锁时需要验证 value 值，也就是说我们在获取锁的时候需要设置一个 value，不能直接用 del key 这种粗暴的方式，因为直接 del key 任何客户端都可以进行解锁了，所以<strong>解锁时，我们需要判断锁是否是自己的，基于 value 值来判断</strong>, 这里使用 Lua 脚本的方式，尽量保证原子性。</p>
+<p><strong>致命缺陷:</strong><br>使用 <code>set key value [EX seconds][PX milliseconds][NX|XX]</code> 命令 看上去很 OK，实际上在有 Redis 主从结构的时候也会出现问题，比如说 A 客户端在 Redis 的 master 节点上拿到了锁，但是这个加锁的 key 还没有同步到 slave 节点，master 故障，发生故障转移，一个 slave 节点升级为 master 节点，B 客户端也可以获取同个 key 的锁，但客户端 A 也已经拿到锁了，这就导致多个客户端都拿到锁。</p>
+<h4 id="RedLock"><a href="#RedLock" class="headerlink" title="RedLock"></a>RedLock</h4><p>参考: <a href="https://zhuanlan.zhihu.com/p/100140241#RedLock" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/100140241#RedLock</a></p>
+<p>使用了多个 Redis 实例来实现分布式锁，这是为了保证在发生单点故障时仍然可用。</p>
+<ul>
+<li>尝试从 N 个互相独立 Redis 实例获取锁；</li>
+<li>计算获取锁消耗的时间，只有时间小于锁的过期时间，并且从大多数（N / 2 + 1）实例上获取了锁，才认为获取锁成功；</li>
+<li>如果获取锁失败，就到每个实例上释放锁</li>
+</ul>
+<h3 id="分布式锁的高并发优化"><a href="#分布式锁的高并发优化" class="headerlink" title="分布式锁的高并发优化"></a>分布式锁的高并发优化</h3><p>先说一个<strong>超卖问题的情景</strong>, 假设订单系统部署两台机器上，不同的用户都要同时买10台iphone，分别发了一个请求给订单系统。<br>接着每个订单系统实例都去数据库里查了一下，当前iphone库存是12台。<br>俩大兄弟一看，乐了，12台库存大于了要买的10台数量啊！<br>于是乎，每个订单系统实例都发送SQL到数据库里下单，然后扣减了10个库存，其中一个将库存从12台扣减为2台，另外一个将库存从2台扣减为-8台。<br>现在完了，库存出现了负数！泪奔啊，没有20台iphone发给两个用户啊！这可如何是好。</p>
+<p><strong>用分布式锁如何解决库存超卖问题:</strong>  只有一个订单系统实例可以成功加分布式锁，然后只有他一个实例可以查库存、判断库存是否充足、下单扣减库存，接着释放锁。<br>释放锁之后，另外一个订单系统实例才能加锁，接着查库存，一下发现库存只有2台了，库存不足，无法购买，下单失败。不会将库存扣减为-8的。</p>
+<p><strong>分布式锁的方案在高并发场景下有什么问题？</strong> 分布式锁一旦加了之后，对同一个商品的下单请求，会导致所有客户端都必须对同一个商品的库存锁key进行加锁。比如，对iphone这个商品的下单，都必对“iphone_stock”这个锁key来加锁。这样会导致对同一个商品的下单请求，就必须串行化，一个接一个的处理,<br>假设加锁之后，释放锁之前，查库存 -&gt; 创建订单 -&gt; 扣减库存，这个过程性能很高吧，算他全过程20毫秒，这应该不错了。那么1秒是1000毫秒，只能容纳50个对这个商品的请求依次串行完成处理。<strong>效率低下</strong>.</p>
+<p><strong>假如下单时，用分布式锁来防止库存超卖，但是是每秒上千订单的高并发场景，如何对分布式锁进行高并发优化来应对这个场景？</strong><br><strong>解决方案: 分段加锁</strong></p>
+<p>其实说出来也很简单，相信很多人看过java里的ConcurrentHashMap的源码和底层原理，应该知道里面的核心思路，就是分段加锁！</p>
+<blockquote>
+<p>在某些情况下我们可以将锁分解技术进一步扩展为一组独立对象上的锁进行分解，这成为分段锁。其实说的简单一点就是：容器里有多把锁，每一把锁用于锁容器其中一部分数据，那么当多线程访问容器里不同数据段的数据时，线程间就不会存在锁竞争，从而可以有效的提高并发访问效率，这就是ConcurrentHashMap所使用的锁分段技术，首先将数据分成一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据的时候，其他段的数据也能被其他线程访问。</p>
+<p>比如：在ConcurrentHashMap中使用了一个包含16个锁的数组，每个锁保护所有散列桶的1/16，其中第N个散列桶由第（N mod 16）个锁来保护。假设使用合理的散列算法使关键字能够均匀的分部，那么这大约能使对锁的请求减少到越来的1/16。也正是这项技术使得ConcurrentHashMap支持多达16个并发的写入线程。</p>
+</blockquote>
+<p>假如你现在iphone有1000个库存，那么你完全可以给拆成20个库存段，要是你愿意，可以在数据库的表里建20个库存字段，比如stock_01，stock_02，类似这样的，也可以在redis之类的地方放20个库存key。<br>总之，就是把你的1000件库存给他拆开，每个库存段是50件库存，比如stock_01对应50件库存，stock_02对应50件库存。<br>接着，每秒1000个请求过来了，好！此时其实可以是自己写一个简单的随机算法，每个请求都是随机在20个分段库存里，选择一个进行加锁。<br>这样就好了，同时可以有最多20个下单请求一起执行，每个下单请求锁了一个库存分段，然后在业务逻辑里面，就对数据库或者是Redis中的那个分段库存进行操作即可，包括查库存 -&gt; 判断库存是否充足 -&gt; 扣减库存。</p>
+<p><strong>有一个坑大家一定要注意</strong>：如果某个下单请求，咔嚓加锁，然后发现这个分段库存里的库存不足了，此时咋办？<br>这时你得自动释放锁，然后立马换下一个分段库存，再次尝试加锁后尝试处理。这个过程一定要实现。</p>
+<h2 id="分布式事务解决方案"><a href="#分布式事务解决方案" class="headerlink" title="分布式事务解决方案"></a>分布式事务解决方案</h2><p>参考:  </p>
+<ul>
+<li><a href="https://www.cnblogs.com/mayundalao/p/11798502.html" target="_blank" rel="noopener">https://www.cnblogs.com/mayundalao/p/11798502.html</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/88226625" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/88226625</a></li>
+<li><a href="https://xiaomi-info.github.io/2020/01/02/distributed-transaction/" target="_blank" rel="noopener">https://xiaomi-info.github.io/2020/01/02/distributed-transaction/</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/183753774" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/183753774</a></li>
+</ul>
+<p>事务有两种:  </p>
+<ul>
+<li><strong>刚性事务</strong>：遵循ACID原则，强一致性。</li>
+<li><strong>柔性事务</strong>：遵循BASE理论，最终一致性；与刚性事务不同，柔性事务允许一定时间内，不同节点的数据不一致，但要求最终一致。</li>
+</ul>
+<h3 id="二阶段提交2PC"><a href="#二阶段提交2PC" class="headerlink" title="二阶段提交2PC"></a>二阶段提交2PC</h3><p><img src="/img/noodle_plan/distributed/transaction/XA-first.jpg" alt><br><img src="/img/noodle_plan/distributed/transaction/XA-second.jpg" alt></p>
+<p>大致的流程：</p>
+<ul>
+<li>第一阶段（prepare）：事务管理器向所有本地资源管理器发起请求，询问是否是 ready 状态，所有参与者都将本事务能否成功的信息反馈发给协调者；  </li>
+<li>第二阶段 (commit/rollback)：事务管理器根据所有本地资源管理器的反馈，通知所有本地资源管理器，步调一致地在所有分支上提交或者回滚。</li>
+</ul>
+<p><strong>缺点:</strong>  </p>
+<ul>
+<li>同步阻塞：当参与事务者存在占用公共资源的情况，其中一个占用了资源，其他事务参与者就只能阻塞等待资源释放，处于阻塞状态。</li>
+<li>单点故障：一旦事务管理器出现故障，整个系统不可用</li>
+<li>数据不一致：在阶段二，如果事务管理器只发送了部分 commit 消息，此时网络发生异常，那么只有部分参与者接收到 commit 消息，也就是说只有部分参与者提交了事务，使得系统数据不一致。</li>
+<li>不确定性：当协事务管理器发送 commit 之后，并且此时只有一个参与者收到了 commit，那么当该参与者与事务管理器同时宕机之后，重新选举的事务管理器无法确定该条消息是否提交成功。</li>
+</ul>
+<p><strong>实战:</strong><br>目前支付宝使用两阶段提交思想实现了分布式事务服务 (Distributed Transaction Service, DTS) ，它是一个分布式事务框架，用来保障在大规模分布式环境下事务的最终一致性。具体可参考支付宝官方文档：<a href="https://tech.antfin.com/docs/2/46887" target="_blank" rel="noopener">https://tech.antfin.com/docs/2/46887</a></p>
+<h3 id="TCC"><a href="#TCC" class="headerlink" title="TCC"></a>TCC</h3><p>关于 TCC（Try-Confirm-Cancel）的概念，最早是由 Pat Helland 于 2007 年发表的一篇名为《Life beyond Distributed Transactions:an Apostate’s Opinion》的论文提出。 TCC 事务机制相比于上面介绍的 XA，解决了其几个缺点：</p>
+<ul>
+<li>解决了协调者单点，由主业务方发起并完成这个业务活动。业务活动管理器也变成多点，引入集群。</li>
+<li>同步阻塞：引入超时，超时后进行补偿，并且不会锁定整个资源，将资源转换为业务逻辑形式，粒度变小。</li>
+<li>数据一致性，有了补偿机制之后，由业务活动管理器控制一致性</li>
+</ul>
+<p>TCC(Try Confirm Cancel)  </p>
+<ol>
+<li>Try 阶段：尝试执行，完成所有业务检查（一致性）, 预留必须业务资源（准隔离性）  </li>
+<li>Confirm 阶段：确认执行真正执行业务，不作任何业务检查，只使用 Try 阶段预留的业务资源，Confirm 操作满足幂等性。要求具备幂等设计，Confirm 失败后需要进行重试。  </li>
+<li>Cancel 阶段：取消执行，释放 Try 阶段预留的业务资源 Cancel 操作满足幂等性 Cancel 阶段的异常和 Confirm 阶段异常处理方案基本上一致。</li>
+</ol>
+<p>在 Try 阶段，是对业务系统进行检查及资源预览，比如订单和存储操作，需要检查库存剩余数量是否够用，并进行预留，预留操作的话就是新建一个可用库存数量字段，Try 阶段操作是对这个可用库存数量进行操作。<br>基于 TCC 实现分布式事务，会将原来只需要一个接口就可以实现的逻辑拆分为 Try、Confirm、Cancel 三个接口，所以代码实现复杂度相对较高。</p>
+<p><img src="/img/noodle_plan/distributed/transaction/tcc.jpg" alt></p>
+<p><strong>缺点:</strong><br>TCC 需要事务接口提供 try, confirm, cancel 三个接口，提高了编程的复杂性。依赖于业务方来配合提供这样的接口，推行难度大，所以一般不推荐使用这种方式。</p>
+<p><strong>实战:</strong><br>一般来说和钱相关的支付、交易等相关的场景，也可以用TCC，严格严格保证分布式事务要么全部成功，要么全部自动回滚，严格保证资金的正确性!</p>
+<h3 id="本地消息表"><a href="#本地消息表" class="headerlink" title="本地消息表"></a>本地消息表</h3><p>本地消息表这个方案最初是 ebay 架构师 Dan Pritchett 在 2008 年发表给 ACM 的文章。该方案中会有消息生产者与消费者两个角色，假设系统 A 是消息生产者，系统 B 是消息消费者，其大致流程如下：<br><img src="/img/noodle_plan/distributed/transaction/native-message.jpg" alt></p>
+<ol>
+<li>当系统 A 被其他系统调用发生数据库表更操作，首先会更新数据库的业务表，其次会往相同数据库的消息表中插入一条数据，两个操作发生在同一个事务中, 如果本步骤发生操作失败, 则直接事务回滚</li>
+<li>系统 A 的脚本定期轮询本地消息往 mq 中写入一条消息，如果消息发送失败会进行重试</li>
+<li>系统 B 消费 mq 中的消息，并处理业务逻辑。如果本地事务处理失败，会在继续消费 mq 中的消息进行重试，如果业务上的失败，可以通知系统 A 进行回滚操作</li>
+</ol>
+<p>本地消息表实现的条件：</p>
+<ul>
+<li>消费者与生成者的接口都要支持幂等</li>
+<li>生产者需要额外的创建消息表</li>
+<li>需要提供补偿逻辑，如果消费者业务失败，需要生产者支持回滚操作</li>
+</ul>
+<p>此方案的核心是将需要分布式处理的任务通过消息日志的方式来异步执行。消息日志可以存储到本地文本、数据库或消息队列，再通过业务规则自动或人工发起重试。人工重试更多的是应用于支付场景，通过对账系统对事后问题的处理。</p>
+<p><strong>缺点:</strong><br>最大的问题就在于严重依赖于数据库的消息表来管理事务,这个会导致高并发场景无力,难以扩展,一般很少用</p>
+<p><strong>实战:</strong><br>跨行转账可通过该方案实现。<br>用户 A 向用户 B 发起转账，首先系统会扣掉用户 A 账户中的金额，将该转账消息写入消息表中，如果事务执行失败则转账失败，如果转账成功，系统中会有定时轮询消息表，往 mq 中写入转账消息，失败重试。mq 消息会被实时消费并往用户 B 中账户增加转账金额，执行失败会不断重试。</p>
+<p><img src="/img/noodle_plan/distributed/transaction/bank-transfer.jpg" alt></p>
+<p>小米海外商城用户订单数据状态变更，会将变更状态记录消息表中，脚本将订单状态消息写入 mq，最终消费 mq 给用户发送邮件、短信、push 等。</p>
+<h3 id="可靠消息最终一致性"><a href="#可靠消息最终一致性" class="headerlink" title="可靠消息最终一致性"></a>可靠消息最终一致性</h3><p>大致流程如下：<br><img src="/img/noodle_plan/distributed/transaction/mq-message.jpg" alt></p>
+<ol>
+<li>A 系统先向 mq 发送一条 prepare 消息，如果 prepare 消息发送失败，则直接取消操作</li>
+<li>如果消息发送成功，则执行本地事务</li>
+<li>如果本地事务执行成功，则向 mq 发送一条 confirm 消息，如果发送失败，则发送回滚消息</li>
+<li>B 系统定期消费 mq 中的 confirm 消息，执行本地事务，并发送 ack 消息。如果 B 系统中的本地事务失败，会一直不断重试，如果是业务失败，会向 A 系统发起回滚请求</li>
+<li>mq 会定期轮询所有 prepared 消息调用系统 A 提供的接口查询消息的处理情况，如果该 prepare 消息本地事务处理成功，则重新发送 confirm 消息，否则直接回滚该消息</li>
+</ol>
+<p>该方案与本地消息最大的不同是去掉了本地消息表，其次本地消息表依赖消息表重试写入 mq 这一步由本方案中的轮询 prepare 消息状态来重试或者回滚该消息替代。其实现条件与容错方案基本一致。</p>
+<p><strong>实战:</strong><br>目前市面上实现该方案的只有阿里的 RocketMq。</p>
+<h3 id="尽最大努力通知"><a href="#尽最大努力通知" class="headerlink" title="尽最大努力通知"></a>尽最大努力通知</h3><p>最大努力通知其实就是定期校对, 是最简单的一种柔性事务，适用于一些最终一致性时间敏感度低的业务，且被动方处理结果 不影响主动方的处理结果。</p>
+<p>业务活动的主动方，在完成业务处理之后，向业务活动的被动方发送消息，允许消息丢失。主动方可以设置时间阶梯型通知规则，在通知失败后按规则重复通知，直到通知N次后不再通知。主动方提供校对查询接口给被动方按需校对查询，用于恢复丢失的业务消息。业务活动的被动方如果正常接收了数据，就正常返回响应，并结束事务。如果被动方没有正常接收，根据定时策略，向业务活动主动方查询，恢复丢失的业务消息</p>
+<p>最大努力通知方案的特点:  </p>
+<ul>
+<li>用到的服务模式：可查询操作、幂等操作。</li>
+<li>被动方的处理结果不影响主动方的处理结果；适用于对业务最终一致性的时间敏感度低的系统, 比如适合跨企业的系统间的操作，或者企业内部比较独立的系统间的操作，比如银行通知、商户通知等；</li>
+</ul>
+<p><img src="/img/noodle_plan/distributed/transaction/notify-callback.jpg" alt></p>
+<p>这个方案的大致意思就是：</p>
+<ol>
+<li>系统 A 本地事务执行完之后，发送个消息到 MQ；</li>
+<li>会有个专门消费 MQ 的服务 notify_service(即最大努力通知服务) ，这个服务会消费 MQ 并调用系统 B 的接口；</li>
+<li>要是系统 B 执行成功就 ok 了；要是系统 B 执行失败了，那么 notify_service (即最大努力通知服务)就定时尝试重新调用系统 B, 反复 N 次，最后还是不行就放弃。</li>
+</ol>
+<p><strong>实战:</strong><br>小米海外商城目前除了支付回调外，最常用的场景是订单数据同步。例如系统 A、B 进行数据同步，当系统 A 发生订单数据变更，先将数据变更消息写入小米 notify 系统（作用等同 mq），然后 notify 系统异步处理该消息来调用系统 B 提供的接口并进行重试到最大次数。</p>
+<h2 id="负载均衡算法有哪些"><a href="#负载均衡算法有哪些" class="headerlink" title="负载均衡算法有哪些"></a>负载均衡算法有哪些</h2><ol>
+<li>轮询法<br>　　将请求按顺序轮流地分配到后端服务器上，它均衡地对待后端的每一台服务器，而不关心服务器实际的连接数和当前的系统负载。</li>
+<li>随机法<br>  通过系统的随机算法，根据后端服务器的列表大小值来随机选取其中的一台服务器进行访问。由概率统计理论可以得知，随着客户端调用服务端的次数增多，<br>其实际效果越来越接近于平均分配调用量到后端的每一台服务器，也就是轮询的结果。</li>
+<li>源地址哈希法<br>  源地址哈希的思想是根据获取客户端的 IP 地址，通过哈希函数计算得到的一个数值，用该数值对服务器列表的大小进行取模运算，得到的结果便是客服端要访问服务器的序号。采用源地址哈希法进行负载均衡，同一 IP 地址的客户端，当后端服务器列表不变时，它每次都会映射到同一台后端服务器进行访问。</li>
+<li>加权轮询法<br>　　不同的后端服务器可能机器的配置和当前系统的负载并不相同，因此它们的抗压能力也不相同。给配置高、负载低的机器配置更高的权重，让其处理更多的请；而配置低、负载高的机器，给其分配较低的权重，降低其系统负载，加权轮询能很好地处理这一问题，并将请求顺序且按照权重分配到后端。加权轮询算法的结果，就是要生成一个服务器序列。每当有请求到来时，就依次从该序列中取出下一个服务器用于处理该请求。比如针对<code>c权重4, b权重2, a权重1</code>的例子，加权轮询算法会生成序列<code>{c, c, b, c, a, b, c}</code>也有可能是<code>{a, a, a, a, a, b, c}</code>, 有可能不均匀, 前五个请求都会分配给服务器a。在Nginx源码中，实现了一种叫做平滑的加权轮询（smooth weighted round-robin balancing）的算法，它生成的序列更加均匀。比如前面的例子，它生成的序列为{ a, a, b, a, c, a, a}，转发给后端a的5个请求现在分散开来，不再是连续的。这样，每收到7个客户端的请求，会把其中的1个转发给后端a，把其中的2个转发给后端b，把其中的4个转发给后端c。收到的第8个请求，重新从该序列的头部开始轮询。<ul>
+<li>普通加权轮询法</li>
+<li><a href="#负载均衡的平滑加权轮询算法怎么实现">平滑加权轮询法</a></li>
+</ul>
+</li>
+<li>加权随机法<br>  与加权轮询法一样，加权随机法也根据后端机器的配置，系统的负载分配不同的权重。不同的是，它是按照权重随机请求后端服务器，而非顺序。</li>
+<li>最小连接数法<br>  最小连接数算法比较灵活和智能，由于后端服务器的配置不尽相同，对于请求的处理有快有慢，它是根据后端服务器当前的连接情况，动态地选取其中当前积压连接数最少的一台服务器来处理当前的请求，尽可能地提高后端服务的利用效率，将负责合理地分流到每一台服务器。</li>
+</ol>
+<h3 id="负载均衡的平滑加权轮询算法怎么实现"><a href="#负载均衡的平滑加权轮询算法怎么实现" class="headerlink" title="负载均衡的平滑加权轮询算法怎么实现"></a>负载均衡的平滑加权轮询算法怎么实现</h3><p>当我们需要把一份数据发送到一个Set中的任意机器的时候，很容易想到的一个问题是，如何挑Set中的机器作为数据的接收方？显然算法需要符合以下要求：</p>
+<ul>
+<li>支持加权，以便在机器故障时可以降低其权重</li>
+<li>在加权的前提下，尽可能地把请求平摊到每台机器上</li>
+</ul>
+<p>第一点很好理解，而第二点的意思是，比如说我们现在有a, b, c三个选择，权重分别是5, 1, 1，我们希望输出的结果是类似于a, a, b, a, c, a, a，而不是a, a, a, a, a, b, c。</p>
+<p>从Github上面可以看到，Nginx以前也是使用和LVS类似的算法，并在某一次提交中修改为当前的算法，该算法大致思想如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">Upstream: smooth weighted round-robin balancing.</span><br><span class="line"></span><br><span class="line">For edge case weights like &#123; 5, 1, 1 &#125; we now produce &#123; a, a, b, a, c, a, a &#125;</span><br><span class="line">sequence instead of &#123; c, b, a, a, a, a, a &#125; produced previously.</span><br><span class="line"></span><br><span class="line">Algorithm is as follows: on each peer selection we increase current_weight</span><br><span class="line">of each eligible peer by its weight, select peer with greatest current_weight</span><br><span class="line">and reduce its current_weight by total number of weight points distributed</span><br><span class="line">among peers.</span><br><span class="line"></span><br><span class="line">In case of &#123; 5, 1, 1 &#125; weights this gives the following sequence of</span><br><span class="line">current_weight&apos;s:</span><br><span class="line"></span><br><span class="line">     a  b  c</span><br><span class="line">     0  0  0  (initial state)</span><br><span class="line"></span><br><span class="line">     5  1  1  (a selected)</span><br><span class="line">    -2  1  1</span><br><span class="line"></span><br><span class="line">     3  2  2  (a selected)</span><br><span class="line">    -4  2  2</span><br><span class="line"></span><br><span class="line">     1  3  3  (b selected)</span><br><span class="line">     1 -4  3</span><br><span class="line"></span><br><span class="line">     6 -3  4  (a selected)</span><br><span class="line">    -1 -3  4</span><br><span class="line"></span><br><span class="line">     4 -2  5  (c selected)</span><br><span class="line">     4 -2 -2</span><br><span class="line"></span><br><span class="line">     9 -1 -1  (a selected)</span><br><span class="line">     2 -1 -1</span><br><span class="line"></span><br><span class="line">     7  0  0  (a selected)</span><br><span class="line">     0  0  0</span><br></pre></td></tr></table></figure></p>
+<p>该算法除了有权重weight，还引入了另一个变量current_weight，在每一次遍历中会把current_weight加上weight的值，并选择current_weight最大的元素，对于被选择的元素，再把current_weight减去所有权重之和。</p>
+<p>假设有 N 台服务器 S = {S0, S1, S2, …, Sn}，默认权重为 W = {W0, W1, W2, …, Wn}，当前权重为 CW = {CW0, CW1, CW2, …, CWn}。在该算法中有两个权重，默认权重表示服务器的原始权重，当前权重表示每次访问后重新计算的权重，当前权重的出初始值为默认权重值，当前权重值最大的服务器为 maxWeightServer，所有默认权重之和为 weightSum，服务器列表为 serverList，算法可以描述为：</p>
+<ol>
+<li>找出当前权重值最大的服务器 maxWeightServer；</li>
+<li>计算 {W0, W1, W2, …, Wn} 之和 weightSum；</li>
+<li>将 maxWeightServer.CW = maxWeightServer.CW - weightSum；</li>
+<li>重新计算 {S0, S1, S2, …, Sn} 的当前权重 CW，计算公式为 Sn.CW = Sn.CW + Sn.Wn</li>
+<li>返回 maxWeightServer</li>
+</ol>
+<h2 id="服务发现是怎么实现的"><a href="#服务发现是怎么实现的" class="headerlink" title="服务发现是怎么实现的"></a>服务发现是怎么实现的</h2><p><a href="https://www.infoq.cn/article/etcd-interpretation-application-scenario-implement-principle" target="_blank" rel="noopener">参考</a>  </p>
+<p>我们可以考虑用etcd来做,<br>服务发现要解决的也是分布式系统中最常见的问题之一，即在同一个分布式集群中的进程或服务，要如何才能找到对方并建立连接。本质上来说，服务发现就是想要了解集群中是否有进程在监听 udp 或 tcp 端口，并且通过名字就可以查找和连接。要解决服务发现的问题，需要有下面三大支柱，缺一不可。</p>
+<ol>
+<li><strong>一个强一致性、高可用的服务存储目录</strong>。基于 Raft 算法的 etcd 天生就是这样一个强一致性高可用的服务存储目录。</li>
+<li><strong>一种提供方的注册服务</strong>。提供方可以在 etcd 中注册服务，并且对注册的服务设置<code>key TTL</code>，定时保持服务的心跳以达到监控健康状态的效果, 比如每隔 30s 发送一次心跳设置一下这个<code>key</code>使代表该机器存活的节点继续存在，否则当etcd 没有检测到心跳这个<code>key</code>的ttl到了过期了就会把这个键值对删了</li>
+<li><strong>需求方可以即时更新提供方服务状态的机制</strong>.需求方通过watch机制监听自己需要用到的提供方信息的改动，提供方相关信息有变动的时候需求方就会收到消息,在接收到信息变动的时候立即从etcd获取相应最新的信息即可, 实现方式通常是这样：不同系统都在 etcd 上对同一个目录进行注册，同时设置 Watcher 观测该目录的变化（如果对子目录的变化也有需要，可以设置递归模式），当某个系统更新了 etcd 的目录，那么设置了 Watcher 的系统就会收到通知，并作出相应处理。<br><img src="/img/noodle_plan/etcd/service_discovery.png" alt="服务发现示意图"><br><img src="/img/noodle_plan/etcd/1beabef5a1168cdc43766903e65f907d.jpg" alt="服务发现示意图"></li>
+</ol>
+<p>下面我们来看服务发现对应的具体场景。<br><strong>微服务协同工作架构中，服务动态添加</strong>。随着 Docker 容器的流行，多种微服务共同协作，构成一个相对功能强大的架构的案例越来越多。透明化的动态添加这些服务的需求也日益强烈。通过服务发现机制，在 etcd 中注册某个服务名字的目录，在该目录下存储可用的服务节点的 IP。在使用服务的过程中，只要从服务目录下查找可用的服务节点去使用即可。<br><img src="/img/noodle_plan/etcd/e7d6918c1c9b7c9f2829779966ffb5d8.jpg" alt="微服务协同工作"></p>
+<h2 id="熔断是怎么实现的"><a href="#熔断是怎么实现的" class="headerlink" title="熔断是怎么实现的"></a>熔断是怎么实现的</h2><p>什么是服务熔断呢？ 服务熔断：当下游的服务因为某种原因突然<strong>变得不可用</strong>或<strong>响应过慢</strong>，上游服务为了保证自己整体服务的可用性，不再继续调用目标服务，直接返回，快速释放资源。如果目标服务情况好转则恢复调用。 需要说明的是熔断其实是一个框架级的处理，那么这套熔断机制的设计，基本上业内用的是<code>断路器模式</code>:</p>
+<ul>
+<li>最开始处于<code>closed</code>状态，一旦检测到错误到达一定阈值，便转为<code>open</code>状态；</li>
+<li>这时候会有个 reset timeout，到了这个时间了，会转移到<code>half open</code>状态；</li>
+<li>尝试放行一部分请求到后端，一旦检测成功便回归到<code>closed</code>状态，即恢复服务；</li>
+</ul>
+<p>业内目前流行的熔断器很多，例如阿里出的 <code>Sentinel</code>, 以及最多人使用的 <code>Hystrix</code> 在 <code>Hystrix</code> 中，对应配置如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//滑动窗口的大小，默认为20</span><br><span class="line">circuitBreaker.requestVolumeThreshold </span><br><span class="line">//过多长时间，熔断器再次检测是否开启，默认为5000，即5s钟</span><br><span class="line">circuitBreaker.sleepWindowInMilliseconds </span><br><span class="line">//错误率，默认50%</span><br><span class="line">circuitBreaker.errorThresholdPercentage</span><br></pre></td></tr></table></figure></p>
+<p>每当 20 个请求中，有 50% 失败时，熔断器就会打开，此时再调用此服务，将会直接返回失败，不再调远程服务。直到 5s 钟之后，重新检测该触发条件，判断是否把熔断器关闭，或者继续打开。<br>这些属于框架层级的实现，我们只要实现对应接口就好！</p>
+<h2 id="服务降级"><a href="#服务降级" class="headerlink" title="服务降级"></a>服务降级</h2><ul>
+<li><strong>降级的本质</strong>:  <ul>
+<li>降级就是为了解决资源不足和访问量增加的矛盾</li>
+<li>在有限的资源情况下，为了能抗住大量的请求，就需要对系统做出一些牺牲，有点“弃卒保帅”的意思。放弃一些功能，保证整个系统能平稳运行</li>
+</ul>
+</li>
+<li><strong>降级牺牲的是</strong>: <ul>
+<li>强强一致性变成最终一致性<ul>
+<li>大多数的系统是不需要强一致性的。</li>
+<li>强一致性就要求多种资源的占用，减少强一致性就能释放更多资源</li>
+<li>这也是我们一般利用消息中间件来削峰填谷，变强一致性为最终一致性，也能达到效果</li>
+</ul>
+</li>
+<li>干掉一些次要功能<ul>
+<li>停止访问不重要的功能，从而释放出更多的资源</li>
+<li>举例来说，比如电商网站，评论功能流量大的时候就能停掉，当然能不直接干掉就别直接，最好能简化流程或者限流最好简化功能流程。把一些功能简化掉</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>降级的注意点</strong>:<ul>
+<li>对业务进行仔细的梳理和分析<ul>
+<li>哪些是核心流程必须保证的，哪些是可以牺牲的</li>
+</ul>
+</li>
+<li>什么指标下能进行降级<ul>
+<li>吞吐量、响应时间、失败次数等达到一个阈值才进行降级处理</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>如何降级</strong>:<ul>
+<li>降级最简单的就是在业务代码中配置一个开关或者做成配置中心模式，直接在配置中心上更改配置，推送到相应的服务。</li>
+</ul>
+</li>
+</ul>
+<h2 id="限流"><a href="#限流" class="headerlink" title="限流"></a>限流</h2><p>限流就是通过对并发访问进行限速。限流的实现方式: </p>
+<ul>
+<li>计数器:<br>  最简单的实现方式 ，维护一个计数器，来一个请求计数加一，达到阈值时，直接拒绝请求。<br>  一般实践中用 ngnix + lua + redis 这种方式，redis 存计数值</li>
+<li>漏斗模式:<br>  流量就像进入漏斗中的水一样，而出去的水和我们系统处理的请求一样，当流量大于漏斗的流出速度，就会出现积水，水多了会溢出,<br>  漏斗很多是用一个队列实现的，当流量过多时，队列会出现积压，队列满了，则开始拒绝请求。</li>
+<li>令牌桶:<br>  看图例，令牌通和漏斗模式很像，主要的区别是增加了一个中间人，这个中间人按照一定的速率放入一些token，然后，处理请求时，需要先拿到token才能处理，如果桶里没有token可以获取，则不进行处理。</li>
+</ul>
+<h2 id="熔断-降级-限流三者的关系"><a href="#熔断-降级-限流三者的关系" class="headerlink" title="熔断-降级-限流三者的关系"></a>熔断-降级-限流三者的关系</h2><ul>
+<li>熔断强调的是服务之间的调用能实现自我恢复的状态；</li>
+<li>限流是从系统的流量入口考虑，从进入的流量上进行限制，达到保护系统的作用；</li>
+<li>降级，是从系统内部的平级服务或者业务的维度考虑，流量大了，可以干掉一些，保护其他正常使用；</li>
+</ul>
+<p>熔断是降级方式的一种；<br>降级又是限流的一种方式；<br>三者都是为了通过一定的方式去保护流量过大时，保护系统的手段。</p>
+<h2 id="id生成器如何实现全局递增"><a href="#id生成器如何实现全局递增" class="headerlink" title="id生成器如何实现全局递增"></a>id生成器如何实现全局递增</h2><p><a href="https://tech.meituan.com/2017/04/21/mt-leaf.html" target="_blank" rel="noopener">参考</a>  </p>
+<p>介绍一下美团在用的工业级 <strong>Leaf-snowflake 方案</strong>。<br><img src="/img/noodle_plan/distributed/721ceeff.png" alt></p>
+<ul>
+<li>41-bit的时间是毫秒级时间, 可以表示<code>(1L&lt;&lt;41)/(1000L*3600*24*365)=69</code>年的时间，</li>
+<li>10-bit机器可以分别表示1024台机器。如果我们对IDC划分有需求，还可以将10-bit分5-bit给IDC，分5-bit给工作机器。这样就可以表示32个IDC，每个IDC下可以有32台机器，可以根据自身需求定义。</li>
+<li>12个自增序列号可以表示<code>2^12</code>个ID，理论上snowflake方案的QPS约为409.6w/s，</li>
+<li><p><strong>这种分配方式可以保证在任何一个IDC的任何一台机器在任意毫秒内生成的ID都是不同的</strong></p>
+</li>
+<li><p>优点：</p>
+<ul>
+<li>毫秒数在高位，自增序列在低位，整个ID都是趋势递增的。</li>
+<li>不依赖数据库等第三方系统，以服务的方式部署，稳定性更高，生成ID的性能也是非常高的。</li>
+<li>可以根据自身业务特性分配bit位，非常灵活。</li>
+</ul>
+</li>
+<li>缺点：强依赖机器时钟，如果机器上时钟回拨，会导致发号重复或者服务会处于不可用状态。</li>
+</ul>
+<h3 id="解决时钟回拨问题"><a href="#解决时钟回拨问题" class="headerlink" title="解决时钟回拨问题"></a>解决时钟回拨问题</h3><p>解决方案:   </p>
+<ul>
+<li>由于强依赖时钟，对时间的要求比较敏感，在机器工作时 NTP 同步也会造成秒级别的回退，建议可以直接关闭 NTP 同步。</li>
+<li>在时钟回拨的时候直接不提供服务直接返回 ERROR_CODE，等时钟追上即可</li>
+<li>偏差在5秒之内, 比如就等待2倍的偏差时间(比如比上次的还小3秒, 那我就等6秒)。然后做一层重试, 如果还是小于上次的时间, 就上报报警系统</li>
+<li>更或者是发现有时钟回拨之后自动摘除本身节点并报警</li>
+</ul>
+<p>代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//发生了回拨，此刻时间小于上次发号时间</span></span><br><span class="line"><span class="keyword">if</span> (timestamp &lt; lastTimestamp) &#123;</span><br><span class="line">    <span class="keyword">long</span> offset = lastTimestamp - timestamp;</span><br><span class="line">    <span class="keyword">if</span> (offset &lt;= <span class="number">5</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">          <span class="comment">//时间偏差大小小于5ms，则等待两倍时间</span></span><br><span class="line">            wait(offset &lt;&lt; <span class="number">1</span>);<span class="comment">//wait</span></span><br><span class="line">            timestamp = timeGen();</span><br><span class="line">            <span class="keyword">if</span> (timestamp &lt; lastTimestamp) &#123;</span><br><span class="line">                <span class="comment">//还是小于，抛异常并上报</span></span><br><span class="line">                throwClockBackwardsEx(timestamp);</span><br><span class="line">              &#125;    </span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;  </span><br><span class="line">            <span class="keyword">throw</span>  e;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//throw</span></span><br><span class="line">        throwClockBackwardsEx(timestamp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> <span class="comment">//分配ID</span></span><br></pre></td></tr></table></figure></p>
+<p>从上线情况来看，在 2017 年闰秒出现那一次出现过部分机器回拨，由于 Leaf-snowflake 的策略保证，成功避免了对业务造成的影响。<br>Leaf 在美团点评公司内部服务包含金融、支付交易、餐饮、外卖、酒店旅游、猫眼电影等众多业务线。目前 Leaf 的性能在 4C8G 的机器上 QPS 能压测到近 5w/s，TP999 1ms，已经能够满足大部分的业务的需求。每天提供亿数量级的调用量，作为公司内部公共的基础技术设施，必须保证高 SLA 和高性能的服务，我们目前还仅仅达到了及格线，还有很多提高的空间。</p>
+<!-- 
+**Leaf-snowflake方案**完全沿用 snowflake 方案的 bit 位设计，即是 “1+41+10+12” 的方式组装 ID 号。对于 workerID 的分配，当服务集群数量较小的情况下，完全可以手动配置。Leaf 服务规模较大，动手配置成本太高。所以使用 Zookeeper 持久顺序节点的特性自动对 snowflake 节点配置 wokerID。Leaf-snowflake 是按照下面几个步骤启动的：
+1.  启动 Leaf-snowflake 服务，连接 Zookeeper，在 leaf_forever 父节点下检查自己是否已经注册过（是否有该顺序子节点）。
+2.  如果有注册过直接取回自己的 workerID（zk 顺序节点生成的 int 类型 ID 号），启动服务。
+3.  如果没有注册过，就在该父节点下面创建一个持久顺序节点，创建成功后取回顺序号当做自己的 workerID 号，启动服务。
+
+![](/img/noodle_plan/distributed/a3f985a8.png)
+
+#### 弱依赖 ZooKeeper
+
+除了每次会去 ZK 拿数据以外，也会在本机文件系统上缓存一个 workerID 文件。当 ZooKeeper 出现问题，恰好机器出现问题需要重启时，能保证服务能够正常启动。这样做到了对三方组件的弱依赖。一定程度上提高了 SLA
+
+
+#### 启动流程
+
+因为这种方案依赖时间，如果机器的时钟发生了回拨，那么就会有可能生成重复的 ID 号，需要解决时钟回退的问题。
+![](/img/noodle_plan/distributed/1453b4e9.png)
+
+参见上图整个启动流程图，服务启动时首先检查自己是否写过 ZooKeeper leaf_forever 节点：
+1.  若写过，则用自身系统时间与 `leaf_forever/${self}` 节点记录时间做比较，若小于 `leaf_forever/${self}` 时间则认为机器时间发生了大步长回拨，服务启动失败并报警。
+2.  若未写过，证明是新服务节点，直接创建持久节点 `leaf_forever/${self}`并写入自身系统时间，接下来综合对比其余 Leaf 节点的系统时间来判断自身系统时间是否准确，具体做法是取 leaf_temporary 下的所有临时节点 (所有运行中的 Leaf-snowflake 节点) 的服务 IP：Port，然后通过 RPC 请求得到所有节点的系统时间，计算 sum(time)/nodeSize。
+3.  若 abs(系统时间 - sum(time)/nodeSize ) < 阈值，认为当前系统时间准确，正常启动服务，同时写临时节点 leaf_temporary/${self} 维持租约。
+4.  否则认为本机系统时间发生大步长偏移，启动失败并报警。
+5.  每隔一段时间 (3s) 上报自身系统时间写入 `leaf_forever/${self}`。
+ -->
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Self-cultivation/" rel="tag"><i class="fa fa-tag"></i> Self-cultivation</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2021/03/13/self_cultivation_cpp/" rel="next" title="服务器开发自我修养专栏-CPP要点">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    服务器开发自我修养专栏-CPP要点
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2021/03/17/coroutine_illustrated/" rel="prev" title="基于ucontext实现协程">
+                <p class="post-nav-pre-next-title">
+                    基于ucontext实现协程
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式系统"><span class="nav-number">1.</span> <span class="nav-text">分布式系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#共识"><span class="nav-number">1.1.</span> <span class="nav-text">共识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一致性的类别"><span class="nav-number">1.2.</span> <span class="nav-text">一致性的类别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性一致性"><span class="nav-number">1.2.1.</span> <span class="nav-text">线性一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顺序一致性"><span class="nav-number">1.2.2.</span> <span class="nav-text">顺序一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#举例说明1"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">举例说明1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例说明2"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">举例说明2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例说明3"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">举例说明3</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAP理论"><span class="nav-number">1.3.</span> <span class="nav-text">CAP理论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cap通俗而精准的解释"><span class="nav-number">1.3.1.</span> <span class="nav-text">cap通俗而精准的解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cap的一些组合例子"><span class="nav-number">1.3.2.</span> <span class="nav-text">cap的一些组合例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BASE-理论"><span class="nav-number">1.4.</span> <span class="nav-text">BASE 理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务治理"><span class="nav-number">1.5.</span> <span class="nav-text">服务治理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式锁"><span class="nav-number">1.6.</span> <span class="nav-text">分布式锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式锁过期时间到了但业务没执行完怎么办"><span class="nav-number">1.6.1.</span> <span class="nav-text">分布式锁过期时间到了但业务没执行完怎么办</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于etcd的分布式锁"><span class="nav-number">1.6.2.</span> <span class="nav-text">基于etcd的分布式锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于redis的分布式锁"><span class="nav-number">1.6.3.</span> <span class="nav-text">基于redis的分布式锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RedLock"><span class="nav-number">1.6.3.1.</span> <span class="nav-text">RedLock</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式锁的高并发优化"><span class="nav-number">1.6.4.</span> <span class="nav-text">分布式锁的高并发优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式事务解决方案"><span class="nav-number">1.7.</span> <span class="nav-text">分布式事务解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二阶段提交2PC"><span class="nav-number">1.7.1.</span> <span class="nav-text">二阶段提交2PC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCC"><span class="nav-number">1.7.2.</span> <span class="nav-text">TCC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地消息表"><span class="nav-number">1.7.3.</span> <span class="nav-text">本地消息表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可靠消息最终一致性"><span class="nav-number">1.7.4.</span> <span class="nav-text">可靠消息最终一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尽最大努力通知"><span class="nav-number">1.7.5.</span> <span class="nav-text">尽最大努力通知</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#负载均衡算法有哪些"><span class="nav-number">1.8.</span> <span class="nav-text">负载均衡算法有哪些</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#负载均衡的平滑加权轮询算法怎么实现"><span class="nav-number">1.8.1.</span> <span class="nav-text">负载均衡的平滑加权轮询算法怎么实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务发现是怎么实现的"><span class="nav-number">1.9.</span> <span class="nav-text">服务发现是怎么实现的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#熔断是怎么实现的"><span class="nav-number">1.10.</span> <span class="nav-text">熔断是怎么实现的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务降级"><span class="nav-number">1.11.</span> <span class="nav-text">服务降级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#限流"><span class="nav-number">1.12.</span> <span class="nav-text">限流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#熔断-降级-限流三者的关系"><span class="nav-number">1.13.</span> <span class="nav-text">熔断-降级-限流三者的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#id生成器如何实现全局递增"><span class="nav-number">1.14.</span> <span class="nav-text">id生成器如何实现全局递增</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决时钟回拨问题"><span class="nav-number">1.14.1.</span> <span class="nav-text">解决时钟回拨问题</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

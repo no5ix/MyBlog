@@ -1,0 +1,1935 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="烫">
+<meta property="og:url" content="https://hulinhong.com/page/43/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="烫">
+<meta name="twitter:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>烫 - 烫烫烫烫烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/01/02/why_not_recursion_and_what_is_tail_recursion/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/01/02/why_not_recursion_and_what_is_tail_recursion/" itemprop="url">为什么不推荐递归以及什么是尾递归</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-02T12:18:54+00:00">
+                2015-01-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Misc/" itemprop="url" rel="index">
+                    <span itemprop="name">Misc</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="为什么不推荐递归"><a href="#为什么不推荐递归" class="headerlink" title="为什么不推荐递归"></a>为什么不推荐递归</h1><p>递归的调试难度奇高，就决定了实际项目中很少用递归。</p>
+<p>而且递归确实运行效率低，因为函数一层一层调用存在调用栈，</p>
+<p>在切换到更深层的函数时要产生断点，为了保证回来时继续运行，</p>
+<p>必须保存现在所处函数的各种状态，回来时恢复状态，这样一层层下去性能损失就不断增加。</p>
+<p>大量开辟在栈区的内存 ，直到每一层的递归结束或整个递归结束才释放 且这个内存空间可能呈几何级数增加， 空间效率不佳， 有可能会栈溢出</p>
+<p><strong>而要知道什么是尾递归， 首先得指到什么是尾调用</strong></p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2014/12/22/advanced_linked_list/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/12/22/advanced_linked_list/" itemprop="url">数据结构四之链表进阶</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-12-22T23:19:21+00:00">
+                2014-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algo/" itemprop="url" rel="index">
+                    <span itemprop="name">Algo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <p>只谈一下单链表, 链表实在是太重要, 是前面两篇说算法博客的基础, 了解了其应用和衍生, 再去了解其本身就有动力了</p>
+<h1 id="存储结构"><a href="#存储结构" class="headerlink" title="存储结构"></a>存储结构</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef struct Node</span><br><span class="line">&#123;</span><br><span class="line">	DataType data;</span><br><span class="line">	struct Node *next;</span><br><span class="line">&#125;Node, *Node_Ptr;</span><br></pre></td></tr></table></figure>
+<img src="/2014/12/22/advanced_linked_list/advanced_linked_list_1.png">
+<ul>
+<li>链表中第一个结点的存储位置叫做头指针</li>
+<li>头指针和头结点不同，头结点即第一个结点，头指针是指向第一个结点的指针。链表中可以没有头结点，但不能没有头指针。</li>
+<li>如果链表有头结点，那么头指针就是指向头结点数据域的指针。</li>
+<li>单链表也可以没有头结点</li>
+</ul>
+<p><strong>头结点的优点: </strong></p>
+<ul>
+<li>头结点是为了操作的统一与方便而设立的，放在第一个元素结点之前，其数据域一般无意义（当然有些情况下也可存放链表的长度、用做监视哨等等）。</li>
+<li>有了头结点后，对在第一个元素结点前插入结点和删除第一个结点，其操作与对其它结点的操作统一了。</li>
+</ul>
+<h2 id="有头结点和无头结点的建立链表方法头插法"><a href="#有头结点和无头结点的建立链表方法头插法" class="headerlink" title="有头结点和无头结点的建立链表方法头插法"></a>有头结点和无头结点的建立链表方法头插法</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">include &lt;stdio.h&gt;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Link</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span>  elem;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Link</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;link;</span><br><span class="line"><span class="comment">//无头结点链表的头插法实现函数</span></span><br><span class="line"><span class="function">link * <span class="title">creatLink</span><span class="params">(<span class="keyword">int</span> * arc, <span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="comment">//最初状态下，头指针 H 没有任何结点，所以，插入第一个元素，就相当于是创建结点 H</span></span><br><span class="line">    link * H =(link*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(link));</span><br><span class="line">    H-&gt;elem = arc[<span class="number">0</span>];</span><br><span class="line">    H-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="comment">//如果采用头插法插入超过 1 个元素，则可添加到第一个结点 H 之前</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i&lt;length; i++) &#123;</span><br><span class="line">        link * a = (link*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(link));</span><br><span class="line">        a-&gt;elem = arc[i];</span><br><span class="line">        <span class="comment">//插入元素时，首先将插入位置后的链表链接到新结点上</span></span><br><span class="line">        a-&gt;next = H;</span><br><span class="line">        <span class="comment">//然后再链接头指针 H</span></span><br><span class="line">        H = a;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> H;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//有头结点链表的头插法实现函数</span></span><br><span class="line"><span class="function">link * <span class="title">HcreatLink</span><span class="params">(<span class="keyword">int</span> * arc, <span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="comment">//创建头结点 H，其链表的头指针也是 H</span></span><br><span class="line">    link * H = (link*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(link));</span><br><span class="line">    H-&gt;elem = <span class="number">0</span>;</span><br><span class="line">    H-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="comment">//采用头插法创建链表</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i&lt;length; i++) &#123;</span><br><span class="line">        link * a = (link*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(link));</span><br><span class="line">        a-&gt;elem = arc[i];</span><br><span class="line">        <span class="comment">//首先将插入位置之后的链表链接到新结点 a 上</span></span><br><span class="line">        a-&gt;next = H-&gt;next;</span><br><span class="line">        <span class="comment">//将新结点 a 插入到头结点之后的位置</span></span><br><span class="line">        H-&gt;next = a;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> H;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//链表的输出函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">(link *p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (p) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d "</span>, p-&gt;elem);</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a[<span class="number">3</span>] = &#123; <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> &#125;;</span><br><span class="line">    <span class="comment">//采用头插法创建无头结点链表</span></span><br><span class="line">    link * H = creatLink(a, <span class="number">3</span>);</span><br><span class="line">    display(H);</span><br><span class="line">    <span class="comment">//采用头插法创建有头结点链表</span></span><br><span class="line">    link * head = HcreatLink(a, <span class="number">3</span>);</span><br><span class="line">    display(head);</span><br><span class="line">    <span class="comment">//使用完毕后，释放即可</span></span><br><span class="line">    <span class="built_in">free</span>(H);</span><br><span class="line">    <span class="built_in">free</span>(head);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">3 2 1</span><br><span class="line">0 3 2 1</span><br></pre></td></tr></table></figure></p>
+<p>提示：没有 0 的为无头结点的头插法输出结果，有 0 的为有头结点的头插法的输出结果</p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2014/12/13/SVN的UpdateItemToThisRevision和RevertToThisRevision和UpdateItemToRevision的区别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/12/13/SVN的UpdateItemToThisRevision和RevertToThisRevision和UpdateItemToRevision的区别/" itemprop="url">SVN的UpdateItemToThisRevision和RevertToThisRevision和UpdateItemToRevision的区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-12-13T10:12:15+00:00">
+                2014-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Misc/" itemprop="url" rel="index">
+                    <span itemprop="name">Misc</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>使用SVN在管理代码的时候免不了进行代码的合并和还原，特别是当前版本的修改发现有重大问题的时候，还原是避免不了的，那么究竟应该怎样操作呢？</p>
+<h1 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h1><p>使用SVN查看文件或目录的日志的时候，右键单击日志记录会弹出下面这个界面，今天我们来着重了解一下被红圈标记的三个选项——“Update item to this version”，“Revert to this version”，“Revert changes from this version”，这三个选项对于刚接触SVN的人确实不太好区分，一开始我也搞不懂，直到亲自试验一下才搞清楚这三个选项的用法。</p>
+<img src="/2014/12/13/SVN的UpdateItemToThisRevision和RevertToThisRevision和UpdateItemToRevision的区别/svn_1.jpg" title="svn">
+<p>在讲解这三个选项的作用之前，我们还是先来假定一个使用情景，假设我们的项目文件一共有8个版本，它版本号分别是1，2，3，4，5，6，7，8。</p>
+<h1 id="Update-item-to-this-version"><a href="#Update-item-to-this-version" class="headerlink" title="Update item to this version"></a>Update item to this version</h1><p>这个选项的作用是将文件版本更新到对应所选的版本（当然内容也修改到了相应的版本）。如果我们是在版本4这里点击“Update item to this version”，表示5~8版本所作的修改全部作废，这个文件的历史回退到了版本4那个时代，但是需要注意的是，此时文件的版本是4，并不是最新的。我们知道SVN工具中如果文件不是最新版本就无法上传，所以说这个功能只是用来暂时还原一下版本，来查询某个问题的，不能将还原后的文件上传。</p>
+<h1 id="Revert-to-this-version"><a href="#Revert-to-this-version" class="headerlink" title="Revert to this version"></a>Revert to this version</h1><p>这个选项的作用是将文件的内容更新到对应的版本，版本号没有发生变化。如果我们是在版本4这里点击“Revert to this version”，表示5~8版本所作的修改全部被还原，文件和版本4的文件一模一样，但需要注意的是这项操作相当于我们把版本4这个文件拷贝了一份赋值给了当前目录下的文件，此时的文件版本还是8，并且是可以提交的，提交以后文件的版本变成了9，增加了一个新的版本，虽然这个版本和版本4的内容是一样的。</p>
+<h1 id="Revert-changes-from-this-version"><a href="#Revert-changes-from-this-version" class="headerlink" title="Revert changes from this version"></a>Revert changes from this version</h1><p>这个选项的作用是将对应版本的修改还原，文件的版本号不发生变化，相当于在当前本版本上剔除某些版本所作的改变。如果我们是在版本4这里点击“Revert changes from this version”，表示版本4所作的修改被抹杀了，只剩下除版本4以外的7个修改了，但是此时文件是可以上传的，并且会生成新的版本9，只是版本9只包括除版本4以外的7次修改。这个选项是可以选择多个版本的，如果我们选择4,5,6,7这四个版本点击“Revert changes from this revision”，那么这几次修改都会被抹杀。如果我们选择5,6,7,8这四个版本点击“Revert changes from this revision”，表示取消这几个版本的修改，实际上和在版本4这里点击“Revert to this version”的作用是一样的。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li><p>Update item to this version：<br>回退文件的内容和版本到指定的版本A，文件内容与版本A一致，此时文件的版本也为A，但是无法上传文件。</p>
+</li>
+<li><p>Revert to this version：<br>只是回退文件的内容到指定版本A，文件版本还是最新版本，此时文件会提示有所更改，可以上传，并且会在最新的版本号上加1，形成新的版本。</p>
+</li>
+<li><p>Revert changes from this version：<br>还原对应版本所作的改变，会将所指定的版本所作的修改直接抹杀，可以对多个版本操作，注意很可能会出现冲突，需要手动解决。</p>
+</li>
+</ul>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2014/09/29/some_common_examination/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/09/29/some_common_examination/" itemprop="url">一些常见的笔试题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-09-29T02:11:22+00:00">
+                2014-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="考察cpp的静态绑定"><a href="#考察cpp的静态绑定" class="headerlink" title="考察cpp的静态绑定"></a>考察cpp的静态绑定</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">MMPA</span>&#123;</span></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">value</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>-&gt;v_; &#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">tvalue</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> <span class="number">1</span>; &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> v_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>&#123;</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">const</span> MMPA* p = <span class="literal">nullptr</span>;</span><br><span class="line"><span class="comment">// 		std::cout &lt;&lt; p-&gt;v_ &lt;&lt; std::endl;</span></span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; p-&gt;tvalue() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; p-&gt;value() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">		getchar(); <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>会打印什么?</p>
+<h2 id="答案以及分析"><a href="#答案以及分析" class="headerlink" title="答案以及分析"></a>答案以及分析</h2><p><strong>答案</strong>: 打印1之后崩溃</p>
+<p><strong>真正的原因是</strong>：</p>
+<p>因为对于非虚成员函数，Ｃ++这门语言是静态绑定的。这也是Ｃ++语言和其它语言Java, Python的一个显著区别。以此下面的语句为例：somenull-&gt;foo();这语句的意图是：调用对象somenull的foo成员函数。如果这句话在Java或Python等动态绑定的语言之中，编译器生成的代码大概是：找到somenull的foo成员函数，调用它。</p>
+<p>（注意，这里的找到是程序运行的时候才找的，这也是所谓动态绑定的含义：运行时才绑定这个函数名与其对应的实际代码。有些地方也称这种机制为迟绑定，晚绑定。）但是对于C++。为了保证程序的运行时效率，Ｃ++的设计者认为凡是编译时能确定的事情，就不要拖到运行时再查找了。</p>
+<p>所以C++的编译器看到这句话会这么干：</p>
+<ol>
+<li>查找somenull的类型，发现它有一个非虚的成员函数叫foo。（编译器干的）</li>
+<li>找到了，在这里生成一个函数调用，直接调B::foo(somenull)。</li>
+</ol>
+<p>所以到了运行时，由于foo()函数里面并没有任何需要解引用somenull指针的代码，所以真实情况下也不会引发segment fault。这里对成员函数的解析，和查找其对应的代码的工作都是在编译阶段完成而非运行时完成的，这就是所谓的静态绑定，也叫早绑定。正确理解C++的静态绑定可以理解一些特殊情况下C++的行为。</p>
+<h1 id="求最大公约数"><a href="#求最大公约数" class="headerlink" title="求最大公约数"></a>求最大公约数</h1><p>求 a 和 b 的最大公约数<br><img src="/img/some_common_examination/greatest_common_divisor.png" alt="辗转相除法"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">measure</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> product = a * b;</span><br><span class="line">	<span class="keyword">if</span> (a == <span class="number">0</span> || b == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (a &lt; b)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> temp = a;</span><br><span class="line">		a = b;</span><br><span class="line">		b = temp;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (<span class="keyword">int</span> mod = a % b)</span><br><span class="line">	&#123;</span><br><span class="line">		a = b;</span><br><span class="line">		b = mod;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//return b; // 最大公约数</span></span><br><span class="line">	<span class="keyword">return</span> product / b; <span class="comment">// 记住这个公式： a*b=最小公倍数*最大公约数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="棋盘-格子问题"><a href="#棋盘-格子问题" class="headerlink" title="棋盘/格子问题"></a>棋盘/格子问题</h1><p>在如下7*5的棋盘中，请计算从A移动到B一共有多少走法？要求每次只能向上或向右移动一格，并且不能经过P。(答案为492)</p>
+<p><img src="/img/some_common_examination/SumWaysOfMoveOnChessBoard.jpg" alt></p>
+<p>给定一个M*N的格子或棋盘，从左下角走到右上角的走法总数（每次只能向右或向上移动一个方格边长的距离）   </p>
+<p>运用动态规划来解答 :<br>我们可以把棋盘的左下角看做二维坐标的原点(0,0)，把棋盘的右上角看做二维坐标(M,N)(坐标系的单位长度为小方格的变长)<br>用f(i,j)表示移动到坐标f(i,j)的走法总数，其中0=&lt;i,j&lt;=n，设f(m,n)代表从坐标（0,0）到坐标（m,n）的移动方法，则<br>    <code>f(m,n)=f(m-1,n)+f(m,n-1).</code><br>于是状态f(i,j)的状态转移方程为：   </p>
+<pre><code>f(i,j)=f(i-1,j)+f(i,j-1)   if i,j&gt;0
+f(i,j)=f(i,j-1)            if i=0
+f(i,j)=f(i-1,j)            if j=0
+</code></pre><p>初始情况就为：f(0,0)=0, f(0,1)=1, f(1,0)=1，这个问题可以在时间O(n^2)，空间O(n^2)内求解，非递归解.   </p>
+<p>所以答案为     492 =     </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SumWaysOfMoveOnChessBoard(<span class="number">7</span>, <span class="number">5</span>) - SumWaysOfMoveOnChessBoard(<span class="number">3</span>, <span class="number">3</span>) * SumWaysOfMoveOnChessBoard(<span class="number">7</span> - <span class="number">3</span>, <span class="number">5</span> - <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="递归解"><a href="#递归解" class="headerlink" title="递归解"></a>递归解</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">SumWaysOfMoveOnChessBoard_Recursion</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (m == <span class="number">0</span> &amp;&amp; n == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (m==<span class="number">0</span> || n==<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> SumWaysOfMoveOnChessBoard_Recursion(m, n - <span class="number">1</span>) + SumWaysOfMoveOnChessBoard_Recursion(m - <span class="number">1</span>, n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="非递归解"><a href="#非递归解" class="headerlink" title="非递归解"></a>非递归解</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">SumWaysOfMoveOnChessBoard_NonRecursion_RawArray</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (m == <span class="number">0</span> || n == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span> (m == <span class="number">0</span> &amp;&amp; n == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> xSize = m + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> ySize = n + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span>** arr = <span class="keyword">new</span> <span class="keyword">int</span>*[xSize];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; xSize; ++i)</span><br><span class="line">		arr[i] = <span class="keyword">new</span> <span class="keyword">int</span>[ySize];</span><br><span class="line"></span><br><span class="line">	arr[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; xSize; ++i) arr[i][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ySize; ++i) arr[<span class="number">0</span>][i] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; xSize; ++i)</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; ySize; ++j)</span><br><span class="line">			arr[i][j] = arr[i - <span class="number">1</span>][j] + arr[i][j - <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; xSize; ++i)</span><br><span class="line">		<span class="keyword">delete</span>[] arr[i];</span><br><span class="line">	<span class="keyword">delete</span>[] arr;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> arr[m][n];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">SumWaysOfMoveOnChessBoard_NonRecursion_STL</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (m == <span class="number">0</span> &amp;&amp; n == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> xSize = m + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> ySize = n + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">vector</span>&lt; <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; ChessBoardArray(xSize, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(ySize));;</span><br><span class="line">	ChessBoardArray[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; xSize; ++i) ChessBoardArray[i][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; ySize; ++j) ChessBoardArray[<span class="number">0</span>][j] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; xSize; ++i)</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; ySize; ++j)</span><br><span class="line">			ChessBoardArray[i][j] = ChessBoardArray[i][j - <span class="number">1</span>] + ChessBoardArray[i - <span class="number">1</span>][j];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ChessBoardArray[m][n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="大数加法-乘法"><a href="#大数加法-乘法" class="headerlink" title="大数加法/乘法"></a>大数加法/乘法</h1><p><strong>大数加法思路</strong> :<br>模拟小学列竖式</p>
+<pre><code>        9  8
++       2  1
+-------------
+    (1)(1)(9)
+</code></pre><p><strong>大数乘法思路</strong> :</p>
+<p>模拟乘法累加 - 改进<br>简单来说，方法二就是先不算任何的进位，也就是说，将每一位相乘，相加的结果保存到同一个位置，到最后才计算进位。</p>
+<p>例如：计算98×21,步骤如下</p>
+<pre><code>        9  8
+×       2  1
+-------------
+       (9)(8)   &lt;---- 第1趟: 98×1的每一位结果 
+   (18)(16)     &lt;---- 第2趟: 98×2的每一位结果 
+-------------
+   (18)(25)(8)  &lt;---- 这里就是相对位的和，还没有累加进位
+</code></pre><p>这里唯一要注意的便是进位问题，我们可以先不考虑进位，当所有位对应相加，产生结果之后，再考虑。<br>从右向左依次累加，如果该位的数字大于10，那么我们用取余运算，在该位上只保留取余后的个位数，而将十位数进位（通过模运算得到）累加到高位便可，循环直到累加完毕。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BigIntAddition</span><span class="params">(<span class="keyword">char</span>* bigIntA, <span class="keyword">char</span>* bigIntB)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!bigIntA || !bigIntB)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">size_t</span> strlenA = <span class="built_in">strlen</span>(bigIntA);</span><br><span class="line">	<span class="keyword">size_t</span> strlenB = <span class="built_in">strlen</span>(bigIntB);</span><br><span class="line">	<span class="keyword">size_t</span> biggerStrlen = strlenA &gt; strlenB ? strlenA : strlenB;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span>* reversedA = <span class="keyword">new</span> <span class="keyword">int</span>[biggerStrlen];</span><br><span class="line">	<span class="keyword">int</span>* reversedB = <span class="keyword">new</span> <span class="keyword">int</span>[biggerStrlen];</span><br><span class="line">	<span class="comment">// 先将例子中的 1234 和 98765 逆序存储, 不够的补零, 方便计算</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; biggerStrlen; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//cout &lt;&lt; int(strlenA - 1 - i) &lt;&lt; endl;</span></span><br><span class="line">		reversedA[i] = (<span class="keyword">int</span>(strlenA - <span class="number">1</span> - i) &gt;= <span class="number">0</span>) ? (bigIntA[strlenA - <span class="number">1</span> - i] - <span class="string">'0'</span>) : <span class="number">0</span>;</span><br><span class="line">		reversedB[i] = (<span class="keyword">int</span>(strlenB - <span class="number">1</span> - i) &gt;= <span class="number">0</span>) ? (bigIntB[strlenB - <span class="number">1</span> - i] - <span class="string">'0'</span>) : <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; biggerStrlen; ++i)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; reversedA[i];</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// --&gt; 43210</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; biggerStrlen; ++i)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; reversedB[i];</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// --&gt; 98765</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span>* bigIntSum = <span class="keyword">new</span> <span class="keyword">int</span>[biggerStrlen + <span class="number">1</span>];</span><br><span class="line">	<span class="keyword">int</span> x = <span class="number">0</span>; <span class="comment">// 进位</span></span><br><span class="line">						 <span class="comment">// 模拟小学的列竖式加法, 满10进1</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; biggerStrlen; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		bigIntSum[i] = reversedA[i] + reversedB[i] + x;</span><br><span class="line">		x = bigIntSum[i] / <span class="number">10</span>;</span><br><span class="line">		bigIntSum[i] %= <span class="number">10</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">size_t</span> printLen = biggerStrlen;</span><br><span class="line">	<span class="comment">// 查看最后一个进位是否 &gt; 0, 大于零则最高位为1</span></span><br><span class="line">	<span class="keyword">if</span> (x &gt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		bigIntSum[biggerStrlen] = x;</span><br><span class="line">		printLen = biggerStrlen + <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; printLen; ++i)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; bigIntSum[printLen - <span class="number">1</span> - i]; <span class="comment">// --&gt; 58023</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">delete</span>[] bigIntSum;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BigIntMultiplication</span><span class="params">(<span class="keyword">char</span>* bigIntA, <span class="keyword">char</span>* bigIntB)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!bigIntA || !bigIntB)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> strlenA = <span class="keyword">static_cast</span>&lt;<span class="keyword">int</span>&gt;(<span class="built_in">strlen</span>(bigIntA));</span><br><span class="line">	<span class="keyword">int</span> strlenB = <span class="keyword">static_cast</span>&lt;<span class="keyword">int</span>&gt;(<span class="built_in">strlen</span>(bigIntB));</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; strlenA &lt;&lt; <span class="string">", "</span> &lt;&lt; strlenB &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">int</span> biggerStrlen = strlenA &gt; strlenB ? strlenA : strlenB;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span>* reversedA = <span class="keyword">new</span> <span class="keyword">int</span>[biggerStrlen];</span><br><span class="line">	<span class="keyword">int</span>* reversedB = <span class="keyword">new</span> <span class="keyword">int</span>[biggerStrlen];</span><br><span class="line">	<span class="comment">// 先将例子中的 1234 和 98765 逆序存储, 不够的补零, 方便计算</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; biggerStrlen; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		reversedA[i] = (<span class="keyword">int</span>(strlenA - <span class="number">1</span> - i) &gt;= <span class="number">0</span>) ? (bigIntA[strlenA - <span class="number">1</span> - i] - <span class="string">'0'</span>) : <span class="number">0</span>;</span><br><span class="line">		reversedB[i] = (<span class="keyword">int</span>(strlenB - <span class="number">1</span> - i) &gt;= <span class="number">0</span>) ? (bigIntB[strlenB - <span class="number">1</span> - i] - <span class="string">'0'</span>) : <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; biggerStrlen; ++i)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; reversedA[i];</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// --&gt; 43210</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; biggerStrlen; ++i)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; reversedB[i];</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// --&gt; 98765</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 分配一个空间，用来存储运算的结果，num1长的数 * num2长的数，</span></span><br><span class="line">	<span class="comment">// 结果不会超过num1+num2长</span></span><br><span class="line">	<span class="keyword">int</span>* bigIntProduct = <span class="keyword">new</span> <span class="keyword">int</span>[strlenA + strlenB];</span><br><span class="line">	<span class="comment">// 比如防止下面执行 bigIntSum[i + j] += reversedA[i] * reversedB[j]; 这句的时候</span></span><br><span class="line">	<span class="comment">// i+j = 0 时 出错, 因为 bigIntSum[0] 为一个未初始化的值</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strlenA + strlenB; ++i)</span><br><span class="line">		bigIntProduct[i] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> carry = <span class="number">0</span>; <span class="comment">// 进位</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 先不考虑进位问题，根据竖式的乘法运算，</span></span><br><span class="line">	<span class="comment">// num1的第i位与num2的第j位相乘，结果应该存放在结果的第i+j位上</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strlenA; ++i)</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; strlenB; ++j)</span><br><span class="line">			bigIntProduct[i + j] += reversedA[i] * reversedB[j];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strlenA + strlenB; ++i)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; bigIntProduct[i] &lt;&lt; <span class="string">", "</span>; <span class="comment">// --&gt; 3659707060341650</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//单独处理进位</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strlenA + strlenB - <span class="number">1</span>; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		bigIntProduct[i] += carry;</span><br><span class="line">		carry = bigIntProduct[i] / <span class="number">10</span>;</span><br><span class="line">		bigIntProduct[i] %= <span class="number">10</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strlenA + strlenB; ++i)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; bigIntProduct[i] &lt;&lt; <span class="string">", "</span>; <span class="comment">// --&gt; 626770070</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> printLen = strlenA + strlenB - <span class="number">1</span>;</span><br><span class="line">	<span class="comment">// 查看最后一个进位是否 &gt; 0, 大于零则最高位为1</span></span><br><span class="line">	<span class="keyword">if</span> (carry &gt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		bigIntProduct[strlenA + strlenB - <span class="number">1</span>] = carry;</span><br><span class="line">		printLen = strlenA + strlenB;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; printLen; ++i)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; bigIntProduct[printLen - <span class="number">1</span> - i]; <span class="comment">// --&gt; 70077626</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">delete</span>[] bigIntProduct;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> *bigIntA = <span class="string">"1234"</span>;</span><br><span class="line">	<span class="keyword">char</span> *bigIntB = <span class="string">"56789"</span>;</span><br><span class="line">	BigIntAddition(bigIntA, bigIntB);</span><br><span class="line">	BigIntMultiplication(bigIntA, bigIntB);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="最长公共子串"><a href="#最长公共子串" class="headerlink" title="最长公共子串"></a>最长公共子串</h1><p>问题：有两个字符串str和str2，求出两个字符串中最长公共子串长度。</p>
+<p>比如：str=acbcbcef，str2=abcbced，则str和str2的最长公共子串为bcbce，最长公共子串长度为5。</p>
+<p>算法思路：</p>
+<p>1、把两个字符串分别以行和列组成一个二维矩阵。<br>2、比较二维矩阵中每个点对应行列字符中否相等，相等的话值设置为1，否则设置为0。<br>3、通过查找出值为1的最长对角线就能找到最长公共子串。</p>
+<p>针对于上面的两个字符串我们可以得到的二维矩阵如下：<br><img src="/img/some_common_examination/LongestCommonSubstring1.jpg" alt></p>
+<p>从上图可以看到，str和str2共有5个公共子串，但最长的公共子串长度为5。</p>
+<p>为了进一步优化算法的效率，我们可以再计算某个二维矩阵的值的时候顺便计算出来当前最长的公共子串的长度，<br>即某个二维矩阵元素的值由 <code>item[i][j]=1</code> 演变为 <code>item[i][j]=1 +item[i-1][j-1]</code> ，这样就避免了后续查找对角线长度的操作了。修改后的二维矩阵如下：<br><img src="/img/some_common_examination/LongestCommonSubstring2.jpg" alt></p>
+<p>故状态转移方程</p>
+<pre><code>X[i] == Y[j]，dp[i][j] = dp[i-1][j-1] + 1
+X[i] != Y[j]，dp[i][j] = 0
+</code></pre><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">LongestCommonSubstring</span><span class="params">(<span class="keyword">char</span>* strA, <span class="keyword">char</span>* strB)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!strA || !strB)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> maxLen = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> strlenA = <span class="keyword">static_cast</span>&lt;<span class="keyword">int</span>&gt;(<span class="built_in">strlen</span>(strA));</span><br><span class="line">	<span class="keyword">int</span> strlenB = <span class="keyword">static_cast</span>&lt;<span class="keyword">int</span>&gt;(<span class="built_in">strlen</span>(strB));</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> biggerStrlen = strlenA &gt; strlenB ? (strlenA + <span class="number">1</span>) : (strlenB + <span class="number">1</span>);</span><br><span class="line">	<span class="keyword">char</span> * lcs = <span class="keyword">new</span> <span class="keyword">char</span>[biggerStrlen];</span><br><span class="line">	<span class="keyword">int</span> lcsMaxIndex = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span>** temp = <span class="keyword">new</span> <span class="keyword">int</span>*[strlenA];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strlenA; ++i)</span><br><span class="line">		temp[i] = <span class="keyword">new</span> <span class="keyword">int</span>[strlenB];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strlenA; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; strlenB; ++j)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (strA[i] == strB[j])</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; j &gt; <span class="number">0</span>)</span><br><span class="line">					temp[i][j] = temp[i - <span class="number">1</span>][j - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">				<span class="keyword">else</span></span><br><span class="line">					temp[i][j] = <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				temp[i][j] = <span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (temp[i][j] &gt; maxLen)</span><br><span class="line">			&#123;</span><br><span class="line">				maxLen = temp[i][j];</span><br><span class="line">				lcsMaxIndex = i;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; maxLen; ++i)</span><br><span class="line">		*(lcs + maxLen - i - <span class="number">1</span>) = strA[lcsMaxIndex--];</span><br><span class="line">	*(lcs+maxLen) = <span class="string">'\0'</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; lcs &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strlenA; ++i)</span><br><span class="line">		<span class="keyword">delete</span>[] temp[i];</span><br><span class="line">	<span class="keyword">delete</span>[] temp;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">delete</span>[] lcs;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> maxLen;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"maxLen = "</span> &lt;&lt;</span><br><span class="line">		LongestCommonSubstring(<span class="string">"wwwadfabcdeasdf"</span>, <span class="string">"wwweoruqpeorqabcdezcvnz"</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2014/09/25/deque_queue_stack_comparison/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/09/25/deque_queue_stack_comparison/" itemprop="url">STL之队列和双端队列和栈的比较</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-09-25T19:11:22+00:00">
+                2014-09-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="队列和双端队列的比较"><a href="#队列和双端队列的比较" class="headerlink" title="队列和双端队列的比较"></a>队列和双端队列的比较</h1><p><strong>队列</strong>(queue)是一种是相对于栈的一种数据结构，它是先进先出(First In First Out)。<br>它只可以在尾部添加元素。</p>
+<img src="/2014/09/25/deque_queue_stack_comparison/deque_queue_stack_comparison_1.png" title="队列">
+<p><strong>双端队列</strong>(deque double ended queue（双端队列）)是一种相对于队列的一种数据结构。它可以在尾部和头部插入、移除和获取。</p>
+<img src="/2014/09/25/deque_queue_stack_comparison/deque_queue_stack_comparison_2.png" title="双端队列">
+<h1 id="三者成员函数的比较"><a href="#三者成员函数的比较" class="headerlink" title="三者成员函数的比较"></a>三者成员函数的比较</h1><p>通过他们各自的成员函数我们能一目了然的看出区别</p>
+<h2 id="栈的成员函数"><a href="#栈的成员函数" class="headerlink" title="栈的成员函数"></a>栈的成员函数</h2><ul>
+<li><code>stack&lt;Type&gt; s</code> : 定义一个stack的变量 </li>
+<li>s.push(x) : 入栈，如例  </li>
+<li>s.pop() : 出栈，如例 . 注意，出栈操作只是删除栈顶元素，并不返回该元素。 </li>
+<li>s.top() : 访问栈顶，如例  </li>
+<li>s.empty() : 判断栈空，如例，当栈空时，返回true。  </li>
+<li>s.size() : 访问栈中的元素个数，如例  </li>
+</ul>
+<h2 id="队列的成员函数"><a href="#队列的成员函数" class="headerlink" title="队列的成员函数"></a>队列的成员函数</h2><ul>
+<li><code>queue&lt;Type&gt; M</code> : 定义一个queue的变量    </li>
+<li>M.empty()  : 查看是否为空范例     是的话返回1，不是返回0;   </li>
+<li>M.push() : 从已有元素后面增加元素 </li>
+<li>M.size() : 输出现有元素的个数    </li>
+<li>M.front() : 显示第一个元素       </li>
+<li>M.back() : 显示最后一个元素      </li>
+<li>M.pop() : 清除第一个元素      </li>
+</ul>
+<h2 id="双端队列的成员函数"><a href="#双端队列的成员函数" class="headerlink" title="双端队列的成员函数"></a>双端队列的成员函数</h2><ul>
+<li><code>deque&lt;Type&gt; c</code> :     定义一个deque的变量</li>
+<li>c.pop_back()    :    删除最后一个数据。</li>
+<li>c.pop_front()     :   删除头部数据。</li>
+<li>c.push_back(elem) :  在尾部加入一个数据。</li>
+<li>c.push_front(elem)  : 在头部插入一个数据。</li>
+<li>c.clear()       :     移除容器中所有数据。</li>
+<li>c.front()       :     传回地一个数据。</li>
+<li>c.back()       :     传回最后一个数据，不检查这个数据是否存在。</li>
+<li>c.size()       :      返回容器中实际数据的个数。</li>
+<li>c.empty()      :     判断容器是否为空。</li>
+</ul>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/42/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><span class="page-number current">43</span><a class="page-number" href="/page/44/">44</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/44/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="GafferOnGames,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="原文原文出处 Introduction Hi, I&amp;rsquo;m Glenn Fiedler and welcome to Networking for Game Programmers.Have you ever wondered how multiplayer games work?From the outside it seems magical: two or more players">
+<meta name="keywords" content="GafferOnGames">
+<meta property="og:type" content="article">
+<meta property="og:title" content="游戏网络开发五之每个游戏开发者都需要知道的游戏网络知识">
+<meta property="og:url" content="https://hulinhong.com/2016/11/18/游戏网络开发五之每个游戏开发者都需要知道的游戏网络知识/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="原文原文出处 Introduction Hi, I&amp;rsquo;m Glenn Fiedler and welcome to Networking for Game Programmers.Have you ever wondered how multiplayer games work?From the outside it seems magical: two or more players">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://gameweb-img.qq.com/gad/20160628/phpEw63Qf.1467079995.jpg">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="游戏网络开发五之每个游戏开发者都需要知道的游戏网络知识">
+<meta name="twitter:description" content="原文原文出处 Introduction Hi, I&amp;rsquo;m Glenn Fiedler and welcome to Networking for Game Programmers.Have you ever wondered how multiplayer games work?From the outside it seems magical: two or more players">
+<meta name="twitter:image" content="http://gameweb-img.qq.com/gad/20160628/phpEw63Qf.1467079995.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>游戏网络开发五之每个游戏开发者都需要知道的游戏网络知识 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/11/18/游戏网络开发五之每个游戏开发者都需要知道的游戏网络知识/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">游戏网络开发五之每个游戏开发者都需要知道的游戏网络知识</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-18T22:20:34+00:00">
+                2016-11-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GS/" itemprop="url" rel="index">
+                    <span itemprop="name">GS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/GafferOnGames/" rel="tag"><i class="fa fa-tag"></i> GafferOnGames</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/17/游戏网络开发四之基于UDP的可靠性与排序和避免拥堵/" rel="next" title="游戏网络开发四之基于UDP的可靠性与排序和避免拥堵">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  游戏网络开发四之基于UDP的可靠性与排序和避免拥堵
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/31/tcp拥塞控制之慢启动和拥塞避免/" rel="prev" title="tcp拥塞控制之慢启动和拥塞避免">
+              <p class="post-nav-pre-next-title">
+                  tcp拥塞控制之慢启动和拥塞避免
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="https://gafferongames.com/post/what_every_programmer_needs_to_know_about_game_networking/" target="_blank" rel="noopener">原文出处</a></p>
+<p></p><h2 id="introduction">Introduction</h2><p></p>
+<p>Hi, I&rsquo;m <a href="https://gafferongames.com/about" target="_blank" rel="noopener">Glenn Fiedler</a> and welcome to <a href="https://gafferongames.com/categories/game-networking/" target="_blank" rel="noopener"><strong>Networking for Game Programmers</strong></a>.</p><br><p>Have you ever wondered how multiplayer games work?</p><br><p>From the outside it seems magical: two or more players sharing a consistent experience across the network like they actually exist together in the same virtual world.</p><br><p>But as programmers we know the truth of what is actually going on underneath is quite different from what you see. It turns out it&rsquo;s all an illusion. A massive sleight-of-hand. What you perceive as a shared reality is only an approximation unique to your own point of view and place in time.</p><br><h2 id="peer-to-peer-lockstep">Peer-to-Peer Lockstep</h2><br><p>In the beginning games were networked peer-to-peer, with each each computer exchanging information with each other in a fully connected mesh topology. You can still see this model alive today in RTS games, and interestingly for some reason, perhaps because it was the first way - it&rsquo;s still how most people think that game networking works.</p><br><p>The basic idea is to abstract the game into a series of turns and a set of command messages when processed at the beginning of each turn direct the evolution of the game state. For example: move unit, attack unit, construct building. All that is needed to network this is to run exactly the same set of commands and turns on each player&rsquo;s machine starting from a common initial state.</p><br><p>Of course this is an overly simplistic explanation and glosses over many subtle points, but it gets across the basic idea of how networking for RTS games work. You can read more about this networking model here: <a href="http://www.gamasutra.com/view/feature/3094/1500_archers_on_a_288_network_.php" target="_blank" rel="noopener">1500 Archers on a 28.8: Network Programming in Age of Empires and Beyond</a>.</p><br><p>It seems so simple and elegant, but unfortunately there are several limitations.</p><br><p>First, it&rsquo;s exceptionally difficult to ensure that a game is completely deterministic; that each turn plays out identically on each machine. For example, one unit could take slightly a different path on two machines, arriving sooner to a battle and saving the day on one machine, while arriving later on the other and erm. not saving the day. Like a butterfly flapping it&rsquo;s wings and causing a hurricane on the other side of the world, one <i>tiny difference</i> results in complete desynchronization over time.</p><br><p>The next limitation is that in order to ensure that the game plays out identically on all machines it is necessary to wait until all player&rsquo;s commands for that turn are received <i>before</i> simulating that turn. This means that each player in the game has latency equal to the most lagged player. RTS games typically hide this by providing audio feedback immediately and/or playing cosmetic animation, but ultimately any truly game affecting action may occur only after this delay has passed.</p><br><p>The final limitation occurs because of the way the game synchronizes by sending just the command messages which change the state. In order for this to work it is necessary for all players to start from the same initial state. Typically this means that each player must join up in a lobby before commencing play, although it is technically possible to support late join, this is not common due to the difficulty of capturing and transmitting a completely deterministic starting point in the middle of a live game.</p><br><p>Despite these limitations this model naturally suits RTS games and it still lives on today in games like &ldquo;Command and Conquer&rdquo;, &ldquo;Age of Empires&rdquo; and &ldquo;Starcraft&rdquo;. The reason being that in RTS games the game state consists of many thousands of units and is simply too large to exchange between players. These games have no choice but to exchange the commands which drive the evolution of the game state.</p><br><p>But for other genres, the state of the art has moved on. So that&rsquo;s it for the deterministic peer-to-peer lockstep networking model. Now lets look at the evolution of action games starting with Doom, Quake and Unreal.</p><br><h2 id="client-server">Client/Server</h2><br><p>In the era of action games, the limitations of peer-to-peer lockstep became apparent in Doom, which despite playing well over the LAN played <i>terribly</i> over the internet for typical users:</p><br><blockquote>Although it is possible to connect two DOOM machines together across the Internet using a modem link, the resulting game will be slow, ranging from the unplayable (e.g. a 14.4Kbps PPP connection) to the marginally playable (e.g. a 28.8Kbps modem running a Compressed SLIP driver). Since these sorts of connections are of only marginal utility, this document will focus only on direct net connections.</blockquote><br><p>The problem of course was that Doom was designed for networking over LAN only, and used the peer-to-peer lockstep model described previously for RTS games. Each turn player inputs (key presses etc.) were exchanged with other peers, and before any player could simulate a frame all other player&rsquo;s key presses needed to be received.</p><br><p>In other words, before you could turn, move or shoot you had to wait for the inputs from the most lagged modem player. Just imagine the wailing and gnashing of teeth that this would have resulted in for the sort of folks with internet connections that were &ldquo;of only marginal utility&rdquo;. :)</p><br><p>In order to move beyond the LAN and the well connected elite at university networks and large companies, it was necessary to change the model. And in 1996, that&rsquo;s exactly what John Carmack and his team did when he released Quake using client/server instead of peer-to-peer.</p><br><p>Now instead of each player running the same game code and communicating directly with each other, each player was now a &ldquo;client&rdquo; and they all communicated with just one computer called the &ldquo;server&rdquo;. There was no longer any need for the game to be deterministic across all machines, because the game really only existed on the server. Each client effectively acted as a <i>dumb terminal</i> showing an approximation of the game as it played out on the server.</p><br><p>In a pure client/server model you run no game code locally, instead sending your inputs such as key presses, mouse movement, clicks to the server. In response the server updates the state of your character in the world and replies with a packet containing the state of your character and other players near you. All the client has to do is interpolate between these updates to provide the illusion of smooth movement and <em>BAM</em> you have a networked game.</p><br><p>This was a great step forward. The quality of the game experience now depended on the connection between the client and the server instead of the most lagged peer in the game. It also became possible for players to come and go in the middle of the game, and the number of players increased as client/server reduced the bandwidth required on average per-player.</p><br><p>But there were still problems with the pure client/server model:</p><br><blockquote>While I can remember and justify all of my decisions about networking from DOOM through Quake, the bottom line is that I was working with the wrong basic assumptions for doing a good internet game. My original design was targeted at &lt; 200ms connection latencies. People that have a digital connection to the internet through a good provider get a pretty good game experience. Unfortunately, 99% of the world gets on with a slip or ppp connection over a modem, often through a crappy overcrowded ISP. This gives 300+ ms latencies, minimum. Client. User&#39;s modem. ISP&#39;s modem. Server. ISP&#39;s modem. User&#39;s modem. Client. God, that sucks.<br>Ok, I made a bad call. I have a T1 to my house, so I just wasn&#39;t familliar with PPP life. I&#39;m addressing it now.</blockquote><br><p>The problem was of course latency.</p><br><p>What happened next would change the industry forever.</p><br><h2 id="client-side-prediction">Client-Side Prediction</h2><br><p>In the original Quake you felt the latency between your computer and the server. Press forward and you&rsquo;d wait however long it took for packets to travel to the server and back to you before you&rsquo;d actually start moving. Press fire and you wait for that same delay before shooting.</p><br><p>If you&rsquo;ve played any modern FPS like Call of Duty: Modern Warfare, you know this is no longer what happens. So how exactly do modern FPS games remove the latency on your own actions in multiplayer?</p><br><p>When writing about his plans for the soon to be released QuakeWorld, John Carmack said:</p><br><blockquote> I am now allowing the client to guess at the results of the users movement until the authoritative response from the server comes through. This is a biiiig architectural change. The client now needs to know about solidity of objects, friction, gravity, etc. I am sad to see the elegant client-as-terminal setup go away, but I am practical above idealistic.</blockquote><br><p>So now in order to remove the latency, the client runs more code than it previously did. It is no longer a dumb terminal sending inputs to the server and interpolating between state sent back. Instead it is able to predict the movement of your character locally and <i>immediately</i> in response to your input, running a subset of the game code for your player character on the client machine.</p><br><p>Now as soon as you press forward, there is no wait for a round trip between client and server - your character start moving forward right away.</p><br><p>The difficulty of this approach is not in the prediction, for the prediction works just as normal game code does - evolving the state of the game character forward in time according to the player&rsquo;s input. The difficulty is in applying the correction back from the server to resolve cases when the client and server disagree about where the player character should be and what it is doing.</p><br><p>Now at this point you might wonder. Hey, if you are running code on the client - why not just make the client authoritative over their player character? The client could run the simulation code for their own character and simply tell the server where they are each time they send a packet. The problem with this is that if each player were able to simply tell the server &ldquo;here is my current position&rdquo; it would be trivially easy to hack the client such that a cheater could instantly dodge the RPG about to hit them, or teleport instantly behind you to shoot you in the back.</p><br><p>So in FPS games it is absolutely necessary that the server is the authoritative over the state of each player character, in-spite of the fact that each player is locally predicting the motion of their own character to hide latency. As Tim Sweeney writes in <a href="https://docs.unrealengine.com/udk/Three/NetworkingOverview.html" target="_blank" rel="noopener">The Unreal Networking Architecture</a>: &ldquo;The Server Is The Man&rdquo;.</p><br><p>Here is where it gets interesting. If the client and the server disagree, the client <i>must</i> accept the update for the position from the server, but due to latency between the client and server this correction is necessarily in the past. For example, if it takes 100ms from client to server and 100ms back, then any server correction for the player character position will appear to be 200ms in the past, relative to the time up to which the client has predicted their own movement.</p><br><p>If the client were to simply apply this server correction update verbatim, it would yank the client back in time, completely undoing any client-side prediction. How then to solve this while still allowing the client to predict ahead?</p><br><p>The solution is to keep a circular buffer of past character state and input for the local player on the client, then when the client receives a correction from the server, it first discards any buffered state older than the corrected state from the server, and replays the state starting from the corrected state back to the present &ldquo;predicted&rdquo; time on the client using player inputs stored in the circular buffer. In effect the client invisibly &ldquo;rewinds and replays&rdquo; the last n frames of local player character movement while holding the rest of the world fixed.</p><br><p>This way the player appears to control their own character without any latency, and provided that the client and server character simulation code is reasonable, giving roughly exactly the same result for the same inputs on the client and server, it is rarely corrected. It is as Tim Sweeney describes:</p><br><blockquote>… the best of both worlds: In all cases, the server remains completely authoritative. Nearly all the time, the client movement simulation exactly mirrors the client movement carried out by the server, so the client’s position is seldom corrected. Only in the rare case, such as a player getting hit by a rocket, or bumping into an enemy, will the client’s location need to be corrected.</blockquote><br><p>In other words, only when the player&rsquo;s character is affected by something external to the local player&rsquo;s input, which cannot possibly be predicted on the client, will the player&rsquo;s position need to be corrected. That and of course, if the player is attempting to cheat :)</p>
+
+<h1 id="译文"><a href="#译文" class="headerlink" title="译文"></a>译文</h1><p><a href="http://gad.qq.com/program/translateview/7161836" target="_blank" rel="noopener">译文出处</a></p>
+<div style="display:none"><br><br><div class="WordSection1"><p class="MsoNormal" align="center" style="text-align: left;"><span style="font-family: 微软雅黑, sans-serif; font-size: 12pt;">翻译：黄威（横写、意气风发）</span><span style="font-family: 微软雅黑, sans-serif; font-size: 12pt;">  </span><span style="font-family: 微软雅黑, sans-serif; font-size: 12pt;">审校：艾涛（轻描一个世界）</span></p><p class="MsoNormal" style="line-height:400%"><span style="font-size:16.0pt;line-height:400%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><b>介绍</b></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">作为一名程序员，你是否曾想过多人游戏是如何运作的呢？</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">从表面来看这是非常奇妙：两个或者更多的玩家通过网络能够拥有相同的游戏体验，就像他们确实存在于同一个虚拟世界一样。但是作为程序员，我们知道底层运行的情况与你看到的完全不同。事实证明，这完全是一种错觉，是一个精妙的戏法。你能感受到游戏中的玩家都处于同一个世界中，但其实这只是在各个时间点，你自己独有的视角与位置和其他玩家的视角与位置相似。</span></p><p class="MsoNormal" style="text-align: center; text-indent: 24pt;"><img src="http://gameweb-img.qq.com/gad/20160628/phpEw63Qf.1467079995.jpg" alt="游戏网络开发(六)：每个游戏开发者都需要知道的游戏网络知识"></p><p class="MsoNormal" style="line-height:400%"><span style="font-size:16.0pt;line-height:400%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><b>对等同步</b></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">起初，网络游戏形成一个对等的网络，在这个网络中每台电脑在一个完全连接的网状拓扑结构中互相交换信息。如今在<span>RTS</span>游戏（即时战略游戏）中你仍能够看到这一模型，有趣的是，因为某种原因，可能因为它是第一种网络连接方式——大多数人仍认为游戏网络是这样运作的。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">基本思想就是在处理数据时将游戏抽象化成一系列的数据改变与一组命令消息，每一个数据改变都决定了游戏状态的演变。例如：移动单位、攻击单位、建造建筑。所有的这一切都要求网络让每一位玩家的机器都从相同的初始状态开始，并且运行完全相同的命令，数据的改变也完全相同。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">当然，这只是一个过于简单并且忽略掉了许多微妙细节的解释，但这个解释向我们解释了<span>RTS</span>游戏网络工作的基本原理。你可以点击</span><span><a rel="noopener" href="http://www.gamasutra.com/view/feature/3094/1500_archers_on_a_288_network_.php" target="_blank"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><span>这里</span></span></a></span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">了解更多关于这个网络模型的细节。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这看起来是如此简单而又巧妙，但是不幸的是这个模型有几个限制因素。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">首先，要想保证游戏状态完全确定是非常困难的；即每台机器都进行着相同的变动。比如说，一个单位可以在两台机器上走略微不同的道路，在一台机器上玩家更早进入战斗并反败为胜，而在另一台机器上玩家到达的更晚，然后，嗯，没有取得胜利。就像一只蝴蝶扇动了翅膀，然后在世界的另一边导致了飓风的出现，随着时间的过去，一个微小的区别会导致两边完全的不同步。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">另一个限制因素就是为了保证游戏在所有机器上表现同步，就有必要在游戏操作在设备上模拟之前进行等待，直到设备接收到了所有玩家对于那个变动的指令。这就意味着游戏中的每一个玩家的延迟都等于延迟最高玩家的延迟。<span>RTS</span>游戏通常代表性地通过立即提供音频反馈与（或是）播放过渡动画来掩盖这段延迟，但是最终真正影响游戏的操作要在这段延迟过去之后才能进行。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">最后一个限制因素就在于游戏的同步方式是通过发送改变当前状态的命令消息。为了让其正常工作就有必要让所有的玩家由同一初始状态开始游戏。通常来说，这就意味着每个玩家都要在开始游戏之前进入房间准备游戏，尽管支持让玩家随后加入游戏从技术上来说是可行的，但是由于在一场进行中的游戏中间捕获与传输一个完全确定的起始点的难度很大，所以这种情况并不常见。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">尽管有这些限制，这个模型还是很适合<span>RTS</span>游戏的，并且在现代的游戏中它仍然存在，例如“命令与征服”、“帝国时代”与“星际争霸”等。原因就是在<span>RTS</span>游戏中，游戏状态包含了成千上万的单位，并且通常游戏状态太大而不能在玩家之间交换。这些游戏别无选择，只能交换这些驱动着游戏状态改变的指令。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">但是对于其他类别的游戏，美工的状态已经改变了。所以对于确定的对等网络同步模型就讲到这里。现在让我们从<span>Doom</span>（毁灭战士）、<span>Quake</span>（雷神之锤）以及<span>Unreal</span>（魔域幻境）中看看动作类游戏的演变。</span></p><p class="MsoNormal" style="line-height:400%"><span style="font-size:15.0pt;line-height:400%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><b>客户端<span>/</span>服务器（<span>C/S</span>结构）</b></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">在动作游戏的时代，对等同步的限制因素在<span>Doom</span>中表现得更加明显，尽管它在局域网中表现很好，但是在面对互联网中的普通用户时表现得很糟糕：</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">“虽然可以通过调制解调器将两个运行<span>DOOM</span>的设备在互联网上连接在一起，最终游戏将会变得缓慢，延迟的情况在完全不能进行游戏（例如一个<span>14.4Kbps</span>的<span>P2P</span>连接）到略微可玩（例如一个<span>28.8Kbps</span>的调制解调器运行一个压缩驱动程序）之间不等。<u>因为这些类型的连接只有边际效用，本文将只关注于网络连接。</u>（</span><span><a rel="noopener" href="http://www.faqs.org/faqs/games/doom/howto-tcp/#ixzz0daOnpBYn" target="_blank"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">faqs.org</span></a></span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">）”</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这个问题显然就是<span>Doom</span>本来就是只为局域网设计的，并且使用了前面描述的为<span>RTS</span>游戏制作的对等同步模型。每一个玩家输入的行为（关键按键等等）与其他人进行信息交换，只有在所有其他玩家的关键按键都被接收到之后，玩家才能够进行游戏画面的模拟。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">换句话说，在你能够操作、移动或是射击之前，你必须等待延迟最高的玩家进行连入。想想这上述的所谓“这些连接只有边际效用”将会导致的令人咬牙切齿的情况。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">现在的游戏局限于局域网游戏以及拥有良好连接条件的大学网络或是大公司的精英之间的游戏，为了改变这种情况，是时候改变这个模型了。这就是<span>John Carmack 1996</span>年在发布雷神之锤时所做的事情——他使用客户端<span>/</span>服务器（<span>C/S</span>结构）代替了对等同步模型（<span>P2P</span>）。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">现在，玩家们不再运行相同的游戏代码，直接地互相交换数据，如今每个玩家都是一个客户端，他们都与一台叫做<span>“</span>服务器<span>”</span>的电脑进行数据交换。现在的游戏不再有任何对于所有机器都要进行确定的要求，因为游戏实际上只存在于服务器上。每个客户端实际上都是作为哑终端，用来显示出一个游戏的近似情况，因为游戏实际上只在服务器上发生。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">在一个纯粹的客户端<span>/</span>服务器模型中你没有在本地运行游戏代码，而是将你的操作例如按键、鼠标移动、点击等发送到服务器。服务器响应并更新了虚拟世界中你的角色状态，然后将一个包含着你与你周围角色状态的数据包传回。所有客户端要做的事情就是在这些数据更新之间插入自己的数据，然后给你一种流畅移动的假象，然后，<span>boom</span>！你就有了一个联网的客户端<span>/</span>服务器游戏了。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这是一个伟大的进步。游戏体验的质量现在取决于客户端与服务器之间的连接，而不是取决于游戏中延迟最高的玩家。这同时让玩家在游戏进行中的加入变成了可能，并且随着客户端<span>/</span>服务器结构对于每位玩家需要的平均带宽减少，游戏玩家也在逐渐增长。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">但是对于纯粹的客户端<span>/</span>服务器模型仍然存在一些问题。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">“尽管我能记得并整理出我从<span>DOOM</span>到<span>Quake</span>做出的所有关于网络的决定，结果就是尽管我为了做出一个好的网络游戏而努力着，但这些努力都是基于一个错误的基础假设。我原先的设计目标就是使延迟低于<span>200ms</span>。这样的话通过一个好的供应商数字连接到网络的人，就能有一个很好的游戏体验。很不幸，世界上百分之九十就都是通过调制解调器进行<span>SLIP</span>连接或是<span>PPP</span>连接，它们通常是通过一个糟糕拥挤的<span>ISP</span>（网络服务提供者）进行连接的。这就导致了<span>300ms</span>以上的延迟，并且这只是最低值。客户端，使用者的调制解调器，<span>ISP</span>的调制解调器，服务器，再回到<span>ISP</span>的调制解调器，使用者的调制解调器，最后再回到客户端。天呐，这真是糟透了！</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">好吧，我做了一件错误的事。我在家里都使用<span>T1</span>载体进行联网，所以我对使用<span>P2P</span>的生活并不了解，我现在就解决这个问题。”</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">问题当然就是延迟。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">接下来<span>John</span>在他发布<span>QuakeWorld</span>（雷神世界）时做的事情将永久改变这个行业。</span></p><p class="MsoNormal" style="line-height:400%"><span style="font-size:15.0pt;line-height:400%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><b>客户端预测</b></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">在最初的雷神之锤中，你可以明显感受到你的电脑与服务器之间的延迟。在你向前点击之后，你需要等待数据包发送至服务器然后再传回到你的电脑，然后你才能够开始移动。点击开火，然后你在射击之前同样需要等待上述延迟。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果你玩过任何像《使命召唤<span>4</span>：现代战争》之类的现代<span>FPS</span>游戏，你就会知道这种情况现在已经不会再出现了。那么现代<span>FPS</span>游戏到底是如何做到在多人游戏中看似消除了你自己行为的延迟呢？</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这个问题在历史上分两个部分来解决。第一部分就是<span>JohnCarmack</span>为雷神世界开发的客户端移动预测，它后来被合并作为<span>Tim Sweeney</span>的魔域幻境网络模型的一部分。第二部分就是维尔福公司的<span>Yahn Bernier</span>为反恐精英开发的延迟补偿。在本节中，我们将主要讨论第一部分<span>——</span>如何隐藏玩家移动的延迟。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">当谈到他对于即将发布的雷神世界的计划时，<span>JohnCarmack</span>说：</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">“我们现在允许客户端预测使用者行动的结果，直到服务器传来命令式回复。这是一个非常非常大的架构变化。客户端现在需要知道物体的硬度、摩擦力、重力之类的数据。对于简洁的客户端作为终端计划我们已经不再采用了，我对此表示遗憾，但我是一个实用主义者而不是一个理想主义者。”</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">所以为了消除延迟，客户端需要比之前运行更多的代码。它现在不再是一个向服务器发送输入内容并在状态发回之前进行数据插入的哑终端，它现在能够在本地预测你的角色移动，并且对你的输入迅速做出反应，在客户端设备上为你的游戏角色运行一部分游戏代码。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">现在只要你向前点击，不需要再等待客户端与服务器之间的信息往返——你的角色立即开始向前移动。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这种方法的难点不在于预测，因为预测就像是普通游戏代码做的那样——根据玩家的操作随时间发展游戏角色状态。难点就在于，当客户端和服务器对于游戏角色所处的位置及所做的事情有分歧时，客户端如何以服务器传来的信息为基础进行修正。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">对于这一点，你可能会想，嘿，如果你在客户端运行游戏代码——为什么不以客户端的情况作为游戏角色的标准呢。客户端可以为自己的角色运行仿真代码，并在每次发送数据包时告诉服务器现在的情况。那么问题就是，如果每个玩家都可以简单地告诉服务器“这就是我现在的情况”，那就非常容易黑进客户端进行作弊，例如作弊者可以瞬间躲开将要射向他们的子弹，或者立即传送到你身后从后方射击你。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">所以在<span>FPS</span>游戏中，尽管每个玩家在本地预测自己角色的运动，从表面上隐藏了延迟，但以服务器状态作为每个玩家角色状态的标准是绝对有必要的。就像<span>Tim Sweeney</span>在</span><span><a rel="noopener" href="http://unreal.epicgames.com/Network.htm" target="_blank"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">UE</span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><span>网络架构</span></span></a></span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">里写到的：“服务器才是大哥！”</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这就是有趣的地方。如果客户端和服务器信息不一致，客户端就必须接受来自服务器的位置更新，但是由于客户端与服务器之间的延迟，这个对过去修正是必然的。举个例子，如果从客户端到服务器要消耗<span>100ms</span>，再经过<span>100ms</span>回来，那么任何服务器对于玩家角色位置的修正就会有<span>200ms</span>的延迟，这个时间是相对于客户端开始预测自己移动的时间。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果客户端连续接收服务器的修正更新，这就会及时拉回客户端，这就会导致客户端完全不能做任何客户端预测。怎么解决这个问题的同时仍然允许客户端进行超前预测呢？</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">解决方法就是在客户端为过去的角色状态以及本地玩家的输入创建一个循环缓冲区，然后当客户端收到一个来自服务器的修正，（首先它丢弃比服务器的修正状态更早的缓冲状态）依据玩家储存在循环缓冲区的输入对由上一次的正确状态开始到现在预测时间的状态进行重放。实际上客户端在等待接下来的情况匹配完成之前悄悄地“倒放与重放”当地的玩家角色移动的最后几帧。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这个方法可以让玩家看似无延迟地控制他们的角色，并且如果客户端与服务器的角色模拟代码一致的话——由于在客户端与服务器上相同的输入可以准确给出相同的结果——这就很少出现要修正的情况。这就像是<span>Tim Sweeney</span>描述的那样：</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">“<span>……</span>最好的两个世界：在所有情况下，服务器都是绝对权威。在几乎任何时间内，客户端的移动模拟都与服务器计算出的客户端移动完全相同，所以客户端的情况很少需要修正。只有在极少的情况，例如玩家被一枚火箭击中，或是撞上一名敌人，客户端的情况将被修正。”</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">换句话说，只有当玩家的角色被一些外部事情影响到了玩家的输入，并且这些不能被客户端所预测时，玩家的情况需要被修正。当然，如果玩家试图作弊时亦然。</span></p><p class="MsoNormal" align="left" style="line-height: 18.4pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"> </span></p><p class="MsoNormal" align="left" style="line-height: 18.4pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:14.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">【版权声明】</span></p><p class="MsoNormal" align="left" style="line-height: 18.4pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:14.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">原文作者未做权利声明，视为共享知识产权进入公共领域，自动获得授权。</span><span style="font-size:9.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333"> </span></p><p class="MsoNormal" align="left" style="text-indent: 24pt;"><span style="font-family:&quot;Lucida Sans Unicode&quot;,&quot;sans-serif&quot;;color:#222222"> </span></p></div>                    </div><br>                
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/GafferOnGames/" rel="tag"><i class="fa fa-tag"></i> GafferOnGames</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2016/11/17/游戏网络开发四之基于UDP的可靠性与排序和避免拥堵/" rel="next" title="游戏网络开发四之基于UDP的可靠性与排序和避免拥堵">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    游戏网络开发四之基于UDP的可靠性与排序和避免拥堵
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2016/12/31/tcp拥塞控制之慢启动和拥塞避免/" rel="prev" title="tcp拥塞控制之慢启动和拥塞避免">
+                <p class="post-nav-pre-next-title">
+                    tcp拥塞控制之慢启动和拥塞避免
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原文"><span class="nav-number">1.</span> <span class="nav-text">原文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#peer-to-peer-lockstep"><span class="nav-number">1.2.</span> <span class="nav-text">Peer-to-Peer Lockstep</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#client-server"><span class="nav-number">1.3.</span> <span class="nav-text">Client/Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#client-side-prediction"><span class="nav-number">1.4.</span> <span class="nav-text">Client-Side Prediction</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#译文"><span class="nav-number">2.</span> <span class="nav-text">译文</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

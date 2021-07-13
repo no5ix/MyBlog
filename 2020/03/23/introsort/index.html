@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Algo,Sort,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="基于比较的排序算法复杂度的理论下界为 O(nlog n)，同时指出了：  每一次判定  a &amp;lt; b ，都相当于回答了一次「是否问题」。按照已有的知识，若要尽可能快地完成排序，就要让每一次大小判断的结果落在两种答案之一的概率接近；若不然，则这次比较带来的信息量较小，也就需要更多次的比较来完成排序。  此篇建立在这些知识的基础上，首先探讨以下三个问题，而后引出号称「在所有情况下，都能较快完成排序">
+<meta name="keywords" content="Algo,Sort">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内省排序">
+<meta property="og:url" content="https://hulinhong.com/2020/03/23/introsort/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="基于比较的排序算法复杂度的理论下界为 O(nlog n)，同时指出了：  每一次判定  a &amp;lt; b ，都相当于回答了一次「是否问题」。按照已有的知识，若要尽可能快地完成排序，就要让每一次大小判断的结果落在两种答案之一的概率接近；若不然，则这次比较带来的信息量较小，也就需要更多次的比较来完成排序。  此篇建立在这些知识的基础上，首先探讨以下三个问题，而后引出号称「在所有情况下，都能较快完成排序">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.058Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="内省排序">
+<meta name="twitter:description" content="基于比较的排序算法复杂度的理论下界为 O(nlog n)，同时指出了：  每一次判定  a &amp;lt; b ，都相当于回答了一次「是否问题」。按照已有的知识，若要尽可能快地完成排序，就要让每一次大小判断的结果落在两种答案之一的概率接近；若不然，则这次比较带来的信息量较小，也就需要更多次的比较来完成排序。  此篇建立在这些知识的基础上，首先探讨以下三个问题，而后引出号称「在所有情况下，都能较快完成排序">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>内省排序 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2020/03/23/introsort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">内省排序</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-23T01:24:14+00:00">
+                2020-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algo/" itemprop="url" rel="index">
+                    <span itemprop="name">Algo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Algo/" rel="tag"><i class="fa fa-tag"></i> Algo</a>
+              
+                <a href="/tags/Sort/" rel="tag"><i class="fa fa-tag"></i> Sort</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/21/template_in_cpp_file/" rel="next" title="模板能放cpp文件里吗之为什么">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  模板能放cpp文件里吗之为什么
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/06/win_share_not_found_issue/" rel="prev" title="Windows共享教程">
+              <p class="post-nav-pre-next-title">
+                  Windows共享教程
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <p>基于比较的排序算法复杂度的理论下界为 O(nlog n)，同时指出了：</p>
+<blockquote>
+<p>每一次判定  a &lt; b ，都相当于回答了一次「是否问题」。按照已有的知识，若要尽可能快地完成排序，就要让每一次大小判断的结果落在两种答案之一的概率接近；若不然，则这次比较带来的信息量较小，也就需要更多次的比较来完成排序。</p>
+</blockquote>
+<p>此篇建立在这些知识的基础上，首先探讨以下三个问题，而后引出号称「在所有情况下，都能较快完成排序任务的内省式排序（Introspective Sort）」：</p>
+<ol>
+<li>为什么堆排序一般快不过快速排序？</li>
+<li>快速排序快得无懈可击吗？</li>
+<li>插入排序什么时候快？</li>
+</ol>
+<h1 id="为什么在平均情况下快速排序比堆排序要优秀"><a href="#为什么在平均情况下快速排序比堆排序要优秀" class="headerlink" title="为什么在平均情况下快速排序比堆排序要优秀"></a>为什么在平均情况下快速排序比堆排序要优秀</h1><p>堆排序是渐进最优的比较排序算法，达到了O(nlgn)这一下界，而快排有一定的可能性会产生最坏划分，时间复杂度可能为O(n^2)，那为什么快排在实际使用中通常优于堆排序？</p>
+<ul>
+<li>虽然quick_sort会n^2（其实有稳定的nlgn的版本），但这毕竟很少出现。heap_sort大多数情况下比较次数都多于quick_sort，尽管大家都是nlgn。那就让倒霉蛋倒霉好了，大多数情况下快才是硬道理。  </li>
+<li>堆排比较的几乎都不是相邻元素，对cache极不友好，这才是很少被采用的原因。数学上的时间复杂度不代表实际运行时的情况.快排是分而治之，每次都在同一小段进行比较，最后越来约接近局部性。反观堆排，堆化过程中需要一直拿index的当前元素A和处于index*2 + 1 的子元素B比较, 两个元素距离较远。(局部性原理是指CPU访问存储器时，无论是存取指令还是存取数据，所访问的存储单元都趋于聚集在一个较小的连续区域中。)  </li>
+<li>在快排的迭代过程中，我们所处理的 [比基准大的数]，[比基准小的数] 序列中，在进行两个数之间大小比较时，在该局部范围内，产生“大于”或者“小于”的可能性是一样的。这意味着每比较一次必然会产生一次有意义的比较结果，会缩减接下来迭代的扫描工作量。  </li>
+<li>我们再来看看堆排序。在每一次进行重新堆调整的时候，我们在迭代时其实就已经知道，上一层的结点值一定是比下面大的。为了打乱堆结构把最后一个元素与顶堆互换时，此时我们也已经知道，互换后的元素是一定比下一层的数要小的。而在迭代时为了调整堆我们还是要进行一次已经知道结果的比较，这无疑是没有什么价值的，也就是产生了一次没有意义的比较，对接下来的迭代工作量并没有任何进展。  </li>
+</ul>
+<p><strong>. . .</strong><a id="more"></a></p>
+<h2 id="回顾三种排序算法"><a href="#回顾三种排序算法" class="headerlink" title="回顾三种排序算法"></a>回顾三种排序算法</h2><h1 id="堆排序慢在哪"><a href="#堆排序慢在哪" class="headerlink" title="堆排序慢在哪"></a>堆排序慢在哪</h1><p>首先回顾一下堆排序的大致流程：</p>
+<ol>
+<li>在未排序部分建堆——一棵二叉树，父节点总是比子节点大；</li>
+<li>将堆顶元素与最后一个未排序元素兑换；</li>
+<li>回到 1，直至排序完成。</li>
+</ol>
+<p>这里需要注意，在用数组实现的堆当中，父节点 i 的左右子节点的位置分别是 2i + 1 与 2i + 2,</p>
+<p>按照前述的原则，不难发现，堆底元素几乎是必然要小于堆顶元素的两个子节点元素。因此，在重新建堆时，原本的堆底元素与上述两个元素的比较  a &lt; b  成立的概率几乎为 0。这就意味着，在堆排序中，存在诸多类似这样「不平衡」的判断，而这些判断带来的信息量很小，因此需要额外的比较次数来提供足够的信息量。</p>
+<p>这就是堆排序不够快的原因。具体来说，尽管在平均情况下，堆排序的时间复杂度与快速排序都是 O(nlog n)，但是它时间复杂度的常数项要比快速排序大不少。不过，由于堆排序所需的比较次数是恒定的，所以它在最坏的情况下，复杂度也是 O(nlog n)。这算是堆排序的一个优点。</p>
+<h1 id="快速排序也没有快得无懈可击"><a href="#快速排序也没有快得无懈可击" class="headerlink" title="快速排序也没有快得无懈可击"></a>快速排序也没有快得无懈可击</h1><p>快速排序的核心是选取主元（pivot），而后将小于主元的元素置于左边以及大于等于主元的元素置于右边，而后递归这个过程。</p>
+<p>现在我们来看元素 a 的比较过程。在全部 n! 种排列中，满足 a &lt; pivot  的排列有一半，不满足的也有一半。因此这次比较干掉了一半的可能性，nice shot！</p>
+<p>不失一般性，现在假定  a &lt; pivot  成立，我们来看元素 b 的比较过程。在剩下的 frac{n!}{2} 种排列中，满足  b &lt; a &lt;  pivot 、 a &lt; b &lt;  pivot  和  a &lt;  pivot &lt; b  的各占三分之一。这也就是说，若是  b &lt;  pivot ，则这一次判断只能排除剩下的三分之一的可能性。这次比较的效果，就不那么令人满意了。</p>
+<p>继续下去，则每次比较所能获得的信息量会逐渐下降，距离最优的情形越来越远。特别地，若是 pivot 是序列中最大或最小的元素，则这一次分割没有排除任何可能性——完全是白费功夫。这就是为什么说快排也不是快得无懈可击，以及这就是为什么说 pivot 选择最值时是快速排序的最坏情况。</p>
+<h1 id="插入排序在几乎排好序的序列上很快"><a href="#插入排序在几乎排好序的序列上很快" class="headerlink" title="插入排序在几乎排好序的序列上很快"></a>插入排序在几乎排好序的序列上很快</h1><p>插入排序某种意义上是最生动的排序算法了。在玩扑克牌的时候，大多数人都会使用插入排序的办法，将分派到自己的扑克牌按顺序整理好。</p>
+<p>对于一个几乎已经排好序的序列（逆序对很少），使用堆排或快排仍然能达到 O(nlog n) 的时间复杂度。但是插入排序在这种情况下，只需要从头到尾扫描一遍，交换、移动少数元素即可；时间复杂度近乎 O(n)。究其原因，堆排或快排按照各自的要求，将已经近似排好序的序列打乱，而后又排序整理，没有用到「几乎已经排好序」的先验知识，所以在这种情况下不如插入排序快就是自然的了。</p>
+<h1 id="内省式排序（Introspective-Sort）"><a href="#内省式排序（Introspective-Sort）" class="headerlink" title="内省式排序（Introspective Sort）"></a>内省式排序（Introspective Sort）</h1><hr>
+<p>回顾上一节的内容，我们发现：</p>
+<ul>
+<li>快速排序在大多数情况下效率最高，应当是首选的排序算法。但是它在某些情况下，会掉入陷阱，复杂度恶化到 O(n^2)。</li>
+<li>堆排序虽然在大多数情况下不如快速排序效率高，但在所有的情况下复杂度都是 O(nlog n)。因此若能检测到快速排序掉入陷阱，则堆排序会是一个很好的补充。</li>
+<li>插入排序虽然复杂度虽然只能达到 O(n^2)，但若能已知「几乎已经排好序」，切换到插入排序的效率又要比快速排序和堆排序高出不少，能做到 O(n)。</li>
+</ul>
+<p>显然，三种排序各有优点也各有缺点。若能将它们的优点组合起来，同时避免它们各自的缺点，形成内省式排序，那就能做到在所有情况下都能以较快的速度完成排序任务了。</p>
+<p>不难归纳，这样的内省式排序，策略应该如下：</p>
+<ol>
+<li>在数据量足够大的情况使用快速排序；</li>
+<li>在快速排序掉入陷阱时，主动切换到堆排序；</li>
+<li>在快速排序和堆排序已经做到基本有序的情况下，或者数据量较小的情况下，主动切换到插入排序。</li>
+</ol>
+<p>于是，问题就变成了，如何定义数据量足够大或者说基本有序，以及如何确定快速排序掉入了陷阱，而对效率没有伤害。现在我们来解决这些问题，从而完善整个内省式排序。</p>
+<h1 id="数据量足够大或者基本有序是什么意思？"><a href="#数据量足够大或者基本有序是什么意思？" class="headerlink" title="数据量足够大或者基本有序是什么意思？"></a>数据量足够大或者基本有序是什么意思？</h1><p>一般来说，当递归调用带来的开销大于递归调用后实际操作的开销时，调用快排、堆排就不太恰当了。因此，如果存在一个阈值，当待排序元素的数量小于该阈值时递归调用的开销相对较大，则该阈值的大小应当取决于机器硬件的特性（位宽、cache 性能）和待排序元素本身的特性（体积、是否对缓存友好）。</p>
+<p>这一阈值某种意义上可以算作是算法的「超参数」，它不会在算法执行时带来额外的开销。</p>
+<h1 id="如何确定快速排序掉入了陷阱？"><a href="#如何确定快速排序掉入了陷阱？" class="headerlink" title="如何确定快速排序掉入了陷阱？"></a>如何确定快速排序掉入了陷阱？</h1><p>通过上文的分析，我们知道，快速排序的效率主要取决于 pivot 的选择。若 pivot 恰好是待分割区间内的最大值或最小值，则这种分割没有排除任何可能的排序，因而是白费力气。既然如此，那么最平凡的方式，就是去检查所选的 pivot 是否为待分割区间内的最值即可判定快速排序是否掉入了陷阱。</p>
+<p>然而，判定区间最值的问题，不可避免地要遍历区间内的所有元素。这也就是说，我们为了避免快速排序掉入陷阱，而使得复杂度从 O(nlog n) 恶化到 O(n^2)，我们在每一次递归中，都要遍历一次所有元素。这相当于额外增加了 O(nlog n) 的遍历操作。诚然，整个算法还是 O (nlog n) 的复杂度，但是无疑增加了常数倍数。考虑到我们的指导原则之一就是尽可能在大多数情况下，避免常数高的堆排序；主动去推高时间常数的做法是不可取的。</p>
+<p>行文至此，我们又需要转换一次看待问题的角度。正如数学中有「正难则反」的说法。</p>
+<p>我们来回顾一下计算机上的「杀毒软件」。早期的计算机病毒，更新速度较慢；但计算机「小白」太多，所以病毒的威力还是很大的。这时候的杀毒软件，会对病毒样本进行脱壳、反编译分析等操作，获取病毒的特征代码，而后加入特征库中。杀毒软件将更新的特征库分发给用户后，用户的杀毒软件就有能力查杀新的病毒了。这种方式的优点是精准，不易误杀；但是缺点也很明显——滞后性。</p>
+<p>为了解决这个问题，后来反病毒工程师就想了一个办法。我们说，判断一个事物可以有两种思路。一个是判断其本质特征，例如使用特征码判断病毒；二个是观察其行为特性。对于病毒来说，它总是要潜伏下来搞破坏的，所以必然有某些行为特征。杀毒软件可以利用这些行为特征来判断一个可执行文件是否是计算机病毒。而这件事情是可以不依赖中心服务器，交由杀毒软件客户端自己处理的。这就解决了传统杀毒软件滞后性的问题。</p>
+<p>杀毒软件的例子应当给予我们有一些启发。既然正面处理问题有困难，那就反过来，看看快速排序掉入陷阱会有什么行为特征。这似乎也不难，是显而易见的。快速排序调入陷阱，意味着在递归时快速排序算法会连续多次选中带分割区间的最值元素，从而导致多次「无效」分割，进而导致递归层数快速增加。因此，我们可以设置一个阈值；一旦递归深度超出该阈值，则认为快速排序掉入陷阱了并切换到堆排序算法。</p>
+<p>快速排序在理想状态下，应当递归约 log n 次。因此，我们可以说，如果递归深度明显大于 log n，快速排序就掉进陷阱了。于是，我们可以将该阈值设置为 log n 的某一倍数，比如 2log n；一旦递归深度超过 2log n，就从快速排序切换到堆排序。</p>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Algo/" rel="tag"><i class="fa fa-tag"></i> Algo</a>
+            
+              <a href="/tags/Sort/" rel="tag"><i class="fa fa-tag"></i> Sort</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/03/21/template_in_cpp_file/" rel="next" title="模板能放cpp文件里吗之为什么">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    模板能放cpp文件里吗之为什么
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/05/06/win_share_not_found_issue/" rel="prev" title="Windows共享教程">
+                <p class="post-nav-pre-next-title">
+                    Windows共享教程
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么在平均情况下快速排序比堆排序要优秀"><span class="nav-number">1.</span> <span class="nav-text">为什么在平均情况下快速排序比堆排序要优秀</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#回顾三种排序算法"><span class="nav-number">1.1.</span> <span class="nav-text">回顾三种排序算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#堆排序慢在哪"><span class="nav-number">2.</span> <span class="nav-text">堆排序慢在哪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#快速排序也没有快得无懈可击"><span class="nav-number">3.</span> <span class="nav-text">快速排序也没有快得无懈可击</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插入排序在几乎排好序的序列上很快"><span class="nav-number">4.</span> <span class="nav-text">插入排序在几乎排好序的序列上很快</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内省式排序（Introspective-Sort）"><span class="nav-number">5.</span> <span class="nav-text">内省式排序（Introspective Sort）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据量足够大或者基本有序是什么意思？"><span class="nav-number">6.</span> <span class="nav-text">数据量足够大或者基本有序是什么意思？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何确定快速排序掉入了陷阱？"><span class="nav-number">7.</span> <span class="nav-text">如何确定快速排序掉入了陷阱？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

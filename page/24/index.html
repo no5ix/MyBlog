@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="烫">
+<meta property="og:url" content="https://hulinhong.com/page/24/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="烫">
+<meta name="twitter:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>烫 - 烫烫烫烫烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/01/10/分布式具体实现重要组件之RPC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/10/分布式具体实现重要组件之RPC/" itemprop="url">分布式具体实现重要组件之RPC</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-10T13:18:12+00:00">
+                2017-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NP/" itemprop="url" rel="index">
+                    <span itemprop="name">NP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="RPC-是什么？"><a href="#RPC-是什么？" class="headerlink" title="RPC 是什么？"></a>RPC 是什么？</h1><p>RPC 的全称是 Remote Procedure Call 是一种进程间通信方式。它允许程序调用另一个地址空间（通常是共享网络的另一台机器上）的过程或函数，而不用程序员显式编码这个远程调用的细节。即程序员无论是调用本地的还是远程的，本质上编写的调用代码基本相同。 像腾讯的<a href="https://github.com/Tencent/phxrpc" target="_blank" rel="noopener">phxrpc框架</a>是使用Protobuf作为IDL用于描述RPC接口以及通信数据结构</p>
+<h1 id="c-RPC的实现"><a href="#c-RPC的实现" class="headerlink" title="c++ RPC的实现"></a>c++ RPC的实现</h1><ul>
+<li><p>1、一套完善的序列化框架；在不同的进程间传输数据，序列化是第一步，如何可靠且方便地将对象转化为二进制（或者其他格式），在对端则是如何正确且安全地将其从二进制恢复为对象。</p>
+</li>
+<li><p>2、完善的底层通信协议；其需要提供合适的语义抽象：服务端支持怎样的并发，是单客户单访问，还是多访问；而客户端的并发模型由服务端决定。当然，还需要健壮且足够的接口抽象，毕竟分布式环境，“一切皆有可能”，需要应对各种问题。</p>
+</li>
+<li><p>3、一个可用的反射系统。是的，需要在C++环境下建立一个反射系统。这一步是最为关键的，其由C++11支持。因为，我们需要注册一个类的各种信息，以供RPC调用。</p>
+</li>
+</ul>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/12/31/tcp拥塞控制之慢启动和拥塞避免/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/12/31/tcp拥塞控制之慢启动和拥塞避免/" itemprop="url">tcp拥塞控制之慢启动和拥塞避免</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-31T01:45:12+00:00">
+                2016-12-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NP/" itemprop="url" rel="index">
+                    <span itemprop="name">NP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="TCP拥塞控制概览"><a href="#TCP拥塞控制概览" class="headerlink" title="TCP拥塞控制概览"></a>TCP拥塞控制概览</h1><p>TCP的拥塞控制算法被设计用来防止快速的发送者压垮整个网络。如果一个发送TCP发<br>送包的速度要快于一个中间路由器转发的速度，那么该路由器就会开始丢弃包。这将会导致<br>较高的包丢失率，其结果是如果TCP保持以相同的速度发送这些被丢弃的分段的话就会极大<br>地降低性能。TCP的拥塞控制算法在下列两个场景中是比较重要的。</p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/11/18/游戏网络开发五之每个游戏开发者都需要知道的游戏网络知识/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/18/游戏网络开发五之每个游戏开发者都需要知道的游戏网络知识/" itemprop="url">游戏网络开发五之每个游戏开发者都需要知道的游戏网络知识</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-18T22:20:34+00:00">
+                2016-11-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GS/" itemprop="url" rel="index">
+                    <span itemprop="name">GS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="https://gafferongames.com/post/what_every_programmer_needs_to_know_about_game_networking/" target="_blank" rel="noopener">原文出处</a></p>
+<p></p><h2 id="introduction">Introduction</h2><p></p>
+<p>Hi, I&rsquo;m <a href="https://gafferongames.com/about" target="_blank" rel="noopener">Glenn Fiedler</a> and welcome to <a href="https://gafferongames.com/categories/game-networking/" target="_blank" rel="noopener"><strong>Networking for Game Programmers</strong></a>.</p><br><p>Have you ever wondered how multiplayer games work?</p><br><p>From the outside it seems magical: two or more players sharing a consistent experience across the network like they actually exist together in the same virtual world.</p><br><p>But as programmers we know the truth of what is actually going on underneath is quite different from what you see. It turns out it&rsquo;s all an illusion. A massive sleight-of-hand. What you perceive as a shared reality is only an approximation unique to your own point of view and place in time.</p><br><h2 id="peer-to-peer-lockstep">Peer-to-Peer Lockstep</h2><br><p>In the beginning games were networked peer-to-peer, with each each computer exchanging information with each other in a fully connected mesh topology. You can still see this model alive today in RTS games, and interestingly for some reason, perhaps because it was the first way - it&rsquo;s still how most people think that game networking works.</p><br><p>The basic idea is to abstract the game into a series of turns and a set of command messages when processed at the beginning of each turn direct the evolution of the game state. For example: move unit, attack unit, construct building. All that is needed to network this is to run exactly the same set of commands and turns on each player&rsquo;s machine starting from a common initial state.</p><br><p>Of course this is an overly simplistic explanation and glosses over many subtle points, but it gets across the basic idea of how networking for RTS games work. You can read more about this networking model here: <a href="http://www.gamasutra.com/view/feature/3094/1500_archers_on_a_288_network_.php" target="_blank" rel="noopener">1500 Archers on a 28.8: Network Programming in Age of Empires and Beyond</a>.</p><br><p>It seems so simple and elegant, but unfortunately there are several limitations.</p><br><p>First, it&rsquo;s exceptionally difficult to ensure that a game is completely deterministic; that each turn plays out identically on each machine. For example, one unit could take slightly a different path on two machines, arriving sooner to a battle and saving the day on one machine, while arriving later on the other and erm. not saving the day. Like a butterfly flapping it&rsquo;s wings and causing a hurricane on the other side of the world, one <i>tiny difference</i> results in complete desynchronization over time.</p><br><p>The next limitation is that in order to ensure that the game plays out identically on all machines it is necessary to wait until all player&rsquo;s commands for that turn are received <i>before</i> simulating that turn. This means that each player in the game has latency equal to the most lagged player. RTS games typically hide this by providing audio feedback immediately and/or playing cosmetic animation, but ultimately any truly game affecting action may occur only after this delay has passed.</p><br><p>The final limitation occurs because of the way the game synchronizes by sending just the command messages which change the state. In order for this to work it is necessary for all players to start from the same initial state. Typically this means that each player must join up in a lobby before commencing play, although it is technically possible to support late join, this is not common due to the difficulty of capturing and transmitting a completely deterministic starting point in the middle of a live game.</p><br><p>Despite these limitations this model naturally suits RTS games and it still lives on today in games like &ldquo;Command and Conquer&rdquo;, &ldquo;Age of Empires&rdquo; and &ldquo;Starcraft&rdquo;. The reason being that in RTS games the game state consists of many thousands of units and is simply too large to exchange between players. These games have no choice but to exchange the commands which drive the evolution of the game state.</p><br><p>But for other genres, the state of the art has moved on. So that&rsquo;s it for the deterministic peer-to-peer lockstep networking model. Now lets look at the evolution of action games starting with Doom, Quake and Unreal.</p><br><h2 id="client-server">Client/Server</h2><br><p>In the era of action games, the limitations of peer-to-peer lockstep became apparent in Doom, which despite playing well over the LAN played <i>terribly</i> over the internet for typical users:</p><br><blockquote>Although it is possible to connect two DOOM machines together across the Internet using a modem link, the resulting game will be slow, ranging from the unplayable (e.g. a 14.4Kbps PPP connection) to the marginally playable (e.g. a 28.8Kbps modem running a Compressed SLIP driver). Since these sorts of connections are of only marginal utility, this document will focus only on direct net connections.</blockquote><br><p>The problem of course was that Doom was designed for networking over LAN only, and used the peer-to-peer lockstep model described previously for RTS games. Each turn player inputs (key presses etc.) were exchanged with other peers, and before any player could simulate a frame all other player&rsquo;s key presses needed to be received.</p><br><p>In other words, before you could turn, move or shoot you had to wait for the inputs from the most lagged modem player. Just imagine the wailing and gnashing of teeth that this would have resulted in for the sort of folks with internet connections that were &ldquo;of only marginal utility&rdquo;. :)</p><br><p>In order to move beyond the LAN and the well connected elite at university networks and large companies, it was necessary to change the model. And in 1996, that&rsquo;s exactly what John Carmack and his team did when he released Quake using client/server instead of peer-to-peer.</p><br><p>Now instead of each player running the same game code and communicating directly with each other, each player was now a &ldquo;client&rdquo; and they all communicated with just one computer called the &ldquo;server&rdquo;. There was no longer any need for the game to be deterministic across all machines, because the game really only existed on the server. Each client effectively acted as a <i>dumb terminal</i> showing an approximation of the game as it played out on the server.</p><br><p>In a pure client/server model you run no game code locally, instead sending your inputs such as key presses, mouse movement, clicks to the server. In response the server updates the state of your character in the world and replies with a packet containing the state of your character and other players near you. All the client has to do is interpolate between these updates to provide the illusion of smooth movement and <em>BAM</em> you have a networked game.</p><br><p>This was a great step forward. The quality of the game experience now depended on the connection between the client and the server instead of the most lagged peer in the game. It also became possible for players to come and go in the middle of the game, and the number of players increased as client/server reduced the bandwidth required on average per-player.</p><br><p>But there were still problems with the pure client/server model:</p><br><blockquote>While I can remember and justify all of my decisions about networking from DOOM through Quake, the bottom line is that I was working with the wrong basic assumptions for doing a good internet game. My original design was targeted at &lt; 200ms connection latencies. People that have a digital connection to the internet through a good provider get a pretty good game experience. Unfortunately, 99% of the world gets on with a slip or ppp connection over a modem, often through a crappy overcrowded ISP. This gives 300+ ms latencies, minimum. Client. User&#39;s modem. ISP&#39;s modem. Server. ISP&#39;s modem. User&#39;s modem. Client. God, that sucks.<br>Ok, I made a bad call. I have a T1 to my house, so I just wasn&#39;t familliar with PPP life. I&#39;m addressing it now.</blockquote><br><p>The problem was of course latency.</p><br><p>What happened next would change the industry forever.</p><br><h2 id="client-side-prediction">Client-Side Prediction</h2><br><p>In the original Quake you felt the latency between your computer and the server. Press forward and you&rsquo;d wait however long it took for packets to travel to the server and back to you before you&rsquo;d actually start moving. Press fire and you wait for that same delay before shooting.</p><br><p>If you&rsquo;ve played any modern FPS like Call of Duty: Modern Warfare, you know this is no longer what happens. So how exactly do modern FPS games remove the latency on your own actions in multiplayer?</p><br><p>When writing about his plans for the soon to be released QuakeWorld, John Carmack said:</p><br><blockquote> I am now allowing the client to guess at the results of the users movement until the authoritative response from the server comes through. This is a biiiig architectural change. The client now needs to know about solidity of objects, friction, gravity, etc. I am sad to see the elegant client-as-terminal setup go away, but I am practical above idealistic.</blockquote><br><p>So now in order to remove the latency, the client runs more code than it previously did. It is no longer a dumb terminal sending inputs to the server and interpolating between state sent back. Instead it is able to predict the movement of your character locally and <i>immediately</i> in response to your input, running a subset of the game code for your player character on the client machine.</p><br><p>Now as soon as you press forward, there is no wait for a round trip between client and server - your character start moving forward right away.</p><br><p>The difficulty of this approach is not in the prediction, for the prediction works just as normal game code does - evolving the state of the game character forward in time according to the player&rsquo;s input. The difficulty is in applying the correction back from the server to resolve cases when the client and server disagree about where the player character should be and what it is doing.</p><br><p>Now at this point you might wonder. Hey, if you are running code on the client - why not just make the client authoritative over their player character? The client could run the simulation code for their own character and simply tell the server where they are each time they send a packet. The problem with this is that if each player were able to simply tell the server &ldquo;here is my current position&rdquo; it would be trivially easy to hack the client such that a cheater could instantly dodge the RPG about to hit them, or teleport instantly behind you to shoot you in the back.</p><br><p>So in FPS games it is absolutely necessary that the server is the authoritative over the state of each player character, in-spite of the fact that each player is locally predicting the motion of their own character to hide latency. As Tim Sweeney writes in <a href="https://docs.unrealengine.com/udk/Three/NetworkingOverview.html" target="_blank" rel="noopener">The Unreal Networking Architecture</a>: &ldquo;The Server Is The Man&rdquo;.</p><br><p>Here is where it gets interesting. If the client and the server disagree, the client <i>must</i> accept the update for the position from the server, but due to latency between the client and server this correction is necessarily in the past. For example, if it takes 100ms from client to server and 100ms back, then any server correction for the player character position will appear to be 200ms in the past, relative to the time up to which the client has predicted their own movement.</p><br><p>If the client were to simply apply this server correction update verbatim, it would yank the client back in time, completely undoing any client-side prediction. How then to solve this while still allowing the client to predict ahead?</p><br><p>The solution is to keep a circular buffer of past character state and input for the local player on the client, then when the client receives a correction from the server, it first discards any buffered state older than the corrected state from the server, and replays the state starting from the corrected state back to the present &ldquo;predicted&rdquo; time on the client using player inputs stored in the circular buffer. In effect the client invisibly &ldquo;rewinds and replays&rdquo; the last n frames of local player character movement while holding the rest of the world fixed.</p><br><p>This way the player appears to control their own character without any latency, and provided that the client and server character simulation code is reasonable, giving roughly exactly the same result for the same inputs on the client and server, it is rarely corrected. It is as Tim Sweeney describes:</p><br><blockquote>… the best of both worlds: In all cases, the server remains completely authoritative. Nearly all the time, the client movement simulation exactly mirrors the client movement carried out by the server, so the client’s position is seldom corrected. Only in the rare case, such as a player getting hit by a rocket, or bumping into an enemy, will the client’s location need to be corrected.</blockquote><br><p>In other words, only when the player&rsquo;s character is affected by something external to the local player&rsquo;s input, which cannot possibly be predicted on the client, will the player&rsquo;s position need to be corrected. That and of course, if the player is attempting to cheat :)</p>
+
+<h1 id="译文"><a href="#译文" class="headerlink" title="译文"></a>译文</h1><p><a href="http://gad.qq.com/program/translateview/7161836" target="_blank" rel="noopener">译文出处</a></p>
+<div style="display:none"><br><br><div class="WordSection1"><p class="MsoNormal" align="center" style="text-align: left;"><span style="font-family: 微软雅黑, sans-serif; font-size: 12pt;">翻译：黄威（横写、意气风发）</span><span style="font-family: 微软雅黑, sans-serif; font-size: 12pt;">  </span><span style="font-family: 微软雅黑, sans-serif; font-size: 12pt;">审校：艾涛（轻描一个世界）</span></p><p class="MsoNormal" style="line-height:400%"><span style="font-size:16.0pt;line-height:400%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><b>介绍</b></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">作为一名程序员，你是否曾想过多人游戏是如何运作的呢？</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">从表面来看这是非常奇妙：两个或者更多的玩家通过网络能够拥有相同的游戏体验，就像他们确实存在于同一个虚拟世界一样。但是作为程序员，我们知道底层运行的情况与你看到的完全不同。事实证明，这完全是一种错觉，是一个精妙的戏法。你能感受到游戏中的玩家都处于同一个世界中，但其实这只是在各个时间点，你自己独有的视角与位置和其他玩家的视角与位置相似。</span></p><p class="MsoNormal" style="text-align: center; text-indent: 24pt;"><img src="http://gameweb-img.qq.com/gad/20160628/phpEw63Qf.1467079995.jpg" alt="游戏网络开发(六)：每个游戏开发者都需要知道的游戏网络知识"></p><p class="MsoNormal" style="line-height:400%"><span style="font-size:16.0pt;line-height:400%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><b>对等同步</b></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">起初，网络游戏形成一个对等的网络，在这个网络中每台电脑在一个完全连接的网状拓扑结构中互相交换信息。如今在<span>RTS</span>游戏（即时战略游戏）中你仍能够看到这一模型，有趣的是，因为某种原因，可能因为它是第一种网络连接方式——大多数人仍认为游戏网络是这样运作的。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">基本思想就是在处理数据时将游戏抽象化成一系列的数据改变与一组命令消息，每一个数据改变都决定了游戏状态的演变。例如：移动单位、攻击单位、建造建筑。所有的这一切都要求网络让每一位玩家的机器都从相同的初始状态开始，并且运行完全相同的命令，数据的改变也完全相同。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">当然，这只是一个过于简单并且忽略掉了许多微妙细节的解释，但这个解释向我们解释了<span>RTS</span>游戏网络工作的基本原理。你可以点击</span><span><a rel="noopener" href="http://www.gamasutra.com/view/feature/3094/1500_archers_on_a_288_network_.php" target="_blank"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><span>这里</span></span></a></span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">了解更多关于这个网络模型的细节。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这看起来是如此简单而又巧妙，但是不幸的是这个模型有几个限制因素。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">首先，要想保证游戏状态完全确定是非常困难的；即每台机器都进行着相同的变动。比如说，一个单位可以在两台机器上走略微不同的道路，在一台机器上玩家更早进入战斗并反败为胜，而在另一台机器上玩家到达的更晚，然后，嗯，没有取得胜利。就像一只蝴蝶扇动了翅膀，然后在世界的另一边导致了飓风的出现，随着时间的过去，一个微小的区别会导致两边完全的不同步。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">另一个限制因素就是为了保证游戏在所有机器上表现同步，就有必要在游戏操作在设备上模拟之前进行等待，直到设备接收到了所有玩家对于那个变动的指令。这就意味着游戏中的每一个玩家的延迟都等于延迟最高玩家的延迟。<span>RTS</span>游戏通常代表性地通过立即提供音频反馈与（或是）播放过渡动画来掩盖这段延迟，但是最终真正影响游戏的操作要在这段延迟过去之后才能进行。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">最后一个限制因素就在于游戏的同步方式是通过发送改变当前状态的命令消息。为了让其正常工作就有必要让所有的玩家由同一初始状态开始游戏。通常来说，这就意味着每个玩家都要在开始游戏之前进入房间准备游戏，尽管支持让玩家随后加入游戏从技术上来说是可行的，但是由于在一场进行中的游戏中间捕获与传输一个完全确定的起始点的难度很大，所以这种情况并不常见。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">尽管有这些限制，这个模型还是很适合<span>RTS</span>游戏的，并且在现代的游戏中它仍然存在，例如“命令与征服”、“帝国时代”与“星际争霸”等。原因就是在<span>RTS</span>游戏中，游戏状态包含了成千上万的单位，并且通常游戏状态太大而不能在玩家之间交换。这些游戏别无选择，只能交换这些驱动着游戏状态改变的指令。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">但是对于其他类别的游戏，美工的状态已经改变了。所以对于确定的对等网络同步模型就讲到这里。现在让我们从<span>Doom</span>（毁灭战士）、<span>Quake</span>（雷神之锤）以及<span>Unreal</span>（魔域幻境）中看看动作类游戏的演变。</span></p><p class="MsoNormal" style="line-height:400%"><span style="font-size:15.0pt;line-height:400%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><b>客户端<span>/</span>服务器（<span>C/S</span>结构）</b></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">在动作游戏的时代，对等同步的限制因素在<span>Doom</span>中表现得更加明显，尽管它在局域网中表现很好，但是在面对互联网中的普通用户时表现得很糟糕：</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">“虽然可以通过调制解调器将两个运行<span>DOOM</span>的设备在互联网上连接在一起，最终游戏将会变得缓慢，延迟的情况在完全不能进行游戏（例如一个<span>14.4Kbps</span>的<span>P2P</span>连接）到略微可玩（例如一个<span>28.8Kbps</span>的调制解调器运行一个压缩驱动程序）之间不等。<u>因为这些类型的连接只有边际效用，本文将只关注于网络连接。</u>（</span><span><a rel="noopener" href="http://www.faqs.org/faqs/games/doom/howto-tcp/#ixzz0daOnpBYn" target="_blank"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">faqs.org</span></a></span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">）”</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这个问题显然就是<span>Doom</span>本来就是只为局域网设计的，并且使用了前面描述的为<span>RTS</span>游戏制作的对等同步模型。每一个玩家输入的行为（关键按键等等）与其他人进行信息交换，只有在所有其他玩家的关键按键都被接收到之后，玩家才能够进行游戏画面的模拟。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">换句话说，在你能够操作、移动或是射击之前，你必须等待延迟最高的玩家进行连入。想想这上述的所谓“这些连接只有边际效用”将会导致的令人咬牙切齿的情况。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">现在的游戏局限于局域网游戏以及拥有良好连接条件的大学网络或是大公司的精英之间的游戏，为了改变这种情况，是时候改变这个模型了。这就是<span>John Carmack 1996</span>年在发布雷神之锤时所做的事情——他使用客户端<span>/</span>服务器（<span>C/S</span>结构）代替了对等同步模型（<span>P2P</span>）。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">现在，玩家们不再运行相同的游戏代码，直接地互相交换数据，如今每个玩家都是一个客户端，他们都与一台叫做<span>“</span>服务器<span>”</span>的电脑进行数据交换。现在的游戏不再有任何对于所有机器都要进行确定的要求，因为游戏实际上只存在于服务器上。每个客户端实际上都是作为哑终端，用来显示出一个游戏的近似情况，因为游戏实际上只在服务器上发生。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">在一个纯粹的客户端<span>/</span>服务器模型中你没有在本地运行游戏代码，而是将你的操作例如按键、鼠标移动、点击等发送到服务器。服务器响应并更新了虚拟世界中你的角色状态，然后将一个包含着你与你周围角色状态的数据包传回。所有客户端要做的事情就是在这些数据更新之间插入自己的数据，然后给你一种流畅移动的假象，然后，<span>boom</span>！你就有了一个联网的客户端<span>/</span>服务器游戏了。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这是一个伟大的进步。游戏体验的质量现在取决于客户端与服务器之间的连接，而不是取决于游戏中延迟最高的玩家。这同时让玩家在游戏进行中的加入变成了可能，并且随着客户端<span>/</span>服务器结构对于每位玩家需要的平均带宽减少，游戏玩家也在逐渐增长。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">但是对于纯粹的客户端<span>/</span>服务器模型仍然存在一些问题。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">“尽管我能记得并整理出我从<span>DOOM</span>到<span>Quake</span>做出的所有关于网络的决定，结果就是尽管我为了做出一个好的网络游戏而努力着，但这些努力都是基于一个错误的基础假设。我原先的设计目标就是使延迟低于<span>200ms</span>。这样的话通过一个好的供应商数字连接到网络的人，就能有一个很好的游戏体验。很不幸，世界上百分之九十就都是通过调制解调器进行<span>SLIP</span>连接或是<span>PPP</span>连接，它们通常是通过一个糟糕拥挤的<span>ISP</span>（网络服务提供者）进行连接的。这就导致了<span>300ms</span>以上的延迟，并且这只是最低值。客户端，使用者的调制解调器，<span>ISP</span>的调制解调器，服务器，再回到<span>ISP</span>的调制解调器，使用者的调制解调器，最后再回到客户端。天呐，这真是糟透了！</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">好吧，我做了一件错误的事。我在家里都使用<span>T1</span>载体进行联网，所以我对使用<span>P2P</span>的生活并不了解，我现在就解决这个问题。”</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">问题当然就是延迟。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">接下来<span>John</span>在他发布<span>QuakeWorld</span>（雷神世界）时做的事情将永久改变这个行业。</span></p><p class="MsoNormal" style="line-height:400%"><span style="font-size:15.0pt;line-height:400%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><b>客户端预测</b></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">在最初的雷神之锤中，你可以明显感受到你的电脑与服务器之间的延迟。在你向前点击之后，你需要等待数据包发送至服务器然后再传回到你的电脑，然后你才能够开始移动。点击开火，然后你在射击之前同样需要等待上述延迟。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果你玩过任何像《使命召唤<span>4</span>：现代战争》之类的现代<span>FPS</span>游戏，你就会知道这种情况现在已经不会再出现了。那么现代<span>FPS</span>游戏到底是如何做到在多人游戏中看似消除了你自己行为的延迟呢？</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这个问题在历史上分两个部分来解决。第一部分就是<span>JohnCarmack</span>为雷神世界开发的客户端移动预测，它后来被合并作为<span>Tim Sweeney</span>的魔域幻境网络模型的一部分。第二部分就是维尔福公司的<span>Yahn Bernier</span>为反恐精英开发的延迟补偿。在本节中，我们将主要讨论第一部分<span>——</span>如何隐藏玩家移动的延迟。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">当谈到他对于即将发布的雷神世界的计划时，<span>JohnCarmack</span>说：</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">“我们现在允许客户端预测使用者行动的结果，直到服务器传来命令式回复。这是一个非常非常大的架构变化。客户端现在需要知道物体的硬度、摩擦力、重力之类的数据。对于简洁的客户端作为终端计划我们已经不再采用了，我对此表示遗憾，但我是一个实用主义者而不是一个理想主义者。”</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">所以为了消除延迟，客户端需要比之前运行更多的代码。它现在不再是一个向服务器发送输入内容并在状态发回之前进行数据插入的哑终端，它现在能够在本地预测你的角色移动，并且对你的输入迅速做出反应，在客户端设备上为你的游戏角色运行一部分游戏代码。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">现在只要你向前点击，不需要再等待客户端与服务器之间的信息往返——你的角色立即开始向前移动。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这种方法的难点不在于预测，因为预测就像是普通游戏代码做的那样——根据玩家的操作随时间发展游戏角色状态。难点就在于，当客户端和服务器对于游戏角色所处的位置及所做的事情有分歧时，客户端如何以服务器传来的信息为基础进行修正。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">对于这一点，你可能会想，嘿，如果你在客户端运行游戏代码——为什么不以客户端的情况作为游戏角色的标准呢。客户端可以为自己的角色运行仿真代码，并在每次发送数据包时告诉服务器现在的情况。那么问题就是，如果每个玩家都可以简单地告诉服务器“这就是我现在的情况”，那就非常容易黑进客户端进行作弊，例如作弊者可以瞬间躲开将要射向他们的子弹，或者立即传送到你身后从后方射击你。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">所以在<span>FPS</span>游戏中，尽管每个玩家在本地预测自己角色的运动，从表面上隐藏了延迟，但以服务器状态作为每个玩家角色状态的标准是绝对有必要的。就像<span>Tim Sweeney</span>在</span><span><a rel="noopener" href="http://unreal.epicgames.com/Network.htm" target="_blank"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">UE</span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><span>网络架构</span></span></a></span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">里写到的：“服务器才是大哥！”</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这就是有趣的地方。如果客户端和服务器信息不一致，客户端就必须接受来自服务器的位置更新，但是由于客户端与服务器之间的延迟，这个对过去修正是必然的。举个例子，如果从客户端到服务器要消耗<span>100ms</span>，再经过<span>100ms</span>回来，那么任何服务器对于玩家角色位置的修正就会有<span>200ms</span>的延迟，这个时间是相对于客户端开始预测自己移动的时间。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果客户端连续接收服务器的修正更新，这就会及时拉回客户端，这就会导致客户端完全不能做任何客户端预测。怎么解决这个问题的同时仍然允许客户端进行超前预测呢？</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">解决方法就是在客户端为过去的角色状态以及本地玩家的输入创建一个循环缓冲区，然后当客户端收到一个来自服务器的修正，（首先它丢弃比服务器的修正状态更早的缓冲状态）依据玩家储存在循环缓冲区的输入对由上一次的正确状态开始到现在预测时间的状态进行重放。实际上客户端在等待接下来的情况匹配完成之前悄悄地“倒放与重放”当地的玩家角色移动的最后几帧。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这个方法可以让玩家看似无延迟地控制他们的角色，并且如果客户端与服务器的角色模拟代码一致的话——由于在客户端与服务器上相同的输入可以准确给出相同的结果——这就很少出现要修正的情况。这就像是<span>Tim Sweeney</span>描述的那样：</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">“<span>……</span>最好的两个世界：在所有情况下，服务器都是绝对权威。在几乎任何时间内，客户端的移动模拟都与服务器计算出的客户端移动完全相同，所以客户端的情况很少需要修正。只有在极少的情况，例如玩家被一枚火箭击中，或是撞上一名敌人，客户端的情况将被修正。”</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">换句话说，只有当玩家的角色被一些外部事情影响到了玩家的输入，并且这些不能被客户端所预测时，玩家的情况需要被修正。当然，如果玩家试图作弊时亦然。</span></p><p class="MsoNormal" align="left" style="line-height: 18.4pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"> </span></p><p class="MsoNormal" align="left" style="line-height: 18.4pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:14.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">【版权声明】</span></p><p class="MsoNormal" align="left" style="line-height: 18.4pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:14.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">原文作者未做权利声明，视为共享知识产权进入公共领域，自动获得授权。</span><span style="font-size:9.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333"> </span></p><p class="MsoNormal" align="left" style="text-indent: 24pt;"><span style="font-family:&quot;Lucida Sans Unicode&quot;,&quot;sans-serif&quot;;color:#222222"> </span></p></div>                    </div><br>                
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/11/17/游戏网络开发四之基于UDP的可靠性与排序和避免拥堵/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/17/游戏网络开发四之基于UDP的可靠性与排序和避免拥堵/" itemprop="url">游戏网络开发四之基于UDP的可靠性与排序和避免拥堵</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-17T22:20:34+00:00">
+                2016-11-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GS/" itemprop="url" rel="index">
+                    <span itemprop="name">GS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="https://gafferongames.com/post/reliability_ordering_and_congestion_avoidance_over_udp//" target="_blank" rel="noopener">原文出处</a></p>
+<p></p><h2 id="introduction">Introduction</h2><p></p>
+<p>Hi, I&rsquo;m <a href="https://gafferongames.com/about" target="_blank" rel="noopener">Glenn Fiedler</a> and welcome to <a href="https://gafferongames.com/categories/game-networking/" target="_blank" rel="noopener"><strong>Networking for Game Programmers</strong></a>.</p><br><p>In the <a href="https://gafferongames.com/post/virtual_connection_over_udp/" target="_blank" rel="noopener">previous article</a>, we added our own concept of virtual connection on top of UDP. In this article we’re going to add reliability, ordering and congestion avoidance to our virtual UDP connection.</p><br><h2 id="the-problem-with-tcp">The Problem with TCP</h2><br><p>Those of you familiar with TCP know that it already has its own concept of connection, reliability-ordering and congestion avoidance, so why are we rewriting our own mini version of TCP on top of UDP?</p><br><p>The issue is that multiplayer action games rely on a steady stream of packets sent at rates of 10 to 30 packets per second, and for the most part, the data contained is these packets is so time sensitive that only the most recent data is useful. This includes data such as player inputs, the position, orientation and velocity of each player character, and the state of physics objects in the world.</p><br><p>The problem with TCP is that it abstracts data delivery as a reliable ordered stream. Because of this, if a packet is lost, TCP has to stop and wait for that packet to be resent. This interrupts the steady stream of packets because more recent packets must wait in a queue until the resent packet arrives, so packets are received in the same order they were sent.</p><br><p>What we need is a different type of reliability. Instead of having all data treated as a reliable ordered stream, we want to send packets at a steady rate and get notified when packets are received by the other computer. This allows time sensitive data to get through without waiting for resent packets, while letting us make our own decision about how to handle packet loss at the application level.</p><br><p>It is not possible to implement a reliability system with these properties using TCP, so we have no choice but to roll our own reliability on top of UDP.</p><br><h2 id="sequence-numbers">Sequence Numbers</h2><br><p>The goal of our reliability system is simple: we want to know which packets arrive at the other side of the connection.</p><br><p>First we need a way to identify packets.</p><br><p>What if we had added the concept of a &ldquo;packet id&rdquo;? Let&rsquo;s make it an integer value. We could start this at zero then with each packet we send, increase the number by one. The first packet we send would be packet 0, and the 100th packet sent is packet 99.</p><br><p>This is actually quite a common technique. It&rsquo;s even used in TCP! These packet ids are called sequence numbers. While we’re not going to implement reliability exactly as TCP does, it makes sense to use the same terminology, so we’ll call them sequence numbers from now on.</p><br><p>Since UDP does not guarantee the order of packets, the 100th packet received is not necessarily the 100th packet sent. It follows that we need to insert the sequence number somewhere in the packet, so that the computer at the other side of the connection knows which packet it is.</p><br><p>We already have a simple packet header for the virtual connection from the previous article, so we&rsquo;ll just add the sequence number in the header like this:</p><br><pre>   [uint protocol id]<br>   [uint sequence]<br>   <em>(packet data…)</em></pre><br><p>Now when the other computer receives a packet it knows its sequence number according to the computer that sent it.</p><br><h2 id="acks">Acks</h2><br><p>Now that we can identify packets using sequence numbers, the next step is to let the other side of the connection know which packets we receive.</p><br><p>Logically this is quite simple, we just need to take note of the sequence number of each packet we receive, and send those sequence numbers back to the computer that sent them.</p><br><p>Because we are sending packets continuously between both machines, we can just add the ack to the packet header, just like we did with the sequence number:</p><br><pre>    [uint protocol id]<br>    [uint sequence]<br>    [uint ack]<br>    <em>(packet data…)</em></pre><br><p>Our general approach is as follows:</p><br><ul><br><li><p>Each time we send a packet we increase the <em>local sequence number</em></p></li><br><li><p>When we receieve a packet, we check the sequence number of the packet against the sequence number of the most recently received packet, called the <em>remote sequence number</em>. If the packet is more recent, we update the remote sequence to be equal to the sequence number of the packet.</p></li><br><li><p>When we compose packet headers, the local sequence becomes the sequence number of the packet, and the remote sequence becomes the ack.</p></li><br></ul><br><p>This simple ack system works provided that one packet comes in for each packet we send out.</p><br><p>But what if packets clump up such that two packets arrive before we send a packet? We only have space for one ack per-packet, so what do we do?</p><br><p>Now consider the case where one side of the connection is sending packets at a faster rate. If the client sends 30 packets per-second, and the server only sends 10 packets per-second, we need <em>at least</em> 3 acks included in each packet sent from the server.</p><br><p>Let&rsquo;s make it even more complex! What if the packet containing the ack is lost? The computer that sent the packet would think the packet got lost but it was actually received!</p><br><p>It seems like we need to make our reliability system&hellip; <em>more reliable!</em></p><br><h2 id="reliable-acks">Reliable Acks</h2><br><p>Here is where we diverge significantly from TCP.</p><br><p>What TCP does is maintain a sliding window where the ack sent is the sequence number of the next packet it expects to receive, in order. If TCP does not receive an ack for a given packet, it stops and resends a packet with that sequence number again. This is exactly the behavior we want to avoid!</p><br><p>In our reliability system, we never resend a packet with a given sequence number. We sequence n exactly once, then we send n+1, n+2 and so on. We never stop and resend packet n if it was lost, we leave it up to the application to compose a new packet containing the data that was lost, if necessary, and this packet gets sent with a new sequence number.</p><br><p>Because we&rsquo;re doing things differently to TCP, its now possible to have <em>holes</em> in the set of packets we ack, so it is no longer sufficient to just state the sequence number of the most recent packet we have received.</p><br><p>We need to include multiple acks per-packet.</p><br><p>How many acks do we need?</p><br><p>As mentioned previously we have the case where one side of the connection sends packets faster than the other. Let&rsquo;s assume that the worst case is one side sending no less than 10 packets per-second, while the other sends no more than 30. In this case, the average number of acks we&rsquo;ll need per-packet is 3, but if packets clump up a bit, we would need more. Let&rsquo;s say 6-10 worst case.</p><br><p>What about acks that don&rsquo;t get through because the packet containing the ack is lost?</p><br><p>To solve this, we&rsquo;re going to use a classic networking strategy of using redundancy to defeat packet loss!</p><br><p>Let&rsquo;s include 33 acks per-packet, and this isn&rsquo;t just going to be up to 33, but <em>always</em> 33. So for any given ack we <span style="text-decoration:underline;">redundantly</span> send it up to 32 additional times, just in case one packet with the ack doesn&rsquo;t get through!</p><br><p>But how can we possibly fit 33 acks in a packet? At 4 bytes per-ack thats 132 bytes!</p><br><p>The trick is to represent the 32 previous acks before &ldquo;ack&rdquo; using a bitfield:</p><br><pre><code>    [uint protocol id]<br>    [uint sequence]<br>    [uint ack]<br>    [uint ack bitfield]<br>    &lt;em&gt;(packet data…)&lt;/em&gt;<br></code></pre><br><p>We define &ldquo;ack bitfield&rdquo; such that each bit corresponds to acks of the 32 sequence numbers before &ldquo;ack&rdquo;. So let&rsquo;s say &ldquo;ack&rdquo; is 100. If the first bit of &ldquo;ack bitfield&rdquo; is set, then the packet also includes an ack for packet 99. If the second bit is set, then packet 98 is acked. This goes all the way down to the 32nd bit for packet 68.</p><br><p>Our adjusted algorithm looks like this:</p><br><ul><br><li><p>Each time we send a packet we increase the <em>local sequence number</em></p></li><br><li><p>When we receive a packet, we check the sequence number of the packet against the <em>remote sequence number</em>. If the packet sequence is more recent, we update the remote sequence number.</p></li><br><li><p>When we compose packet headers, the local sequence becomes the sequence number of the packet, and the remote sequence becomes the ack. The ack bitfield is calculated by looking into a queue of up to 33 packets, containing sequence numbers in the range [remote sequence - 32, remote sequence]. We set bit n (in [1,32]) in ack bits to 1 if the sequence number remote sequence - n is in the received queue.</p></li><br><li><p>Additionally, when a packet is received, ack bitfield is scanned and if bit n is set, then we acknowledge sequence number packet sequence - n, if it has not been acked already.</p></li><br></ul><br><p>With this improved algorithm, you would have to lose 100% of packets for more than a second to stop an ack getting through. And of course, it easily handles different send rates and clumped up packet receives.</p><br><h2 id="detecting-lost-packets">Detecting Lost Packets</h2><br><p>Now that we know what packets are received by the other side of the connection, how do we detect packet loss?</p><br><p>The trick here is to flip it around and say that if you don&rsquo;t get an ack for a packet within a certain amount of time, then we consider that packet lost.</p><br><p>Given that we are sending at no more than 30 packets per second, and we are redundantly sending acks roughly 30 times, if you don&rsquo;t get an ack for a packet within one second, it is <em>very</em> likely that packet was lost.</p><br><p>So we are playing a bit of a trick here, while we can know 100% for sure which packets get through, but we can only be <em>reasonably</em> certain of the set of packets that didn&rsquo;t arrive.</p><br><p>The implication of this is that any data which you resend using this reliability technique needs to have its own message id so that if you receive it multiple times, you can discard it. This can be done at the application level.</p><br><h2 id="handling-sequence-number-wrap-around">Handling Sequence Number Wrap-Around</h2><br><p>No discussion of sequence numbers and acks would be complete without coverage of sequence number wrap around!</p><br><p>Sequence numbers and acks are 32 bit unsigned integers, so they can represent numbers in the range [0,4294967295]. Thats a very high number! So high that if you sent 30 packets per-second, it would take over four and a half years for the sequence number to wrap back around to zero.</p><br><p>But perhaps you want to save some bandwidth so you shorten your sequence numbers and acks to 16 bit integers. You save 4 bytes per-packet, but now they wrap around in only half an hour.</p><br><p>So how do we handle this wrap around case?</p><br><p>The trick is to realize that if the current sequence number is already very high, and the next sequence number that comes in is very low, then you must have wrapped around. So even though the new sequence number is <em>numerically</em> lower than the current sequence value, it actually represents a more recent packet.</p><br><p>For example, let&rsquo;s say we encoded sequence numbers in one byte (not recommended btw. :)), then they would wrap around after 255 like this:</p><br><pre>    … 252, 253, 254, 255, 0, 1, 2, 3, …</pre><br><p>To handle this case we need a new function that is aware of the fact that sequence numbers wrap around to zero after 255, so that 0, 1, 2, 3 are considered more recent than 255. Otherwise, our reliability system stops working after you receive packet 255.</p><br><p>Here&rsquo;s a function for 16 bit sequence numbers:</p><br><pre><code>    inline bool sequence_greater_than( uint16_t s1, uint16_t s2 )<br>    {<br>        return ( ( s1 &gt; s2 ) &amp;&amp; ( s1 - s2 &lt;= 32768 ) ) ||<br>               ( ( s1 &lt; s2 ) &amp;&amp; ( s2 - s1  &gt; 32768 ) );<br>    }<br></code></pre><br><p>This function works by comparing the two numbers <em>and</em> their difference. If their difference is less than <sup>1</sup>&frasl;<sub>2</sub> the maximum sequence number value, then they must be close together - so we just check if one is greater than the other, as usual. However, if they are far apart, their difference will be greater than <sup>1</sup>&frasl;<sub>2</sub> the max sequence, then we paradoxically consider the sequence number more recent if it is <em>less</em> than the current sequence number.</p><br><p>This last bit is what handles the wrap around of sequence numbers transparently, so 0,1,2 are considered more recent than 255.</p><br><p>Make sure you include this in any sequence number processing you do.</p><br><h2 id="congestion-avoidance">Congestion Avoidance</h2><br><p>While we have solved reliability, there is still the question of congestion avoidance. TCP provides congestion avoidance as part of the packet when you get TCP reliability, but UDP has no congestion avoidance whatsoever!</p><br><p>If we just send packets without some sort of flow control, we risk flooding the connection and inducing severe latency (2 seconds plus!) as routers between us and the other computer become congested and buffer up packets. This happens because routers try <em>very hard</em> to deliver all the packets we send, and therefore tend to buffer up packets in a queue before they consider dropping them.</p><br><p>While it would be nice if we could tell the routers that our packets are time sensitive and should be dropped instead of buffered if the router is overloaded, we can&rsquo;t really do this without rewriting the software for all routers in the world.</p><br><p>Instead, we need to focus on what we can actually do which is to avoid flooding the connection in the first place. We try to avoid sending too much bandwidth in the first place, and then if we detect congestion, we attempt to back off and send even less.</p><br><p>The way to do this is to implement our own basic congestion avoidance algorithm. And I stress basic! Just like reliability, we have no hope of coming up with something as general and robust as TCP&rsquo;s implementation on the first try, so let&rsquo;s keep it as simple as possible.</p><br><h2 id="measuring-round-trip-time">Measuring Round Trip Time</h2><br><p>Since the whole point of congestion avoidance is to avoid flooding the connection and increasing round trip time (RTT), it makes sense that the most important metric as to whether or not we are flooding our connection is the RTT itself.</p><br><p>We need a way to measure the RTT of our connection.</p><br><p>Here is the basic technique:</p><br><ul><br><li><p>For each packet we send, we add an entry to a queue containing the sequence number of the packet and the time it was sent.</p></li><br><li><p>Each time we receive an ack, we look up this entry and note the difference in local time between the time we receive the ack, and the time we sent the packet. This is the RTT time for that packet.</p></li><br><li><p>Because the arrival of packets varies with network jitter, we need to smooth this value to provide something meaningful, so each time we obtain a new RTT we move a percentage of the distance between our current RTT and the packet RTT. 10% seems to work well for me in practice. This is called an exponentially smoothed moving average, and it has the effect of smoothing out noise in the RTT with a low pass filter.</p></li><br><li><p>To ensure that the sent queue doesn&rsquo;t grow forever, we discard packets once they have exceeded some maximum expected RTT. As discussed in the previous section on reliability, it is exceptionally likely that any packet not acked within a second was lost, so one second is a good value for this maximum RTT.</p></li><br></ul><br><p>Now that we have RTT, we can use it as a metric to drive our congestion avoidance. If RTT gets too large, we send data less frequently, if its within acceptable ranges, we can try sending data more frequently.</p><br><h2 id="simple-binary-congestion-avoidance">Simple Binary Congestion Avoidance</h2><br><p>As discussed before, let&rsquo;s not get greedy, we&rsquo;ll implement a very basic congestion avoidance. This congestion avoidance has two modes. Good and bad. I call it simple binary congestion avoidance.</p><br><p>Let&rsquo;s assume you send packets of a certain size, say 256 bytes. You would like to send these packets 30 times a second, but if conditions are bad, you can drop down to 10 times a second.</p><br><p>So 256 byte packets 30 times a second is around 64kbits/sec, and 10 times a second is roughly 20kbit/sec. There isn&rsquo;t a broadband network connection in the world that can&rsquo;t handle at least 20kbit/sec, so we&rsquo;ll move forward with this assumption. Unlike TCP which is entirely general for any device with any amount of send/recv bandwidth, we&rsquo;re going to assume a minimum supported bandwidth for devices involved in our connections.</p><br><p>So the basic idea is this. When network conditions are &ldquo;good&rdquo; we send 30 packets per-second, and when network conditions are &ldquo;bad&rdquo; we drop to 10 packets per-second.</p><br><p>Of course, you can define &ldquo;good&rdquo; and &ldquo;bad&rdquo; however you like, but I&rsquo;ve gotten good results considering only RTT. For example if RTT exceeds some threshold (say 250ms) then you know you are probably flooding the connection. Of course, this assumes that nobody would normally exceed 250ms under non-flooding conditions, which is reasonable given our broadband requirement.</p><br><p>How do you switch between good and bad? The algorithm I like to use operates as follows:</p><br><ul><br><li><p>If you are currently in good mode, and conditions become bad, immediately drop to bad mode</p></li><br><li><p>If you are in bad mode, and conditions have been good for a specific length of time &rsquo;t&rsquo;, then return to good mode</p></li><br><li><p>To avoid rapid toggling between good and bad mode, if you drop from good mode to bad in under 10 seconds, double the amount of time &rsquo;t&rsquo; before bad mode goes back to good. Clamp this at some maximum, say 60 seconds.</p></li><br><li><p>To avoid punishing good connections when they have short periods of bad behavior, for each 10 seconds the connection is in good mode, halve the time &rsquo;t&rsquo; before bad mode goes back to good. Clamp this at some minimum like 1 second.</p></li><br></ul><br><p>With this algorithm you will rapidly respond to bad conditions and drop your send rate to 10 packets per-second, avoiding flooding of the connection. You&rsquo;ll also <em>conservatively</em> try out good mode, and persist sending packets at a higher rate of 30 packets per-second, while network conditions are good.</p><br><p>Of course, you can implement much more sophisticated algorithms. Packet loss % can be taken into account as a metric, even the amount of network jitter (time variance in packet acks), not just RTT.</p><br><p>You can also get much more <em>greedy</em> with congestion avoidance, and attempt to discover when you can send data at a much higher bandwidth (eg. LAN), but you have to be very careful! With increased greediness comes more risk that you&rsquo;ll flood the connection.</p><br><h2 id="conclusion">Conclusion</h2><br><p>Our new reliability system let&rsquo;s us send a steady stream of packets and notifies us which packets are received. From this we can infer lost packets, and resend data that didn&rsquo;t get through if necessary. We also have a simple congestion avoidance system that drops from 30 packets per-second to 10 times a second so we don&rsquo;t flood the connection.</p>
+
+<h1 id="译文"><a href="#译文" class="headerlink" title="译文"></a>译文</h1><p><a href="http://gad.qq.com/program/translateview/7161834" target="_blank" rel="noopener">译文出处</a></p>
+<!-- <div style="display:none"> -->
+<div class="WordSection1"><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-family: 微软雅黑, sans-serif; font-size: 12pt; line-height: 150%;">翻译：艾涛（轻描一个世界） </span><span style="font-family: 微软雅黑, sans-serif; font-size: 12pt; line-height: 150%;">  </span><span style="font-family: 微软雅黑, sans-serif; font-size: 12pt; line-height: 150%;">审校：黄威（横写丶意气风发）</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><br></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><b style="line-height: 1.5;"><span style="line-height: 40px; font-size: 20pt; font-family: 微软雅黑, sans-serif; color: rgb(34, 34, 34); border: 1pt none windowtext; padding: 0cm;">简介</span></b></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">嗨，我是格伦<span>-</span>菲德勒，欢迎来到我的</span><span><a rel="noopener" href="http://gafferongames.com/networking-for-game-programmers/" target="_blank"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:red"><span>游戏程序员网络设计</span></span></a></span><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">文章系列的第四篇。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">在</span><span><a rel="noopener" href="http://gafferongames.com/networking-for-game-programmers/virtual-connection-over-udp/" target="_blank"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:red"><span>之前的文章</span></span></a></span><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">里，我们将我们的虚拟连接的概念加入到<span>UDP</span>之上。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">现在我们将要给我们的虚拟<span>UDP</span>连接增加可靠性，排序和避免拥堵。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这是迄今为止底层游戏网络设计中最复杂的一面，因此这将是一篇</span><span style="font-size: 12pt; line-height: 150%; font-family: 微软雅黑, sans-serif;">极其热情</span><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">的文章，跟上我启程出发！</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"> </span><img src="http://gameweb-img.qq.com/gad/20160617/phpYxViiW.1466148040.jpg" alt="游戏网络开发(四)：基于UDP的可靠性，排序和避免拥堵" style="line-height: 1.5;"></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><b><span style="font-size:20.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">TCP</span></b><b><span style="font-size:20.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">的问题</span></b></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">熟悉<span>TCP</span>的你们知道它已经有了自己关于连接、可靠性、排序和避免拥堵的概念，那么为什么我们还要重写我们自己的迷你版本的基于<span>UDP</span>的<span>TCP</span>呢？</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">问题是多人动作游戏依靠于一个稳定的每秒发送<span>10</span>到<span>30</span>包的数据包流，而且在大多数情况下，这些数据包中包含的数据对时间是如此敏感以至于只有最新的数据才是有用的。这包括玩家的输入，位置方向和每个玩家角色的速度以及游戏世界中物理对象的状态等数据。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">TCP</span><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">的问题是它提取的是以可靠有序的数据流发送的数据。正因为如此，如果一个数据包丢失了，<span>TCP</span>不得不停止以等待那个数据包重新发送，这打断了这个稳定的数据包流因为更多的最新的数据包在重新发送的数据包到达之前必须在队列中等待，所以数据包必须有序地提供。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">我们需要的是一种不同类型的可靠性。我们想要以一个稳定的速度发送数据包而且当数据被其他电脑接收到时我们会得到通知，而不是让所有的数据用一个可靠有效的数据流处理。这样的方法使得那些对时间敏感的数据能够不用等待重新发送的数据包就通过，而让我们自己拿主意怎么在应用层级去处理丢包。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">具有<span>TCP</span>这些特性的系统是不可能实现可靠性的，</span><span style="font-size: 12pt; line-height: 150%; font-family: 微软雅黑, sans-serif;">因此我们别无选择只能在<span>UDP</span>的基础上自行努力。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">不幸的是，可靠性并不是唯一一个我们必须重写的东西，这是因为<span>TCP</span>也提供避免拥堵功能，这样它就能够动态地衡量数据发送速率以来适应网络连接的性能。例如<span>TCP</span>在<span>28.8k</span>的调制调解器上会比在<span>T1</span>线路上发送更少的数据，而且它在不用事先知道这是什么类型的网络连接的情况下就能这么做！</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Lucida Sans Unicode&quot;,&quot;sans-serif&quot;;color:#222222"> </span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><b><span style="font-size:20.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">序列号</span></b></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">现在回到可靠性！</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">我们可靠性系统的目标很简单：我们想要知道哪些数据包到了网络连接的另一端。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">首先我们得鉴别数据包。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">如果我们添加一个“数据包<span>id</span>”的概念会怎么样？让我们先给<span>id</span>赋一个整数值。我们能够从零开始，然后随着我们每发送一个数据包，增加一个数值。我们发送的第一个数据包就是“包<span>0</span>”，发送的第<span>100</span>个数据包就是“包<span>99</span>”。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这实际上是一个相当普遍的技术。甚至于在<span>TCP</span>中也得到了应用！这些数据包<span>id</span>叫做序列号，然而我们并不打算像<span>TCP</span>那样去做来实现可靠性，使用相同的术语是有意义的，因此从现在起我们还将称之为序列号。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">因为<span>UDP</span>并不能保证数据包的顺序，所以第<span>100</span>个收到的数据包并不一定是第<span>100</span>个发出的数据包。接下来我们需要在数据包中插入序列号这样网络连接另一端电脑便能够知道是哪个数据包。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">我们在</span><span><a rel="noopener" href="http://gafferongames.com/networking-for-game-programmers/virtual-connection-over-udp/" target="_blank"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#C00000"><span>前一篇文章</span></span></a></span><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#C00000">中</span><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">已经有了一个简单的关于虚拟网络连接的数据头，因此我们将只需要像这样在数据头中插入序列号：</span></p><div style="border:solid #F0F0F0 1.0pt;border-left:solid #E0E0E0 2.25pt;padding:0cm 0cm 0cm 0cm;background:whitesmoke"><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222">   [uint protocol id]</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222">   [uint sequence]</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><i><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">(packet data…)</span></i></p></div><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">现在当其他电脑收到一个数据包时通过发送数据包的电脑它就能知道数据包的序列号啦。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"> </span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><b><span style="font-size:20.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">应答系统</span></b></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">既然我们已经能够使用序列号来鉴别数据包，下一步就该是让网络连接的另一端知道我们收到了哪个包了。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">逻辑上来说这是非常简单的，我们只需要记录我们收到的每个包的序列号，然后把那些序列号发回发送他们的电脑即可。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">因为我们是在两个机器间相互发送数据包，我们只能在数据包头添加上确认字符，就像我们加上序列号一样：</span></p><div style="border:solid #F0F0F0 1.0pt;border-left:solid #E0E0E0 2.25pt;padding:0cm 0cm 0cm 0cm;background:whitesmoke"><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222">    [uint protocol id]</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222">    [uint sequence]</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222">    [uint ack]</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><i><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">(packet data…)</span></i></p></div><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">我们的一般方法如下：</span></p><ul type="disc"><li class="MsoNormal" style="text-align:left;line-height:150%;vertical-align:     baseline"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">每次我们发送一个数据包我们就增加本地序列号。</span></li><li class="MsoNormal" style="text-align:left;line-height:150%;vertical-align:     baseline"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">当我们接收一个数据包时，我们将这个数据包的序列号与最近收到的数据包的序列号(称之为远程序列号)进行核对。如果这个包时间更近，我们就更新远程序列号使之等于这个数据包的序列号。</span></li><li class="MsoNormal" style="text-align:left;line-height:150%;vertical-align:     baseline"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">当我们编写数据包头时，本地序列号就变成了数据包的序列号，而远程序列号则变成确认字符。</span></li></ul><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这个简单的应答系统工作条件是每当我们发出一个数据包就会接收到一个数据包。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">但如果数据包一起发送这样在我们发送一个数据包之前有两个数据包到达该怎么办呢？我们每个数据包只留了一个确认字符的位置，那我们该怎么处理呢<span>?</span></span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">现在考虑网络连接中的一端用更快的速率发送数据包这种情况。如果客户端每秒发送<span>30</span>个数据包，而服务器每秒只发送<span>10</span>个数据包，这样从服务器发出的每个数据包我们至少需要<span>3</span>个确认字符。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">让我们想得更复杂点！</span><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果数据包留下来了而确认字符丢失了会怎么样？这<span style="color:#222222">样发送这个数据包的电脑会认为这个数据包已经丢失了而实际上它已经被收到了！</span></span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">貌似我们需要让我们的可靠性系统……<span style="border:none windowtext 1.0pt;padding:0cm">更加可靠一点！</span></span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"> </span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><b><span style="font-size:20.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">可靠的应答系统</span></b></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这就是我们偏离<span>TCP</span>的地方。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">TCP</span><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">的做法是在确认字符发送的地方给下一个按顺序预期该收到的数据包序列号的位置维持一个移动窗口。<span style="color:#222222">如果<span>TCP</span>对于一个已经发出的数据包没有收到确认字符，它将暂停并重新发送那个对应序列号的数据包。这正是我们想要避免的做法！</span></span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">因此在我们的可靠性系统里，我们从不为一个已经发出的序列号重新发送数据包，我们精确地只排序一次<span>n</span>，然后我们发送<span>n+1</span>，<span>n+2</span>，依次类推。如果数据包<span>n</span>丢失了我们也从不暂停重新发送它，而是把它留给应用程序来编写一个包含丢失数据的新的数据包，必要的话，这个包还会用一个新的序列号发送。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">因为我们工作的方式与<span>TCP</span>不同，</span><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">它的做法现在可能在我们数据包的确定字符设置中有了个洞，<span style="color:#222222">因此现在仅仅陈述最近的数据包的序列号已经远远不够了。</span></span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">我们需要在每个数据包中包含多个确认字符。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">那我们需要多少确认字符呢<span>?</span></span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">正如之前提到网络连接的一端发包速率比另一端快的情况，让我们假定最糟的情况是一端每秒钟发送不少于<span>10</span>个数据包，而另一端每秒钟发送不多于<span>30</span>个数据包。这种情况下，我们每个数据包需要的平均确认字符数是<span>3</span>个，但是如果数据包发送密集点，我们将需要更多。让我们说<span>6-10</span>个最差的情况。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">如果因为包含确认字符的数据包丢失而导致确认字符并没有到达怎么办<span>?</span></span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">为了解决这个问题，我们将要使用一种经典的使用冗余码的网络设计策略来处理数据包丢失的情况！</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">让我们在每个数据包中容纳<span>33</span>个确认字符，而且这不仅是他将要达到<span>33</span>个，而是一直是<span>33</span>个。因此对于每一个发出的确认字符我们多余地把它额外多发送了多达<span>32</span>次，仅仅是以防某个包含确认字符的数据包不能通过！</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">但是我们怎么可能在一个数据包里配置<span>33</span>个确认字符呢？每个确认字符<span>4</span>字节那就是<span>132</span>字节了！</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">窍门是在“相应确认字符”之前使用一段位域来代表<span>32</span>个之前的确认字符<span style="color:#222222">，就像这样</span></span><span style="font-size:12.0pt;line-height:150%;font-family:宋体;color:#222222">：</span></p><div style="border:solid #F0F0F0 1.0pt;border-left:solid #E0E0E0 2.25pt;padding:0cm 0cm 0cm 0cm;background:whitesmoke"><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">   [uint protocol id]</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">   [uint sequence]</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">   [uint ack]</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">   [uint ack bitfield]</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><i><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">(packet data…)</span></i></p></div><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">我们这样规定“位域”中每一位对应“相应确认字符”之前的<span>32</span>个确认字符<span style="color:#222222">。因此让我们说“相应确认字符”是<span>100</span>。如果位域的第一位设置好了，那么这个数据包也包含包<span>99</span>的一个确认字符。如果第二位设置好了，那么它也包含包<span>98</span>的一个确认字符。这样一路下来就到了包<span>68</span>的第<span>32</span>位。</span></span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">我们调整过的算法看起来就像这样<span>:</span></span></p><ul type="disc"><li class="MsoNormal" style="color:#222222;text-align:left;line-height:150%;     vertical-align:baseline"><span style="font-size:12.0pt;line-height:150%;     font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:windowtext">每次我们发送一个数据包我们就增加本地序列号</span><span style="font-size:12.0pt;line-height:150%;font-family:&quot;quot;微软雅黑&quot;,&quot;sans-serif&quot;">。</span></li><li class="MsoNormal" style="text-align:left;line-height:150%;vertical-align:     baseline"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">当我们接收一个数据包时，我们将这个数据包的序列号与最近收到的数据包的序列号(称之为远程序列号)进行核对。如果这个包是更新的，我们就更新远程序列号使之等于数据包的序列号。</span></li><li class="MsoNormal" style="text-align:left;line-height:150%;vertical-align:     baseline"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">当我们编写数据包头时，本地序列号就变成了数据包的序列号，而远程序列号则变成确认字符<span style="color:#222222">。 计算确认字符位域是通过寻找一个多达<span>33</span>个数据包的队列，其中包括在<span>[</span>远程序列号<span>-32</span>，远程序列号<span>]</span>范围内的序列号。</span>如果序列号“远程序列号<span>-n</span>”正在接收队列中那就把确认字符位域中的位<span>n</span>（在<span>[1</span>，<span>32]</span>范围内）设置为位<span>1</span>。</span></li><li class="MsoNormal" style="color:#222222;text-align:left;line-height:150%;     vertical-align:baseline"><span style="font-size:12.0pt;line-height:150%;     font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:windowtext">此外，当一个数据包被接收了，确认字符位域也被扫描了，如果位<span>n</span>设置好了，那么即使它还没有被应答，我们也认可序列号“远程序列号<span>-n</span>”</span><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">。</span></li></ul><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">利用这个改善过的算法，你将可能不得不在不止一秒内丢掉<span>100%</span>的数据包而不是让一个数据包停止通过。当然，它能够轻松地处理不同的发包速率和接受一起发送的数据包。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"> </span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><b><span style="font-size:20.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">检测丢包</span></b></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">既然我们知道网络连接另一端接受的是哪些数据包，那么我们该怎么检测数据包的丢失呢<span>?</span></span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这次的窍门是反过来想，如果你在一定时间内还没有收到某个数据包的应答，那么我们可以考虑说那个数据包已经丢失了。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">考虑到我们正在以每秒不超过<span>30</span>包的速率发送数据包，而且我们正在多余地发送数据包大概三十次。如果你在一秒内没有收到某个数据包的确认字符，那很有可能就是这个数据包已经丢失了。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">因此我们在这儿用了一些小窍门，尽管我们能<span>100%</span>确定哪个数据包通过了，但是我们只能适度地确定那些没有到达的数据包。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这种情况的复杂性在于任何你重新发送的使用了这种可靠性方法的数据需要有它自己的信息<span>id</span>，这样的话在你多次收到它的时候你可以放弃它。这在应用层级是能够做到的。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><b><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">应对环绕式处理的序列号</span></b></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">如果序列号没有环绕式处理覆盖，那么对于序列号和确认字符的讨论是不完整的！</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">序列号和确认字符都是<span>32</span>比特的无符号整数，因此它们能够代表在范围<span>[0</span>，<span>4294967295]</span>内的数字。那是一个非常大的数字！那么大以至于如果你每秒发送三十个数据包也将要花费四年半来把这个序列号环绕式处理回零。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">但是可能你想要节省一些带宽这样你将你的序列号和确认字符缩减到到<span>16</span>比特整数。你每个数据包节省了<span>4</span>个字节，但现在他们只需要在仅仅半个小时内即可完成环绕式处理！</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">所以我们该怎么应对这种环绕式处理的情况呢<span>?</span></span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">诀窍是要认识到如果当前序列号已经非常高了，而且下一个到达的序列号很低，那么你就必须进行环绕式处理。那么即使新的序列号数值上比当前序列号值更低它也能实际代表一个更新的数据包。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">举个例子，让我们假设我们用一个字节编码序列号（顺便说一下并不推荐这样做）。<span> :))</span>， 之后他们就会在<span>255</span>后面进行环绕式处理，就像这样</span><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Lucida Sans Unicode&quot;,&quot;sans-serif&quot;;color:#222222">:</span></p><div style="border:solid #F0F0F0 1.0pt;border-left:solid #E0E0E0 2.25pt;padding:0cm 0cm 0cm 0cm;background:whitesmoke"><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222">   … 252, 253, 254, 255, 0, 1, 2, 3,…</span></p></div><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">为了解决这种情况我们需要一个能够意识到在<span>255</span>之后需要环绕式处理回零这样一个事实的新功能，这样<span>0</span>，<span>1</span>，<span>2</span>，<span>3</span>就会被认为比<span>255</span>更新。否则，我们的可靠性系统就会在你收到包<span>255</span>后停止工作。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这就是那个新功能：</span></p><div style="border:solid #F0F0F0 1.0pt;border-left:solid #E0E0E0 2.25pt;padding:0cm 0cm 0cm 0cm;background:whitesmoke"><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">boolsequence_more_recent( unsigned int s1, </span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">                          unsigned int s2,</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">                          unsigned int max )</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">{</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">   return </span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">       ( s1 &gt; s2 ) &amp;&amp;</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">       ( s1 - s2 &lt;= max/2 ) </span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">          ||</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">       ( s2 &gt; s1 ) &amp;&amp;</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">       ( s2 - s1  &gt; max/2 );</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;Courier New&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">}</span></p></div><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这个功能通过比较两个数字和他们的不同来工作。如果它们之间的差异少于<span>1/2</span>的最大序列号值，那么它们必须靠在一起<span>– </span>因此我们只需要照常检查某个序列号是否比另一个大。然而，如果它们相差很多，它们之间的差异将会比<span>1/2</span>的最大序列号值大，那么如果它比当前序列号小我们反而认为这个序列号是更新的。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这最后一点是显然需要环绕式处理序列号的地方，那么<span>0</span>，<span>1</span>，<span>2</span>就会被认为比<span>255</span>更新。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">多么简洁而巧妙！</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">一定要确保你在你所做的任何序列号处理当中包含了这一步！</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"> </span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><b><span style="font-size:20.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">避免拥堵</span></b></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">当你已经解决了可靠性的问题的时候，还有避免拥堵的问题。当你获得<span>TCP</span>的可靠性的时候<span>TCP</span>已经提供了避免拥堵的功能作为数据包的一部分，但是<span>UDP</span>无论怎样都不会有避免拥堵！</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">如果我们仅仅发送数据包而没有某种流量控制，我们正在冒险占满网络连接而且会引起严重的延迟（<span>2</span>秒以上！），正如我们和另外一台电脑之间的路由器会超负荷而缓冲数据包。这个发生是因为路由器很努力地想要尝试传送我们发送的所有数据包，因此在它们考虑丢弃数据包之前会在队列中缓冲数据包。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">然而如果我们能告诉路由器我们的数据包是时间敏感的而且如果路由器超载的话这些数据包应该丢弃而不是缓冲这样会很棒的，但只有我们重写世界上所有路由器的软件才能做到这一点！</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">那么我们反而需要把重点放在我们实际上能做的是<u>避免占满首位网络连接</u>。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">做到这个的方法是实施我们自己的基础避免拥堵算法。我强调基础！就像可靠性，我们并不寄希望于像<span>TCP</span>第一次尝试应用那样普通而粗暴地想出某些东西，那么让我们让它尽可能简单吧。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"> </span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><b><span style="font-size:20.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">衡量往返时间</span></b></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">因为所有避免拥堵的要点就是避免占满网络连接和避免增加往返时间（<span>RTT</span>），关于我们是不是占满网络的最重要的衡量标准是<span>RTT</span>它本身的观点是有道理的。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">我们需要一种方法来衡量我们网络连接的<span>RTT</span>。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这是基础的技巧：</span></p><ul type="disc"><li class="MsoNormal" style="color:#222222;text-align:left;line-height:150%;     vertical-align:baseline"><span style="font-size:12.0pt;line-height:150%;     font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">对我们发送的每个数据包，我们对数据包队列中包含的序列号和他们发送的时间添加一个登记。</span></li><li class="MsoNormal" style="color:#222222;text-align:left;line-height:150%;     vertical-align:baseline"><span style="font-size:12.0pt;line-height:150%;     font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:windowtext">当我们收到一个应答时，我们找到这个登记, 然后记录我们收到这个应答的时间t1与我们发送数据包的时间的t2的差值(都基于本地时间来计算)。这就是是这个数据包的<span>RTT</span>时间</span><span style="font-size:12.0pt;line-height:     150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">。</span></li><li class="MsoNormal" style="color:#222222;text-align:left;line-height:150%;     vertical-align:baseline"><span style="font-size:12.0pt;line-height:150%;     font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">因为数据包的到达因网络波动而不同，我们需要缓和这个值来提供某些有意义的东西，这样每次我们获得一个新的<span>RTT</span>我们就移动一个我们当前的<span>RTT</span>和数据包的<span>RTT</span>之间距离的百分比。<span>10%</span>在实践中看起来效果很好。这就叫做一个指数级平滑移动平均值，而且它在用一个低通滤波器的情况下能有效地平滑<span>RTT</span>中的杂音。</span></li><li class="MsoNormal" style="color:#222222;text-align:left;line-height:150%;     vertical-align:baseline"><span style="font-size:12.0pt;line-height:150%;     font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">为了确保发送队列永不增长，一旦超过某些最大预期<span>RTT</span>值我们就丢弃数据包。正如上一节关于可靠性讨论过的，任何在一秒内未应答的数据包都极有可能丢失了，那么对于最大<span>RTT</span>来说，一秒是个很棒的值。</span></li></ul><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">既然我们有<span>RTT</span>，我们能把它作为一个衡量标准来推动我们的避免拥堵功能。如果<span>RTT</span>变得太大了，我们更缓慢地发送数据，如果它的值低于可接受范围，我们能努力更频繁地发送数据。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"> </span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><b><span style="font-size:20.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">简单的好坏机制避免拥堵</span></b></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">正如之前讨论的，我们不要那么贪心，我们将要执行一个非常基础的避免拥堵机制。这个避免拥堵机制有两种模式。好和坏。我把它叫做简单的二进制避免拥堵。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">让我们假设你在发送一个确定大小的数据包，就假设<span>256</span>字节吧。你想要每秒发送这些数据包<span>30</span>次，但是如果网络条件差，你可以削减为每秒<span>10</span>次。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">那么<span>30</span>次<span>256</span>字节的数据包的速率大概是<span>64kbits/sec</span>，每秒<span>10</span>次的话大概<span>20kbits/sec</span>。世界上没有一个宽带连接不能处理至少<span>20kbits/sec</span>的速率，所以我们在这样的假定下继续前进。不像<span>TCP</span>这样对有任何数量的发送<span>/</span>接受带宽的任何设备都完全通用，我们将假设一个设备的最小支持带宽来参与我们的网络连接。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">所以基础想法就是这样了。当网络条件好的时候我们每秒发送<span>30</span>个数据包，当网络条件差的时候我们降至每秒<span>10</span>个数据包。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">当然，你能随你喜爱定义好和坏，但是仅考虑<span>RTT</span>的时候我已经得到了好的成效。举个例子，如果<span>RTT</span>超过某些极限值（假设<span>250ms</span>）那你就知道你可能已经正占满了网络连接。当然，这里假设一般没人在非占满网络条件下超过<span>250ms</span>，考虑到我们的宽带要求这是合理的。。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">好和坏之间你会怎么转换？我喜欢用下列操作的算法<span>:</span></span></p><ul type="disc"><li class="MsoNormal" style="color:#222222;text-align:left;line-height:150%;     vertical-align:baseline"><span style="font-size:12.0pt;line-height:150%;     font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果你当前在好模式下，而网络条件突然变坏，立即降至坏模式。</span></li><li class="MsoNormal" style="color:#222222;text-align:left;line-height:150%;     vertical-align:baseline"><span style="font-size:12.0pt;line-height:150%;     font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果你正在坏模式下，而且网络条件已经好了一段特定时长<span>”t”</span>，那么回到好模式。</span></li><li class="MsoNormal" style="color:#222222;text-align:left;line-height:150%;     vertical-align:baseline"><span style="font-size:12.0pt;line-height:150%;     font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">为了避免好模式和坏模式之间的快速切换，如果你从好模式降至坏模式持续<span>10</span>秒钟以内，从坏模式回到好模式之前的时间是<span>”t”</span>的两倍。在某些最大值中固定这个时间值，假设<span>60</span>秒。</span></li><li class="MsoNormal" style="color:#222222;text-align:left;line-height:150%;     vertical-align:baseline"><span style="font-size:12.0pt;line-height:150%;     font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:windowtext">为了避免打击良好的网络连接，当它们有一小段时期的差连接时，每过<span>10</span>秒连接就处于好模式，把坏模式回到好模式之前的时间<span>“t”</span>减半。在某些最小值中固定这个时间值，例如<span>1</span>秒</span><span style="font-size:12.0pt;line-height:150%;     font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">。</span></li></ul><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">利用这个算法，你将对差网络连接迅速反应然后降低你的发送速率至每秒<span>10</span>个数据包，避免占满网络。在网络条件好时，你也将谨慎地尝试好模式，坚持以更高的每秒发送<span>30</span>个数据包的速率发送数据包。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">当然，你也能实施复杂得多的算法，丢包率百分比甚至是网络波动（数据包确认字符的时间差异）都可以考虑作为一个衡量标准，而不仅仅是<span>RTT</span>。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">对于避免拥堵你还可以更贪心点，并尝试发现什么时候你能以一个更高的带宽（例如<span>LAN</span>）发送数据，但是你必须非常小心！随着贪婪心的增加你占满网络连接的风险也在增大！</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"> </span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><b><span style="font-size:20.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">结语</span></b></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">我们全新的可靠性系统让我们稳定流畅发送数据包，而且能通知我们收到了什么数据包。从这我们能推断出丢失的数据包，必要的话重新发送没有通过的数据。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">基于此我们有了能够取决于网络条件在每秒<span>10</span>次和每秒<span>30</span>次发包速率间轮流切换的一个简单的避免拥堵系统，因此我们不会占满网络连接。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">还有很多实施细节因为太具体而不能在这篇文章一一提到，所以务必确保你检查</span><span><a rel="noopener" href="http://netgame.googlecode.com/files/ReliabilityAndFlowControl.zip" target="_blank"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:red"><span>示例源代码</span></span></a></span><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">来看是否它都被实施了。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这就是关于可靠性，排序和避免拥堵的一切了，或许是低层次网络设计中最复杂的一面了。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"> </span></p><p class="MsoNormal" style="line-height:150%"><br></p><p class="MsoNormal" style="line-height:150%">【版权声明】</p><p class="MsoNormal" style="line-height:150%"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">原文作者未做权利声明，视为共享知识产权进入公共领域，自动获得授权；</span><span style="font-size:9.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333"> </span></p><p class="MsoNormal" align="left" style="text-indent: 24pt;"><span style="font-family:&quot;Lucida Sans Unicode&quot;,&quot;sans-serif&quot;;color:#222222"> </span></p></div>                    <br>                
+
+
+
+<h1 id="源码下载"><a href="#源码下载" class="headerlink" title="源码下载"></a>源码下载</h1><p>因 Gaffer On Games 的源码原下载地址失效, 所以特地补上.</p>
+<p><a href="https://github.com/no5ix/ReliableUDP" target="_blank" rel="noopener">请点击</a></p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/11/16/virtual_connection_over_udp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/16/virtual_connection_over_udp/" itemprop="url">游戏网络开发三之基于UDP的虚拟连接</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-16T22:20:34+00:00">
+                2016-11-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GS/" itemprop="url" rel="index">
+                    <span itemprop="name">GS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="https://gafferongames.com/post/virtual_connection_over_udp/" target="_blank" rel="noopener">原文出处</a></p>
+<p></p><h2 id="introduction">Introduction</h2><p></p>
+<p>Hi, I&rsquo;m <a href="https://gafferongames.com/about" target="_blank" rel="noopener">Glenn Fiedler</a> and welcome to <a href="https://gafferongames.com/categories/game-networking/" target="_blank" rel="noopener"><strong>Networking for Game Programmers</strong></a>.</p><br><p>In the <a href="https://gafferongames.com/post/sending_and_receiving_packets" target="_blank" rel="noopener">previous article</a> we sent and received packets over UDP. Since UDP is connectionless, one UDP socket can be used to exchange packets with any number of different computers. In multiplayer games however, we usually only want to exchange packets between a small set of connected computers.</p><br><p>As the first step towards a general connection system, we&rsquo;ll start with the simplest case possible: creating a virtual connection between two computers on top of UDP.</p><br><p>But first, we&rsquo;re going to dig in a bit deeper about how the Internet really works!</p><br><h2 id="the-internet-u-not-u-a-series-of-tubes">The Internet <u>NOT</u> a series of tubes</h2><br><p>In 2006, Senator Ted Stevens made internet history with his <a href="https://en.wikipedia.org/wiki/Series_of_tubes" target="_blank" rel="noopener">famous speech</a> on the net neutrality act:</p><br><blockquote>“The internet is not something that you just dump something on. It’s not a big truck. It’s a series of tubes”</blockquote><br><p>When I first started using the Internet, I was just like Ted. Sitting in the computer lab in University of Sydney in 1995, I was &ldquo;surfing the web&rdquo; with this new thing called Netscape Navigator, and I had absolutely no idea what was going on.</p><br><p>You see, I thought each time you connected to a website there was some actual connection going on, like a telephone line. I wondered, how much does it cost each time I connect to a new website? 30 cents? A dollar? Was somebody from the university going to tap me on the shoulder and ask me to pay the long distance charges? :)</p><br><p>Of course, this all seems silly now.</p><br><p>There is no switchboard somewhere that directly connects you via a physical phone line to the other computer you want to talk to, let alone a series of pneumatic tubes like Sen. Stevens would have you believe.</p><br><h2 id="no-direct-connections">No Direct Connections</h2><br><p>Instead your data is sent over Internet Protocol (IP) via packets that hop from computer to computer.</p><br><p>A packet may pass through several computers before it reaches its destination. You cannot know the exact set of computers in advance, as it changes dynamically depending on how the network decides to route packets. You could even send two packets A and B to the same address, and they may take different routes.</p><br><p>On unix-like systems can inspect the route that packets take by calling &ldquo;traceroute&rdquo; and passing in a destination hostname or IP address.</p><br><p>On windows, replace &ldquo;traceroute&rdquo; with &ldquo;tracert&rdquo; to get it to work.</p><br><p>Try it with a few websites like this:</p><br><pre>    traceroute slashdot.org<br>    traceroute amazon.com<br>    traceroute google.com<br>    traceroute bbc.co.uk<br>    traceroute news.com.au<br></pre><br><p>Take a look and you should be able to convince yourself pretty quickly that there is no direct connection.</p><br><h2 id="how-packets-get-delivered">How Packets Get Delivered</h2><br><p>In the <a href="https://gafferongames.com/post/udp_vs_tcp/" target="_blank" rel="noopener">first article</a>, I presented a simple analogy for packet delivery, describing it as somewhat like a note being passed from person to person across a crowded room.</p><br><p>While this analogy gets the basic idea across, it is much too simple. The Internet is <u>not</u> a flat network of computers, it is a network of networks. And of course, we don&rsquo;t just need to pass letters around a small room, we need to be able to send them anywhere in the world.</p><br><p>It should be pretty clear then that the best analogy is the postal service!</p><br><p>When you want to send a letter to somebody you put your letter in the mailbox and you trust that it will be delivered correctly. It&rsquo;s not really relevant to you <i>how</i> it gets there, as long as it does. Somebody has to physically deliver your letter to its destination of course, so how is this done?</p><br><p>Well first off, the postman sure as hell doesn&rsquo;t take your letter and deliver it personally! It seems that the postal service is not a series of tubes either. Instead, the postman takes your letter to the local post office for processing.</p><br><p>If the letter is addressed locally then the post office just sends it back out, and another postman delivers it directly. But, if the address is is non-local then it gets interesting! The local post office is not able to deliver the letter directly, so it passes it &ldquo;up&rdquo; to the next level of hierarchy, perhaps to a regional post office which services cities nearby, or maybe to a mail center at an airport, if the address is far away. Ideally, the actual transport of the letter would be done using a <u>big truck</u>.</p><br><p>Lets be complicated and assume the letter is sent from Los Angeles to Sydney, Australia. The local post office receives the letter and given that it is addressed internationally, sends it directly to a mail center at LAX. The letter is processed again according to address, and gets routed on the next flight to Sydney.</p><br><p>The plane lands at Sydney airport where an <i>entirely different postal system</i> takes over. Now the whole process starts operating in reverse. The letter travels &ldquo;down&rdquo; the hierarchy, from the general, to the specific. From the mail hub at Sydney Airport it gets sent out to a regional center, the regional center delivers it to the local post office, and eventually the letter is hand delivered by a mailman with a funny accent. Crikey! :)</p><br><p>Just like post offices determine how to deliver letters via their address, networks deliver packets according to their IP address. The low-level details of this delivery and the actual routing of packets from network to network is actually quite complex, but the basic idea is that each router is just another computer, with a routing table describing where packets matching sets of addresses should go, as well as a default gateway address describing where to pass packets for which there is no matching entry in the table. It is routing tables, and the physical connections they represent that define the network of networks that is the Internet.</p><br><p>The job of configuring these routing tables is up to network administrators, not programmers like us. But if you want to read more about it, then this article from <a href="https://arstechnica.com/guides/other/peering-and-transit.ars" target="_blank" rel="noopener">ars technica</a> provides some fascinating insight into how networks exchange packets between each other via peering and transit relationships. You can also read more details about <a href="http://www.faqs.org/docs/linux_network/x-087-2-issues.routing.html" target="_blank" rel="noopener">routing tables</a> in this linux faq, and about the <a href="https://en.wikipedia.org/wiki/Border_Gateway_Protocol" target="_blank" rel="noopener">border gateway protocol</a> on wikipedia, which automatically discovers how to route packets between networks, making the internet a truly distributed system capable of dynamically routing around broken connectivity.</p><br><h2 id="virtual-connections">Virtual Connections</h2><br><p>Now back to connections.</p><br><p>If you have used TCP sockets then you know that they sure <i>look</i> like a connection, but since TCP is implemented on top of IP, and IP is just packets hopping from computer to computer, it follows that TCP&rsquo;s concept of connection must be a <i>virtual connection.</i></p><br><p>If TCP can create a virtual connection over IP, it follows that we can do the same over UDP.</p><br><p>Lets define our virtual connection as two computers exchanging UDP packets at some fixed rate like 10 packets per-second. As long as the packets are flowing, we consider the two computers to be virtually connected.</p><br><p>Our connection has two sides:</p><br><ul><br><li>One computer sits there and <i>listens</i> for another computer to connect to it. We’ll call this computer the <u>server</u>.</li><br><li>Another computer <i>connects</i> to a server by specifying an IP address and port. We’ll call this computer the <u>client</u>.</li><br></ul><br><p>In our case, we only allow one client to connect to the server at any time. We&rsquo;ll generalize our connection system to support multiple simultaneous connections in a later article. Also, we assume that the IP address of the server is on a fixed IP address that the client may directly connect to.</p><br><h2 id="protocol-id">Protocol ID</h2><br><p>Since UDP is connectionless our UDP socket can receive packets sent from any computer.</p><br><p>We&rsquo;d like to narrow this down so that the server only receives packets sent from the client, and the client only receives packets sent from the server. We can&rsquo;t just filter out packets by address, because the server doesn&rsquo;t know the address of the client in advance. So instead, we prefix each UDP packet with small header containing a 32 bit protocol id as follows:</p><br><pre>    [uint protocol id]<br>    <i>(packet data…)</i><br></pre><br><p>The protocol id is just some unique number representing our game protocol. Any packet that arrives from our UDP socket first has its first four bytes inspected. If they don&rsquo;t match our protocol id, then the packet is ignored. If the protocol id does match, we strip out the first four bytes of the packet and deliver the rest as payload.</p><br><p>You just choose some number that is reasonably unique, perhaps a hash of the name of your game and the protocol version number. But really you can use anything. The whole point is that from the point of view of our connection based protocol, packets with different protocol ids are ignored.</p><br><h2 id="detecting-connection">Detecting Connection</h2><br><p>Now we need a way to detect connection.</p><br><p>Sure we could do some complex handshaking involving multiple UDP packets sent back and forth. Perhaps a client &ldquo;request connection&rdquo; packet is sent to the server, to which the server responds with a &ldquo;connection accepted&rdquo; sent back to the client, or maybe an &ldquo;i&rsquo;m busy&rdquo; packet if a client tries to connect to server which already has a connected client.</p><br><p>Or&hellip; we could just setup our server to take the first packet it receives with the correct protocol id, and consider a connection to be established.</p><br><p>The client just starts sending packets to the server assuming connection, when the server receives the first packet from the client, it takes note of the IP address and port of the client, and starts sending packets back.</p><br><p>The client already knows the address and port of the server, since it was specified on connect. So when the client receives packets, it filters out any that don&rsquo;t come from the server address. Similarly, once the server receives the first packet from the client, it gets the address and port of the client from &ldquo;recvfrom&rdquo;, so it is able to ignore any packets that don&rsquo;t come from the client address.</p><br><p>We can get away with this shortcut because we only have two computers involved in the connection. In later articles, we&rsquo;ll extend our connection system to support more than two computers in a client/server or peer-to-peer topology, and at this point we&rsquo;ll upgrade our connection negotiation to something more robust.</p><br><p>But for now, why make things more complicated than they need to be?</p><br><h2 id="detecting-disconnection">Detecting Disconnection</h2><br><p>How do we detect disconnection?</p><br><p>Well if a connection is defined as receiving packets, we can define disconnection as <i>not</i> receiving packets.</p><br><p>To detect when we are not receiving packets, we keep track of the number of seconds since we last received a packet from the other side of the connection. We do this on both sides.</p><br><p>Each time we receive a packet from the other side, we reset our accumulator to 0.0, each update we increase the accumulator by the amount of time that has passed.</p><br><p>If this accumulator exceeds some value like 10 seconds, the connection &ldquo;times out&rdquo; and we disconnect.</p><br><p>This also gracefully handles the case of a second client trying to connect to a server that has already made a connection with another client. Since the server is already connected it ignores packets coming from any address other than the connected client, so the second client receives no packets in response to the packets it sends, so the second client times out and disconnects.</p><br><h2 id="conclusion">Conclusion</h2><br><p>And that&rsquo;s all it takes to setup a virtual connection: some way to establish connection, filtering for packets not involved in the connection, and timeouts to detect disconnection.</p><br><p>Our connection is as real as any TCP connection, and the steady stream of UDP packets it provides is a suitable starting point for a multiplayer action game.</p><br><p>Now that you have your virtual connection over UDP, you can easily setup a client/server relationship for a two player multiplayer game without TCP.</p>
+
+<h1 id="译文"><a href="#译文" class="headerlink" title="译文"></a>译文</h1><p><a href="http://gad.qq.com/program/translateview/7161829" target="_blank" rel="noopener">译文出处</a></p>
+<div class="WordSection1"><p class="MsoNormal"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">译者：张华栋<span>(wcby) </span>审校：崔国军（飞扬<span>971</span>）</span> </span></p><p class="MsoNormal" align="left" style="line-height: 20.25pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑; color: rgb(51, 51, 51); font-size: 12pt;"> </span></p><p class="MsoTitle" align="left"><span style="font-family:微软雅黑;"><span style="border: 1pt none windowtext; padding: 0cm;"><span style="font-size:large;"><br><h2 id="序言">序言</h2><br></span></span> </span></p><p class="MsoNormal" align="left" style="line-height: 18pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">大家好，我是<span>Glenn Fiedler</span>，欢迎阅读《<a rel="noopener" href="http://gafferongames.com/networking-for-game-programmers/" target="_blank">针对游戏程序员的网络知识</a>》系列教程的第三篇文章。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">在之前的文章中，我向你展示了如何使用<span>UDP</span>协议来发送和接收数据包。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">由于<span>UDP</span>协议是无连接的传输层协议，一个<span>UDP</span>套接字可以用来与任意数目的不同电脑进行数据包交换。但是在多人在线网络游戏中，我们通常只需要在一小部分互相连接的计算机之间交换数据包。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span><br></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">作为实现通用连接系统的第一步，我们将从最简单的可能情况开始：创建两台电脑之间构建于<span>UDP</span>协议之上的虚拟连接。</span><span style="color: rgb(34, 34, 34);"> </span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">但是首先，我们将对互联网到底是如何工作的进行一点深度挖掘！</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size: 12pt; color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size: 12pt; color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;"><br></span></span></p><p class="MsoTitle" align="left"><span style="font-family:微软雅黑;"><span style="border: 1pt none windowtext; padding: 0cm;"><br><h2 id="互联网不是一连串的管子">互联网不是一连串的管子</h2><br></span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">在<span>2006</span>年，参议院特德<span>·</span>史蒂文斯<span>(Ted Stevens) </span>用他关于互联网中立（<span>netneutrality</span>）法案的著名演讲创造了互联网的历史：</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">”</span><span style="font-size: 12pt; color: rgb(34, 34, 34);">互联网不是那种你随便丢点什么东西进去就能运行的东西。它不是一个大卡车。它是一连串的管子<span>“</span></span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">当我第一次开始使用互联网的时候，我也像<span>Ted</span>一样无知。那是<span>1995</span>年，我坐在悉尼大学的计算机实验室里，在用一种叫做<span>Netscape</span>的网络浏览器（最早最热门的网页浏览工具）“在网上冲浪（<span>surfing the web</span>）“，那个时候我对发生了什么根本一无所知。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="color: rgb(34, 34, 34);"> </span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size: 12pt; color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;">你看那个时候，我觉得每次连到一个网站上就一定有某个真实存在的连接在帮我们传递信息，就像电话线一样。那时候我在想，当我每次连到一个新的网站上需要花费多少钱<span>? 30</span>美分吗<span>?</span>一美元吗<span>? </span>会有大学里的某个人过来拍拍我的肩膀让我付长途通信的费用么？</span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">当然，现在回头看那时候一切的想法都非常的愚蠢。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">并没有在某个地方存在一个物理交换机用物理电话线将你和你希望通话的某个电脑直接连起来。更不用说像参议院史蒂文斯想让你相信的那样存在一串气压输送管。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size: 12pt; color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span class="Char1"><br><h2 id="没有直接的连接">没有直接的连接</h2><br></span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">相反你的数据是基于<span>IP</span>协议<span>(</span></span><span style="color: rgb(34, 34, 34);">InternetProtocol</span><span style="font-size: 12pt; color: rgb(34, 34, 34);">)</span><span style="font-size: 12pt; color: rgb(34, 34, 34);">通过在电脑到电脑之间发送数据包来传递信息的</span><b><span style="font-size: 13.5pt; color: rgb(43, 43, 43); background: rgb(248, 248, 248);">。</span></b> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">一个数据包可能在到达它的目的地之前要经过几个电脑。你没有办法提前知道数据包会经过具体哪些电脑，因为它会依赖当前网络的情况对数据包进行路由来动态的改变路径。甚至有可能给同一个地址发送<span>A</span>和<span>B</span>两个数据包，这两个数据包都采用不同的路由。这就是为什么<span>UDP</span>协议不能保证数据包的到达顺序。（其实这么说稍微容易有点引起误解，<span>TCP</span>协议是能保证数据包的到达顺序的，但是他也是基于<span>IP</span>协议进行数据包的发送，并且往同一个地址发送的两个数据包也有可能采用完全不同的路由，这主要是因为<span>TCP</span>在自己这一层做了一些控制而<span>UDP</span>没有，所以导致<span>TCP</span>协议可以保证数据包的有序性，而<span>UDP</span>协议不能，当然这种保证需要付出性能方面的代价）。</span><span style="color: rgb(34, 34, 34);"><br></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">在类<span>unix</span>的系统中可以通过调用<span>“traceroute”</span>函数并传递一个目的地主机名或<span>IP</span>地址来检查数据包的路由。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">在<span>Windows</span>系统中，可以用<span>“tracert”</span>代替<span>“traceroute”</span>，其他不变，就能检查数据包的路由了。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">像下面这样用一些网址来尝试下这种方法：</span> </span></p><div style="border:solid #F0F0F0 1.0pt;border-left:solid #E0E0E0 2.25pt;padding:0cm 0cm 0cm 0cm;background:whitesmoke"><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family:微软雅黑;"><span style="color: rgb(34, 34, 34);">   traceroute slashdot.org</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family:微软雅黑;"><span style="color: rgb(34, 34, 34);">   traceroute amazon.com</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family:微软雅黑;"><span style="color: rgb(34, 34, 34);">   traceroute google.com</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family:微软雅黑;"><span style="color: rgb(34, 34, 34);">   traceroute bbc.co.uk</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family:微软雅黑;"><span style="color: rgb(34, 34, 34);">   traceroute news.com.au</span> </span></p></div><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">运行下看下输出结果，你应该很快就能说服你自己确实连接到了网站上，但是并没有一个直接的连接。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);"><br></span></span></p><p class="MsoTitle" align="left"><span style="font-family:微软雅黑;"><span style="border: 1pt none windowtext; padding: 0cm;"><br><h2 id="数据包是如何传递到目的地的？">数据包是如何传递到目的地的？</h2><br></span><span style="color: rgb(34, 34, 34);"><br></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">在<a rel="noopener" href="http://gafferongames.com/networking-for-game-programmers/udp-vs-tcp/" target="_blank">第一篇文章</a>中，我对数据包传递到目的地这个事情做了一个简单的类比，把这个过程描述的有点像在一个拥挤的房间内一个人接着一个人的把便条传递下去。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">虽然这个类比的基本思想还是表达出来了，但是它有点过于简单了。互联网并不是电脑组成的一个平面的网络，实际上它是网络的网络。当然，我们不只是要在一个小房间里面传递信件，我们要做的事能够把信息传递到全世界。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="color: rgb(34, 34, 34);"><br></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">这就应该很清楚了，数据包传递到目的地的最好的类比是邮政服务<span>!</span></span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">当你想给某人写信的时候，你会把你的信件放到邮箱里并且你相信它将正确的传递到目的地。这封信件具体是怎么到达目的地的和你并不是十分相关，尽管它是否正确到达会对你有影响。当然会有某个人在物理上帮你把信件传递到目的地，所以这是怎么做的呢<span>?</span></span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">首先，邮递员肯定不需要自己去把你的信件送到目的地！看起来邮政服务也不是一串管子。相反，邮递员是把你的信件带到当地的邮政部门进行处理。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">如果这封信件是发送给本地的，那么邮政部门就会把这封信件发送回来，另外一个邮递员会直接投递这封信件。但是，如果这封信件不是发送给本地的，那么这个处理过程就有意思了！当地的邮政部门不能直接投递这封信件，所以这封信件会被向上传递到层次结构的上一层，这个上一层也许是地区级的邮政部门它会负责服务附近的几个城市，如果要投递的地址非常远的话，这个上一层也许是位于机场的一个邮件中心。理想情况下，信件的实际运输将通过一个大卡车来完成。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">让我们通过一个例子来把上面说的过程具体的走一遍，假设有一封信件要从洛杉矶发送到澳大利亚的悉尼。当地的邮政部门收到信件以后考虑到这封信件是一封跨国投递的信件，所以会直接把它发送到位于洛杉矶机场的邮件中心。在那里，这封信件会再次根据它的地址进行处理，并被安排通过下一个到悉尼的航班投递到悉尼去。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">当飞机降落到悉尼机场以后，一个完全不同的邮政系统会负责接管这封信件。现在整个过程开始逆向操作。这封信件会沿着层次结构向下传递，从大的管理部门到具体的投递区域。这封信件会从悉尼机场的邮件中心被送往一个地区级的中心，然后地区级的中心会把这封信件投递到当地的邮政部门，最终这封信件会是由一个操着有趣的本地口音的邮政人员用手投递到真正的目的地的。哎呀<span>! !</span></span><span style="color: rgb(34, 34, 34);"> </span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="color: rgb(34, 34, 34);"> </span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">就像邮局是通过信件的地址来决定这些信件是该如何投递的一样，网络也是根据这些数据包的<span>IP</span>地址来决定它们是该如何传递的。投递机制的底层细节以及数据包从网络到网络的实际路由其实都是相当复杂的，但是基本的想法都是一样的，就是每个路由器都只是另外一台计算机，它会携带一张路由表用来描述如果数据包的<span>IP</span>地址匹配了这张表上的某个地址集，那么这个数据包该如何传递，这张表还会记载着默认的网关地址，如果数据包的<span>IP</span>地址和这张路由表上的一个地址都匹配不上，那么这个数据包该传递到默认的网关地址那里。其实是路由表以及它们代表的物理连接定义了网络的网络，也就是互联网（互联网也被称为万维网）。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span><a rel="nofollow" href="http://baike.baidu.com/view/1706.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>因特网</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">于<span>1969</span>年诞生于</span><span><a rel="nofollow" href="http://baike.baidu.com/view/2398.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>美国</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">。最初名为<span>“</span></span><span><a rel="nofollow" href="http://baike.baidu.com/view/108095.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>阿帕网</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">”</span><span style="font-size: 12pt; color: rgb(34, 34, 34);">（<span>ARPAnet</span>）是一个军用研究系统，后来又成为连接大学及高等院校计算机的学术系统，则已</span><span><a rel="nofollow" href="http://baike.baidu.com/view/141536.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>发展</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">成为一个覆盖五大洲<span>150</span>多个国家的开放型全球</span><span><a rel="nofollow" href="http://baike.baidu.com/view/541460.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>计算机网络系统</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">，拥有许多服务商。普通电脑用户只需要一台个人计算机用电话线通过</span><span><a rel="nofollow" href="http://baike.baidu.com/view/1074.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>调制解调器</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">和</span><span><a rel="nofollow" href="http://baike.baidu.com/view/1706.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>因特网</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">服务商连接，便可进入因特网。但</span><span><a rel="nofollow" href="http://baike.baidu.com/view/1706.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>因特网</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">并不是全球唯一的</span><span><a rel="nofollow" href="http://baike.baidu.com/view/380232.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>互联网络</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">。例如在</span><span><a rel="nofollow" href="http://baike.baidu.com/view/3622.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>欧洲</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">，跨国的</span><span><a rel="nofollow" href="http://baike.baidu.com/view/380232.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>互联网络</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">就有<span>“</span>欧盟网<span>”</span>（<span>Euronet</span>），<span>“</span>欧洲学术与研究网<span>”</span>（<span>EARN</span>），<span>“</span>欧洲信息网<span>”</span>（<span>EIN</span>），在美国还有<span>“</span>国际学术网<span>”</span>（</span><span><a rel="nofollow" href="http://baike.baidu.com/view/370280.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;">BITNET</span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">），世界范围的还有<span>“</span>飞多网<span>”</span>（全球性的</span><span><a rel="nofollow" href="http://baike.baidu.com/view/66.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;">BBS</span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">系统）等。但这些网络其实根本就不需要知道，感谢<span>IP</span>协议的帮助，只要知道他们是可以互联互通的就可以。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">这些路由表的配置工作是由网络管理员完成的，而不是由像我们这样的程序员来做。但是如果你想要了解这方面的更多内容，</span><span style="color: rgb(34, 34, 34);"> </span><span style="color: rgb(34, 34, 34);">那么来自</span><span><a rel="noopener" href="http://arstechnica.com/guides/other/peering-and-transit.ars" target="_blank"><span style="color: rgb(221, 51, 51);">ars technica</span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">的这篇文章将提供网络是如何在端与端之间互联来交换数据包以及传输关系方面一些非常有趣的见解。你还可以通过<span>linux</span>常见问题中路由表（</span><span><a rel="noopener" href="http://www.faqs.org/docs/linux_network/x-087-2-issues.routing.html" target="_blank"><span style="color: rgb(221, 51, 51);">routing tables</span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">）方面的文章以及维基百科上面的边界网关协议（</span><span><a rel="noopener" href="http://en.wikipedia.org/wiki/Border_Gateway_Protocol" target="_blank"><span style="color: rgb(221, 51, 51);">border gateway protocol</span></a></span><span style="color: rgb(34, 34, 34);"> </span><span style="font-size: 12pt; color: rgb(34, 34, 34);">）的解释来获得更多的细节。边界网关协议是用来自动发现如何在网络之间路由数据包的协议，有了它才真正的让互联网成为一个分布式系统，能够在不稳定的连接里面进行动态的路由。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">边界网关协议（<span>BGP</span>）是运行于<span> TCP </span>上的一种</span><span><a rel="nofollow" href="http://baike.baidu.com/view/2663.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>自治系统</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">的</span><span><a rel="nofollow" href="http://baike.baidu.com/view/7031.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>路由协议</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">。<span> BGP </span>是唯一一个用来处理像因特网大小的网络的协议，也是唯一能够妥善处理好不相关</span><span><a rel="nofollow" href="http://baike.baidu.com/view/4303246.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>路由域</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">间的多路连接的协议。<span> BGP </span>构建在<span> EGP </span>的经验之上。<span> BGP </span>系统的主要功能是和其他的<span> BGP </span>系统交换网络可达信息。网络可达信息包括列出的</span><span><a rel="nofollow" href="http://baike.baidu.com/view/2663.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>自治系统</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">（<span>AS</span>）的信息。这些信息有效地构造了<span> AS </span>互联的拓朴图并由此清除了</span><span><a rel="nofollow" href="http://baike.baidu.com/view/2098835.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>路由环路</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">，同时在<span> AS </span>级别上可实施策略决策。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><br><h2 id="虚拟的连接">虚拟的连接</h2><br></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">现在让我们回到连接本身。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">如果你已经使用过<span>TCP</span>套接字，那么你会知道它们看起来真的像是一个连接，但是由于<span>TCP</span>协议是在<span>IP</span>协议之上实现的，而<span>IP</span>协议是通过在计算机之间进行跳转来传递数据包的，所以<span>TCP</span>的连接仍然是一个虚拟连接。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">如果<span>TCP</span>协议可以基于<span>IP</span>协议建立虚拟连接，那么我们在<span>UDP</span>协议上所做的一切都可以应用于<span>TCP</span>协议上。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">让我们给虚拟连接下个定义：两个计算机之间以某个固定频率比如说每秒<span>10</span>个数据包来交换<span>UDP</span>的数据包。只要数据包仍然在传输，我们就认为这两台计算机之间存在一个虚拟连接。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">我们的连接有两侧：</span> </span></p><ul type="disc"><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-family:微软雅黑;"><span style="font-size: 12pt;">一个计算机坐在那儿侦听是否有另一台计算机连接到它。我们称负责监听的这台计算机为服务器（<span>server</span>）。</span> </span></li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-family:微软雅黑;"><span style="font-size: 12pt;">另一台计算机会通过一个指定的<span>IP</span>地址和端口连接到一个服务器。我们称主动连接的这台电脑为客户端（<span>client</span>）。</span> </span></li></ul><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">在我们的场景里，我们只允许一个客户端在任意的时候连接到服务器。我们将在下一篇文章里面拓展我们的连接系统以支持多个客户端的同时连接。此外，我们假定服务器的<span>IP</span>地址是一个固定的<span>IP</span>地址，客户端可以随时直接连接上来。我们将在后面的文章里面介绍匹配（<span>matchmaking</span>）和<span>NAT</span>打穿（<span>NATpunch-through</span>）。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);"><br></span></span></p><p class="MsoTitle" align="left"><span style="font-family:微软雅黑;"><br><h2 id="协议ID">协议ID</h2><br></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">由于<span>UDP</span>协议是无连接的传输层协议，所以我们的<span>UDP</span>套接字可以接受来自任何电脑的数据包。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">我们想要缩小接收数据包的范围，以便我们的服务器只接收那些从我们的客户端发送出来的数据包，并且我们的客户端只接收那些从我们的服务端发送出来的数据包。我们不能只通过地址来过滤我们的数据包，因为服务器没有办法提前知道客户端的地址。所以，我们会在每一个<span>UDP</span>数据包前面加上一个包含<span>32</span>位协议<span>id</span>的头<span>,</span>如下所示<span>:</span></span> </span></p><div style="border:solid #F0F0F0 1.0pt;border-left:solid #E0E0E0 2.25pt;padding:0cm 0cm 0cm 0cm;background:whitesmoke"><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family:微软雅黑;"><span style="color: rgb(34, 34, 34);">   [uint protocol id]</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family:微软雅黑;"><span style="color: rgb(34, 34, 34);">    <i><span style="border:none windowtext 1.0pt;padding:0cm">(packet data…)</span></i></span> </span></p></div><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">协议<span>ID</span>只是一些独特的代表我们的游戏协议的数字。我们的<span>UDP</span>套接字收到的任意数据包首先都要检查数据包的首四位。如果它们和我们的协议<span>ID</span>不匹配的话，这个数据包就会被忽略。如果它们和我们的协议<span>ID</span>匹配的话，我们会剔除数据包的第一个四个字节并把剩下的部分发给我们的系统进行处理。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">你只要选择一些非常独特的数字就可以了，这些数字可以是你的游戏名字和协议版本号的散列值。不过说真的，你可以使用任何东西。这种做法的重点是把我们的连接视为基于协议进行通信的连接，如果协议<span>ID</span>不同，那么这样的数据包将被丢弃掉。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><br><h2 id="检测连接">检测连接</h2><br></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">现在我们需要一个方法来检测连接。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">当然我们可以实现一些复杂的握手协议，牵扯到多个<span>UDP</span>数据包来回传递。比如说客户端发送一个<span>”</span>请求连接（<span>request connection</span>）<span>“</span>的数据包给服务器，当服务器收到这个数据包的时候会回应一个<span>”</span>连接接受（<span>connection accepted</span>）<span>“</span>的数据包给客户端，或者如果这个服务器已经有超过一个连接的客户端以后，会回复一个“我很忙（<span>i’m busy</span>）<span>”</span>的数据包给客户端。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="color: rgb(34, 34, 34);"> </span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">或者。。我们可以设置我们的服务器，让它以它收到的第一个数据包的协议<span>ID</span>作为正确的协议<span>ID</span>，并在收到第一个数据包的时候就认为连接已经建立起来了。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">客户端只是开始给服务器发送数据包，当服务器收到客户端发过来的第一个数据包的时候，它会记录下客户端的<span>IP</span>地址和端口号，然后开始给客户端回包。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">客户端已经知道了服务器的地址和端口，因为这些信息是在连接的时候指定的。所以当客户端收到数据包的时候，它会过滤掉任何不是来自于服务器地址的数据包。同样的，一旦服务器收到客户端的第一个数据包，它就会从<span>“recvfrom”</span>函数里面得到客户端的地址和端口号，所以它也可以忽略任何不是发自客户端地址的数据包。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">我们可以通过一个捷径来避开这个问题，因为我们的系统只有两台计算机会建立连接。在后面的文章里，我们将拓展我们的连接系统来支持超过两台计算机参与客户端<span>/</span>服务器或者端对端（<span>peer-to-peer</span>，<span>p2p</span>）网络模型，并且在那个时候我们会升级我们的连接协议方式来让它变得更加健壮。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">但是现在，为什么我们要让事情变得超出需求的复杂度呢？（作者的意思是因为我们现在不需要解决这个问题，因为我们的场景是面对只有两台计算机的情况，所以我们可以先放过这个问题。）</span> </span></p><p class="MsoTitle" align="left"><span style="font-family:微软雅黑;"><span style="border: 1pt none windowtext; padding: 0cm;"><br></span></span></p><p class="MsoTitle" align="left"><span style="font-family:微软雅黑;"><span style="border: 1pt none windowtext; padding: 0cm;"><br></span></span></p><p class="MsoTitle" align="left"><span style="font-family:微软雅黑;"><span style="border: 1pt none windowtext; padding: 0cm;"><br><h2 id="检测断线的情况">检测断线的情况</h2><br></span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">我们该如何检测断线（<span>disconnection</span>）的情况？</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">那么，如果一个连接被定义为接收数据包，我们可以定义断线为收不到数据包。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">为了检测什么时候开始我们收不到数据包，我们要记录上一次我们从连接的另外一侧收到数据包到现在过去了多少秒，我们在连接的两侧都做了这个事情。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">每次我们从连接的另外一端收到数据包的时候，我们都会重置我们的计数器为<span>0.0</span>，每一次更新的时候我们都会把这次更新到上一次更新逝去的时间量加到计数器上。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">如果计数器的值超过某一个值，比如说<span>10</span>秒，那么我们就认定这个连接“超时<span>”</span>了并且我们会断开连接。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">这也可以很优雅的处理当服务器已经与一个客户端建立连接以后，有第二个客户端试图与服务器建立连接的情况。因为服务器已经建立了连接，它会忽略掉不是来自连接的客户端地址发出来的数据包，所以第二个客户端在发出了数据包以后得不到任何回应，这样它就会判断连接超时并断开连接。</span> </span></p><br><h2 id="总结">总结</h2><br><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">而这一切都需要设置一个虚拟连接：用某种方法建立一个连接，过滤掉那些不是来自这个连接的数据包，并且如果发现连接超时就断开连接。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">我们的连接就跟任何<span>TCP</span>连接一样真实，并且<span>UDP</span>数据包构成的稳定数据流为多人在线动作网络游戏提供了一个很好的起点。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">我们还获得了一些互联网是如何路由数据包的见解。举个例子来说，我们现在知道<span>UDP</span>数据包有时候会在到达的时候是乱序的原因是因为它们在<span>IP</span>层传输的时候采用不同的路由！看下互联网的地图，你会不会对你的数据包能够到达正确的目的点感到非常的神奇？如果你想对这个问题进行更加深入的了解，维基百科上的这篇文章<span>(<a rel="noopener" href="https://en.wikipedia.org/wiki/Internet_backbone" target="_blank">Internet backbone</a>)</span>是一个很好的起点。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">现在，既然你已经有了一个基于<span>UDP</span>协议的虚拟连接，你可以轻松的在两个玩家的多人在线游戏里面设置一个客户端<span>/</span>服务器关系而不需要使用<span>TCP</span>协议。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">你可以在这篇文章的示例源代码（</span><span><a rel="noopener" href="http://netgame.googlecode.com/files/VirtualConnectionOverUDP.zip" target="_blank"><span style="color: rgb(221, 51, 51);">examplesource code</span></a></span><span class="apple-converted-space"><span style="color: rgb(34, 34, 34);"> </span></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">）找到一个具体实现。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">这是一个简单的客户端<span>/</span>服务器程序，每秒交换<span>30</span>个数据包。你可以在任意你喜欢的机器上运行这个服务器，只要给它提供一个公共的<span>IP</span>地址就可以了，需要公共<span>IP</span>地址的原因是我们目前还不支持<span>NAT</span>打穿</span><span style="color: rgb(34, 34, 34);">（</span><span><a rel="noopener" href="http://www.jenkinssoftware.com/raknet/manual/natpunchthrough.html" target="_blank"><span style="color: rgb(221, 51, 51);">NAT punch-through</span></a></span><span style="color: rgb(34, 34, 34);"> </span><span style="color: rgb(34, 34, 34);">）。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">NAT</span><span style="font-size: 12pt; color: rgb(34, 34, 34);">穿越（<span>NATtraversal</span>）涉及<span>TCP/IP</span>网络中的一个常见问题，即在处于使用了<span>NAT</span>设备的私有<span>TCP/IP</span>网络中的</span><span><a rel="nofollow" href="http://baike.baidu.com/view/23880.htm" target="_blank"><span style="font-size: 12pt; color: rgb(34, 34, 34); text-decoration: none;"><span>主机</span></span></a></span><span style="font-size: 12pt; color: rgb(34, 34, 34);">之间建立连接的问题。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">像这样来运行客户端：</span> </span></p><div style="border:solid #F0F0F0 1.0pt;border-left:solid #E0E0E0 2.25pt;padding:0cm 0cm 0cm 0cm;background:whitesmoke"><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family:微软雅黑;"><span style="color: rgb(34, 34, 34);">   ./Client 205.10.40.50</span> </span></p></div><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">它会尝试连接到你在命令行输入的地址。如果你不输入地址的话，默认情况下它会连接到<span>127.0.0.1</span>。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">当一个客户端已经与服务器建立连接的时候，你可以尝试用另外一个客户端来连接这个服务器，你会注意到这次连接的尝试失败了。这么设计是故意的。因为到目前为止，一次只允许一个客户端连接上服务器。 </span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">你也可以在客户端和服务器连接的状态下尝试停止客户端或者服务器，你会注意到<span>10</span>秒以后连接的另外一侧会判断连接超时并断开连接。当客户端超时的时候它会退到<span>shell</span>窗口，但是服务器会退到监听状态为下一次的连接做好准备。</span> </span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">预告下接下来的一篇文章的题目<span>:</span>《基于<span>UDP</span>的可靠、有序和拥塞避免的传输》，欢迎继续阅读。</span> </span></p><p class="MsoNormal"><span style="font-family:微软雅黑;"><b><u><span style="color: rgb(34, 34, 34); border: 1pt none windowtext; padding: 0cm;"><span style="text-decoration: none"> </span></span></u></b> </span></p><p class="MsoNormal" align="left" style="line-height: 18pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">如果你喜欢这篇文章的话，请考虑对我做一个小小的捐赠。捐款会鼓励我写更多的文章<span>!</span>（原文作者在原文的地址上提供了一个捐赠网址，有兴趣的读者可以在文章开始的地方找到原文地址进行捐赠）</span> </span></p><p class="MsoNormal" align="left" style="line-height: 18pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 18pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);"><br></span></span></p><p class="MsoNormal" align="left" style="line-height: 18pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">【版权声明】</span> </span></p><p class="MsoNormal"><span style="font-family:微软雅黑;"><span style="font-size: 12pt; color: rgb(34, 34, 34);">原文作者未做权利声明，视为共享知识产权进入公共领域，自动获得授权。</span></span><span style="font-size:9.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333"> </span></p><p class="MsoNormal" align="left" style="text-indent: 24pt;"><span style="font-family:&quot;Lucida Sans Unicode&quot;,&quot;sans-serif&quot;;color:#222222"> </span></p></div>                    <br>                
+
+
+
+<h1 id="源码下载"><a href="#源码下载" class="headerlink" title="源码下载"></a>源码下载</h1><p>因 Gaffer On Games 的源码原下载地址失效, 所以特地补上.</p>
+<p><a href="https://github.com/no5ix/ReliableUDP" target="_blank" rel="noopener">请点击</a></p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

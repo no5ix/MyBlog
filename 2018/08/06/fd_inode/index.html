@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Linux,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="FD 文件描述符　　Linux 系统中，把一切都看做是文件，当进程打开现有文件或创建新文件时，内核向进程返回一个文件描述符，文件描述符就是内核为了高效管理已被打开的文件所创建的索引，用来指向被打开的文件，所有执行 I/O 操作的系统调用都会通过文件描述符。 文件描述符、文件、进程间的关系我们可以通过 linux 的几个基本的 I/O 操作函数来理解什么是文件描述符。 123456fd = open">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件描述符FD与Inode">
+<meta property="og:url" content="https://hulinhong.com/2018/08/06/fd_inode/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="FD 文件描述符　　Linux 系统中，把一切都看做是文件，当进程打开现有文件或创建新文件时，内核向进程返回一个文件描述符，文件描述符就是内核为了高效管理已被打开的文件所创建的索引，用来指向被打开的文件，所有执行 I/O 操作的系统调用都会通过文件描述符。 文件描述符、文件、进程间的关系我们可以通过 linux 的几个基本的 I/O 操作函数来理解什么是文件描述符。 123456fd = open">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hulinhong.com/img/fd_inode/fd_inode1.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/fd_inode/fd_inode2.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/fd_inode/fd_inode3.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/fd_inode/fd_inode4.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/fd_inode/fd_inode5.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/hard_link_soft_link.jpg">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.054Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="文件描述符FD与Inode">
+<meta name="twitter:description" content="FD 文件描述符　　Linux 系统中，把一切都看做是文件，当进程打开现有文件或创建新文件时，内核向进程返回一个文件描述符，文件描述符就是内核为了高效管理已被打开的文件所创建的索引，用来指向被打开的文件，所有执行 I/O 操作的系统调用都会通过文件描述符。 文件描述符、文件、进程间的关系我们可以通过 linux 的几个基本的 I/O 操作函数来理解什么是文件描述符。 123456fd = open">
+<meta name="twitter:image" content="https://hulinhong.com/img/fd_inode/fd_inode1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>文件描述符FD与Inode | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2018/08/06/fd_inode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">文件描述符FD与Inode</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-06T08:08:06+00:00">
+                2018-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/06/noodle_plan/" rel="next" title="noodle_plan">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  noodle_plan
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/09/kcpp_intro/" rel="prev" title="一个轻量级的kcp会话实现">
+              <p class="post-nav-pre-next-title">
+                  一个轻量级的kcp会话实现
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="FD-文件描述符"><a href="#FD-文件描述符" class="headerlink" title="FD 文件描述符"></a>FD 文件描述符</h1><p>　　Linux 系统中，把一切都看做是文件，当进程打开现有文件或创建新文件时，内核向进程返回一个文件描述符，文件描述符就是内核为了高效管理已被打开的文件所创建的索引，用来指向被打开的文件，所有执行 I/O 操作的系统调用都会通过文件描述符。</p>
+<h2 id="文件描述符、文件、进程间的关系"><a href="#文件描述符、文件、进程间的关系" class="headerlink" title="文件描述符、文件、进程间的关系"></a>文件描述符、文件、进程间的关系</h2><p>我们可以通过 linux 的几个基本的 I/O 操作函数来理解什么是文件描述符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fd = open(pathname, flags, mode)</span><br><span class="line">// 返回了该文件的fd</span><br><span class="line">rlen = read(fd, buf, count)</span><br><span class="line">// IO操作均需要传入该文件的fd值</span><br><span class="line">wlen = write(fd, buf, count)</span><br><span class="line">status = close(fd)</span><br></pre></td></tr></table></figure>
+<p>每当进程用<code>open（）</code>函数打开一个文件，内核便会返回该文件的文件描述符（一个非负的整形值），此后所有对该文件的操作，都会以返回的 fd 文件描述符为参数。</p>
+<p><img src="/img/fd_inode/fd_inode1.jpg" alt></p>
+<p><strong>文件描述符</strong>可以理解为进程文件描述表这个表的<strong>索引</strong>，或者把文件描述表看做一个数组的话，文件描述符可以看做是数组的下标。当需要进行 I/O 操作的时候，会传入 fd 作为参数，先从进程文件描述符表查找该 fd 对应的那个条目，取出对应的那个已经打开的文件的<strong>句柄</strong>，根据文件句柄指向，去系统 fd 表中查找到该文件指向的 <strong>inode</strong>，从而定位到该文件的真正位置，从而进行 I/O 操作。</p>
+<p>我们仔细看这张图, 在进程A中，文件描述符1和30都指向了同一个打开的文件句柄（标号23）。这可能是通过调用dup()、dup2()、fcntl()或者对同一个文件多次调用了open()函数而形成的。</p>
+<p>进程A的文件描述符2和进程B的文件描述符2都指向了同一个打开的文件句柄（标号73）。这种情形可能是在调用fork()后出现的（即，进程A、B是父子进程关系），或者当某进程通过UNIX域套接字将一个打开的文件描述符传递给另一个进程时，也会发生。再者是不同的进程独自去调用open函数打开了同一个文件，此时进程内部的描述符正好分配到与其他进程打开该文件的描述符一样。<br>此外，进程A的描述符0和进程B的描述符3分别指向不同的打开文件句柄，但这些句柄均指向i-node表的相同条目（1976），换言之，指向同一个文件。发生这种情况是因为每个进程各自对同一个文件发起了open()调用。同一个进程两次打开同一个文件，也会发生类似情况。</p>
+<p><strong>小结:</strong>  </p>
+<ul>
+<li>由于进程级文件描述符表的存在，不同的进程中会出现相同的文件描述符，它们可能指向同一个文件，也可能指向不同的文件</li>
+<li>两个不同的文件描述符，若指向同一个打开文件句柄，将共享同一文件偏移量。因此，如果通过其中一个文件描述符来修改文件偏移量（由调用read()、write()或lseek()所致），那么从另一个描述符中也会观察到变化，无论这两个文件描述符是否属于不同进程，还是同一个进程，情况都是如此。</li>
+<li>要获取和修改打开的文件标志（例如：O_APPEND、O_NONBLOCK和O_ASYNC），可执行fcntl()的F_GETFL和F_SETFL操作，其对作用域的约束与上一条颇为类似。</li>
+<li>文件描述符标志（即，close-on-exec）为进程和文件描述符所私有。对这一标志的修改将不会影响同一进程或不同进程中的其他文件描述符</li>
+<li>每个文件描述符会与一个打开的文件相对应</li>
+<li>不同的文件描述符也可能指向同一个文件</li>
+<li>相同的文件可以被不同的进程打开，也可以在同一个进程被多次打开</li>
+</ul>
+<h2 id="系统为维护文件描述符建立了三个表"><a href="#系统为维护文件描述符建立了三个表" class="headerlink" title="系统为维护文件描述符建立了三个表"></a>系统为维护文件描述符建立了三个表</h2><ul>
+<li>进程级的文件描述符表</li>
+<li>系统级的文件描述符表</li>
+<li>文件系统的 i-node 表 (inode 见下文)</li>
+</ul>
+<h3 id="进程级别的文件描述表"><a href="#进程级别的文件描述表" class="headerlink" title="进程级别的文件描述表"></a>进程级别的文件描述表</h3><p>linux 内核会为每一个进程创建一个<code>task_truct</code>结构体来维护进程信息，称之为 进程描述符，<code>task_truct</code>结构体中的指针指向一个名称为<code>file_struct</code>的结构体，该结构体即 进程级别的文件描述表。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">files_struct</span> *<span class="title">files</span></span></span><br></pre></td></tr></table></figure>
+<p>它的每一个条目记录的是单个文件描述符的相关信息</p>
+<ol>
+<li>fd 控制标志，前内核仅定义了一个，即 close-on-exec</li>
+<li>文件描述符所打开的文件句柄的引用【注 2】</li>
+</ol>
+<blockquote>
+<p>[注释 2]：文件句柄这里可以理解为文件名，或者文件的全路径名，因为 linux 文件系统文件名和文件是独立的，以此与 inode 区分</p>
+</blockquote>
+<h3 id="系统级别的文件描述符表"><a href="#系统级别的文件描述符表" class="headerlink" title="系统级别的文件描述符表"></a>系统级别的文件描述符表</h3><p>内核对系统中所有打开的文件维护了一个描述符表，也被称之为 【<strong>打开文件表</strong>】，表格中的每一项被称之为 【<strong>打开文件句柄</strong>】，一个【<strong>打开文件句柄</strong>】 描述了一个打开文件的全部信息。<br>主要包括：</p>
+<ol>
+<li>当前文件偏移量（调用 read() 和 write() 时更新，或使用 lseek() 直接修改）</li>
+<li>打开文件时所使用的状态标识（即，open() 的 flags 参数）</li>
+<li>文件访问模式（如调用 open() 时所设置的只读模式、只写模式或读写模式）</li>
+<li>与信号驱动相关的设置</li>
+<li>对该文件 i-node 对象的引用</li>
+<li>文件类型（例如：常规文件、套接字或 FIFO）和访问权限</li>
+<li>一个指针，指向该文件所持有的锁列表</li>
+<li>文件的各种属性，包括文件大小以及与不同类型操作相关的时间戳</li>
+</ol>
+<h3 id="Inode表"><a href="#Inode表" class="headerlink" title="Inode表"></a>Inode表</h3><p>每个文件系统会为存储于其上的所有文件 (包括目录) 维护一个 i-node 表，单个 i-node 包含以下信息：</p>
+<ol>
+<li>文件类型 (file type)，可以是常规文件、目录、套接字或 FIFO</li>
+<li>访问权限</li>
+<li>文件锁列表 (file locks)</li>
+<li>文件大小  </li>
+<li>…</li>
+</ol>
+<p>i-node 存储在磁盘设备上，内核在内存中维护了一个副本，这里的 i-node 表为后者。副本除了原有信息，还包括：引用计数 (从打开文件描述体)、所在设备号以及一些临时属性，例如文件锁。</p>
+<blockquote>
+<p>注：进程 A 的 fd 表中，左边 fd0，fd1，fd2… 就是各个文件描述符，它是 fd 表的索引，fd 不是表里那个 fd flags！这里不要搞混淆了，fd flags 目前只有一个取值。</p>
+</blockquote>
+<p>在进程 A 中，文件描述符 1 和 30 都指向了同一个打开的文件句柄（标号 23）。这可能是通过调用 dup()、dup2()、fcntl() 或者对同一个文件多次调用了 open() 函数而形成的。  </p>
+<p><strong>dup（）</strong>，也称之为<strong>文件描述符复制函数</strong>，在某些场景下非常有用，比如：标准输入 / 输出重定向。在 shell 下，完成这个操作非常简单，大部分人都会，但是极少人思考过背后的原理。大概描述一下需要的几个步骤，以标准输出 (文件描述符为 1) 重定向为例：</p>
+<ol>
+<li>打开目标文件，返回文件描述符 n；</li>
+<li>关闭文件描述符 1；</li>
+<li>调用 dup 将文件描述符 n 复制到 1；</li>
+<li>关闭文件描述符 n；</li>
+</ol>
+<p>进程 A 的文件描述符 2 和进程 B 的文件描述符 2 都指向了同一个打开的文件句柄（标号 73）。这种情形可能是在调用 fork() 后出现的（即，进程 A、B 是父子进程关系）【注 3】，或者当某进程通过 UNIX 域套接字将一个打开的文件描述符传递给另一个进程时，也会发生。再者是不同的进程独自去调用 open 函数打开了同一个文件，此时进程内部的描述符正好分配到与其他进程打开该文件的描述符一样。</p>
+<blockquote>
+<p>注 3： 子进程会继承父进程的文件描述符表，也就是子进程继承父进程打开的文件 这句话的由来。</p>
+</blockquote>
+<p>此外，进程 A 的描述符 0 和进程 B 的描述符 3 分别指向不同的打开文件句柄，但这些句柄均指向 i-node 表的相同条目（1976），换言之，指向同一个文件。发生这种情况是因为每个进程各自对同一个文件发起了 open() 调用。同一个进程两次打开同一个文件，也会发生类似情况。</p>
+<h2 id="文件描述符数目限制"><a href="#文件描述符数目限制" class="headerlink" title="文件描述符数目限制"></a>文件描述符数目限制</h2><p>　　有资源的地方就有战争，“文件描述符”也是一种资源，系统中的每个进程都需要有 “文件描述符” 才能进行改变世界的宏图霸业。世界需要秩序，于是就有了 “文件描述符限制” 的规定。</p>
+<p>如下表：<br><img src="/img/fd_inode/fd_inode2.jpg" alt></p>
+<p>永久修改用户级限制时有三种设置类型：</p>
+<ul>
+<li>soft 指的是当前系统生效的设置值</li>
+<li>hard 指的是系统中所能设定的最大值</li>
+<li>“-” 指的是同时设置了 soft 和 hard 的值</li>
+</ul>
+<h1 id="inode"><a href="#inode" class="headerlink" title="inode"></a>inode</h1><p>理解 inode，要从文件储存说起。文件储存在硬盘上，硬盘的最小存储单位叫做” 扇区”（Sector）。每个扇区储存 512 字节（相当于 0.5KB）。</p>
+<p>操作系统读取硬盘的时候，不会一个个扇区地读取，这样效率太低，而是一次性连续读取多个扇区，即一次性读取一个” 块”（block）。这种由多个扇区组成的” 块”，是文件存取的最小单位。” 块” 的大小，最常见的是 4KB，即连续八个 sector 组成一个 block。</p>
+<p>文件数据都储存在” 块” 中，那么很显然，我们还必须找到一个地方储存文件的元信息，比如文件的创建者、文件的创建日期、文件的大小等等。这种储存文件元信息的区域就叫做 inode，中文译名为” 索引节点”。</p>
+<p>每一个文件都有对应的 inode，里面包含了与该文件有关的一些信息。</p>
+<h2 id="inode-的内容"><a href="#inode-的内容" class="headerlink" title="inode 的内容"></a>inode 的内容</h2><p>inode 包含文件的元信息，具体来说有以下内容：</p>
+<ul>
+<li>文件的字节数</li>
+<li>文件拥有者的 User ID</li>
+<li>文件的 Group ID</li>
+<li>文件的读、写、执行权限</li>
+<li>文件的时间戳，共有三个：ctime 指 inode 上一次变动的时间，mtime 指文件内容上一次变动的时间，atime 指文件上一次打开的时间。</li>
+<li>链接数，即有多少文件名指向这个 inode</li>
+<li>文件数据 block 的位置</li>
+</ul>
+<p>可以用<code>stat</code>命令，查看某个文件的 inode 信息：<br><code>stat 233.txt</code>  </p>
+<p><img src="/img/fd_inode/fd_inode3.jpg" alt></p>
+<p>总之，除了文件名以外的所有文件信息，都存在 inode 之中。至于为什么没有文件名，下文会有详细解释。</p>
+<h2 id="inode-的大小"><a href="#inode-的大小" class="headerlink" title="inode 的大小"></a>inode 的大小</h2><p>inode 也会消耗硬盘空间，所以硬盘格式化的时候，操作系统自动将硬盘分成两个区域。一个是数据区，存放文件数据；另一个是 inode 区（inode table），存放 inode 所包含的信息。</p>
+<p>每个 inode 节点的大小，一般是 128 字节或 256 字节。inode 节点的总数，在格式化时就给定，一般是每 1KB 或每 2KB 就设置一个 inode。假定在一块 1GB 的硬盘中，每个 inode 节点的大小为 128 字节，每 1KB 就设置一个 inode，那么 inode table 的大小就会达到 128MB，占整块硬盘的 12.8%。</p>
+<p>查看每个硬盘分区的 inode 总数和已经使用的数量，可以使用 df 命令。<br><code>df -i</code><br><img src="/img/fd_inode/fd_inode4.jpg" alt><br>查看每个 inode 节点的大小，可以用如下命令：<br><code>sudo dumpe2fs -h /dev/hda | grep &quot;Inode size&quot;</code><br>由于每个文件都必须有一个 inode，因此有可能发生 inode 已经用光，但是硬盘还未存满的情况。这时，就无法在硬盘上创建新文件。</p>
+<h2 id="inode-号码"><a href="#inode-号码" class="headerlink" title="inode 号码"></a>inode 号码</h2><p>每个 inode 都有一个号码，操作系统用 inode 号码来识别不同的文件。</p>
+<p>这里值得重复一遍，<strong>Unix/Linux 系统内部不使用文件名，而使用 inode 号码来识别文件</strong>。对于系统来说，文件名只是 inode 号码便于识别的别称或者绰号。</p>
+<p>表面上，用户通过文件名，打开文件。实际上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的 inode 号码；其次，通过 inode 号码，获取 inode 信息；最后，根据 inode 信息，找到文件数据所在的 block，读出数据。</p>
+<p>使用 ls -i 命令，可以看到文件名对应的 inode 号码：<br><code>ls -i 233.txt</code><br><img src="/img/fd_inode/fd_inode5.jpg" alt></p>
+<h2 id="目录文件"><a href="#目录文件" class="headerlink" title="目录文件"></a>目录文件</h2><p>Unix/Linux 系统中，目录（directory）也是一种文件。打开目录，实际上就是打开目录文件。目录文件的结构非常简单，就是一系列目录项（dirent）的列表。每个目录项，由两部分组成:</p>
+<ul>
+<li>所包含文件的文件名，</li>
+<li>该文件名对应的 inode 号码。</li>
+</ul>
+<p>ls 命令只列出目录文件中的所有文件名：<br><code>ls /etc</code><br>ls -i 命令列出整个目录文件，即文件名和 inode 号码：<br><code>ls -i /etc</code><br>如果要查看文件的详细信息，就必须根据 inode 号码，访问 inode 节点，读取信息。ls -l 命令列出文件的详细信息。<br><code>ls -l /etc</code><br><strong>理解了上面这些知识，就能理解目录的权限。目录文件的读权限（r）和写权限（w），都是针对目录文件本身。</strong>由于目录文件内只有文件名和 inode 号码，所以如果只有读权限，只能获取文件名，无法获取其他信息，因为其他信息都储存在 inode 节点中，而读取 inode 节点内的信息需要目录文件的执行权限（x）。</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><img src="/img/noodle_plan/linux/hard_link_soft_link.jpg" alt></p>
+<h3 id="硬链接"><a href="#硬链接" class="headerlink" title="硬链接"></a>硬链接</h3><p>一般情况下，文件名和 inode 号码是” 一一对应” 关系，每个 inode 号码对应一个文件名。但是，<strong>Unix/Linux 系统允许，多个文件名指向同一个 inode 号码。</strong></p>
+<p>这意味着，可以用不同的文件名访问同样的内容；对文件内容进行修改，会影响到所有文件名；但是，删除一个文件名，不影响另一个文件名的访问。这种情况就被称为” 硬链接”（hard link）。<br>ln 命令可以创建硬链接:<br><code>ln 源文件 目标文件</code><br>运行上面这条命令以后，源文件与目标文件的 inode 号码相同，都指向同一个 inode。</p>
+<p><strong>inode 信息中有一项叫做<code>i_nlink</code>”链接数”，记录指向该 inode 的文件名总数，这时就会增加 1。</strong></p>
+<p><strong>反过来，删除一个文件名，就会使得 inode 节点中的<code>i_nlink</code>”链接数” 减 1。当这个值减到 0，表明没有文件名指向这个 inode，系统就会回收这个 inode 号码，以及其所对应 block 区域。</strong></p>
+<p>这里顺便说一下目录文件的<code>i_nlink</code>”链接数”。创建目录时，默认会生成两个目录项：”.” 和”..”。前者的 inode 号码就是当前目录的 inode 号码，等同于当前目录的” 硬链接”；后者的 inode 号码就是当前目录的父目录的 inode 号码，等同于父目录的” 硬链接”。所以，任何一个目录的” 硬链接” 总数，总是等于 2 加上它的子目录总数（含隐藏目录）。</p>
+<p>简单说，<strong>硬链接就是一个 inode 号对应多个文件名。就是同一个文件使用了多个别名</strong>（上图中 hard link 就是 file 的一个别名，他们有共同的 inode）。</p>
+<p>由于硬链接是有着相同 inode 号仅文件名不同的文件，因此硬链接存在以下几点特性：</p>
+<ul>
+<li>文件有相同的 inode 及 data block；</li>
+<li>只能对已存在的文件进行创建；</li>
+<li>不能交叉文件系统进行硬链接的创建；</li>
+<li>不能对目录进行创建，只可对文件创建；</li>
+<li>删除一个硬链接文件并不影响其他有相同 inode 号的文件, 只是相应的链接计数器（link count)减1</li>
+</ul>
+<h3 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h3><p>(又称符号链接，即 soft link 或 symbolic link） 软链接与硬链接不同，若文件用户数据块中存放的内容是另一文件的路径名的指向，则该文件就是软连接。软链接就是一个普通文件，只是数据块内容有点特殊。软链接有着自己的 inode 号以及用户数据块。（见图2）软连接可以指向目录，而且软连接所指向的目录可以位于不同的文件系统中。</p>
+<p><strong>ln -s 命令可以创建软链接</strong>。</p>
+<p><code>ln -s 源文文件或目录 目标文件或目录</code></p>
+<p>软链接特性：</p>
+<ul>
+<li>软链接有自己的文件属性及权限等；</li>
+<li>可对不存在的文件或目录创建软链接；</li>
+<li>软链接可交叉文件系统；</li>
+<li>软链接可对文件或目录创建；</li>
+<li>创建软链接时，链接计数 i_nlink 不会增加；</li>
+<li>删除软链接并不影响被指向的文件，但若被指向的原文件被删除，则相关软连接被称为死链接或悬挂的软链接（即 dangling link，若被指向路径文件被重新创建，死链接可恢复为正常的软链接）。</li>
+</ul>
+<p>文件 A 和文件 B 的 inode 号码虽然不一样，但是文件 A 的内容是文件 B 的路径。读取文件 A 时，系统会自动将访问者导向文件 B。因此，无论打开哪一个文件，最终读取的都是文件 B。这时，文件 A 就称为文件 B 的” 软链接”（soft link）或者” 符号链接（symbolic link）。</p>
+<p>这意味着，文件 A 依赖于文件 B 而存在，如果删除了文件 B，打开文件 A 就会报错：”No such file or directory”。这是软链接与硬链接最大的不同：文件 A 指向文件 B 的文件名，而不是文件 B 的 inode 号码，文件 B 的 inode” 链接数” 不会因此发生变化。</p>
+<h2 id="inode-的特殊作用"><a href="#inode-的特殊作用" class="headerlink" title="inode 的特殊作用"></a>inode 的特殊作用</h2><p>由于 inode 号码与文件名分离，这种机制导致了一些 Unix/Linux 系统特有的现象。</p>
+<ol>
+<li>有时，文件名包含特殊字符，无法正常删除。这时，直接删除 inode 节点，就能起到删除文件的作用。</li>
+<li>移动文件或重命名文件，只是改变文件名，不影响 inode 号码。</li>
+<li>打开一个文件以后，系统就以 inode 号码来识别这个文件，不再考虑文件名。因此，通常来说，系统无法从 inode 号码得知文件名。</li>
+</ol>
+<p>第 3 点使得软件更新变得简单，可以在不关闭软件的情况下进行更新，不需要重启。因为系统通过 inode 号码，识别运行中的文件，不通过文件名。更新的时候，新版文件以同样的文件名，生成一个新的 inode，不会影响到运行中的文件。等到下一次运行这个软件的时候，文件名就自动指向新版文件，旧版文件的 inode 则被回收。</p>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/08/06/noodle_plan/" rel="next" title="noodle_plan">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    noodle_plan
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/08/09/kcpp_intro/" rel="prev" title="一个轻量级的kcp会话实现">
+                <p class="post-nav-pre-next-title">
+                    一个轻量级的kcp会话实现
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FD-文件描述符"><span class="nav-number">1.</span> <span class="nav-text">FD 文件描述符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件描述符、文件、进程间的关系"><span class="nav-number">1.1.</span> <span class="nav-text">文件描述符、文件、进程间的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统为维护文件描述符建立了三个表"><span class="nav-number">1.2.</span> <span class="nav-text">系统为维护文件描述符建立了三个表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程级别的文件描述表"><span class="nav-number">1.2.1.</span> <span class="nav-text">进程级别的文件描述表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统级别的文件描述符表"><span class="nav-number">1.2.2.</span> <span class="nav-text">系统级别的文件描述符表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inode表"><span class="nav-number">1.2.3.</span> <span class="nav-text">Inode表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件描述符数目限制"><span class="nav-number">1.3.</span> <span class="nav-text">文件描述符数目限制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#inode"><span class="nav-number">2.</span> <span class="nav-text">inode</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#inode-的内容"><span class="nav-number">2.1.</span> <span class="nav-text">inode 的内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inode-的大小"><span class="nav-number">2.2.</span> <span class="nav-text">inode 的大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inode-号码"><span class="nav-number">2.3.</span> <span class="nav-text">inode 号码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录文件"><span class="nav-number">2.4.</span> <span class="nav-text">目录文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链接"><span class="nav-number">2.5.</span> <span class="nav-text">链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#硬链接"><span class="nav-number">2.5.1.</span> <span class="nav-text">硬链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软链接"><span class="nav-number">2.5.2.</span> <span class="nav-text">软链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inode-的特殊作用"><span class="nav-number">2.6.</span> <span class="nav-text">inode 的特殊作用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Self-cultivation,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Linux进程管理读者-写者问题定义： 允许多个进程同时对数据进行读操作，但是不允许读和写以及写和写操作同时发生。 解决方案：    读者优先  读进程只要看到有其他读进程正在访问文件，就可以继续作读访问；写进程必须等待所有读进程都不访问时才能写文件，即使写进程可能比一些读进程更早提出申请。 读者写者公平竞争，老实排队  因为读者优先的方案如果在读访问非常频繁的场合，有可能造成写进程一直无法访问文">
+<meta name="keywords" content="Self-cultivation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器开发自我修养专栏-Linux进程管理">
+<meta property="og:url" content="https://hulinhong.com/2021/03/08/self_cultivation_linux_process/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="Linux进程管理读者-写者问题定义： 允许多个进程同时对数据进行读操作，但是不允许读和写以及写和写操作同时发生。 解决方案：    读者优先  读进程只要看到有其他读进程正在访问文件，就可以继续作读访问；写进程必须等待所有读进程都不访问时才能写文件，即使写进程可能比一些读进程更早提出申请。 读者写者公平竞争，老实排队  因为读者优先的方案如果在读访问非常频繁的场合，有可能造成写进程一直无法访问文">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/an_illustration_of_the_dining_philosophers_problem.png">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/dead_lock/dead_lock1.png">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/dead_lock/dead_lock2.png">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/dead_lock/dead_lock3.png">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/dead_lock/dead_lock4.png">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/dead_lock/dead_lock5.png">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/dead_lock/dead_lock6.png">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/process_scheduler.jpg">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.070Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="服务器开发自我修养专栏-Linux进程管理">
+<meta name="twitter:description" content="Linux进程管理读者-写者问题定义： 允许多个进程同时对数据进行读操作，但是不允许读和写以及写和写操作同时发生。 解决方案：    读者优先  读进程只要看到有其他读进程正在访问文件，就可以继续作读访问；写进程必须等待所有读进程都不访问时才能写文件，即使写进程可能比一些读进程更早提出申请。 读者写者公平竞争，老实排队  因为读者优先的方案如果在读访问非常频繁的场合，有可能造成写进程一直无法访问文">
+<meta name="twitter:image" content="https://hulinhong.com/img/noodle_plan/linux/an_illustration_of_the_dining_philosophers_problem.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>服务器开发自我修养专栏-Linux进程管理 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/03/08/self_cultivation_linux_process/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">服务器开发自我修养专栏-Linux进程管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-08T19:08:06+00:00">
+                2021-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self-cultivation/" itemprop="url" rel="index">
+                    <span itemprop="name">Self-cultivation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Self-cultivation/" rel="tag"><i class="fa fa-tag"></i> Self-cultivation</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/02/26/quic_intro/" rel="next" title="QUIC原理与KCP会话握手借鉴">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  QUIC原理与KCP会话握手借鉴
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/03/08/self_cultivation_linux_memory_manage/" rel="prev" title="服务器开发自我修养专栏-Linux内存管理">
+              <p class="post-nav-pre-next-title">
+                  服务器开发自我修养专栏-Linux内存管理
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="Linux进程管理"><a href="#Linux进程管理" class="headerlink" title="Linux进程管理"></a>Linux进程管理</h1><h2 id="读者-写者问题"><a href="#读者-写者问题" class="headerlink" title="读者-写者问题"></a>读者-写者问题</h2><p>定义： 允许多个进程同时对数据进行读操作，但是不允许读和写以及写和写操作同时发生。</p>
+<p>解决方案：  </p>
+<ul>
+<li>读者优先<br>  读进程只要看到有其他读进程正在访问文件，就可以继续作读访问；写进程必须等待所有读进程都不访问时才能写文件，即使写进程可能比一些读进程更早提出申请。</li>
+<li>读者写者公平竞争，老实排队<br>  因为读者优先的方案如果在读访问非常频繁的场合，有可能造成写进程一直无法访问文件的局面….为了避免这种情况的产生，读者写者请求都老实排队， 排到谁就执行谁， 不准读者插队</li>
+<li>写者优先<br>  如果有写者申请写文件，那么在申请之前已经开始读取文件的可以继续读取，但是如果再有读者申请读取文件，则不能够读取，只有在所有的写者写完之后才可以读取</li>
+</ul>
+<h2 id="哲学家就餐问题"><a href="#哲学家就餐问题" class="headerlink" title="哲学家就餐问题"></a>哲学家就餐问题</h2><p><img src="/img/noodle_plan/linux/an_illustration_of_the_dining_philosophers_problem.png" alt></p>
+<p>5 个沉默寡言的哲学家围坐在圆桌前，每人面前一盘意面。叉子放在哲学家之间的桌面上。（5 个哲学家，5 根叉子）</p>
+<p>所有的哲学家都只会在思考和进餐两种行为间交替。哲学家只有同时拿到左边和右边的叉子才能吃到面，而同一根叉子在同一时间只能被一个哲学家使用。每个哲学家吃完面后都需要把叉子放回桌面以供其他哲学家吃面。只要条件允许，哲学家可以拿起左边或者右边的叉子，但在没有同时拿到左右叉子时不能进食。</p>
+<p>设计一个进餐规则（并行算法）使得每个哲学家都不会挨饿；也就是说，在没有人知道别人什么时候想吃东西或思考的情况下，每个哲学家都可以在吃饭和思考之间一直交替下去。</p>
+<p>显而易见，<strong>如果不小心处理会有死锁现象</strong>， 比如：当每个科学家都同时拿起了左边的筷子时候死锁发生了，都想拿自己右边的筷子，但是科学家每个人左手都不松手。导致都吃不了饭</p>
+<p><a href="https://zhuanlan.zhihu.com/p/34553097" target="_blank" rel="noopener">参考</a><br>解决方案：  </p>
+<ul>
+<li>规定奇数号科学家先拿左边的筷子，然后拿右边的筷子。偶数号科学家先拿右边的筷子，然后那左边的筷子。导致0，1科学家竞争1号筷子，2，3科学家竞争3号筷子。四号科学家无人竞争。最后总有一个科学家能获得两只筷子。</li>
+<li>仅当科学家左右两只筷子都能用的时候，才允许他进餐，代码里的用trylock来实现</li>
+<li>至多允许四个哲学家同时去拿左边的筷子，最终保证至少有一个科学家能进餐，并且用完之后释放筷子，从而使更多的哲学家能够拿到筷子。</li>
+</ul>
+<h2 id="活锁"><a href="#活锁" class="headerlink" title="活锁"></a>活锁</h2><p>在某种情形下，轮询（忙等待）可用于进入临界区或存取资源。采用这一策略的主要原因是，相比所做的工作而言，互斥的时间很短而挂起等待的时间开销很大。考虑一个原语，通过该原语，调用进程测试一个互斥信号量，然后或者得到该信号量或者返回失败信息。</p>
+<p>现在假设有一对进程使用两种资源。每个进程需要两种资源，它们利用轮询原语enter_region去尝试取得必要的锁，如果尝试失败，则该进程继续尝试。如果进程A先运行并得到资源1，然后进程2运行并得到资源2，以后不管哪一个进程运行，都不会有任何进展，但是哪一个进程也没有被阻塞。结果是两个进程总是一再消耗完分配给它们的CPU配额，<strong>但是没有进展也没有阻塞</strong>。因此，没有出现死锁现象（因为没有进程阻塞），但是从现象上看好像死锁发生了，这就是活锁（livelock）。</p>
+<h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p><a href="https://www.cyc2018.xyz/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20-%20%E6%AD%BB%E9%94%81.html" target="_blank" rel="noopener">参考</a></p>
+<h3 id="必要条件"><a href="#必要条件" class="headerlink" title="必要条件"></a>必要条件</h3><p><img src="/img/noodle_plan/linux/dead_lock/dead_lock1.png" alt></p>
+<p>(口诀互占不还？233):  </p>
+<ul>
+<li>互斥：每个资源要么已经分配给了一个进程，要么就是可用的。</li>
+<li>占有和等待：已经得到了某个资源的进程可以再请求新的资源。</li>
+<li>不可抢占：已经分配给一个进程的资源不能强制性地被抢占，它只能被占有它的进程显式地释放。</li>
+<li>环路等待：有两个或者两个以上的进程组成一条环路，该环路中的每个进程都在等待下一个进程所占有的资源。</li>
+</ul>
+<h3 id="死锁处理方法大纲"><a href="#死锁处理方法大纲" class="headerlink" title="死锁处理方法大纲"></a>死锁处理方法大纲</h3><p>主要有以下四种方法：  </p>
+<ul>
+<li>鸵鸟策略</li>
+<li>死锁检测与死锁恢复</li>
+<li>死锁预防</li>
+<li>死锁避免</li>
+</ul>
+<h3 id="鸵鸟策略"><a href="#鸵鸟策略" class="headerlink" title="鸵鸟策略"></a>鸵鸟策略</h3><p>把头埋在沙子里，假装根本没发生问题。<br>因为解决死锁问题的代价很高，因此鸵鸟策略这种不采取任务措施的方案会获得更高的性能。当发生死锁时不会对用户造成多大影响，或发生死锁的概率很低，可以采用鸵鸟策略。大多数操作系统，包括 Unix，Linux 和 Windows，处理死锁问题的办法仅仅是忽略它。</p>
+<h3 id="死锁检测与死锁恢复"><a href="#死锁检测与死锁恢复" class="headerlink" title="死锁检测与死锁恢复"></a>死锁检测与死锁恢复</h3><p>不试图阻止死锁，而是当检测到死锁发生时，采取措施进行恢复。</p>
+<h4 id="每种类型一个资源的死锁检测"><a href="#每种类型一个资源的死锁检测" class="headerlink" title="每种类型一个资源的死锁检测"></a>每种类型一个资源的死锁检测</h4><p><img src="/img/noodle_plan/linux/dead_lock/dead_lock2.png" alt></p>
+<p>上图为资源分配图，其中方框表示资源，圆圈表示进程。资源指向进程表示该资源已经分配给该进程，进程指向资源表示进程请求获取该资源。</p>
+<p>图 a 可以抽取出环，如图 b，它满足了环路等待条件，因此会发生死锁。</p>
+<p>每种类型一个资源的死锁检测算法是通过检测有向图是否存在环来实现，从一个节点出发进行深度优先搜索，对访问过的节点进行标记，如果访问了已经标记的节点，就表示有向图存在环，也就是检测到死锁的发生。（当然也可以用拓扑排序思路来检测哈）</p>
+<h4 id="每种类型多个资源的死锁检测"><a href="#每种类型多个资源的死锁检测" class="headerlink" title="每种类型多个资源的死锁检测"></a>每种类型多个资源的死锁检测</h4><p><img src="/img/noodle_plan/linux/dead_lock/dead_lock3.png" alt></p>
+<p>上图中，有三个进程四个资源，每个数据代表的含义如下：</p>
+<ul>
+<li>E 向量：资源总量</li>
+<li>A 向量：资源剩余量</li>
+<li>C 矩阵：每个进程所拥有的资源数量，每一行都代表一个进程拥有资源的数量</li>
+<li>R 矩阵：每个进程请求的资源数量</li>
+</ul>
+<p>进程 P<sub>1</sub> 和 P<sub>2</sub> 所请求的资源都得不到满足，只有进程 P<sub>3</sub> 可以，让 P<sub>3</sub> 执行，之后释放 P<sub>3</sub> 拥有的资源，此时 A = (2 2 2 0)。P<sub>2</sub> 可以执行，执行后释放 P<sub>2</sub> 拥有的资源，A = (4 2 2 1) 。P<sub>1</sub> 也可以执行。所有进程都可以顺利执行，没有死锁。</p>
+<p>算法总结如下：</p>
+<p>每个进程最开始时都不被标记，执行过程有可能被标记。当算法结束时，任何没有被标记的进程都是死锁进程。</p>
+<ol>
+<li>寻找一个没有标记的进程 P<sub>i</sub>，它所请求的资源小于等于 A。</li>
+<li>如果找到了这样一个进程，那么将 C 矩阵的第 i 行向量加到 A 中，标记该进程，并转回 1。</li>
+<li>如果没有这样一个进程，算法终止。</li>
+</ol>
+<h4 id="死锁恢复"><a href="#死锁恢复" class="headerlink" title="死锁恢复"></a>死锁恢复</h4><ul>
+<li>利用抢占恢复</li>
+<li>利用回滚恢复</li>
+<li>通过杀死进程恢复</li>
+</ul>
+<h3 id="死锁预防"><a href="#死锁预防" class="headerlink" title="死锁预防"></a>死锁预防</h3><p>在程序运行之前预防发生死锁。</p>
+<ul>
+<li>破坏互斥条件<br>  例如假脱机打印机技术允许若干个进程同时输出，唯一真正请求物理打印机的进程是打印机守护进程。</li>
+<li>破坏占有和等待条件<br>  一种实现方式是规定所有进程在开始执行前请求所需要的全部资源。</li>
+<li>破坏不可抢占条件</li>
+<li>破坏环路等待<br>  给资源统一编号，进程只能按编号顺序来请求资源。</li>
+</ul>
+<h3 id="死锁避免"><a href="#死锁避免" class="headerlink" title="死锁避免"></a>死锁避免</h3><p>在程序运行时避免发生死锁。避免死锁的主要算法是基于一个安全状态的概念。在描述算法前，我们先讨论有关安全的概念。</p>
+<h4 id="安全状态的检测"><a href="#安全状态的检测" class="headerlink" title="安全状态的检测"></a>安全状态的检测</h4><p><img src="/img/noodle_plan/linux/dead_lock/dead_lock4.png" alt></p>
+<p>图 a 的第二列 Has 表示已拥有的资源数，第三列 Max 表示总共需要的资源数，Free 表示还有可以使用的资源数。从图 a 开始出发，先让 B 拥有所需的所有资源（图 b），运行结束后释放 B，此时 Free 变为 5（图 c）；接着以同样的方式运行 C 和 A，使得所有进程都能成功运行，因此可以称图 a 所示的状态时安全的。</p>
+<p><strong>安全状态的定义</strong>：如果没有死锁发生，并且即使所有进程突然请求对资源的最大需求，也仍然<strong>存在某种调度次序</strong>能够使得每一个进程运行完毕，则称该状态是安全的。</p>
+<p>安全状态的检测与死锁的检测类似，因为安全状态必须要求不能发生死锁。下面的银行家算法与死锁检测算法非常类似，可以结合着做参考对比。</p>
+<h4 id="单个资源的银行家算法"><a href="#单个资源的银行家算法" class="headerlink" title="单个资源的银行家算法"></a>单个资源的银行家算法</h4><p>Dijkstra（1965）提出了一种能够避免死锁的调度算法，称为银行家算法（banker’s algorithm），<br>一个小城镇的银行家，他向一群客户分别承诺了一定的贷款额度，算法要做的是判断对请求的满足是否会进入不安全状态，如果是，就拒绝请求；否则予以分配。</p>
+<p><img src="/img/noodle_plan/linux/dead_lock/dead_lock5.png" alt></p>
+<p>客户们各自做自己的生意，在某些时刻需要贷款（相当于请求资源）。在某一时刻，具体情况如图b所示。这个状态是安全的，由于保留着2个单位，银行家能够拖延除了C以外的其他请求。因而可以让C先完成，然后释放C所占的4个单位资源。有了这4个单位资源，银行家就可以给D或B分配所需的贷款单位，以此类推。</p>
+<p>考虑假如向B提供了另一个他所请求的贷款单位，如图b所示，那么我们就有如图c所示的状态，该状态是不安全的。如果忽然所有的客户都请求最大的限额，而银行家无法满足其中任何一个的要求，那么就会产生死锁。不安全状态并不一定引起死锁，由于客户不一定需要其最大贷款额度，但银行家不敢抱这种侥幸心理。</p>
+<p><strong>银行家算法就是对每一个请求进行检查，检查如果满足这一请求是否会达到安全状态。若是，那么就满足该请求；若否，那么就推迟对这一请求的满足。</strong>为了看状态是否安全，银行家看他是否有足够的资源满足某一个客户。如果可以，那么这笔投资认为是能够收回的，并且接着检查最接近最大限额的一个客户，以此类推。如果所有投资最终都被收回，那么该状态是安全的，最初的请求可以批准。</p>
+<p>上图 c 为不安全状态，因此算法会拒绝之前的请求，从而避免进入图 c 中的状态。</p>
+<h4 id="多个资源的银行家算法"><a href="#多个资源的银行家算法" class="headerlink" title="多个资源的银行家算法"></a>多个资源的银行家算法</h4><p><img src="/img/noodle_plan/linux/dead_lock/dead_lock6.png" alt></p>
+<p>可以把银行家算法进行推广以处理多个资源  </p>
+<p>上图中有五个进程，四个资源。左边的图表示已经分配的资源，右边的图表示还需要分配的资源。最右边的 E、P 以及 A 分别表示：总资源、已分配资源以及可用资源，注意这三个为向量，而不是具体数值，例如 A=(1020)，表示 4 个资源分别还剩下 1/0/2/0。</p>
+<p>检查一个状态是否安全的算法如下：</p>
+<ul>
+<li>查找右边的矩阵是否存在一行小于等于向量 A。如果不存在这样的行，那么系统将会发生死锁，状态是不安全的。</li>
+<li>假若找到这样一行，将该进程标记为终止，并将其已分配资源加到 A 中。</li>
+<li>重复以上两步，直到所有进程都标记为终止，则状态时安全的。</li>
+</ul>
+<p>如果一个状态不是安全的，需要拒绝进入这个状态。</p>
+<h2 id="linux进程调度"><a href="#linux进程调度" class="headerlink" title="linux进程调度"></a>linux进程调度</h2><p>参考 <a href="https://juejin.im/post/6844903568613310477" target="_blank" rel="noopener">https://juejin.im/post/6844903568613310477</a></p>
+<p>在Linux中，线程和进程一视同仁，所以讲到进程调度，也包含了线程调度。</p>
+<p>调度分两种:  </p>
+<ul>
+<li>非抢占式多任务<br>  除非任务自己结束，否则将会一直执行。</li>
+<li><strong>抢占式多任务（Linux用的是这种)</strong><br>  这种情况下，由调度程序来决定什么时候停止一个进程的运行，这个强制的挂起动作即为<strong>抢占</strong>。采用抢占式多任务的基础是使用时间片轮转机制来为每个进程分配可以运行的时间单位。</li>
+</ul>
+<p>Linux有两种不同的进程优先级范围:</p>
+<ul>
+<li>使用nice值：越大的nice值意味着更低的优先级。 (-19 ~ 20之间)</li>
+<li>实时优先级：可配置(通过实时调度API)，越高意味着进程优先级越高。</li>
+</ul>
+<p>任何实时的进程优先级都高于普通的进程，因此上面的两种优先级范围处于互不相交的范畴。</p>
+<p>时间片：Linux中并不是以固定的时间值(如10ms)来分配时间片的，而是将处理器的使用比作为“时间片”划分给进程。这样，进程所获得的实际CPU时间就和系统的负载密切相关。</p>
+<p>Linux内核有两个调度类：</p>
+<ul>
+<li>CFS(完全公平调度器Completely Fair Scheduler)</li>
+<li>实时调度类。</li>
+</ul>
+<h3 id="公平调度CFS"><a href="#公平调度CFS" class="headerlink" title="公平调度CFS"></a>公平调度CFS</h3><p>举个例子来区分Unix调度和CFS, 有两个运行的优先级相同的进程:</p>
+<ul>
+<li>在Unix中可能是每个各执行5ms，执行期间完全占用处理器，但在“理想情况”下，应该是，能够在10ms内同时运行两个进程，每个占用处理器一半的能力。</li>
+<li>CFS的做法是：CFS 调度程序并不采用严格规则来为一个优先级分配某个长度的时间片, 在所有可运行进程的总数上计算出一个进程应该运行的时间，nice值不再作为时间片分配的标准，而是用于处理计算获得的处理器使用权重。</li>
+</ul>
+<p>现在我们来看一个简单的例子，假设我们的系统只有两个进程在运行，一个是文本编辑器（I/O消耗型），另一个是视频解码器（处理器消耗型）。<br>理想的情况下，文本编辑器应该得到更多的处理器时间，至少当它需要处理器时，处理器应该立刻被分配给它（这样才能完成用户的交互），这也就意味着当文本编辑器被唤醒的时候，它应该抢占视频解码程序。<br>按照普通的情况，OS应该分配给文本编辑器更大的优先级和更多的时间片，但在Linux中，这两个进程都是普通进程，他们具有相同的nice值，因此它们将得到相同的处理器使用比（50%）。<br>但实际的运行过程中会发生什么呢？CFS将能够注意到，文本编辑器使用的处理器时间比分配给它的要少得多（因为大多时间在等待I/O），这种情况下，要实现所有进程“公平”地分享处理器，就会让文本编辑器在需要运行时立刻抢占视频解码器（每次都是如此）。</p>
+<h3 id="实时调度"><a href="#实时调度" class="headerlink" title="实时调度"></a>实时调度</h3><p>Linux还实现了 POS1X实时调度扩展。这些扩展允许应用程序精确地控制如何分配CPU<br>给进程。运作在两个实时调度策略</p>
+<ul>
+<li>SCHED RR （循环）</li>
+<li>SCHED FIFO （先入先出）</li>
+</ul>
+<p>下的进程的优先级总是高于运作在非实时策略下的进程。实时进程优先级的取值范围为1 （低）〜99<br>（高）。只有进程处于可运行状态，那么优先级更高的进程就会完全将优先级低的进程排除在<br>CPU之外。运作在SCHED_FIFO策略下的进程会互斥地访问CPU直到它执行终止或自动释放<br>CPU或被进入可运行状态的优先级更高的进程抢占。类似的规则同样适用于SCHED RR策略,<br>但在该策略下，如果存在多个进程运行于同样的优先级下，那么CPU就会以循环的方式被这<br>些进程共享。</p>
+<p>实时调度采用 SCHED_FIFO 或 SCHED_RR 实时策略来调度的任何任务，与普通（非实时的）任务相比，具有更高的优先级。</p>
+<p>Linux 采用两个单独的优先级范围，一个用于实时任务，另一个用于正常任务。实时任务分配的静态优先级为 0〜99，而正常任务分配的优先级为 100〜139。</p>
+<p>这两个值域合并成为一个全局的优先级方案，其中较低数值表明较高的优先级。正常任务，根据它们的nice值，分配一个优先级；这里 -20 的nice值映射到优先级 100，而 +19 的nice值映射到 139。下图显示了这个方案。</p>
+<p><img src="/img/noodle_plan/linux/process_scheduler.jpg" alt></p>
+<h2 id="linux轻量级进程LWP"><a href="#linux轻量级进程LWP" class="headerlink" title="linux轻量级进程LWP"></a>linux轻量级进程LWP</h2><p>对于Linux操作系统而言，它对Thread的实现方式比较特殊。在Linux内核中，其实是没有线程的概念的，它把所有的线程当做标准的进程来实现，也就是说<strong>Linux内核，并没有为线程提供任何特殊的调度语义，也没有为线程实现特定的数据结构。取而代之的是，线程只是一个与其他进程共享某些资源的进程。</strong>每一个线程拥有一个唯一的task_struct结构，Linux内核它仅仅把线程当做一个正常的进程，或者说是轻量级进程，LWP(Lightweight processes)。</p>
+<p>Linux线程与进程的区别，主要体现在资源共享、调度、性能几个方面，首先看一下资源共享方面。上面也提到，线程其实是共享了某一个进程的资源，这些资源包括：</p>
+<ul>
+<li>内存地址空间</li>
+<li>进程基础信息</li>
+<li>大部分数据</li>
+<li>打开的文件</li>
+<li>信号处理</li>
+<li>当前工作目录</li>
+<li>用户和用户组属性</li>
+<li>…</li>
+</ul>
+<p>哪些是线程独自拥有的呢？</p>
+<ul>
+<li>线程ID</li>
+<li>一系列的寄存器</li>
+<li>栈的局部变量和返回地址</li>
+<li>错误码 errno</li>
+<li>信号掩码</li>
+<li>优先级</li>
+<li>…</li>
+</ul>
+<p>这里说一个黑科技，线程拥有独立的调用栈，除了栈之外共享了其他所有的段segment。但是由于线程间共享了内存，也就是说一个线程，理论上是可以访问到其他线程的调用栈的，可以用一个指针变量，去访问其他线程的局部栈帧，以访问其他线程的局部变量。</p>
+<h3 id="LWP如何创建出来"><a href="#LWP如何创建出来" class="headerlink" title="LWP如何创建出来"></a>LWP如何创建出来</h3><p>那么Linux中线程是如何创建出来的呢？上面也提到，在Linux中线程是一种资源共享的方式，可以在创建进程的时候，指定某些资源是从其他进程共享的，从而在概念上创建了一个线程。在Linux中，可以通过clone系统调用来创建一个进程，它的函数签名如下：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sched.h&gt;</span></span></span><br><span class="line">int clone(int (*fn)(void *), void *child_stack, int flags, void *arg, ...);</span><br></pre></td></tr></table></figure></p>
+<p>我们在使用clone创建进程的过程中，可以指明相应的参数，来决定共享某些资源，比如:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clone(CLONE_VM | CLONE_FS | CLONE_FILES | CLONE_SIGHAND, <span class="number">0</span>);</span><br></pre></td></tr></table></figure></p>
+<p><strong>这个clone系统调用的行为类似于fork，不过新创建出来的进程，它的内存地址、文件系统资源、打开的文件描述符和信号处理器，都是共享父进程的。换句话说，这个新创建出来的进程，也被叫做Linux Thread</strong>。从这个例子中，也可以看出<strong>Linux中，线程其实是进程实现资源共享的一种方式。</strong></p>
+<p>在内核中，clone调用经过参数传递和解释后会调用do_fork，这个核内函数同时也是fork、vfork系统调用的最终实现：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">do_fork</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> clone_flags, <span class="keyword">unsigned</span> <span class="keyword">long</span> stack_start, struct pt_regs* regs,<span class="keyword">unsigned</span> <span class="keyword">long</span> stack_size)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>在do_fork中，不同的clone_flags将导致不同的行为（共享不同的资源），下面列举几个flag的作用。 </p>
+<ul>
+<li>CLONE_VM<br>  如果do_fork时指定了CLONE_VM开关，创建的轻量级进程的内存空间将会和父进程指向同一个地址，即创建的轻量级进程将与父进程共享内存地址空间。</li>
+<li>CLONE_FS<br>  如果do_fork时指定了CLONE_FS开关，对于轻量级进程则会与父进程共享相同的所在文件系统的根目录和当前目录信息。也就是说，轻量级进程没有独立的文件系统相关的信息，进程中任何一个线程改变当前目录、根目录等信息都将直接影响到其他线程。</li>
+<li>CLONE_FILES<br>  如果do_fork时指定了CLONE_FILES开关，创建的轻量级进程与父进程将会共享已经打开的文件。这一共享使得任何线程都能访问进程所维护的打开文件，对它们的操作会直接反映到进程中的其他线程。</li>
+<li>CLONE_SIGHAND<br>  如果do_fork时指定了CLONE_FILES开关，轻量级进程与父进程将会共享对信号的处理方式。也就是说，子进程与父进程的信号处理方式完全相同，而且可以相互更改。</li>
+</ul>
+<p>尽管linux支持轻量级进程，但并不能说它就支持内核线程，因为linux的”线程”和”进程”实际上处于一个调度层次，共享一个进程标识符空间，这种限制使得不可能在linux上实现完全意义上的POSIX线程机制，因此众多的linux线程库实现尝试都只能尽可能实现POSIX的绝大部分语义，并在功能上尽可能逼近。</p>
+<h2 id="多核CPU是否能同时执行多个进程？"><a href="#多核CPU是否能同时执行多个进程？" class="headerlink" title="多核CPU是否能同时执行多个进程？"></a>多核CPU是否能同时执行多个进程？</h2><p>多核的作用就是每个CPU可以调度不同的任务“并行”执行。注意，这里说的是“并行”，而不是“并发”，所以问题的回答是“能”。</p>
+<p>第二个问题，“同时最多执行几个进程“?<br>这里你想描述的“同时”的意思，是某一个特定时刻吗？如果是，很明显，在某一特定时刻，每个核只能调度一个任务执行，所以有多少个核最多就可以调度多少个进程（或者说成线程比较准确些）。但在一段时间之内，每个核可以“并发”调度多个任务执行。如何“并发”，这就是由不同操作系统的进程调度策略规定的了，比如常见Linux的CFS调度算法和Windows的抢占式调度算法。</p>
+<h2 id="创建守护进程的步骤"><a href="#创建守护进程的步骤" class="headerlink" title="创建守护进程的步骤"></a>创建守护进程的步骤</h2><p>(两fork一set, u工文dev)<br>最关键的三步骤:</p>
+<ol>
+<li><p>调用fork，然后使父进程exit。<br>虽然子进程继承了父进程的进程组ID，但获得了一个新的进程ID，这就保证了子进程不是一个进程组的组长进程。这是下面将要进行的setsid调用的先决条件。</p>
+</li>
+<li><p>调用setsid创建一个新会话。<br>使调用进程：(a)成为新会话的首进程，(b)成为一个新进程组的组长进程．(c)没有控制终端。也可概括为 : 开启一个新会话并释放它与控制终端之间的所有关联关系</p>
+</li>
+<li><p>再次fork并杀掉首进程.<br>这样就确保了子进程不是一个会话首进程， 根据linux中获取终端的规则（只有会话首进程才能请求一个控制终端）， 这样进程永远不会重新请求一个控制终端</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">                   会      话</span><br><span class="line">                 /     |      \</span><br><span class="line">               /       |       \</span><br><span class="line">             /         |         \</span><br><span class="line">     前台进程组     后台进程组1     后台进程组2 ...</span><br><span class="line">   /    |   \     /    |   \      /    |   \</span><br><span class="line">进程1 进程2 ...  进程3 进程4 ...       ...</span><br></pre></td></tr></table></figure>
+<h2 id="进程组"><a href="#进程组" class="headerlink" title="进程组"></a>进程组</h2><p>进程组就是一系列相互关联的进程集合，系统中的每一个进程也必须从属于某一个进程组；每个进程组中都会有一个唯一的 ID(process group id)，简称 PGID；PGID 一般等同于进程组的创建进程的 Process ID，而这个进进程一般也会被称为进程组先导 (process group leader)</p>
+<h2 id="会话"><a href="#会话" class="headerlink" title="会话"></a>会话</h2><p>会话（session）是一个若干进程组的集合，同样的，系统中每一个进程组也都必须从属于某一个会话；一个会话只拥有最多一个控制终端（也可以没有），该终端为会话中所有进程组中的进程所共用。一个会话中前台进程组只会有一个，只有其中的进程才可以和控制终端进行交互；除了前台进程组外的进程组，都是后台进程组；和进程组先导类似，会话中也有会话先导 (session leader) 的概念，用来表示建立起到控制终端连接的进程。在拥有控制终端的会话中，session leader 也被称为控制进程(controlling process)，一般来说控制进程也就是登入系统的 shell 进程(login shell)；</p>
+<h2 id="杀死进程组或会话中的所有进程"><a href="#杀死进程组或会话中的所有进程" class="headerlink" title="杀死进程组或会话中的所有进程"></a>杀死进程组或会话中的所有进程</h2><p>我们可以使用该 PGID，通过 kill 命令向整个进程组发送信号：</p>
+<p><code>kill -SIGTERM -- -19701</code></p>
+<p>我们用一个负数 -19701 向进程组发送信号。如果我们传递的是一个正数，这个数将被视为进程 ID 用于终止进程。如果我们传递的是一个负数，它被视为 PGID，用于终止整个进程组。<br>负数来自系统调用的直接定义。</p>
+<p>杀死会话中的所有进程与之完全不同。有些系统没有会话 ID 的概念。即使是具有会话 ID 的系统，例如 Linux，也没有提供系统调用来终止会话中的所有进程。你需要遍历 /proc 输出的进程树，收集所有的 SID，然后一一终止进程。<br>Pgrep 实现了遍历、收集并通过会话 ID 杀死进程的算法。使用以下命令：</p>
+<p><code>pkill -s &lt;SID&gt;</code></p>
+<h2 id="SIGHUP"><a href="#SIGHUP" class="headerlink" title="SIGHUP"></a>SIGHUP</h2><p>SIGHUP 会在以下 3 种情况下被发送给相应的进程：</p>
+<ul>
+<li>终端关闭时，该信号被发送到 session 首进程以及作为 job 提交的进程（即用 &amp; 符号提交的进程）；</li>
+<li>session 首进程退出时，该信号被发送到该 session 中的前台进程组中的每一个进程；</li>
+<li>若父进程退出导致进程组成为孤儿进程组，且该进程组中有进程处于停止状态（收到 SIGSTOP 或 SIGTSTP 信号），该信号会被发送到该进程组中的每一个进程。</li>
+</ul>
+<p>例如：在我们登录 Linux 时，系统会分配给登录用户一个终端 (Session)。在这个终端运行的所有程序，包括前台进程组和后台进程组，一般都属于这个 Session。当用户退出 Linux 登录时，前台进程组和后台有对终端输出的进程将会收到 SIGHUP 信号。这个信号的默认操作为终止进程，因此前台进程组和后台有终端输出的进程就会中止。<br><strong>此外，对于与终端脱离关系的守护进程，正常情况下是永远都收不到这个信号的, 所以可以人为的发SIGHUP信号给她用于通知它做一些想要的自定义的操作</strong>, 比较常见的如重新读取配置文件操作。 比如 xinetd 超级服务程序。</p>
+<h2 id="SIGCHLD与僵死进程"><a href="#SIGCHLD与僵死进程" class="headerlink" title="SIGCHLD与僵死进程"></a>SIGCHLD与僵死进程</h2><p>SIGCHLD信号,子进程结束时, 父进程会收到这个信号。如果父进程没有处理这个信号，也没有等待(waitpid)子进程，子进程虽然终止，但是还会在内核进程表中占有表项，这时的子进程称为僵尸进程。这种情 况我们应该捕捉它，或者wait它派生的子进程，或者父进程先终止，这时子进程的终止自动由init进程 来接管</p>
+<h2 id="SIGPIPE"><a href="#SIGPIPE" class="headerlink" title="SIGPIPE"></a>SIGPIPE</h2><p>在网络编程中，SIGPIPE 这个信号是很常见的。当往一个写端关闭的管道或 socket 连接中连续写入数据时会引发 SIGPIPE 信号, 引发 SIGPIPE 信号的写操作将设置 errno 为 EPIPE。在 TCP 通信中，当通信的双方中的一方 close 一个连接时，若另一方接着发数据，根据 TCP 协议的规定，会收到一个 RST 响应报文，若再往这个服务器发送数据时，系统会发出一个 SIGPIPE 信号给进程，告诉进程这个连接已经断开了，不能再写入数据。</p>
+<p>因为 SIGPIPE 信号的默认行为是结束进程，而我们绝对不希望因为写操作的错误而导致程序退出，尤其是作为服务器程序来说就更恶劣了。所以我们应该对这种信号加以处理，在这里，介绍处理 SIGPIPE 信号的方式：</p>
+<p>一般给 SIGPIPE 设置 SIG_IGN 信号处理函数，忽略该信号:</p>
+<p><code>signal(SIGPIPE, SIG_IGN);</code></p>
+<p>前文说过，引发 SIGPIPE 信号的写操作将设置 errno 为 EPIPE,。所以，第二次往关闭的 socket 中写入数据时, 会返回 - 1, 同时 errno 置为 EPIPE. 这样，便能知道对端已经关闭，然后进行相应处理，而不会导致整个进程退出.</p>
+<h2 id="内核态与用户态的区别"><a href="#内核态与用户态的区别" class="headerlink" title="内核态与用户态的区别"></a>内核态与用户态的区别</h2><ul>
+<li>内核态：cpu可以访问内存的所有数据，包括外围设备，例如硬盘，网卡，cpu也可以将自己从一个程序切换到另一个程序。</li>
+<li>用户态：只能受限的访问内存，且不允许访问外围设备，占用cpu的能力被剥夺，cpu资源可以被其他程序获取。</li>
+</ul>
+<p>从用户态到内核态切换可以通过三种方式：</p>
+<ul>
+<li>系统调用: 其实系统调用本身就是中断，但是软件中断，跟硬中断不同。</li>
+<li>异常：如果当前进程运行在用户态，如果这个时候发生了异常事件，就会触发切换。例如：缺页异常。</li>
+<li>外设中断：当外设完成用户的请求时，会向CPU发送中断信号。</li>
+</ul>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Self-cultivation/" rel="tag"><i class="fa fa-tag"></i> Self-cultivation</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2021/02/26/quic_intro/" rel="next" title="QUIC原理与KCP会话握手借鉴">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    QUIC原理与KCP会话握手借鉴
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2021/03/08/self_cultivation_linux_memory_manage/" rel="prev" title="服务器开发自我修养专栏-Linux内存管理">
+                <p class="post-nav-pre-next-title">
+                    服务器开发自我修养专栏-Linux内存管理
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux进程管理"><span class="nav-number">1.</span> <span class="nav-text">Linux进程管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#读者-写者问题"><span class="nav-number">1.1.</span> <span class="nav-text">读者-写者问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哲学家就餐问题"><span class="nav-number">1.2.</span> <span class="nav-text">哲学家就餐问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#活锁"><span class="nav-number">1.3.</span> <span class="nav-text">活锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#死锁"><span class="nav-number">1.4.</span> <span class="nav-text">死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#必要条件"><span class="nav-number">1.4.1.</span> <span class="nav-text">必要条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁处理方法大纲"><span class="nav-number">1.4.2.</span> <span class="nav-text">死锁处理方法大纲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#鸵鸟策略"><span class="nav-number">1.4.3.</span> <span class="nav-text">鸵鸟策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁检测与死锁恢复"><span class="nav-number">1.4.4.</span> <span class="nav-text">死锁检测与死锁恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#每种类型一个资源的死锁检测"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">每种类型一个资源的死锁检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#每种类型多个资源的死锁检测"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">每种类型多个资源的死锁检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁恢复"><span class="nav-number">1.4.4.3.</span> <span class="nav-text">死锁恢复</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁预防"><span class="nav-number">1.4.5.</span> <span class="nav-text">死锁预防</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁避免"><span class="nav-number">1.4.6.</span> <span class="nav-text">死锁避免</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安全状态的检测"><span class="nav-number">1.4.6.1.</span> <span class="nav-text">安全状态的检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单个资源的银行家算法"><span class="nav-number">1.4.6.2.</span> <span class="nav-text">单个资源的银行家算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多个资源的银行家算法"><span class="nav-number">1.4.6.3.</span> <span class="nav-text">多个资源的银行家算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux进程调度"><span class="nav-number">1.5.</span> <span class="nav-text">linux进程调度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#公平调度CFS"><span class="nav-number">1.5.1.</span> <span class="nav-text">公平调度CFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实时调度"><span class="nav-number">1.5.2.</span> <span class="nav-text">实时调度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux轻量级进程LWP"><span class="nav-number">1.6.</span> <span class="nav-text">linux轻量级进程LWP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LWP如何创建出来"><span class="nav-number">1.6.1.</span> <span class="nav-text">LWP如何创建出来</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多核CPU是否能同时执行多个进程？"><span class="nav-number">1.7.</span> <span class="nav-text">多核CPU是否能同时执行多个进程？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建守护进程的步骤"><span class="nav-number">1.8.</span> <span class="nav-text">创建守护进程的步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程组"><span class="nav-number">1.9.</span> <span class="nav-text">进程组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#会话"><span class="nav-number">1.10.</span> <span class="nav-text">会话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#杀死进程组或会话中的所有进程"><span class="nav-number">1.11.</span> <span class="nav-text">杀死进程组或会话中的所有进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SIGHUP"><span class="nav-number">1.12.</span> <span class="nav-text">SIGHUP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SIGCHLD与僵死进程"><span class="nav-number">1.13.</span> <span class="nav-text">SIGCHLD与僵死进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SIGPIPE"><span class="nav-number">1.14.</span> <span class="nav-text">SIGPIPE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内核态与用户态的区别"><span class="nav-number">1.15.</span> <span class="nav-text">内核态与用户态的区别</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

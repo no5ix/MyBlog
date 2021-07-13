@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="烫">
+<meta property="og:url" content="https://hulinhong.com/page/38/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="烫">
+<meta name="twitter:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>烫 - 烫烫烫烫烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/04/12/sizeof_struct/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/04/12/sizeof_struct/" itemprop="url">对象模型之内存对齐基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-04-12T23:30:01+00:00">
+                2015-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <p>本文不讨论类的虚函数, 请参考 <a href="/2015/02/21/cpp_object_model_conclusion/" title="C++对象模型之虚函数讲解">C++对象模型之虚函数讲解</a></p>
+<h1 id="内存对齐规则"><a href="#内存对齐规则" class="headerlink" title="内存对齐规则"></a>内存对齐规则</h1><p>首先我们明确内存对齐规则</p>
+<p>我们设 </p>
+<pre><code>A = #pragma pack()指定的数
+B = 这个数据成员的自身长度
+C = 结构(或联合)中最大数据成员长度
+</code></pre><p>在解释内存对齐的作用前，先来看下内存对齐的规则：</p>
+<p>1.  <strong>对于结构的各个成员</strong>，第一个成员位于偏移为0的位置，<br>以后每个数据成员的偏移量必须是 <code>min( A，B )</code> 的倍数。</p>
+<p>2.  <strong>在数据成员完成各自对齐之后</strong>，结构(或联合)本身也要进行对齐，对齐将按照 <code>min( A, C)</code> 进行。</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p><strong>32位</strong>机器上, 下列代码的sizeof(a)的值是多少?</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(2)</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">union</span> U</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">char</span> buff[<span class="number">13</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">    &#125;u;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">char</span>* (*f)(<span class="keyword">void</span>*);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">enum</span>&#123; red, green, blue &#125; color;</span><br><span class="line">&#125;a;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack()</span></span><br></pre></td></tr></table></figure>
+<h2 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h2><p>答案是sizeof(a)的值为22.</p>
+<ul>
+<li>void foo() { } ，typedef char* (f)(void);不占字节，</li>
+<li>枚举占4个字节，</li>
+<li>union按最大的变量所占字节算，占14个字节，</li>
+<li>int占4个字节，</li>
+</ul>
+<p>4+14+4=22。</p>
+<p>如果把#pragma pack(2)改为 #pragma pack(4)， sizeof(a)的值就为 24。</p>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>分为三部分来解析:</p>
+<ul>
+<li><a href="#枚举所占内存计算方法">枚举所占内存计算方法</a></li>
+<li><a href="#pragma-pack用法">#pragma pack用法</a></li>
+<li><a href="#共用体-union-所占内存计算方法">共用体(union)所占内存计算方法</a></li>
+</ul>
+<h3 id="枚举所占内存计算方法"><a href="#枚举所占内存计算方法" class="headerlink" title="枚举所占内存计算方法"></a>枚举所占内存计算方法</h3><p>枚举变量，由枚举类型定义的变量。枚举变量的大小，即枚举类型所占内存的大小。</p>
+<p>由于枚举变量的赋值，一次只能存放枚举结构中的某个常数。</p>
+<p>所以枚举变量的大小，实质是常数所占内存空间的大小（常数为int类型，当前主流的编译器中一般是32位机器和64位机器中int型都是4个字节），枚举类型所占内存大小也是这样。</p>
+<h3 id="pragma-pack用法"><a href="#pragma-pack用法" class="headerlink" title="#pragma pack用法"></a>#pragma pack用法</h3><p><code>#pragma pack(a)</code>规定的对齐长度（a可选值为1，2，4，8，16），实际使用的规则是：<br>结构，联合，或者类的数据成员，第一个放在偏移为0的地方，以后每个数据成员的对齐，按照#pragma pack指定的数值和这个数据成员自身长度中，比较小的那个进行。<br>也就是说，当#pragma pack的值等于或超过所有数据成员长度的时候，这个值的大小将不产生任何效果。<br>而结构整体的对齐，则按照结构体中最大的数据成员 和 #pragma pack指定值 之间，较小的那个进行。<br>而 <code>#pragma pack()</code> 表示恢复默认的内存对齐（与<code>#pragma pack(a)</code>指令配对使用）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(4)</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestB</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> aa; <span class="comment">//第一个成员，放在[0,3]偏移的位置，</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> a; <span class="comment">//第二个成员，自身长为1，#pragma pack(4),取小值，也就是1，所以这个成员按一字节对齐，放在偏移[4]的位置。</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">short</span> b; <span class="comment">//第三个成员，自身长2，#pragma pack(4)，取2，按2字节对齐，所以放在偏移[6,7]的位置。</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> c; <span class="comment">//第四个，自身长为1，放在[8]的位置。</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack()</span></span><br></pre></td></tr></table></figure>
+<p>这个类实际占据的内存空间是9字节<br>类之间的对齐，是按照类内部最大的成员的长度，和#pragma pack规定的值之中较小的一个对齐的。<br>所以这个例子中，类之间对齐的长度是min(sizeof(int),4)，也就是4。<br>9按照4字节圆整的结果是12，所以sizeof(TestB)是12。</p>
+<p>如果<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(2)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestB</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> aa; <span class="comment">//第一个成员，放在[0,3]偏移的位置，</span></span><br><span class="line">    <span class="keyword">char</span> a; <span class="comment">//第二个成员，自身长为1，#pragma pack(2),取小值，也就是1，所以这个成员按一字节对齐，放在偏移[4]的位置。</span></span><br><span class="line">    <span class="keyword">short</span> b; <span class="comment">//第三个成员，自身长2，#pragma pack(2)，取2，按2字节对齐，所以放在偏移[6,7]的位置。</span></span><br><span class="line">    <span class="keyword">char</span> c; <span class="comment">//第四个，自身长为1，放在[8]的位置。</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack()</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看出，上面的位置完全没有变化，只是类之间改为按2字节对齐，9按2圆整的结果是10。<br>所以 sizeof(TestB)是10。</p>
+<p>现在去掉第一个成员变量为如下代码：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(4)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestC</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">　　<span class="keyword">char</span> a;<span class="comment">//第一个成员，放在[0]偏移的位置，</span></span><br><span class="line">　　<span class="keyword">short</span> b;<span class="comment">//第二个成员，自身长2，#pragma pack(4)，取2，按2字节对齐，所以放在偏移[2,3]的位置。</span></span><br><span class="line">　　<span class="keyword">char</span> c;<span class="comment">//第三个，自身长为1，放在[4]的位置。</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack()</span></span><br></pre></td></tr></table></figure></p>
+<p>整个类的大小是5字节，按照min(sizeof(short),4)字节对齐，也就是2字节对齐，结果是6，所以sizeof(TestC)是6。</p>
+<h3 id="共用体-union-所占内存计算方法"><a href="#共用体-union-所占内存计算方法" class="headerlink" title="共用体(union)所占内存计算方法"></a>共用体(union)所占内存计算方法</h3><p>共用体又名”联合体”, 英文名为union.</p>
+<p>当多个数据需要共享内存或者多个数据每次只取其一时，可以利用联合体(union)。在C Programming Language 一书中对于联合体是这么描述的：</p>
+<ul>
+<li>联合体是一个结构；</li>
+<li>它的所有成员相对于基地址的偏移量都为0；</li>
+<li>此结构空间要大到足够容纳最”宽”的成员；</li>
+<li>其对齐方式要适合其中所有的成员；</li>
+</ul>
+<p>下面解释这四条描述：</p>
+<p>由于联合体中的所有成员是共享一段内存的，因此每个成员的存放首地址相对于于联合体变量的基地址的偏移量为0，即所有成员的首地址都是一样的。为了使得所有成员能够共享一段内存，因此该空间必须足够容纳这些成员中最宽的成员。对于这句“对齐方式要适合其中所有的成员”是指其必须符合所有成员的自身对齐方式。</p>
+<p>下面举例说明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">union U</span><br><span class="line">&#123;</span><br><span class="line">    char s[9];</span><br><span class="line">    int n;</span><br><span class="line">    double d;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>s占9字节，n占4字节，d占8字节，因此其至少需9字节的空间。然而其实际大小并不是9，用运算符sizeof测试其大小为16.这是因为这里存在字节对齐的问题，9既不能被4整除，也不能被8整除。</p>
+<p>因此补充字节到16，这样就符合所有成员的自身对齐了。从这里可以看出联合体所占的空间不仅取决于最宽成员，还跟所有成员有关系，即其大小必须满足两个条件：</p>
+<ul>
+<li>大小足够容纳最宽的成员；</li>
+<li>大小能被其包含的所有基本数据类型的大小所整除。</li>
+</ul>
+<h3 id="若问题为-pragma-pack-4-的情况"><a href="#若问题为-pragma-pack-4-的情况" class="headerlink" title="若问题为#pragma pack(4)的情况"></a>若问题为#pragma pack(4)的情况</h3><ul>
+<li>void foo() { } ，typedef char* (f)(void);不占字节，</li>
+<li>枚举占4个字节，</li>
+<li>union按最大的变量buff[13]所占字节算为13, 在#pragma pack(2)的情况, 得补齐1个字节变为14才能被2整除, 而#pragma pack(4)的情况得补齐3个字节, 总占16个字节，才可以被4整除,</li>
+<li>int占4个字节</li>
+</ul>
+<p>所以#pragma pack(4)的情况, sizeof(A)为4+16+4=24。</p>
+<h1 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h1><p>注意有陷阱, 32位环境下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">pragma</span> pack(2)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">test_class</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">float</span> i;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">union</span> test_union</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> bb;</span><br><span class="line">		<span class="keyword">char</span> aa[<span class="number">13</span>];</span><br><span class="line">		<span class="keyword">short</span> cc;</span><br><span class="line">	&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">enum</span> test_enum</span><br><span class="line">	&#123;</span><br><span class="line">		monday,</span><br><span class="line">		tuesday,</span><br><span class="line">		sunday</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">testFunc</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">char</span> xmly;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta"># <span class="meta-keyword">pragma</span> pack()</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"sizeof(test_class) : "</span> &lt;&lt; <span class="keyword">sizeof</span>(test_class) &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>请问打印结果?</p>
+<p><code>sizeof(test_class) : 6</code></p>
+<p>为什么呢?<br>注意看共用体 test_union 和枚举 test_enum其实并没有声明变量, 如果写成<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta"># <span class="meta-keyword">pragma</span> pack(2)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">test_class</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">float</span> i;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">union</span> test_union</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> bb;</span><br><span class="line">		<span class="keyword">char</span> aa[<span class="number">13</span>];</span><br><span class="line">		<span class="keyword">short</span> cc;</span><br><span class="line">	&#125;uVar;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">enum</span> test_enum</span><br><span class="line">	&#123;</span><br><span class="line">		monday,</span><br><span class="line">		tuesday,</span><br><span class="line">		sunday</span><br><span class="line">	&#125;eVar;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">testFunc</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">char</span> xmly;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta"># <span class="meta-keyword">pragma</span> pack()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> enum_x </span><br><span class="line">&#123; </span><br><span class="line">	x1=<span class="number">5</span>, </span><br><span class="line">	x2, </span><br><span class="line">	x3, </span><br><span class="line">	x4, </span><br><span class="line">&#125;; </span><br><span class="line"><span class="keyword">enum</span> enum_x x=x3; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"sizeof(test_class) : "</span> &lt;&lt; <span class="keyword">sizeof</span>(test_class) &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"x : "</span> &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	test_class::test_enum i;</span><br><span class="line">	i = test_class::monday;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"i : "</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	test_class test_obj;</span><br><span class="line">	test_obj.eVar = test_class::sunday;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; test_obj.monday &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; test_class::sunday &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>打印结果就为 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sizeof(test_class) : 24</span><br><span class="line">x : 7</span><br><span class="line">i : 0</span><br><span class="line">0</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/04/11/linux_gcc_builtin_expect/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/04/11/linux_gcc_builtin_expect/" itemprop="url">GCC的分支预测优化__builtin_expect</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-04-11T12:26:26+00:00">
+                2015-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-为什么需要分支预测优化"><a href="#1-为什么需要分支预测优化" class="headerlink" title="1. 为什么需要分支预测优化"></a>1. 为什么需要分支预测优化</h1><p> 将流水线引入cpu，可以提高cpu的效率。更简单的说，让cpu可以预先取出下一条指令，可以提供cpu的效率。如下图所示：</p>
+<table>
+<thead>
+<tr>
+<th>取指令</th>
+<th>执行指令</th>
+<th>输出结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>取指令</td>
+<td>执行</td>
+</tr>
+</tbody>
+</table>
+<p>可见，cpu流水钱可以减少cpu等待取指令的耗时，从而提高cpu的效率。<br>如果存在跳转指令，那么预先取出的指令就无用了。cpu在执行当前指令时，从内存中取出了当前指令的下一条指令。执行完当前指令后，cpu发现不是要执行下一条指令,而是执行offset偏移处的指令。cpu只能重新从内存中取出offset偏移处的指令。因此，跳转指令会降低流水线的效率，也就是降低cpu的效率。</p>
+<p>综上，在写程序时应该尽量避免跳转语句。那么如何避免跳转语句呢？答案就是使用__builtin_expect。</p>
+<p>这个指令是gcc引入的，作用是”允许程序员将最有可能执行的分支告诉编译器”。</p>
+<p>这个指令的写法为：<strong>builtin_expect(EXP, N)。意思是：EXP==N的概率很大。一般的使用方法是将</strong>builtin_expect指令封装为LIKELY和UNLIKELY宏。这两个宏的写法如下。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIKELY(x) __builtin_expect(!!(x), 1) <span class="comment">//x很可能为真</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> UNLIKELY(x) __builtin_expect(!!(x), 0) <span class="comment">//x很可能为假</span></span></span><br></pre></td></tr></table></figure>
+<p>在很多源码如Linux内核、Glib等,我们都能看到likely()和unlikely()这两个宏,通常这两个宏定义是下面这样的形式。<br>可以看出这2个宏都是使用函数 <strong>builtin_expect()实现的, </strong>builtin_expect()函数是GCC的一个内建函数(build-in function).</p>
+<h1 id="2-函数声明"><a href="#2-函数声明" class="headerlink" title="2. 函数声明"></a>2. 函数声明</h1><p>函数__builtin_expect()是GCC v2.96版本引入的, 其声明如下:</p>
+<p><code>long __builtin_expect(long exp, long c);</code></p>
+<h2 id="2-1-功能描述"><a href="#2-1-功能描述" class="headerlink" title="2.1. 功能描述"></a>2.1. 功能描述</h2><p>由于大部分程序员在分支预测方面做得很糟糕，所以GCC 提供了这个内建函数来帮助程序员处理分支预测.</p>
+<p>你期望 exp 表达式的值等于常量 c, 看 c 的值, 如果 c 的值为0(即期望的函数返回值), 那么 执行 if 分支的的可能性小, 否则执行 else 分支的可能性小(函数的返回值等于第一个参数 exp).</p>
+<p>GCC在编译过程中，会将可能性更大的代码紧跟着前面的代码，从而减少指令跳转带来的性能上的下降, 达到优化程序的目的.</p>
+<p>通常，你也许会更喜欢使用 gcc 的一个参数 ‘-fprofile-arcs’ 来收集程序运行的关于执行流程和分支走向的实际反馈信息,但是对于很多程序来说,数据是很难收集的。</p>
+<h2 id="2-2-参数详解"><a href="#2-2-参数详解" class="headerlink" title="2.2. 参数详解"></a>2.2. 参数详解</h2><ul>
+<li><p>exp<br>  exp 为一个整型表达式, 例如: (ptr != NULL)</p>
+</li>
+<li><p>c<br>  c 必须是一个编译期常量, 不能使用变量</p>
+</li>
+</ul>
+<h2 id="2-3-返回值"><a href="#2-3-返回值" class="headerlink" title="2.3. 返回值"></a>2.3. 返回值</h2><p>　　返回值等于 第一个参数 exp</p>
+<h2 id="2-4-使用方法"><a href="#2-4-使用方法" class="headerlink" title="2.4. 使用方法"></a>2.4. 使用方法</h2><p>与关键字if一起使用.首先要明确一点就是 if (value) 等价于 if (__builtin_expert(value, x)), 与x的值无关.</p>
+<p>例子如下:</p>
+<p>例子1 : 期望 x == 0, 所以执行func()的可能性小</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (__builtin_expect(x, <span class="number">0</span>))</span><br><span class="line">&#123;</span><br><span class="line">    func();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">　　<span class="comment">//do someting</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>例子2 : 期望 ptr !=NULL这个条件成立(1), 所以执行func()的可能性小</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (__builtin_expect(ptr != <span class="literal">NULL</span>, <span class="number">1</span>))</span><br><span class="line">&#123;　　</span><br><span class="line">　　<span class="comment">//do something</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">　　func();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>例子3 : 引言中的likely()和unlikely()宏</p>
+<p>首先,看第一个参数!!(x), 他的作用是把(x)转变成”布尔值”, 无论(x)的值是多少 !(x)得到的是true或false, !!(x)就得到了原值的”布尔值”</p>
+<p>使用 likely() ，执行 if 后面的语句 的机会更大，使用 unlikely()，执行 else 后面的语句的机会更大。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> likely(x)    __builtin_expect(!!(x), 1)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> unlikely(x)  __builtin_expect(!!(x), 0)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">char</span> *argv[], <span class="keyword">int</span> argc)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">int</span> a;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/* Get the value from somewhere GCC can't optimize */</span></span><br><span class="line">   a = atoi (argv[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (unlikely (a == <span class="number">2</span>))</span><br><span class="line">　 &#123;</span><br><span class="line">      a++;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">　 &#123;</span><br><span class="line">　　  a--;</span><br><span class="line">　 &#125;</span><br><span class="line">   <span class="built_in">printf</span> (<span class="string">"%d\n"</span>, a);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="3-RATIONALE-原理"><a href="#3-RATIONALE-原理" class="headerlink" title="3. RATIONALE(原理)"></a>3. RATIONALE(原理)</h1><p>if else 句型编译后, 一个分支的汇编代码紧随前面的代码,而另一个分支的汇编代码需要使用JMP指令才能访问到.</p>
+<p>很明显通过JMP访问需要更多的时间, 在复杂的程序中,有很多的if else句型,又或者是一个有if else句型的库函数,每秒钟被调用几万次,</p>
+<p>通常程序员在分支预测方面做得很糟糕, 编译器又不能精准的预测每一个分支,这时JMP产生的时间浪费就会很大,</p>
+<p>函数 <code>__builtin_expert()</code> 就是用来解决这个问题的.</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/04/11/smart_pointer_note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/04/11/smart_pointer_note/" itemprop="url">智能指针笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-04-11T12:26:26+00:00">
+                2015-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <p>有些错误是编译器查不到的, 这种错误是最可怕的, 当项目大了之后,<br>即使用 Valgrind 也很难定位,<br>因为裸指针在团队合作中使用很容易导致其他成员忘记释放或多次释放, 所以在团队合作中一般使用智能指针. </p>
+<p>而智能指针用的不好, 结果可能适得其反.</p>
+<p>所以我们聊一下智能指针的几点注意事项.</p>
+<p>总结自 C++ Primer.</p>
+<h1 id="一个简单的包含删除器的例子演示"><a href="#一个简单的包含删除器的例子演示" class="headerlink" title="一个简单的包含删除器的例子演示"></a>一个简单的包含删除器的例子演示</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;memory&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::bind;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>::placeholders;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">testBind</span><span class="params">( <span class="keyword">int</span>* a, <span class="keyword">int</span> b, <span class="keyword">int</span> c )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; *a + b + c &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> *a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Foo</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	Foo() = <span class="keyword">default</span>;</span><br><span class="line">	Foo( <span class="keyword">const</span> Foo &amp; a )</span><br><span class="line">	&#123;</span><br><span class="line">		data = a.data;</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"复制构造"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">print_sum</span><span class="params">( <span class="keyword">int</span> n1, <span class="keyword">int</span> n2 )</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; n1 + n2 &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> data = <span class="number">10</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//绑定类成员函数用对象的指针</span></span><br><span class="line">	Foo foo;</span><br><span class="line">	<span class="keyword">auto</span> f3 = <span class="built_in">std</span>::bind( &amp;Foo::print_sum, &amp;foo, <span class="number">95</span>, _1 );</span><br><span class="line">	f3( <span class="number">5</span> );</span><br><span class="line"></span><br><span class="line">	<span class="keyword">auto</span> check_testBind = <span class="built_in">std</span>::bind( testBind, <span class="built_in">std</span>::placeholders::_1, <span class="number">3</span>, <span class="number">9</span> );</span><br><span class="line">	<span class="keyword">int</span> * p = <span class="keyword">new</span> <span class="keyword">int</span>( <span class="number">7</span> );</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; check_testBind( p ) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; pi( <span class="keyword">new</span> <span class="keyword">int</span>(),</span><br><span class="line">		check_testBind );</span><br><span class="line">	*pi = <span class="number">88</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; pii( <span class="keyword">new</span> <span class="keyword">int</span>( <span class="number">12</span> ),</span><br><span class="line">		<span class="built_in">std</span>::bind( testBind, <span class="built_in">std</span>::placeholders::_1, <span class="number">32</span>, <span class="number">19</span> ) );</span><br><span class="line"></span><br><span class="line">	<span class="built_in">std</span>::function&lt; <span class="keyword">int</span>( <span class="keyword">int</span>* ) &gt; test_function_bind =</span><br><span class="line">		<span class="built_in">std</span>::bind( testBind, <span class="built_in">std</span>::placeholders::_1, <span class="number">331</span>, <span class="number">9</span> );</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"test_function_bind( p, 331, 9 ) = "</span> &lt;&lt; test_function_bind( p ) &lt;&lt; <span class="built_in">endl</span>;;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; piii( <span class="keyword">new</span> <span class="keyword">int</span>( <span class="number">112</span> ),</span><br><span class="line">		test_function_bind );</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打印结果 :</p>
+<pre><code>100
+119
+7
+347
+test_function_bind( p, 331, 9 ) = 7
+452
+63
+100
+请按任意键继续. . .
+</code></pre><h1 id="智能指针陷阱"><a href="#智能指针陷阱" class="headerlink" title="智能指针陷阱"></a>智能指针陷阱</h1><p>智能指针可以提供对动态分配的内存安全而又方便的管理，但这建立在正确使用的<br>前提下 。 为了正确使用智能指针，我们必须坚持一些基本规范 :</p>
+<ul>
+<li>不使用相同的内置指针值初始化(或 reset) 多个智能指针 。</li>
+<li>不 delete get ( ) 返 回的指针 。</li>
+<li>不使用 get () 初始化或 reset 另 一 个智能指针 。</li>
+<li>如果你使用 get () 返 回的指针，记住当最后一个对应的智能指针销 毁 后， 你 的<br>指 针就 变为无 效 了 。</li>
+<li>如果你使用智能指针管理的资源不是 new 分配的内存 ， 记住传递给它一个删除<br>器( 参见 12. 1.4 节 ， 第 415 页和 12. 1.5 节 ， 第 419 页)。</li>
+</ul>
+<h1 id="尽量用make-shared而非new"><a href="#尽量用make-shared而非new" class="headerlink" title="尽量用make_shared而非new"></a>尽量用make_shared而非new</h1><p>shared_ptr 可以协调对象的析构 ， 但这仅限于其自身的拷贝 ( 也 是 shared_ptr)<br>之间。</p>
+<p><strong>这也是为什么我们推荐使用 make_shared 而不是 new 的原因 。</strong></p>
+<p><strong>这样 ， 我们就能在分配对象的同时就将 shared_ptr 与之绑定，</strong><br><strong>从而避免了无意中将同一块内存绑定到多个独立创建的 shared_ptr 上 。(这是最容易犯的错)</strong></p>
+<p><strong>总结 : 所以我们要尽量一开始就用make_shared来分配动态内存, 而不是先new一个出来, 再找机会将它转为智能指针.</strong></p>
+<p>考虑下面对 shared_ptr 进行操作的函数 :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在函数被调用时 ptr 被创建并初始化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">(<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; ptr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// 使用 ptr</span></span><br><span class="line">&#125; <span class="comment">// ptr 离 开作用域，被销毁</span></span><br></pre></td></tr></table></figure>
+<p>process 的参数是传值方式传递的，因此实参会被拷贝到 ptr 巾 。 拷贝 一 个 shared_ptr<br>会递增其引用讨数，因此， 在 process 运行过程中，引用七| 数值至少为 2 。 当 process<br>结束时， ptr 的引用计数会边喊，但不会变为 0 。 因此，当用音11变 11 ptr 被销毁时， ptr<br>指向的内存不会被释放 。</p>
+<p>使用此函数的正确方法是传递给它一个 shared_ptr :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">42</span>)) ; <span class="comment">// 引用计数为 1</span></span><br><span class="line">process(p); <span class="comment">// 拷贝 p 会递增它的引用计数 ;在 process 中引用计数位为 2</span></span><br><span class="line"><span class="keyword">int</span> i = *p; <span class="comment">// 正确:引用计数位为 1</span></span><br></pre></td></tr></table></figure>
+<p>虽然不能传递给 process 一 个内置指针，但可以传递 给它 一 个(临时的)<br>shared_ptr ， 这个 shared_ptr 是用 一个内 置指针显式构造的 。 但是，这样做很可能<br>会导致错误 :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int *x(new int(1024)); // 危险 x 是一个普通指针，不是一个智能指针</span><br><span class="line">process(x) ; <span class="comment">// 错误 : 不能将 int* 转换为 一个 shared_ptr&lt;int&gt;</span></span><br><span class="line">process(<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt;(x)); <span class="comment">// 合法的，但内存会被释放!</span></span><br><span class="line"><span class="keyword">int</span> j = *x ; <span class="comment">//未定义的 x 是一个空悬指针!</span></span><br></pre></td></tr></table></figure>
+<p>在上面的调用中 ， 我们将一个临时 shared_ptr 传递给 process 。 当这个调用所在的表<br>达式结束时，这个临时对象就被销毁了 。 销毁这个临时变量会递减引用计数，此时引用计<br>数就变为 0 了 。 因此，当临时对象被销毁时 ， 它所指向的内存会被释放 。<br>但 x 继续指 向 (已经释放的)内存，从而变成一个空悬指针。如果试图使用 x 的值，<br>其行为是未定义的 。</p>
+<p>当将一个 shared_ptr 绑定到一个普通指针时 ， 我们就将内存的管理责任交给了这<br>个 shared_ptr 一旦这样做 了 ， 我们就不应该再使用内置指针来访问 shared_ptr 所<br>指向的内存了 </p>
+<h1 id="不要使用-get-初始化另一个智能指针或为智能指针赋值"><a href="#不要使用-get-初始化另一个智能指针或为智能指针赋值" class="headerlink" title="不要使用 get 初始化另一个智能指针或为智能指针赋值"></a>不要使用 get 初始化另一个智能指针或为智能指针赋值</h1><p>智能指针类型定义了 一个名为 get 的函数(参见表 1 2. J )，它返回一个内置指针，<br>指向智能指针管理的对象 。 此函数是为了这样一种情况而设计的 : 我们需要向不能使用智<br>能指针的代码传递一个内置指针。使用 get 返回的指告| 的代码不能 delete 此指针 。<br>虽然编译器不会给出错误信息 ， 但将另一个智能指针也绑定到 get 返回的指针上是<br>错误的 :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">42</span>)) ; <span class="comment">// 引 用计数为 1</span></span><br><span class="line"><span class="keyword">int</span> *q = p . get() ; <span class="comment">// 正确 · 但使用 q 时妥注意，不要让它管理的指针被释放</span></span><br><span class="line">&#123; <span class="comment">// 新程序块</span></span><br><span class="line"><span class="comment">// 未定义:两个独立的 shared_ptr 指 向 相同的内存</span></span><br><span class="line">    shared ptr&lt;<span class="keyword">int</span>&gt; (q) ;</span><br><span class="line">&#125; <span class="comment">// 程序块结束， q 被销毁 ， 它指向的内存被待放</span></span><br><span class="line"><span class="keyword">int</span> foo = *p ; <span class="comment">// 未定义 p 指向的内存 已 经被释放了</span></span><br></pre></td></tr></table></figure>
+<p>在本例中， p 和 q 指 向相同的内存。由于它们是相互独立创建的，因此各自的引用计数都<br>是 1。 当 q 所在的程序块结束时 ， q 被销毁 ， 这会导致 q 指向的内存被释放 。 从而 p 变成<br>一个空悬指针，意味着当我们试图使用 p 时，将发生未定义的行为 。 而且 ， 当 p 被销毁时 ，<br>这块内存会被第二次 delete 。</p>
+<p>get 用来将指针的访问权限传递给代码，你只有在确定代码不会 get.<br>特别是，永远不要用 get 初始化另一个智能指针 del ete 指针或者为另一个智能指针赋值.</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/04/11/linux_gcc_atomic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/04/11/linux_gcc_atomic/" itemprop="url">GCC的原子操作函数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-04-11T12:26:26+00:00">
+                2015-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <p>linux支持的哪些操作是具有原子特性的？知道这些东西是理解和设计无锁化编程算法的基础。</p>
+<p>下面的东西整理自网络。先感谢大家的分享！</p>
+<h1 id="原子操作的api函数"><a href="#原子操作的api函数" class="headerlink" title="原子操作的api函数"></a>原子操作的api函数</h1><p>gcc从4.1.2以后提供了 <code>__sync_*</code> 系列的下面几类的内嵌函数，提供用于针对数字或布尔型变量的原子操作。</p>
+<h2 id="n-类"><a href="#n-类" class="headerlink" title="n++类"></a>n++类</h2><p>这组返回更新前的值</p>
+<pre><code>type __sync_fetch_and_add (type *ptr, type value, ...)
+type __sync_fetch_and_sub (type *ptr, type value, ...)
+type __sync_fetch_and_or (type *ptr, type value, ...)
+type __sync_fetch_and_and (type *ptr, type value, ...)
+type __sync_fetch_and_xor (type *ptr, type value, ...)
+type __sync_fetch_and_nand (type *ptr, type value, ...)
+</code></pre><h2 id="n类"><a href="#n类" class="headerlink" title="++n类"></a>++n类</h2><p>这组返回更新后的值</p>
+<pre><code>type __sync_add_and_fetch (type *ptr, type value, ...)
+type __sync_sub_and_fetch (type *ptr, type value, ...)
+type __sync_or_and_fetch (type *ptr, type value, ...)
+type __sync_and_and_fetch (type *ptr, type value, ...)
+type __sync_xor_and_fetch (type *ptr, type value, ...)
+type __sync_nand_and_fetch (type *ptr, type value, ...)
+</code></pre><p>type可以是1,2,4或8字节长度的int类型，即：</p>
+<pre><code>int8_t / uint8_t
+int16_t / uint16_t
+int32_t / uint32_t
+int64_t / uint64_t
+</code></pre><p>后面的可扩展参数(…)用来指出哪些变量需要memory barrier,因为目前gcc实现的是full barrier（类似于linux kernel 中的mb(),表示这个操作之前的所有内存操作不会被重排序到这个操作之后）,所以可以略掉这个参数。</p>
+<h2 id="CAS类"><a href="#CAS类" class="headerlink" title="CAS类"></a>CAS类</h2><p>CAS 即 compare-and-swap , </p>
+<p>下面这两个函数提供原子的比较和交换，如果 <code>*ptr == oldval</code>,就将 <code>newval</code> 写入 <code>*ptr</code> </p>
+<ul>
+<li><p>此函数在相等并写入的情况下返回 true</p>
+<pre><code>bool __sync_bool_compare_and_swap (type *ptr, type oldval, type newval, ...)
+/* 对应的伪代码 */
+{ if (*ptr == oldval) { *ptr = newval; return true; } else { return false; } }
+</code></pre></li>
+</ul>
+<ul>
+<li><p>此函数在返回 <code>oldval</code></p>
+<pre><code>type __sync_val_compare_and_swap (type *ptr, type oldval, type newval, ...)
+/* 对应的伪代码 */
+{ if (*ptr == oldval) { *ptr = newval; } return oldval; }
+</code></pre></li>
+</ul>
+<h2 id="其他原子操作"><a href="#其他原子操作" class="headerlink" title="其他原子操作"></a>其他原子操作</h2><pre><code>type __sync_lock_test_and_set (type *ptr, type value, ...)
+</code></pre><p>将  <code>*ptr</code> 设为value并返回 <code>*ptr</code> 操作之前的值。</p>
+<pre><code>void __sync_lock_release (type *ptr, ...)
+</code></pre><p>将 <code>*ptr</code> 置 0</p>
+<h1 id="内存栅障"><a href="#内存栅障" class="headerlink" title="内存栅障"></a>内存栅障</h1><p>内存栅障主要是处理不同cpu运作时（主要是执行不同线程代码时），一个cpu对内存的操作的原子性，也就保证其他cpu见到的内存单元数据的正确性。</p>
+<h2 id="内存栅障介绍"><a href="#内存栅障介绍" class="headerlink" title="内存栅障介绍"></a>内存栅障介绍</h2><p>如果有对某一变量上写锁， 就不能在不获得相应的锁时对其进行读取操作。<br>内存栅的作用在于保证内存操作的相对顺序， 但并不保证内存操作的严格时序。 </p>
+<p>内存栅并不保证 CPU 将本地快取缓存或存储缓冲的内容刷写回内存， 而是在锁释放时确保其所保护的数据， 对于能看到刚释放的那个锁的 CPU 或设备可见。<br>持有内存栅的 CPU 可以在其快取缓存或存储缓冲中将数据保持其所希望的、 任意长的时间， 但如果其它 CPU 在同一数据元上执行原子操作，<br>则第一个 CPU 必须保证， 其所更新的数据值， 以及内存栅所要求的任何其它操作， 对第二个 CPU 可见。</p>
+<pre><code>__sync_synchronize (...)
+</code></pre><p>发出一个full barrier.</p>
+<h2 id="内存栅障应用"><a href="#内存栅障应用" class="headerlink" title="内存栅障应用"></a>内存栅障应用</h2><p>对于执行一条指令，操作到4个寄存器时，如：</p>
+<pre><code>write1(dev.register_size,size);
+write1(dev.register_addr,addr);
+write1(dev.register_cmd,READ);
+write1(dev.register_control,GO);
+</code></pre><p>最后一个寄存器是控制寄存器，在所有的参数都设置好之后向其发出指令，设备开始读取参数.</p>
+<p>如果最后一条write1被换到了前几条语句之前，那么肯定不是我们所期望的，这时候我们可以在最后一条语句之前加入一个memory barrier,强制cpu执行完前面的写入以后再执行最后一条：</p>
+<pre><code>write1(dev.register_size,size);
+write1(dev.register_addr,addr);
+write1(dev.register_cmd,READ);
+__sync_synchronize();
+write1(dev.register_control,GO);
+</code></pre><p>memory barrier有几种类型：</p>
+<ul>
+<li>acquire barrier : 不允许将barrier之后的内存读取指令移到barrier之前（linux kernel中的wmb()）。</li>
+<li>release barrier : 不允许将barrier之前的内存读取指令移到barrier之后 (linux kernel中的rmb())。</li>
+<li>full barrier    : 以上两种barrier的合集(linux kernel中的mb())。</li>
+</ul>
+<h1 id="原子操作应用范围"><a href="#原子操作应用范围" class="headerlink" title="原子操作应用范围"></a>原子操作应用范围</h1><p>原子操作只允许一次更新或读一个内存单元。 需要原子地更新多个单元时， 就必须使用锁来代替它了。 </p>
+<p>例如， 如果需要更新两个相互关联的计数器时， 就必须使用锁， 而不是两次单独的原子操作了。</p>
+<h1 id="原子操作例子"><a href="#原子操作例子" class="headerlink" title="原子操作例子"></a>原子操作例子</h1><p>例子代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;  </span></span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">0</span>;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">test_func</span><span class="params">(<span class="keyword">void</span> *arg)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">        <span class="keyword">int</span> i=<span class="number">0</span>;  </span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">20000</span>;++i)&#123;  </span><br><span class="line">                __sync_fetch_and_add(&amp;count,<span class="number">1</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> *argv[])</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">        <span class="keyword">pthread_t</span> id[<span class="number">20</span>];  </span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;  </span><br><span class="line">  </span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">20</span>;++i)&#123;  </span><br><span class="line">                pthread_create(&amp;id[i],<span class="literal">NULL</span>,test_func,<span class="literal">NULL</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">20</span>;++i)&#123;  </span><br><span class="line">                pthread_join(id[i],<span class="literal">NULL</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,count);  </span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="原子操作封装使用"><a href="#原子操作封装使用" class="headerlink" title="原子操作封装使用"></a>原子操作封装使用</h1><p>根据常用的原子操作，封装一些实用的接口 :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//原子操作  </span></span><br><span class="line"><span class="comment">//设置值  </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lock_set</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">int</span> &amp;a, <span class="keyword">int</span> value)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    __sync_val_compare_and_swap(&amp;a, a, value);  </span><br><span class="line">    <span class="keyword">return</span> a;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="comment">//加1  </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lock_inc</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">int</span> &amp;n)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> __sync_fetch_and_add(&amp;n, <span class="number">1</span>);  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="comment">//减1  </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lock_dec</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">int</span> &amp;n)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> __sync_fetch_and_sub(&amp;n, <span class="number">1</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//加值value  </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lock_add</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">int</span> &amp;n, <span class="keyword">int</span> value)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> __sync_fetch_and_add(&amp;n, value);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//减值value  </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lock_sub</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">int</span> &amp;n, <span class="keyword">int</span> value)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> __sync_fetch_and_sub(&amp;n, value);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//位或value  </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lock_or</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">int</span> &amp;n, <span class="keyword">int</span> value)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> __sync_fetch_and_or(&amp;n, value);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//位与value  </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lock_and</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">int</span> &amp;n, <span class="keyword">int</span> value)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> __sync_fetch_and_and(&amp;n, value);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//异或value  </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lock_xor</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">int</span> &amp;n, <span class="keyword">int</span> value)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> __sync_fetch_and_xor(&amp;n, value);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//无符号类型（函数重载）  </span></span><br><span class="line"><span class="comment">//设置值  </span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">lock_set</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> &amp;a, <span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    __sync_val_compare_and_swap(&amp;a, a, value);  </span><br><span class="line">    <span class="keyword">return</span> a;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//加1  </span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">lock_inc</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> &amp;n)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> __sync_fetch_and_add(&amp;n, <span class="number">1</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//减1  </span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">lock_dec</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> &amp;n)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> __sync_fetch_and_sub(&amp;n, <span class="number">1</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//加值value  </span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">lock_add</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> &amp;n, <span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> __sync_fetch_and_add((<span class="keyword">int</span>*)&amp;n, value);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//减值value  </span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">lock_sub</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> &amp;n, <span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> __sync_fetch_and_sub((<span class="keyword">int</span>*)&amp;n, value);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//位或value  </span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">lock_or</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> &amp;n, <span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> __sync_fetch_and_or((<span class="keyword">int</span>*)&amp;n, value);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//位与value  </span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">lock_and</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> &amp;n, <span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> __sync_fetch_and_and((<span class="keyword">int</span>*)&amp;n, value);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//异或value  </span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">lock_xor</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> &amp;n, <span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> __sync_fetch_and_xor((<span class="keyword">int</span>*)&amp;n, value);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/03/18/linux_directory_permission/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/03/18/linux_directory_permission/" itemprop="url">linux一些不要想当然的事(一)之目录权限</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-03-18T17:11:52+00:00">
+                2015-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="目录的可读-可写-可执行权限"><a href="#目录的可读-可写-可执行权限" class="headerlink" title="目录的可读/可写/可执行权限"></a>目录的可读/可写/可执行权限</h1><p>不要把目录的这几个权限和档案的这几个权限混淆了, 不要想当然的以为是差不多的, 差很多!<br>记忆技巧 : <strong>档案的rwx是针对于档案的内容来设计的, 而目录的rwx是针对于目录的文件名列表来设计的</strong></p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/37/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><span class="page-number current">38</span><a class="page-number" href="/page/39/">39</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/39/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

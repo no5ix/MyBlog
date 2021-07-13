@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="CPP,Linux,MultiThread,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="在 Linux 系统中使用 C/C++ 进行多线程编程时，我们遇到最多的就是对同一变量的多线程读写问题，大多情况下遇到这类问题都是通过锁机制来处理，但这对程序的性能带来了很大的影响， 当然对于那些系统原生支持原子操作的数据类型来说，我们可以使用原子操作来处理，这能对程序的性能会得到一定的提高。那么对于那些系统不支持原子操作的自定义数据类型， 在不使用锁的情况下如何做到线程安全呢？本文将从线程特有数">
+<meta name="keywords" content="CPP,Linux,MultiThread">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程特有数据">
+<meta property="og:url" content="https://hulinhong.com/2016/04/17/thread_specific_data/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="在 Linux 系统中使用 C/C++ 进行多线程编程时，我们遇到最多的就是对同一变量的多线程读写问题，大多情况下遇到这类问题都是通过锁机制来处理，但这对程序的性能带来了很大的影响， 当然对于那些系统原生支持原子操作的数据类型来说，我们可以使用原子操作来处理，这能对程序的性能会得到一定的提高。那么对于那些系统不支持原子操作的自定义数据类型， 在不使用锁的情况下如何做到线程安全呢？本文将从线程特有数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hulinhong.com/img/thread_specific_data/20140521140749687.png">
+<meta property="og:image" content="https://hulinhong.com/img/thread_specific_data/20140521141540062.png">
+<meta property="og:image" content="https://hulinhong.com/img/thread_specific_data/20140521141742921.png">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.074Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="线程特有数据">
+<meta name="twitter:description" content="在 Linux 系统中使用 C/C++ 进行多线程编程时，我们遇到最多的就是对同一变量的多线程读写问题，大多情况下遇到这类问题都是通过锁机制来处理，但这对程序的性能带来了很大的影响， 当然对于那些系统原生支持原子操作的数据类型来说，我们可以使用原子操作来处理，这能对程序的性能会得到一定的提高。那么对于那些系统不支持原子操作的自定义数据类型， 在不使用锁的情况下如何做到线程安全呢？本文将从线程特有数">
+<meta name="twitter:image" content="https://hulinhong.com/img/thread_specific_data/20140521140749687.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>线程特有数据 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/04/17/thread_specific_data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">线程特有数据</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-17T18:51:26+00:00">
+                2016-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/CPP/" rel="tag"><i class="fa fa-tag"></i> CPP</a>
+              
+                <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+              
+                <a href="/tags/MultiThread/" rel="tag"><i class="fa fa-tag"></i> MultiThread</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/12/git_tutorial/" rel="next" title="Git深入浅出">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  Git深入浅出
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/22/thread_local_storage/" rel="prev" title="线程局部存储">
+              <p class="post-nav-pre-next-title">
+                  线程局部存储
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <p>在 Linux 系统中使用 C/C++ 进行多线程编程时，我们遇到最多的就是对同一变量的多线程读写问题，大多情况下遇到这类问题都是通过锁机制来处理，但这对程序的性能带来了很大的影响，</p>
+<p>当然对于那些系统原生支持原子操作的数据类型来说，我们可以使用原子操作来处理，这能对程序的性能会得到一定的提高。那么对于那些系统不支持原子操作的自定义数据类型，</p>
+<p>在不使用锁的情况下如何做到线程安全呢？本文将从线程特有数据方面，简单讲解处理这一类线程安全问题的方法。</p>
+<p>如果有些数据只能有一个线程可以访问，那么这一类数据就可以使用线程特有数据机制来处理，虽然使用这种机制会给程序执行效率上带来一定的影响，但对于使用锁机制来说，这些性能影响将可以忽略。</p>
+<p>还有一种大致相当的编程技术就是使用 <code>__thread</code> (比 线程特有数据 易用, 也比 线程特有数据 高效), 它是 GCC 内置的线程局部存储设施 ，这将在 <a href="/2016/04/22/thread_local_storage/" title="线程局部存储">线程局部存储</a> 中讨论。</p>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><p>在 C/C++ 程序中常存在全局变量、函数内定义的静态变量以及局部变量，对于局部变量来说，其不存在线程安全问题，因此不在本文讨论的范围之内。</p>
+<p>全局变量和函数内定义的静态变量，是同一进程中各个线程都可以访问的共享变量，因此它们存在多线程读写问题。</p>
+<p>在一个线程中修改了变量中的内容，其他线程都能感知并且能读取已更改过的内容，这对数据交换来说是非常快捷的，但是由于多线程的存在，对于同一个变量可能存在两个或两个以上的线程同时修改变量所在的内存内容，同时又存在多个线程在变量在修改的时去读取该内存值，如果没有使用相应的同步机制来保护该内存的话，那么所读取到的数据将是不可预知的，甚至可能导致程序崩溃。</p>
+<p>如果需要在一个线程内部的各个函数调用都能访问、但其它线程不能访问的变量，这就需要新的机制来实现，我们称之为 Static memory local to a thread (线程局部静态变量)，同时也可称之为线程特有数据（TSD: Thread-Specific Data）</p>
+<p>这一类型的数据，在程序中每个线程都会分别维护一份变量的副本 (copy)，并且长期存在于该线程中，对此类变量的操作不影响其他线程。<br>如下图：<br><img src="/img/thread_specific_data/20140521140749687.png" alt></p>
+<h1 id="一次性初始化"><a href="#一次性初始化" class="headerlink" title="一次性初始化"></a>一次性初始化</h1><p>在讲解线程特有数据之前，先让我们来了解一下一次性初始化。</p>
+<p>多线程程序有时有这样的需求：不管创建多少个线程，有些数据的初始化只能发生一次。</p>
+<p>列如：在 C++ 程序中某个类在整个进程的生命周期内只能存在一个实例对象，在多线程的情况下，为了能让该对象能够安全的初始化，一次性初始化机制就显得尤为重要了。</p>
+<p>——在设计模式中这种实现常常被称之为单例模式（Singleton）。<br>Linux 中提供了如下函数来实现一次性初始化：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Returns 0 on success, or a positive error number on error</span></span><br><span class="line">int pthread_once (pthread_once_t *once_control, void (*init) (void));</span><br><span class="line"><span class="comment">// 利用参数once_control的状态，函数pthread_once()可以确保无论有多少个线程调用多少次该函数，</span></span><br><span class="line"><span class="comment">// 也只会执行一次由init所指向的由调用者定义的函数。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// init所指向的函数没有任何参数，形式如下：</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span> <span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="comment">// some variables initializtion in here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外，参数 once_control 必须是 pthread_once_t 类型变量的指针，指向初始化为 PTHRAD_ONCE_INIT 的静态变量。<br>在 C++0x 以后提供了类似功能的函数 std::call_once ()，用法与该函数类似。<br>使用实例请参考 :<br><a href="https://github.com/ApusApp/Swift/blob/master/swift/base/singleton.hpp" target="_blank" rel="noopener">https://github.com/ApusApp/Swift/blob/master/swift/base/singleton.hpp</a><br>实现。</p>
+<h1 id="线程特有数据API介绍"><a href="#线程特有数据API介绍" class="headerlink" title="线程特有数据API介绍"></a>线程特有数据API介绍</h1><p>在 Linux 中提供了如下函数来对线程特有数据进行操作</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Returns 0 on success, or a positive error number on error</span></span><br><span class="line">int pthread_key_create (pthread_key_t *key, void (*destructor)(void *));</span><br><span class="line"></span><br><span class="line"><span class="comment">// Returns 0 on success, or a positive error number on error</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_key_delete</span> <span class="params">(<span class="keyword">pthread_key_t</span> key)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Returns 0 on success, or a positive error number on error</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_setspecific</span> <span class="params">(<span class="keyword">pthread_key_t</span> key, <span class="keyword">const</span> <span class="keyword">void</span> *value)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Returns pointer, or NULL if no thread-specific data is associated with key</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">pthread_getspecific</span> <span class="params">(<span class="keyword">pthread_key_t</span> key)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="pthread-key-create"><a href="#pthread-key-create" class="headerlink" title="pthread_key_create"></a>pthread_key_create</h2><pre><code>// Returns 0 on success, or a positive error number on error
+int pthread_key_create (pthread_key_t *key, void (*destructor)(void *));
+</code></pre><p>函数 pthread_key_create() 为线程特有数据创建一个新键，并通过 key 指向新创建的键缓冲区。</p>
+<p>因为所有线程都可以使用返回的新键，所以参数 key 可以是一个全局变量（在 C++ 多线程编程中一般不使用全局变量，而是使用单独的类对线程特有数据进行封装，每个变量使用一个独立的 pthread_key_t）。</p>
+<p>destructor 所指向的是一个自定义的函数，其格式如下：</p>
+<pre><code>void Dest (void *value)
+{
+    // Release storage pointed to by &apos;value&apos;
+}
+</code></pre><p>只要线程终止时与 key 关联的值不为 NULL，则 destructor 所指的函数将会自动被调用。</p>
+<p>如果一个线程中有多个线程特有数据变量，那么对各个变量所对应的 destructor 函数的调用顺序是不确定的，因此，每个变量的 destructor 函数的设计应该相互独立。</p>
+<h2 id="pthread-key-delete"><a href="#pthread-key-delete" class="headerlink" title="pthread_key_delete"></a>pthread_key_delete</h2><pre><code>// Returns 0 on success, or a positive error number on error
+int pthread_key_delete (pthread_key_t key);
+</code></pre><p>函数 pthread_key_delete() 并不检查当前是否有线程正在使用该线程特有数据变量，也不会调用清理函数 destructor，而只是将其释放以供下一次调用 pthread_key_create() 使用。</p>
+<p>在 Linux 线程中，它还会将与之相关的线程数据项设置为 NULL。</p>
+<blockquote>
+<p>由于系统对每个进程中 pthread_key_t 类型的个数是有限制的，所以进程中并不能创建无限个的 pthread_key_t 变量。Linux 中可以通过 PTHREAD_KEY_MAX（定义于 limits.h 文件中）或者系统调用 sysconf(_SC_THREAD_KEYS_MAX) 来确定当前系统最多支持多少个键。Linux 中默认是 1024 个键，这对于大多数程序来说已经足够了。如果一个线程中有多个线程特有数据变量，通常可以将这些变量封装到一个数据结构中，然后使封装后的数据结构与一个线程局部变量相关联，这样就能减少对键值的使用。</p>
+</blockquote>
+<h2 id="pthread-setspecific"><a href="#pthread-setspecific" class="headerlink" title="pthread_setspecific"></a>pthread_setspecific</h2><pre><code>// Returns 0 on success, or a positive error number on error
+int pthread_setspecific (pthread_key_t key, const void *value);
+</code></pre><p>函数 pthread_setspecific() 用于将 value 的副本存储于一数据结构中，并将其与调用线程以及 key 相关联。</p>
+<p>参数 value 通常指向由调用者分配的一块内存，当线程终止时，会将该指针作为参数传递给与 key 相关联的 destructor 函数。</p>
+<h2 id="pthread-getspecific"><a href="#pthread-getspecific" class="headerlink" title="pthread_getspecific"></a>pthread_getspecific</h2><pre><code>// Returns pointer, or NULL if no thread-specific data is associated with key
+void *pthread_getspecific (pthread_key_t key);
+</code></pre><p>当线程被创建时，会将所有的线程特有数据变量初始化为 NULL，因此第一次使用此类变量前必须先调用 pthread_getspecific() 函数来确认是否已经于对应的 key 相关联，如果没有，那么 pthread_getspecific() 会分配一块内存并通过 pthread_setspecific() 函数保存指向该内存块的指针。</p>
+<blockquote>
+<p>参数 value 的值也可以不是一个指向调用者分配的内存区域，而是任何可以强制转换为 void * 的变量值，在这种情况下，先前的 pthread_key<em>create() 函数应将参数</em> _destructor 设置为 NULL</p>
+</blockquote>
+<p>函数 pthread_getspecific() 正好与 pthread_setspecific() 相反，其是将 pthread_setspecific() 设置的 value 取出。在使用取出的值前最好是将 void * 转换成原始数据类型的指针。</p>
+<h1 id="使用线程特有数据API"><a href="#使用线程特有数据API" class="headerlink" title="使用线程特有数据API"></a>使用线程特有数据API</h1><p>我们先讨论一下非线程安全的 <code>stderror()</code> 的实现, 接着说明如何使用线程特有数据来实现该函数的线程安全.</p>
+<h2 id="非线程安全的stderror"><a href="#非线程安全的stderror" class="headerlink" title="非线程安全的stderror()"></a>非线程安全的stderror()</h2><p>An implementation of strerror() that is not thread-safe.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*************************************************************************\</span></span><br><span class="line"><span class="comment">*                  Copyright (C) Michael Kerrisk, 2017.                   *</span></span><br><span class="line"><span class="comment">*                                                                         *</span></span><br><span class="line"><span class="comment">* This program is free software. You may use, modify, and redistribute it *</span></span><br><span class="line"><span class="comment">* under the terms of the GNU General Public License as published by the   *</span></span><br><span class="line"><span class="comment">* Free Software Foundation, either version 3 or (at your option) any      *</span></span><br><span class="line"><span class="comment">* later version. This program is distributed without any warranty.  See   *</span></span><br><span class="line"><span class="comment">* the file COPYING.gpl-v3 for details.                                    *</span></span><br><span class="line"><span class="comment">\*************************************************************************/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Listing 31-1 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* strerror.c</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   An implementation of strerror() that is not thread-safe.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _GNU_SOURCE                 <span class="comment">/* Get '_sys_nerr' and '_sys_errlist'</span></span></span><br><span class="line"><span class="meta"><span class="comment">                                       declarations from &lt;stdio.h&gt; */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;                 /* Get declaration of strerror() */</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_ERROR_LEN 256           <span class="comment">/* Maximum length of string</span></span></span><br><span class="line"><span class="meta"><span class="comment">                                       returned by strerror() */</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">char</span> buf[MAX_ERROR_LEN];     <span class="comment">/* Statically allocated return buffer */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> *</span><br><span class="line">strerror(<span class="keyword">int</span> err)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (err &lt; <span class="number">0</span> || err &gt;= _sys_nerr || _sys_errlist[err] == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">snprintf</span>(buf, MAX_ERROR_LEN, <span class="string">"Unknown error %d"</span>, err);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">strncpy</span>(buf, _sys_errlist[err], MAX_ERROR_LEN - <span class="number">1</span>);</span><br><span class="line">        buf[MAX_ERROR_LEN - <span class="number">1</span>] = <span class="string">'\0'</span>;          <span class="comment">/* Ensure null termination */</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> buf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="线程安全的stderror"><a href="#线程安全的stderror" class="headerlink" title="线程安全的stderror()"></a>线程安全的stderror()</h2><p>这是使用线程特有数据技术实现的线程安全的stderror().</p>
+<p>如果对使用线程局部存储技术实现的线程安全的stderror()感兴趣,<br>请转 <a href="/2016/04/22/thread_local_storage/" title="线程局部存储">线程局部存储</a></p>
+<p>An implementation of strerror() that is made thread-safe through the use of thread-specific data.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*************************************************************************\</span></span><br><span class="line"><span class="comment">*                  Copyright (C) Michael Kerrisk, 2017.                   *</span></span><br><span class="line"><span class="comment">*                                                                         *</span></span><br><span class="line"><span class="comment">* This program is free software. You may use, modify, and redistribute it *</span></span><br><span class="line"><span class="comment">* under the terms of the GNU General Public License as published by the   *</span></span><br><span class="line"><span class="comment">* Free Software Foundation, either version 3 or (at your option) any      *</span></span><br><span class="line"><span class="comment">* later version. This program is distributed without any warranty.  See   *</span></span><br><span class="line"><span class="comment">* the file COPYING.gpl-v3 for details.                                    *</span></span><br><span class="line"><span class="comment">\*************************************************************************/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Listing 31-3 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* strerror_tsd.c</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   An implementation of strerror() that is made thread-safe through</span></span><br><span class="line"><span class="comment">   the use of thread-specific data.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   See also strerror_tls.c.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _GNU_SOURCE                 <span class="comment">/* Get '_sys_nerr' and '_sys_errlist'</span></span></span><br><span class="line"><span class="meta"><span class="comment">                                       declarations from &lt;stdio.h&gt; */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;                 /* Get declaration of strerror() */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"tlpi_hdr.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">pthread_once_t</span> once = PTHREAD_ONCE_INIT;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">pthread_key_t</span> strerrorKey;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_ERROR_LEN 256           <span class="comment">/* Maximum length of string in per-thread</span></span></span><br><span class="line"><span class="meta"><span class="comment">                                       buffer returned by strerror() */</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span>                         <span class="comment">/* Free thread-specific data buffer */</span></span><br><span class="line">destructor(<span class="keyword">void</span> *buf)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">free</span>(buf);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span>                         <span class="comment">/* One-time key creation function */</span></span><br><span class="line">createKey(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> s;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Allocate a unique thread-specific data key and save the address</span></span><br><span class="line"><span class="comment">       of the destructor for thread-specific data buffers */</span></span><br><span class="line"></span><br><span class="line">    s = pthread_key_create(&amp;strerrorKey, destructor);</span><br><span class="line">    <span class="keyword">if</span> (s != <span class="number">0</span>)</span><br><span class="line">        errExitEN(s, <span class="string">"pthread_key_create"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> *</span><br><span class="line">strerror(<span class="keyword">int</span> err)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> s;</span><br><span class="line">    <span class="keyword">char</span> *buf;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Make first caller allocate key for thread-specific data */</span></span><br><span class="line"></span><br><span class="line">    s = pthread_once(&amp;once, createKey);</span><br><span class="line">    <span class="keyword">if</span> (s != <span class="number">0</span>)</span><br><span class="line">        errExitEN(s, <span class="string">"pthread_once"</span>);</span><br><span class="line"></span><br><span class="line">    buf = pthread_getspecific(strerrorKey);</span><br><span class="line">    <span class="keyword">if</span> (buf == <span class="literal">NULL</span>) &#123;          <span class="comment">/* If first call from this thread, allocate</span></span><br><span class="line"><span class="comment">                                   buffer for thread, and save its location */</span></span><br><span class="line">        buf = <span class="built_in">malloc</span>(MAX_ERROR_LEN);</span><br><span class="line">        <span class="keyword">if</span> (buf == <span class="literal">NULL</span>)</span><br><span class="line">            errExit(<span class="string">"malloc"</span>);</span><br><span class="line"></span><br><span class="line">        s = pthread_setspecific(strerrorKey, buf);</span><br><span class="line">        <span class="keyword">if</span> (s != <span class="number">0</span>)</span><br><span class="line">            errExitEN(s, <span class="string">"pthread_setspecific"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (err &lt; <span class="number">0</span> || err &gt;= _sys_nerr || _sys_errlist[err] == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">snprintf</span>(buf, MAX_ERROR_LEN, <span class="string">"Unknown error %d"</span>, err);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">strncpy</span>(buf, _sys_errlist[err], MAX_ERROR_LEN - <span class="number">1</span>);</span><br><span class="line">        buf[MAX_ERROR_LEN - <span class="number">1</span>] = <span class="string">'\0'</span>;          <span class="comment">/* Ensure null termination */</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> buf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="深入理解线程特有数据机制"><a href="#深入理解线程特有数据机制" class="headerlink" title="深入理解线程特有数据机制"></a>深入理解线程特有数据机制</h1><p><strong>深入理解线程特有数据的实现有助于对其 API 的使用。</strong></p>
+<p>在典型的实现中包含以下数组：</p>
+<ul>
+<li><p>一个全局（进程级别）的数组，用于存放线程特有数据的键值信息<br>pthread_key_create() 返回的 pthread_key_t 类型值只是对全局数组的索引，该全局数组标记为 pthread_keys，其格式大概如下：<br><img src="/img/thread_specific_data/20140521141540062.png" alt></p>
+<p>数组的每个元素都是一个包含两个字段的结构，第一个字段标记该数组元素是否在用，第二个字段用于存放针对此键、线程特有数据变的解构函数的一个副本，即 destructor 函数。</p>
+</li>
+<li><p>每个线程还包含一个数组，存有为每个线程分配的线程特有数据块的指针（通过调用 pthread_setspecific() 函数来存储的指针，即参数中的 value）</p>
+</li>
+</ul>
+<p><strong>在常见的存储 pthread_setspecific()函数参数 value 的实现中，大多数都类似于下图的实现。</strong></p>
+<p>图中假设 pthread_keys[1]分配给 func1()函数，pthread API 为每个函数维护指向线程特有数据数据块的一个指针数组，<br>其中每个数组元素都与图线程特有数据键的实现 (上图) 中的全局 pthread_keys 中元素一一对应。</p>
+<p><img src="/img/thread_specific_data/20140521141742921.png" alt></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li>[1] Linux/UNIX 系统编程手册（上） </li>
+<li>[2] <a href="http://www.groad.net/bbs/thread-2182-1-1.html" target="_blank" rel="noopener">http://www.groad.net/bbs/thread-2182-1-1.html</a> </li>
+<li>[3] <a href="http://baike.baidu.com/view/598128.htm" target="_blank" rel="noopener">http://baike.baidu.com/view/598128.htm</a></li>
+</ul>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/CPP/" rel="tag"><i class="fa fa-tag"></i> CPP</a>
+            
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+            
+              <a href="/tags/MultiThread/" rel="tag"><i class="fa fa-tag"></i> MultiThread</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2016/04/12/git_tutorial/" rel="next" title="Git深入浅出">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    Git深入浅出
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2016/04/22/thread_local_storage/" rel="prev" title="线程局部存储">
+                <p class="post-nav-pre-next-title">
+                    线程局部存储
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据类型"><span class="nav-number">1.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一次性初始化"><span class="nav-number">2.</span> <span class="nav-text">一次性初始化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程特有数据API介绍"><span class="nav-number">3.</span> <span class="nav-text">线程特有数据API介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pthread-key-create"><span class="nav-number">3.1.</span> <span class="nav-text">pthread_key_create</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pthread-key-delete"><span class="nav-number">3.2.</span> <span class="nav-text">pthread_key_delete</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pthread-setspecific"><span class="nav-number">3.3.</span> <span class="nav-text">pthread_setspecific</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pthread-getspecific"><span class="nav-number">3.4.</span> <span class="nav-text">pthread_getspecific</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用线程特有数据API"><span class="nav-number">4.</span> <span class="nav-text">使用线程特有数据API</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#非线程安全的stderror"><span class="nav-number">4.1.</span> <span class="nav-text">非线程安全的stderror()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程安全的stderror"><span class="nav-number">4.2.</span> <span class="nav-text">线程安全的stderror()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深入理解线程特有数据机制"><span class="nav-number">5.</span> <span class="nav-text">深入理解线程特有数据机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

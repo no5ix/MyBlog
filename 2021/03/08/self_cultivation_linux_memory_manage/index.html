@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Self-cultivation,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Linux内存管理为什么需要虚拟内存虚拟内存的目的是为了让物理内存扩充成更大的逻辑内存，从而让程序获得更多的可用内存。 为了更好的管理内存，操作系统将内存抽象成地址空间。每个程序拥有自己的地址空间，这个地址空间被分割成多个块，每一块称为一页。这些页被映射到物理内存，但不需要映射到连续的物理内存，也不需要所有页都必须在物理内存中。当程序引用到不在物理内存中的页时，由硬件执行必要的映射，将缺失的部分装">
+<meta name="keywords" content="Self-cultivation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器开发自我修养专栏-Linux内存管理">
+<meta property="og:url" content="https://hulinhong.com/2021/03/08/self_cultivation_linux_memory_manage/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="Linux内存管理为什么需要虚拟内存虚拟内存的目的是为了让物理内存扩充成更大的逻辑内存，从而让程序获得更多的可用内存。 为了更好的管理内存，操作系统将内存抽象成地址空间。每个程序拥有自己的地址空间，这个地址空间被分割成多个块，每一块称为一页。这些页被映射到物理内存，但不需要映射到连续的物理内存，也不需要所有页都必须在物理内存中。当程序引用到不在物理内存中的页时，由硬件执行必要的映射，将缺失的部分装">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/mmu_1.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/virtual_memory_mgr.jpeg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/mmap.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/virtual_memory_mgr1.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/buddy_algo.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/buddy_algo2.png">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/traditional_io.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/sendfile1.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/linux/sendfile2.jpg">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.070Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="服务器开发自我修养专栏-Linux内存管理">
+<meta name="twitter:description" content="Linux内存管理为什么需要虚拟内存虚拟内存的目的是为了让物理内存扩充成更大的逻辑内存，从而让程序获得更多的可用内存。 为了更好的管理内存，操作系统将内存抽象成地址空间。每个程序拥有自己的地址空间，这个地址空间被分割成多个块，每一块称为一页。这些页被映射到物理内存，但不需要映射到连续的物理内存，也不需要所有页都必须在物理内存中。当程序引用到不在物理内存中的页时，由硬件执行必要的映射，将缺失的部分装">
+<meta name="twitter:image" content="https://hulinhong.com/img/noodle_plan/linux/mmu_1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>服务器开发自我修养专栏-Linux内存管理 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/03/08/self_cultivation_linux_memory_manage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">服务器开发自我修养专栏-Linux内存管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-08T19:08:06+00:00">
+                2021-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self-cultivation/" itemprop="url" rel="index">
+                    <span itemprop="name">Self-cultivation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Self-cultivation/" rel="tag"><i class="fa fa-tag"></i> Self-cultivation</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/03/08/self_cultivation_linux_process/" rel="next" title="服务器开发自我修养专栏-Linux进程管理">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  服务器开发自我修养专栏-Linux进程管理
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/03/13/self_cultivation_cpp/" rel="prev" title="服务器开发自我修养专栏-CPP要点">
+              <p class="post-nav-pre-next-title">
+                  服务器开发自我修养专栏-CPP要点
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="Linux内存管理"><a href="#Linux内存管理" class="headerlink" title="Linux内存管理"></a>Linux内存管理</h1><h2 id="为什么需要虚拟内存"><a href="#为什么需要虚拟内存" class="headerlink" title="为什么需要虚拟内存"></a>为什么需要虚拟内存</h2><p>虚拟内存的目的是为了让物理内存扩充成更大的逻辑内存，从而让程序获得更多的可用内存。</p>
+<p>为了更好的管理内存，操作系统将内存抽象成地址空间。每个程序拥有自己的地址空间，这个地址空间被分割成多个块，每一块称为一页。这些页被映射到物理内存，但不需要映射到连续的物理内存，也不需要所有页都必须在物理内存中。当程序引用到不在物理内存中的页时，由硬件执行必要的映射，将缺失的部分装入物理内存并重新执行失败的指令。</p>
+<p>从上面的描述中可以看出，<strong>虚拟内存允许程序不用将地址空间中的每一页都映射到物理内存，也就是说一个程序不需要全部调入内存就可以运行，这使得有限的内存运行大程序成为可能。</strong>例如有一台计算机可以产生 16 位地址，那么一个程序的地址空间范围是 0~64K。该计算机只有 32KB 的物理内存，虚拟内存技术允许该计算机运行一个 64K 大小的程序。</p>
+<h2 id="MMU工作原理"><a href="#MMU工作原理" class="headerlink" title="MMU工作原理"></a>MMU工作原理</h2><p>内存管理单元（MMU）管理着地址空间和物理内存的转换，其中的页表（Page table）存储着页（程序地址空间）和页框（物理内存空间）的映射表。</p>
+<p>一个虚拟地址分成两个部分:  </p>
+<ul>
+<li>一部分存储页面号，</li>
+<li>一部分存储偏移量。</li>
+</ul>
+<p><img src="/img/noodle_plan/linux/mmu_1.jpg" alt><br>上图的页表存放着 16 个页，这 16 个页需要用 4 个比特位来进行索引定位。例如对于虚拟地址（0010 000000000100），前 4 位是存储页面号 2，读取表项内容为（110 1），页表项最后一位表示是否存在于内存中，1 表示存在。后 12 位存储偏移量。这个页对应的页框的地址为 （110 000000000100）。</p>
+<h2 id="主机字节序"><a href="#主机字节序" class="headerlink" title="主机字节序"></a>主机字节序</h2><p>主机字节序又叫 CPU 字节序，其不是由操作系统决定的，而是由 CPU 指令集架构决定的。主机字节序分为两种：  </p>
+<ul>
+<li><strong>记忆技巧</strong>: 低序地址存了高序字节就叫大端, 反之就小端</li>
+<li>大端字节序（Big Endian）：高序字节存储在低位地址，低序字节存储在高位地址, 目前主要是ARM/PowerPC在用</li>
+<li>小端字节序（Little Endian）：低序字节存储在低位地址, 高序字节存储在高位地址，目前主要是Intel在用</li>
+</ul>
+<p>存储方式:<br>32 位整数 0x12345678 是从起始位置为 0x00 的地址开始存放，则：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">内存地址</th>
+<th style="text-align:center">0x00</th>
+<th style="text-align:center">0x01</th>
+<th style="text-align:center">0x02</th>
+<th style="text-align:center">0x03</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">大端</td>
+<td style="text-align:center">12</td>
+<td style="text-align:center">34</td>
+<td style="text-align:center">56</td>
+<td style="text-align:center">78</td>
+</tr>
+<tr>
+<td style="text-align:center">小端</td>
+<td style="text-align:center">78</td>
+<td style="text-align:center">56</td>
+<td style="text-align:center">34</td>
+<td style="text-align:center">12</td>
+</tr>
+</tbody>
+</table>
+<h2 id="网络字节序"><a href="#网络字节序" class="headerlink" title="网络字节序"></a>网络字节序</h2><p>网络字节顺序是 TCP/IP 中规定好的一种数据表示格式，它与具体的 CPU 类型、操作系统等无关，从而可以保证数据在不同主机之间传输时能够被正确解释。</p>
+<p>网络字节顺序采用：大端（Big Endian）排列方式。</p>
+<h2 id="Linux虚拟地址空间如何分布"><a href="#Linux虚拟地址空间如何分布" class="headerlink" title="Linux虚拟地址空间如何分布"></a>Linux虚拟地址空间如何分布</h2><p>Linux 使用虚拟地址空间，大大增加了进程的寻址空间，由低地址到高地址(下图中从下到上即为从低到高)分别为(口诀: 文初堆栈)：</p>
+<p><img src="/img/noodle_plan/linux/virtual_memory_mgr.jpeg" alt></p>
+<ul>
+<li>文本段(只读段)：该部分空间只能读，不可写；(包括：代码段、rodata 段(C常量字符串和#define定义的常量) )</li>
+<li>数据段(初始化数据段与未初始化数据段)：保存初始化了的与未初始化的全局变量、静态变量的空间；</li>
+<li>堆 ：就是平时所说的动态内存， malloc/new 大部分都来源于此。其中堆顶的位置可通过函数 brk 和 sbrk 进行动态调整。</li>
+<li>文件映射区域 ：如动态库、共享内存等映射物理空间的内存，一般是 mmap 函数所分配的虚拟地址空间。</li>
+<li>栈：用于维护函数调用的上下文空间，一般为 8M ，可通过 ulimit –s 查看。</li>
+<li>内核虚拟空间：用户代码不可见的内存区域，由内核管理(页表就存放在内核虚拟空间)。上图是 32 位系统典型的虚拟地址空间分布(来自《深入理解计算机系统》)。</li>
+</ul>
+<h2 id="brk函数"><a href="#brk函数" class="headerlink" title="brk函数"></a>brk函数</h2><p>先了解：brk()和sbrk()函数<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">brk</span><span class="params">( <span class="keyword">const</span> <span class="keyword">void</span> *addr )</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">sbrk</span> <span class="params">( <span class="keyword">intptr_t</span> incr )</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>这两个函数的作用主要是扩展heap的上界brk。第一个函数的参数为设置的新的brk上界地址，如果成功返回0，失败返回-1。第二个函数的参数为需要申请的内存的大小，然后返回heap新的上界brk地址。如果sbrk的参数为0，则返回的为原来的brk地址。</p>
+<h2 id="mmap"><a href="#mmap" class="headerlink" title="mmap"></a>mmap</h2><p>虚拟内存系统通过将虚拟内存分割为称作虚拟页 (Virtual Page，VP) 大小固定的块，一般情况下，每个虚拟页的大小默认是 4096 字节。同样的，物理内存也被分割为物理页(Physical Page，PP)，也为 4096 字节。</p>
+<p>在 LINUX 中我们可以使用 mmap 用来在进程虚拟内存地址空间中分配地址空间，创建和物理内存的映射关系。</p>
+<p><img src="/img/noodle_plan/linux/mmap.jpg" alt="映射关系"></p>
+<p><strong>映射关系可以分为两种</strong>  </p>
+<ol>
+<li>文件映射<br> 磁盘文件映射进程的虚拟地址空间，使用文件内容初始化物理内存。  </li>
+<li>匿名映射<br> 初始化全为 0 的内存空间。</li>
+</ol>
+<p><strong>而对于映射关系是否共享又分为</strong>  </p>
+<ol>
+<li>私有映射 (MAP_PRIVATE)<br> 多进程间数据共享，修改不反应到磁盘实际文件，是一个 copy-on-write（写时复制）的映射方式。  </li>
+<li>共享映射 (MAP_SHARED)<br> 多进程间数据共享，修改反应到磁盘实际文件中。</li>
+</ol>
+<p><strong>因此总结起来有 4 种组合</strong>  </p>
+<ol>
+<li>私有文件映射<br> 多个进程使用同样的物理内存页进行初始化，但是各个进程对内存文件的修改不会共享，也不会反应到物理文件中</li>
+<li>私有匿名映射<br> mmap 会创建一个新的映射，各个进程不共享，这种使用主要用于分配内存 (malloc 分配大内存会调用 mmap)。<br> 例如开辟新进程时，会为每个进程分配虚拟的地址空间，这些虚拟地址映射的物理内存空间各个进程间读的时候共享，写的时候会 copy-on-write。</li>
+<li>共享文件映射<br> 多个进程通过虚拟内存技术共享同样的物理内存空间，对内存文件 的修改会反应到实际物理文件中，他也是进程间通信 (IPC) 的一种机制。</li>
+<li>共享匿名映射<br> 这种机制在进行 fork 的时候不会采用写时复制，父子进程完全共享同样的物理内存页，这也就实现了父子进程通信 (IPC).</li>
+</ol>
+<p><strong>这里值得注意的是，mmap 只是在虚拟内存分配了地址空间，只有在第一次访问虚拟内存的时候才分配物理内存。</strong><br>在 mmap 之后，并没有在将文件内容加载到物理页上，只上在虚拟内存中分配了地址空间。当进程在访问这段地址时，通过查找页表，发现虚拟内存对应的页没有在物理内存中缓存，则产生 “缺页”，由内核的缺页异常处理程序处理，将文件对应内容，以页为单位 (4096) 加载到物理内存，注意是只加载缺页，但也会受操作系统一些调度策略影响，加载的比所需的多。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">mmap</span><span class="params">(<span class="keyword">void</span> *addr, <span class="keyword">size_t</span> length, <span class="keyword">int</span> prot, <span class="keyword">int</span> flags, <span class="keyword">int</span> fd, <span class="keyword">off_t</span> offset)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">munmap</span><span class="params">(<span class="keyword">void</span> *addr, <span class="keyword">size_t</span> length)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>这里要注意的是fd参数，fd为映射的文件描述符，如果是匿名映射，可以设为-1；</p>
+<ul>
+<li>mmap函数第一种用法是映射磁盘文件到内存中；而malloc使用的是mmap函数的第二种用法，即匿名映射，匿名映射不映射磁盘文件，而是向映射区申请一块内存。</li>
+<li>munmap函数是用于释放内存，第一个参数为内存首地址，第二个参数为内存的长度。接下来看下mmap函数的参数。</li>
+</ul>
+<p>由于brk/sbrk/mmap属于系统调用，如果每次申请内存，都调用这三个函数中的一个，那么每次都要产生系统调用开销（即cpu从用户态切换到内核态的上下文切换，这里要保存用户态数据，等会还要切换回用户态），这是非常影响性能的；其次，这样申请的内存容易产生碎片，因为堆是从低地址到高地址，如果低地址的内存没有被释放，高地址的内存就不能被回收。</p>
+<h2 id="malloc和free原理"><a href="#malloc和free原理" class="headerlink" title="malloc和free原理"></a>malloc和free原理</h2><p>malloc: </p>
+<ul>
+<li><strong>当申请小内存的时，malloc使用sbrk分配内存</strong></li>
+<li><strong>当申请大内存时，使用mmap函数申请内存</strong></li>
+<li><strong>但是这只是分配了虚拟内存，还没有映射到物理内存，当访问申请的内存时，才会因为缺页异常，内核分配物理内存。</strong></li>
+<li>将所有空闲内存块连成链表，每个节点记录空闲内存块的地址、大小等信息</li>
+<li>分配内存时，找到大小合适的块，切成两份，一分给用户，一份放回空闲链表</li>
+<li>free时，直接把内存块返回链表</li>
+<li>解决外部碎片：将能够合并的内存块进行合并</li>
+</ul>
+<p>malloc函数的实质体现在：它有一个将可用的内存块连接为一个长长的列表的所谓空闲链表。调用malloc函数时，它沿连接表寻找一个大到足以满足用户请求所需要的内存块。然后，将该内存块一分为二（一块的大小与用户请求的大小相等，另一块的大小就是剩下的字节）。接下来，将分配给用户的那块内存传给用户，并将剩下的那块（如果有的话）返回到连接表上。</p>
+<p>这里注意，malloc找到的内存块大小一定是会大于等于我们需要的内存大小，下面会提到如果所有的内存块都比要求的小会怎么办？</p>
+<p><strong>调用free函数时，它将用户释放的内存块连接到空闲链上。到最后，空闲链会被切成很多的小内存片段，如果这时用户申请一个大的内存片段，那么空闲链上可能没有可以满足用户要求的片段了。于是，malloc函数请求延时，并开始在空闲链上翻箱倒柜地检查各内存片段，对它们进行整理，将相邻的小空闲块合并成较大的内存块。</strong></p>
+<p>在对内存块进行了 free 调用之后，我们需要做的是诸如将它们标记为未被使用的等事情，并且，在调用 malloc 时，我们要能够定位未被使用的内存块。因此， malloc返回的每块内存的起始处首先要有这个结构：</p>
+<p>这就解释了，为什么在程序中free之后，但是堆的内存还是没有释放。</p>
+<p>内存控制块结构定义<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">mem_control_block</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> is_available;</span><br><span class="line">    <span class="keyword">int</span> size;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>现在，您可能会认为当程序调用 malloc 时这会引发问题 —— 它们如何知道这个结构？答案是它们不必知道；在返回指针之前，我们会将其移动到这个结构之后，把它隐藏起来。这使得返回的指针指向没有用于任何其他用途的内存。那样，从调用程序的角度来看，它们所得到的全部是空闲的、开放的内存。然后，当通过 free() 将该指针传递回来时，我们只需要倒退几个内存字节就可以再次找到这个结构。</p>
+<p><strong>关于 malloc 获得虚存空间的实现，与 glibc 的版本有关，但大体逻辑是：</strong></p>
+<ul>
+<li>若分配内存小于 128k ，调用 sbrk() ，将堆顶指针向高地址移动，获得新的虚存空间。</li>
+<li>若分配内存大于 128k ，调用 mmap() ，在文件映射区域中分配匿名虚存空间。</li>
+</ul>
+<p>接着： VSZ为虚拟内存 RSS为物理内存</p>
+<ul>
+<li>VSZ 并不是每次 malloc 后都增长，是与上一节说的堆顶没发生变化有关，因为可重用堆顶内剩余的空间，这样的 malloc 是很轻量快速的。</li>
+<li>但如果 VSZ 发生变化，基本与分配内存量相当，因为 VSZ 是计算虚拟地址空间总大小。</li>
+<li>RSS 的增量很少，是因为 malloc 分配的内存并不就马上分配实际存储空间，只有第一次使用，如第一次 memset 后才会分配。</li>
+<li>由于每个物理内存页面大小是 4k ，不管 memset 其中的 1k 还是 5k 、 7k ，实际占用物理内存总是 4k 的倍数。所以 RSS 的增量总是 4k 的倍数。</li>
+<li>因此，不是 malloc 后就马上占用实际内存，而是第一次使用时发现虚存对应的物理页面未分配，产生缺页中断，才真正分配物理页面，同时更新进程页面的映射关系。这也是 Linux 虚拟内存管理的核心概念之一。</li>
+</ul>
+<h2 id="vmalloc和kmalloc和malloc的区别"><a href="#vmalloc和kmalloc和malloc的区别" class="headerlink" title="vmalloc和kmalloc和malloc的区别"></a>vmalloc和kmalloc和malloc的区别</h2><ul>
+<li>kmalloc和vmalloc是分配的是内核的内存,malloc分配的是用户的内存</li>
+<li>kmalloc保证分配的内存在物理上是连续的,vmalloc保证的是在虚拟地址空间上的连续,malloc不保证任何东西(这点是自己猜测的,不一定正确)</li>
+<li>kmalloc能分配的大小有限,vmalloc和malloc能分配的大小相对较大</li>
+<li>内存只有在要被DMA访问的时候才需要物理上连续</li>
+<li>vmalloc比kmalloc要慢</li>
+</ul>
+<p><img src="/img/noodle_plan/linux/virtual_memory_mgr1.jpg" alt></p>
+<p>对于提供了MMU（存储管理器，辅助操作系统进行内存管理，提供虚实地址转换等硬件支持）的处理器而言，Linux提供了复杂的存储管理系统，使得进程所能访问的内存达到4GB。</p>
+<p>进程的4GB内存空间被人为的分为两个部分–用户空间与内核空间。用户空间地址分布从0到3GB(PAGE_OFFSET，在0x86中它等于0xC0000000)，3GB到4GB为内核空间。</p>
+<p>内核空间中，从3G到vmalloc_start这段地址是物理内存映射区域（该区域中包含了内核镜像、物理页框表mem_map等等），比如我们使用 的 VMware虚拟系统内存是160M，那么3G～3G+160M这片内存就应该映射物理内存。在物理内存映射区之后，就是vmalloc区域。对于 160M的系统而言，vmalloc_start位置应在3G+160M附近（在物理内存映射区与vmalloc_start期间还存在一个8M的gap 来防止跃界），vmalloc_end的位置接近4G(最后位置系统会保留一片128k大小的区域用于专用页面映射)</p>
+<p>一般情况下，只有硬件设备才需要物理地址连续的内存，因为硬件设备往往存在于MMU之外，根本不了解虚拟地址；但为了性能上的考虑，内核中一般使用kmalloc(),而只有在需要获得大块内存时才使用vmalloc，例如当模块被动态加载到内核当中时，就把模块装载到由vmalloc（）分配的内存上。</p>
+<ul>
+<li><strong>kmalloc</strong>:<br>  kmalloc申请的是较小的连续的物理内存，内存物理地址上连续，虚拟地址上也是连续的，使用的是内存分配器slab的一小片。申请的内存位于物理内存的映射区域。其真正的物理地址只相差一个固定的偏移。而且不对获得空间清零。可以查看<a href="#Slab分配器">slab分配器</a></li>
+<li><strong>kzalloc</strong>:<br>  用kzalloc申请内存的时候， 效果等同于先是用 kmalloc() 申请空间 , 然后用 memset() 来初始化 ,所有申请的元素都被初始化为 0.</li>
+<li><strong>vmalloc</strong>:<br>  vmalloc用于申请较大的内存空间，虚拟内存是连续。申请的内存的则位于vmalloc_start～vmalloc_end之间，与物理地址没有简单的转换关系，虽然在逻辑上它们也是连续的，但是在物理上它们不要求连续。</li>
+<li><strong>malloc</strong>:<br>  malloc分配的是用户的内存。除非被阻塞否则他执行的速度非常快，而且不对获得空间清零。</li>
+</ul>
+<h2 id="Buddy（伙伴）分配算法"><a href="#Buddy（伙伴）分配算法" class="headerlink" title="Buddy（伙伴）分配算法"></a>Buddy（伙伴）分配算法</h2><p>参考: <a href="https://zhuanlan.zhihu.com/p/149581303" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/149581303</a></p>
+<p>伙伴系统用于管理物理页，主要目的在于维护可用的连续物理空间，避免外部碎片。所有关于内存分配的操作都会与其打交道，buddy是物理内存的管理的门户</p>
+<p>Linux 内核引入了伙伴系统算法（Buddy system），什么意思呢？就是把相同大小的页框块用链表串起来，页框块就像手拉手的好伙伴，也是这个算法名字的由来。</p>
+<p>具体的，所有的空闲页框分组为11个块链表，每个块链表分别包含大小为1，2，4，8，16，32，64，128，256，512和1024个连续页框的页框块。最大可以申请1024个连续页框，对应4MB大小的连续内存。</p>
+<p><img src="/img/noodle_plan/linux/buddy_algo.jpg" alt></p>
+<p>伙伴系统:<br>因为任何正整数都可以由 2^n 的和组成，所以总能找到合适大小的内存块分配出去，减少了外部碎片产生 。</p>
+<p>分配实例:<br>比如：我需要申请4个页框，但是长度为4个连续页框块链表没有空闲的页框块，伙伴系统会从连续8个页框块的链表获取一个，并将其拆分为两个连续4个页框块，取其中一个，另外一个放入连续4个页框块的空闲链表中。释放的时候会检查，释放的这几个页框前后的页框是否空闲，能否组成下一级长度的块。</p>
+<h2 id="Slab分配器"><a href="#Slab分配器" class="headerlink" title="Slab分配器"></a>Slab分配器</h2><p>伙伴系统和slab不是二选一的关系，slab 内存分配器是对伙伴分配算法的补充</p>
+<p>slab的目的在于避免内部碎片。从buddy系统获取的内存至少是一个页，也就是4K，如果仅仅需要8字节的内存，显然巨大的内部碎片无法容忍。</p>
+<p><strong>slab从buddy系统申请空间，将较大的连续内存拆分成一系列较小的内存块。</strong></p>
+<p>用户申请空间时从slab中获取大小最相近的小块内存，这样可以有效减少内部碎片。在slab最大的块为8K，slab中所有块在物理上也是连续的。</p>
+<p>上面说的用于内存分配的slab是通用的slab，主要用于支持kmalloc分配内存。</p>
+<p>slab还有一个作用就是用作对象池，针对经常分配和回收的对象比如task_struct，可以分配一个slab对象池对其优化。这种slab是独立于通用的内存分配slab的，在内核中有很多这样的针对特定对象的slab。</p>
+<p><strong>在内核中想要分配一段连续的内存</strong>，首先向slab系统申请，如果不满足（超过两个页面，也就是8K），直接向buddy系统申请。如果还不满足（超过4M，也就是1024个页面），将无法获取到连续的物理地址。可以通过vmalloc获取虚拟地址空间连续，但物理地址不连续的更大的内存空间。</p>
+<p><img src="/img/noodle_plan/linux/buddy_algo2.png" alt></p>
+<p>malloc是用户态使用的内存分配接口，最终还是向buddy申请内存，因为buddy系统是管理物理内存的门户。申请到大块内存后，再像slab一样对其进行细分维护，根据用户需要返回相应内存的指针。</p>
+<h2 id="fork内存语义"><a href="#fork内存语义" class="headerlink" title="fork内存语义"></a>fork内存语义</h2><ul>
+<li>共享代码段, 子指向父 : 父子进程共享同一代码段, 子进程的页表项指向父进程相同的物理内存页(即数据段/堆段/栈段的各页)</li>
+<li>写时复制(copy-on-write) : 内核会捕获所有父进程或子进程针对这些页面(即数据段/堆段/栈段的各页)的修改企图, 并为将要修改的页面创建拷贝, 将新的页面拷贝分配给遭内核捕获的进程, 从此父/子进程可以分别修改各自的页拷贝, 不再相互影响.</li>
+</ul>
+<p>虽然fork创建的子进程不需要拷贝父进程的物理内存空间, 但是会复制父进程的空间内存页表. 例如对于10GB的redis进程, 需要复制约20MB的内存页表, 因为此fork操作耗时跟进程总内存量息息相关</p>
+<h2 id="零拷贝"><a href="#零拷贝" class="headerlink" title="零拷贝"></a>零拷贝</h2><p>参考 <a href="https://juejin.im/post/6844903949359644680" target="_blank" rel="noopener">https://juejin.im/post/6844903949359644680</a></p>
+<p>“先从简单开始，实现下这个场景：从一个文件中读出数据并将数据传到另一台服务器上？”<br>大概伪代码如下:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">File.read(file, buf, len);</span><br><span class="line">Socket.send(socket, buf, len);</span><br></pre></td></tr></table></figure></p>
+<p>可以看出, 这样效率是很低的. </p>
+<p>下图分别对应传统 I/O 操作的数据读写流程，整个过程涉及 2 次 CPU 拷贝、2 次 DMA 拷贝总共 4 次拷贝，以及 4 次上下文切换，下面简单地阐述一下相关的概念。<br><img src="/img/noodle_plan/linux/traditional_io.jpg" alt></p>
+<ul>
+<li>上下文切换：当用户程序向内核发起系统调用时，CPU 将用户进程从用户态切换到内核态；当系统调用返回时，CPU 将用户进程从内核态切换回用户态。</li>
+<li>CPU拷贝：由 CPU 直接处理数据的传送，数据拷贝时会一直占用 CPU 的资源。</li>
+<li>DMA拷贝：由 CPU 向DMA磁盘控制器下达指令，让 DMA 控制器来处理数据的传送，数据传送完毕再把信息反馈给 CPU，从而减轻了 CPU 资源的占有率。</li>
+</ul>
+<h3 id="传统读操作"><a href="#传统读操作" class="headerlink" title="传统读操作"></a>传统读操作</h3><p>当应用程序执行 read 系统调用读取一块数据的时候，如果这块数据已经存在于用户进程的页内存中，就直接从内存中读取数据；如果数据不存在，则先将数据从磁盘加载数据到内核空间的读缓存（read buffer）中，再从读缓存拷贝到用户进程的页内存中。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">read(file_fd, tmp_buf, len);</span><br></pre></td></tr></table></figure></p>
+<p>复制代码基于传统的 I/O 读取方式，read 系统调用会触发 2 次上下文切换，1 次 DMA 拷贝和 1 次 CPU 拷贝，发起数据读取的流程如下：</p>
+<ol>
+<li>用户进程通过 read() 函数向内核（kernel）发起系统调用，上下文从用户态（user space）切换为内核态（kernel space）。</li>
+<li>CPU利用DMA控制器将数据从主存或硬盘拷贝到内核空间（kernel space）的读缓冲区（read buffer）。</li>
+<li>CPU将读缓冲区（read buffer）中的数据拷贝到用户空间（user space）的用户缓冲区（user buffer）。</li>
+<li>上下文从内核态（kernel space）切换回用户态（user space），read 调用执行返回。</li>
+</ol>
+<h3 id="传统写操作"><a href="#传统写操作" class="headerlink" title="传统写操作"></a>传统写操作</h3><p>当应用程序准备好数据，执行 write 系统调用发送网络数据时，先将数据从用户空间的页缓存拷贝到内核空间的网络缓冲区（socket buffer）中，然后再将写缓存中的数据拷贝到网卡设备完成数据发送。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">write(socket_fd, tmp_buf, len);</span><br></pre></td></tr></table></figure></p>
+<p>复制代码基于传统的 I/O 写入方式，write() 系统调用会触发 2 次上下文切换，1 次 CPU 拷贝和 1 次 DMA 拷贝，用户程序发送网络数据的流程如下：</p>
+<ol>
+<li>用户进程通过 write() 函数向内核（kernel）发起系统调用，上下文从用户态（user space）切换为内核态（kernel space）。</li>
+<li>CPU 将用户缓冲区（user buffer）中的数据拷贝到内核空间（kernel space）的网络缓冲区（socket buffer）。</li>
+<li>CPU 利用 DMA 控制器将数据从网络缓冲区（socket buffer）拷贝到网卡进行数据传输。</li>
+<li>上下文从内核态（kernel space）切换回用户态（user space），write 系统调用执行返回。</li>
+</ol>
+<h3 id="sendfile"><a href="#sendfile" class="headerlink" title="sendfile"></a>sendfile</h3><p>sendfile 系统调用在 Linux 内核版本 2.1 中被引入，目的是简化通过网络在两个通道之间进行的数据传输过程。sendfile 系统调用的引入，不仅减少了 CPU 拷贝的次数，还减少了上下文切换的次数，它的伪代码如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sendfile(socket_fd, file_fd, len);</span><br></pre></td></tr></table></figure></p>
+<p>复制代码通过 sendfile 系统调用，数据可以直接在内核空间内部进行 I/O 传输，从而省去了数据在用户空间和内核空间之间的来回拷贝。与 mmap 内存映射方式不同的是， sendfile 调用中 I/O 数据对用户空间是完全不可见的。也就是说，这是一次完全意义上的数据传输过程。</p>
+<p><img src="/img/noodle_plan/linux/sendfile1.jpg" alt></p>
+<p>基于 sendfile 系统调用的零拷贝方式，整个拷贝过程会发生 2 次上下文切换，1 次 CPU 拷贝和 2 次 DMA 拷贝，用户程序读写数据的流程如下：</p>
+<ol>
+<li>用户进程通过 sendfile() 函数向内核（kernel）发起系统调用，上下文从用户态（user space）切换为内核态（kernel space）。</li>
+<li>CPU 利用 DMA 控制器将数据从主存或硬盘拷贝到内核空间（kernel space）的读缓冲区（read buffer）。</li>
+<li>CPU 将读缓冲区（read buffer）中的数据拷贝到的网络缓冲区（socket buffer）。</li>
+<li>CPU 利用 DMA 控制器将数据从网络缓冲区（socket buffer）拷贝到网卡进行数据传输。</li>
+<li>上下文从内核态（kernel space）切换回用户态（user space），sendfile 系统调用执行返回。</li>
+</ol>
+<p>相比较于 mmap 内存映射的方式，sendfile 少了 2 次上下文切换，但是仍然有 1 次 CPU 拷贝操作。sendfile 存在的问题是用户程序不能对数据进行修改，而只是单纯地完成了一次数据传输过程。</p>
+<p>“这样确实改善了很多，但还没达到零拷贝的要求（还有一次cpu参与的拷贝），还有其它黑技术？”<br>“对的，如果底层网络接口卡支持收集(gather)操作的话，就可以进一步的优化。”<br>“怎么说？”<br>“继续看下一小节”  </p>
+<h3 id="sendfile-DMA-gather-copy"><a href="#sendfile-DMA-gather-copy" class="headerlink" title="sendfile + DMA gather copy"></a>sendfile + DMA gather copy</h3><p>Linux 2.4 版本的内核对 sendfile 系统调用进行修改，如果底层网络接口卡支持收集(gather)操作的话, 为  DMA 拷贝引入了 gather 操作。它将内核空间（kernel space）的读缓冲区（read buffer）中对应的数据描述信息（内存地址、地址偏移量）记录到相应的网络缓冲区（ socket  buffer）中，由 DMA 根据内存地址、地址偏移量将数据批量地从读缓冲区（read buffer）拷贝到网卡设备中，这样就省去了内核空间中仅剩的 1 次 CPU 拷贝操作，sendfile 的伪代码如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sendfile(socket_fd, file_fd, len);</span><br></pre></td></tr></table></figure></p>
+<p>复制代码在硬件的支持下，sendfile 拷贝方式不再从内核缓冲区的数据拷贝到 socket 缓冲区，取而代之的仅仅是缓冲区文件描述符和数据长度的拷贝，这样 DMA 引擎直接利用 gather 操作将页缓存中数据打包发送到网络中即可，本质就是和虚拟内存映射的思路类似。</p>
+<p><img src="/img/noodle_plan/linux/sendfile2.jpg" alt></p>
+<p>基于 sendfile + DMA gather copy 系统调用的零拷贝方式，整个拷贝过程会发生 2 次上下文切换、0 次 CPU 拷贝以及 2 次 DMA 拷贝，用户程序读写数据的流程如下：</p>
+<ol>
+<li>用户进程通过 sendfile() 函数向内核（kernel）发起系统调用，上下文从用户态（user space）切换为内核态（kernel space）。</li>
+<li>CPU 利用 DMA 控制器将数据从主存或硬盘拷贝到内核空间（kernel space）的读缓冲区（read buffer）。</li>
+<li>CPU 把读缓冲区（read buffer）的文件描述符（file descriptor）和数据长度拷贝到网络缓冲区（socket buffer）。</li>
+<li>基于已拷贝的文件描述符（file descriptor）和数据长度，CPU 利用 DMA 控制器的 gather/scatter 操作直接批量地将数据从内核的读缓冲区（read buffer）拷贝到网卡进行数据传输。</li>
+<li>上下文从内核态（kernel space）切换回用户态（user space），sendfile 系统调用执行返回。</li>
+</ol>
+<p>sendfile + DMA gather copy 拷贝方式同样存在用户程序不能对数据进行修改的问题，而且本身需要硬件的支持，它只适用于将数据从文件拷贝到 socket 套接字上的传输过程。</p>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Self-cultivation/" rel="tag"><i class="fa fa-tag"></i> Self-cultivation</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2021/03/08/self_cultivation_linux_process/" rel="next" title="服务器开发自我修养专栏-Linux进程管理">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    服务器开发自我修养专栏-Linux进程管理
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2021/03/13/self_cultivation_cpp/" rel="prev" title="服务器开发自我修养专栏-CPP要点">
+                <p class="post-nav-pre-next-title">
+                    服务器开发自我修养专栏-CPP要点
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux内存管理"><span class="nav-number">1.</span> <span class="nav-text">Linux内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要虚拟内存"><span class="nav-number">1.1.</span> <span class="nav-text">为什么需要虚拟内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MMU工作原理"><span class="nav-number">1.2.</span> <span class="nav-text">MMU工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主机字节序"><span class="nav-number">1.3.</span> <span class="nav-text">主机字节序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络字节序"><span class="nav-number">1.4.</span> <span class="nav-text">网络字节序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux虚拟地址空间如何分布"><span class="nav-number">1.5.</span> <span class="nav-text">Linux虚拟地址空间如何分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#brk函数"><span class="nav-number">1.6.</span> <span class="nav-text">brk函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mmap"><span class="nav-number">1.7.</span> <span class="nav-text">mmap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#malloc和free原理"><span class="nav-number">1.8.</span> <span class="nav-text">malloc和free原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vmalloc和kmalloc和malloc的区别"><span class="nav-number">1.9.</span> <span class="nav-text">vmalloc和kmalloc和malloc的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Buddy（伙伴）分配算法"><span class="nav-number">1.10.</span> <span class="nav-text">Buddy（伙伴）分配算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Slab分配器"><span class="nav-number">1.11.</span> <span class="nav-text">Slab分配器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fork内存语义"><span class="nav-number">1.12.</span> <span class="nav-text">fork内存语义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#零拷贝"><span class="nav-number">1.13.</span> <span class="nav-text">零拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传统读操作"><span class="nav-number">1.13.1.</span> <span class="nav-text">传统读操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传统写操作"><span class="nav-number">1.13.2.</span> <span class="nav-text">传统写操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sendfile"><span class="nav-number">1.13.3.</span> <span class="nav-text">sendfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sendfile-DMA-gather-copy"><span class="nav-number">1.13.4.</span> <span class="nav-text">sendfile + DMA gather copy</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

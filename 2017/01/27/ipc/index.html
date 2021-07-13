@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="noodle,IPC,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="概绍IPC 即 Inter Process Communication, 大概有以下几种方式(排序已打乱) :    6.共享内存( shared memory, 非常实用, 后文将说一下比较常用的两种方式, 分别是 mmap 和 System V共享内存  ) ：共享内存就是映射一段能被其他进程所访问的内存，这段共享内存由一个进程创建，但多个进程都可以访问。共享内存是最快的 IPC 方式，它是针">
+<meta name="keywords" content="noodle,IPC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进程间的通信与同步">
+<meta property="og:url" content="https://hulinhong.com/2017/01/27/ipc/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="概绍IPC 即 Inter Process Communication, 大概有以下几种方式(排序已打乱) :    6.共享内存( shared memory, 非常实用, 后文将说一下比较常用的两种方式, 分别是 mmap 和 System V共享内存  ) ：共享内存就是映射一段能被其他进程所访问的内存，这段共享内存由一个进程创建，但多个进程都可以访问。共享内存是最快的 IPC 方式，它是针">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hulinhong.com/img/ipc/mmap.jpg">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.058Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="进程间的通信与同步">
+<meta name="twitter:description" content="概绍IPC 即 Inter Process Communication, 大概有以下几种方式(排序已打乱) :    6.共享内存( shared memory, 非常实用, 后文将说一下比较常用的两种方式, 分别是 mmap 和 System V共享内存  ) ：共享内存就是映射一段能被其他进程所访问的内存，这段共享内存由一个进程创建，但多个进程都可以访问。共享内存是最快的 IPC 方式，它是针">
+<meta name="twitter:image" content="https://hulinhong.com/img/ipc/mmap.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>进程间的通信与同步 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/01/27/ipc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">进程间的通信与同步</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-27T21:01:59+00:00">
+                2017-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/noodle/" rel="tag"><i class="fa fa-tag"></i> noodle</a>
+              
+                <a href="/tags/IPC/" rel="tag"><i class="fa fa-tag"></i> IPC</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/26/state_synchronization/" rel="next" title="网络物理模拟六之状态同步">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  网络物理模拟六之状态同步
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/08/多级指针与多维数组详解/" rel="prev" title="多级指针与多维数组详解">
+              <p class="post-nav-pre-next-title">
+                  多级指针与多维数组详解
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="概绍"><a href="#概绍" class="headerlink" title="概绍"></a>概绍</h1><p>IPC 即 <strong>Inter Process Communication</strong>, 大概有以下几种方式(排序已打乱) :  </p>
+<ul>
+<li><p>6.<strong>共享内存</strong>( shared memory, 非常实用, 后文将说一下比较常用的两种方式, 分别是 <a href="#mmap">mmap</a> 和 <a href="#System-V共享内存">System V共享内存</a>  ) ：<br>共享内存就是映射一段能被其他进程所访问的内存，这段共享内存由一个进程创建，但多个进程都可以访问。共享内存是最快的 IPC 方式，它是针对其他进程间通信方式运行效率低而专门设计的。它往往与其他通信机制，如信号量，配合使用，来实现进程间的同步和通信。</p>
+</li>
+<li><p>3.<strong>信号量</strong>( semophore, 主要用来进程/线程间同步, 后文将会说 <a href="#System-V信号量">System V信号量</a>) ：<br>信号量是一个计数器，可以用来控制多个进程对共享资源的访问。它常作为一种锁机制，防止某进程正在访问共享资源时，其他进程也访问该资源。因此，主要作为进程间以及同一进程内不同线程之间的同步手段。</p>
+</li>
+<li><p>7.套接字( socket ) ：<br>套接字也是一种进程间通信机制，与其他通信机制不同的是，它可用于不同机器间的进程通信。</p>
+</li>
+<li><p>1.匿名管道( 英文为pipe, 这种IPC很原始 )：<br>匿名管道是一种半双工的通信方式，通常是在父子进程间使用。</p>
+</li>
+<li><p>2.命名管道 ( named pipe或FIFO, 这种IPC很原始 ) ：<br>命名管道也是半双工的通信方式，但是它允许无亲缘关系进程间的通信。</p>
+</li>
+<li><p>4.消息队列( message queue, 正在被淘汰 ) ：<br>消息队列是消息的链表，存放在内核中并由消息队列标识符标识。消息队列克服了信号传递信息少、管道只能承载无格式字节流以及缓冲区大小受限等缺点。</p>
+</li>
+<li><p>5.信号 ( sinal ) ：<br>信号是一种比较复杂的通信方式，用于通知接收进程某个事件已经发生。</p>
+</li>
+</ul>
+<h1 id="共享内存概绍"><a href="#共享内存概绍" class="headerlink" title="共享内存概绍"></a>共享内存概绍</h1><p>采用共享内存通信的一个显而易见的好处是效率高，因为进程可以直接读写内存，而不需要任何数据的拷贝。对于像管道和消息队列等通信方式，则需要在内核和用户空间进行四次的数据拷贝，而共享内存则只拷贝两次数据 [1]：一次从输入文件到共享内存区，另一次从共享内存区到输出文件。实际上，进程之间在共享内存时，并不总是读写少量数据后就解除映射，有新的通信时，再重新建立共享内存区域。而是保持共享区域，直到通信完毕为止，这样，数据内容一直保存在共享内存中，并没有写回文件。共享内存中的内容往往是在解除映射时才写回文件的。因此，采用共享内存的通信方式效率是非常高的。</p>
+<p>Linux 的 2.2.x 内核支持多种共享内存方式，如 mmap() 系统调用，Posix 共享内存，以及系统 V 共享内存。linux 发行版本如 Redhat 8.0 支持 mmap() 系统调用及系统 V 共享内存，但还没实现 Posix 共享内存，本文将主要介绍 mmap() 系统调用及系统 V 共享内存 API 的原理及应用。</p>
+<h2 id="内核怎样保证各个进程寻址到同一个共享内存区域的内存页面"><a href="#内核怎样保证各个进程寻址到同一个共享内存区域的内存页面" class="headerlink" title="内核怎样保证各个进程寻址到同一个共享内存区域的内存页面"></a>内核怎样保证各个进程寻址到同一个共享内存区域的内存页面</h2><ul>
+<li><p>1、page cache 及 swap cache 中页面的区分：一个被访问文件的物理页面都驻留在 page cache 或 swap cache 中，一个页面的所有信息由 struct page 来描述。struct page 中有一个域为指针 mapping ，它指向一个 struct address_space 类型结构。page cache 或 swap cache 中的所有页面就是根据 address_space 结构以及一个偏移量来区分的。</p>
+</li>
+<li><p>2、文件与 address_space 结构的对应：一个具体的文件在打开后，内核会在内存中为之建立一个 struct inode 结构，其中的 i_mapping 域指向一个 address_space 结构。这样，一个文件就对应一个 address_space 结构，一个 address_space 与一个偏移量能够确定一个 page cache 或 swap cache 中的一个页面。因此，当要寻址某个数据时，很容易根据给定的文件及数据在文件内的偏移量而找到相应的页面。</p>
+</li>
+<li><p>3、进程调用 mmap() 时，只是在进程空间内新增了一块相应大小的缓冲区，并设置了相应的访问标识，但并没有建立进程空间到物理页面的映射。因此，第一次访问该空间时，会引发一个缺页异常。</p>
+</li>
+<li><p>4、对于共享内存映射情况，缺页异常处理程序首先在 swap cache 中寻找目标页（符合 address_space 以及偏移量的物理页），如果找到，则直接返回地址；如果没有找到，则判断该页是否在交换区 (swap area)，如果在，则执行一个换入操作；如果上述两种情况都不满足，处理程序将分配新的物理页面，并把它插入到 page cache 中。进程最终将更新进程页表。<br>注：对于映射普通文件情况（非共享映射），缺页异常处理程序首先会在 page cache 中根据 address_space 以及数据偏移量寻找相应的页面。如果没有找到，则说明文件数据还没有读入内存，处理程序会从磁盘读入相应的页面，并返回相应地址，同时，进程页表也会更新。</p>
+</li>
+<li><p>5、所有进程在映射同一个共享内存区域时，情况都一样，在建立线性地址与物理地址之间的映射之后，不论进程各自的返回地址如何，实际访问的必然是同一个共享内存区域对应的物理页面。<br>注：一个共享内存区域可以看作是特殊文件系统 shm 中的一个文件，shm 的安装点在交换区上。</p>
+</li>
+</ul>
+<p>上面涉及到了一些数据结构，围绕数据结构理解问题会容易一些。</p>
+<h1 id="共享内存的优缺点"><a href="#共享内存的优缺点" class="headerlink" title="共享内存的优缺点"></a>共享内存的优缺点</h1><p>使用共享内存的优缺点如下所述 。</p>
+<ul>
+<li><p>优点：使用共享内存进行进程间的通信非常方便，而且函数的接口也简单，数据的<br>共享还使进程间的数据不用传送，而是直接访问内存，也加快了程序的效率。 同时，它也不<br>像无名管道那样要求通信的进程有一定的父子关系 。</p>
+</li>
+<li><p>缺点：共享 内存没有提供同步的机制，这使得在使用共享 内存进行进程间通信时，<br>往往要借助其他的手段来进行进程间的同步工作 。</p>
+</li>
+</ul>
+<h1 id="mmap"><a href="#mmap" class="headerlink" title="mmap"></a>mmap</h1><p>mmap() 系统调用使得进程之间通过映射同一个普通文件实现共享内存。普通文件被映射到进程地址空间后，进程可以向访问普通内存一样对文件进行访问，不必再调用 read()，write（）等操作。</p>
+<p>注：实际上，mmap() 系统调用并不是完全为了用于共享内存而设计的。它本身提供了不同于一般对普通文件的访问方式，进程可以像读写内存一样对普通文件的操作。而 Posix 或系统 V 的共享内存 IPC 则纯粹用于共享目的，当然 mmap() 实现共享内存也是其主要应用之一。</p>
+<h2 id="mmap-系统调用形式如下"><a href="#mmap-系统调用形式如下" class="headerlink" title="mmap() 系统调用形式如下"></a>mmap() 系统调用形式如下</h2><p><code>void* mmap (void * addr , size_t len , int prot , int flags , int fd , off_t offset)</code></p>
+<ul>
+<li>参数 fd 为即将映射到进程空间的文件描述字，一般由 open() 返回，同时，fd 可以指定为 - 1，此时须指定 flags 参数中的 MAP_ANON，表明进行的是匿名映射（不涉及具体的文件名，避免了文件的创建及打开，很显然只能用于具有亲缘关系的进程间通信）。</li>
+<li>len 是映射到调用进程地址空间的字节数，它从被映射文件开头 offset 个字节开始算起。</li>
+<li>prot 参数指定共享内存的访问权限。<br>可取如下几个值的或：PROT_READ（可读） , PROT_WRITE （可写）, PROT_EXEC （可执行）, PROT_NONE（不可访问）。</li>
+<li>flags 由以下几个常值指定：MAP_SHARED , MAP_PRIVATE , MAP_FIXED，其中，MAP_SHARED , MAP_PRIVATE 必选其一，而 MAP_FIXED 则不推荐使用。</li>
+<li>offset 参数一般设为 0，表示从文件头开始映射。</li>
+<li>参数 addr 指定文件应被映射到进程空间的起始地址，一般被指定一个空指针，此时选择起始地址的任务留给内核来完成。</li>
+</ul>
+<p>函数的返回值为最后文件映射到进程空间的地址，进程可直接操作起始地址为该值的有效地址。<br>这里不再详细介绍 mmap() 的参数，读者可参考 mmap() 手册页获得进一步的信息。</p>
+<h2 id="系统调用-mmap-用于共享内存的两种方式"><a href="#系统调用-mmap-用于共享内存的两种方式" class="headerlink" title="系统调用 mmap() 用于共享内存的两种方式"></a>系统调用 mmap() 用于共享内存的两种方式</h2><ul>
+<li><p>（1）使用普通文件提供的内存映射：适用于任何进程之间； 此时，需要打开或创建一个文件，然后再调用 mmap()；典型调用代码如下：</p>
+<p>  <code>fd=open(name, flag, mode);</code></p>
+<p>  ptr=mmap(NULL, len , PROT_READ|PROT_WRITE, MAP_SHARED , fd , 0); 通过 mmap() 实现共享内存的通信方式有许多特点和要注意的地方，我们将在范例中进行具体说明。</p>
+</li>
+<li><p>（2）使用特殊文件提供匿名内存映射：适用于具有亲缘关系的进程之间； 由于父子进程特殊的亲缘关系，在父进程中先调用 mmap()，然后调用 fork()。</p>
+<p>  那么在调用 fork() 之后，子进程继承父进程匿名映射后的地址空间，同样也继承 mmap() 返回的地址，这样，父子进程就可以通过映射区域进行通信了。<br>  注意，这里不是一般的继承关系。<br>  一般来说，子进程单独维护从父进程继承下来的一些变量。<br>  而 mmap() 返回的地址，却由父子进程共同维护。<br>  对于具有亲缘关系的进程实现共享内存最好的方式应该是采用匿名内存映射的方式。<br>  此时，不必指定具体的文件，只要设置相应的标志即可，参见范例 2。</p>
+</li>
+</ul>
+<h2 id="系统调用-munmap"><a href="#系统调用-munmap" class="headerlink" title="系统调用 munmap()"></a>系统调用 munmap()</h2><p><code>int munmap(void * addr, size_t len)</code><br>该调用在进程地址空间中解除一个映射关系，addr 是调用 mmap() 时返回的地址，len 是映射区的大小。当映射关系解除后，对原来映射地址的访问将导致段错误发生。</p>
+<h2 id="系统调用-msync"><a href="#系统调用-msync" class="headerlink" title="系统调用 msync()"></a>系统调用 msync()</h2><p><code>int msync (void * addr , size_t len, int flags)</code><br>一般说来，进程在映射空间的对共享内容的改变并不直接写回到磁盘文件中，往往在调用 munmap（）后才执行该操作。可以通过调用 msync() 实现磁盘上文件内容与共享内存区的内容一致。</p>
+<h2 id="mmap-范例"><a href="#mmap-范例" class="headerlink" title="mmap() 范例"></a>mmap() 范例</h2><p>下面将给出使用 mmap() 的两个范例：</p>
+<ul>
+<li>范例 1 给出两个进程通过映射普通文件实现共享内存通信；</li>
+<li>范例 2 给出父子进程通过匿名映射实现共享内存。</li>
+</ul>
+<p>系统调用 mmap() 有许多有趣的地方，下面是通过 mmap（）映射普通文件实现进程间的通信的范例，我们通过该范例来说明 mmap() 实现共享内存的特点及注意事项。</p>
+<h3 id="范例1两个进程通过映射普通文件实现共享内存通信"><a href="#范例1两个进程通过映射普通文件实现共享内存通信" class="headerlink" title="范例1两个进程通过映射普通文件实现共享内存通信"></a>范例1两个进程通过映射普通文件实现共享内存通信</h3><p>范例1 包含两个子程序：map_normalfile1.c 及 map_normalfile2.c。<br>编译两个程序，可执行文件分别为 map_normalfile1 及 map_normalfile2。<br>两个程序通过命令行参数指定同一个文件来实现共享内存方式的进程间通信。</p>
+<p>map_normalfile2 试图打开命令行参数指定的一个普通文件，把该文件映射到进程的地址空间，并对映射后的地址空间进行写操作。<br>map_normalfile1 把命令行参数指定的文件映射到进程地址空间，然后对映射后的地址空间执行读操作。<br>这样，两个进程通过命令行参数指定同一个文件来实现共享内存方式的进程间通信。</p>
+<p>下面是两个程序代码：</p>
+<figure class="highlight c"><figcaption><span>map_normalfile1.c</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*-------------map_normalfile1.c-----------*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">char</span> name[<span class="number">4</span>];</span><br><span class="line">  <span class="keyword">int</span>  age;</span><br><span class="line">&#125;people;</span><br><span class="line"></span><br><span class="line">main(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv) <span class="comment">// map a normal file as shared mem:</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> fd,i;</span><br><span class="line">    people *p_map;</span><br><span class="line">    <span class="keyword">char</span> temp;</span><br><span class="line">    </span><br><span class="line">    fd=open(argv[<span class="number">1</span>],O_CREAT|O_RDWR|O_TRUNC,<span class="number">00777</span>);</span><br><span class="line">    lseek(fd,<span class="keyword">sizeof</span>(people)*<span class="number">5</span><span class="number">-1</span>,SEEK_SET);</span><br><span class="line">    write(fd,<span class="string">""</span>,<span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    p_map = (people*) mmap( <span class="literal">NULL</span>,<span class="keyword">sizeof</span>(people)*<span class="number">10</span>,PROT_READ|PROT_WRITE,</span><br><span class="line">          MAP_SHARED,fd,<span class="number">0</span> );</span><br><span class="line">    close( fd );</span><br><span class="line">    temp = <span class="string">'a'</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        temp += <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">memcpy</span>( ( *(p_map+i) ).name, &amp;temp,<span class="number">2</span> );</span><br><span class="line">        ( *(p_map+i) ).age = <span class="number">20</span>+i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">" initialize over \n "</span>);</span><br><span class="line">    sleep(<span class="number">10</span>);</span><br><span class="line">    munmap( p_map, <span class="keyword">sizeof</span>(people)*<span class="number">10</span> );</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">"umap ok \n"</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><figcaption><span>map_normalfile2.c</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*-------------map_normalfile2.c-----------*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> name[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">int</span>  age;</span><br><span class="line">&#125;people;</span><br><span class="line"></span><br><span class="line">main(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)  <span class="comment">// map a normal file as shared mem:</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> fd,i;</span><br><span class="line">    people *p_map;</span><br><span class="line">    fd=open( argv[<span class="number">1</span>],O_CREAT|O_RDWR,<span class="number">00777</span> );</span><br><span class="line">    p_map = (people*)mmap(<span class="literal">NULL</span>,<span class="keyword">sizeof</span>(people)*<span class="number">10</span>,PROT_READ|PROT_WRITE,</span><br><span class="line">        MAP_SHARED,fd,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>;i&lt;<span class="number">10</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>( <span class="string">"name: %s age %d;\n"</span>,(*(p_map+i)).name, (*(p_map+i)).age );</span><br><span class="line">    &#125;</span><br><span class="line">    munmap( p_map,<span class="keyword">sizeof</span>(people)*<span class="number">10</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>map_normalfile1.c 首先定义了一个 people 数据结构，（在这里采用数据结构的方式是因为，共享内存区的数据往往是有固定格式的，这由通信的各个进程决定，采用结构的方式有普遍代表性）。map_normfile1 首先打开或创建一个文件，并把文件的长度设置为 5 个 people 结构大小。然后从 mmap() 的返回地址开始，设置了 10 个 people 结构。然后，进程睡眠 10 秒钟，等待其他进程映射同一个文件，最后解除映射。</p>
+<p>map_normfile2.c 只是简单的映射一个文件，并以 people 数据结构的格式从 mmap() 返回的地址处读取 10 个 people 结构，并输出读取的值，然后解除映射。</p>
+<p>分别把两个程序编译成可执行文件 map_normalfile1 和 map_normalfile2 后，在一个终端上先运行./map_normalfile2 /tmp/test_shm，程序输出结果如下：</p>
+<pre><code>initialize over
+umap ok
+</code></pre><p>在 map_normalfile1 输出 initialize over 之后，输出 umap ok 之前，在另一个终端上运行 map_normalfile2 /tmp/test_shm，将会产生如下输出 (为了节省空间，输出结果为稍作整理后的结果)：</p>
+<pre><code>name: b age 20;
+name: c age 21;
+name: d age 22;
+name: e age 23;
+name: f age 24;
+name: g age 25;
+name: h age 26;
+name: I age 27;
+name: j age 28;
+name: k age 29;
+</code></pre><p>在 map_normalfile1 输出 umap ok 后，运行 map_normalfile2 则输出如下结果：</p>
+<pre><code>name: b age 20;
+name: c age 21;
+name: d age 22;
+name: e age 23;
+name: f age 24;
+name:   age 0;
+name:   age 0;
+name:   age 0;
+name:   age 0;
+name:   age 0;
+</code></pre><p><strong>从程序的运行结果中可以得出的结论</strong></p>
+<ul>
+<li><p>1、 最终被映射文件的内容的长度不会超过文件本身的初始大小，即映射不能改变文件的大小；</p>
+</li>
+<li><p>2、 可以用于进程通信的有效地址空间大小大体上受限于被映射文件的大小，但不完全受限于文件大小。打开文件被截短为 5 个 people 结构大小，而在 map_normalfile1 中初始化了 10 个 people 数据结构，在恰当时候（map_normalfile1 输出 initialize over 之后，输出 umap ok 之前）调用 map_normalfile2 会发现 map_normalfile2 将输出全部 10 个 people 结构的值，<a href="#理解页式管理机制">后面</a>将给出详细讨论。</p>
+<pre><code>注：在 linux 中，内存的保护是以页为基本单位的，即使被映射文件只有一个字节大小，
+内核也会为映射分配一个页面大小的内存。当被映射文件小于一个页面大小时，
+进程可以对从 mmap() 返回地址开始的一个页面大小进行访问，
+而不会出错；但是，
+如果对一个页面以外的地址空间进行访问，
+则导致错误发生，
+后面将进一步描述。因此，
+可用于进程间通信的有效地址空间大小不会超过文件大小及一个页面大小的和。
+</code></pre></li>
+<li><p>3、 文件一旦被映射后，调用 mmap() 的进程对返回地址的访问是对某一内存区域的访问，暂时脱离了磁盘上文件的影响。所有对 mmap() 返回地址空间的操作只在内存中有意义，只有在调用了 munmap() 后或者 msync() 时，才把内存中的相应内容写回磁盘文件，所写内容仍然不能超过文件的大小。</p>
+</li>
+</ul>
+<h3 id="范例2父子进程通过匿名映射实现共享内存并用semaphore同步"><a href="#范例2父子进程通过匿名映射实现共享内存并用semaphore同步" class="headerlink" title="范例2父子进程通过匿名映射实现共享内存并用semaphore同步"></a>范例2父子进程通过匿名映射实现共享内存并用semaphore同步</h3><p>主要介绍下在多进程中使用信号量semaphore的方法。在上一文中，我们已经知道semaphore和mutex对临界区访问控制的一个最主要区别就是semaphore可以跨进程使用，而mutex只能在一个进程中使用。我们再来看下sem_init的原型，熟悉决定进程共享或者线程共享的方法：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sem_init</span><span class="params">(<span class="keyword">sem_t</span> *sem, <span class="keyword">int</span> pshared, <span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>通过设置pshared的值来控制信号量是属于进程间共享还是线程间共享，若pshared为0表明是多线程共享，否则就是多进程间共享。</p>
+<p>接下来我们实验思路是：创建两个进程，一个进程负责读取用户在界面输入的数据，然后存入本地的test.txt文件；另一个进程负责读取该文件，然后在标准输出上显示读取的内容。</p>
+<p>为此，我们需要创建两个个支持两个进程访问的信号量sem1和sem2，读文件时需要获取sem1信号，读取结束后释放sem2信号；写文件需要获取sem2信号，写文件结束后方式sem1信号。</p>
+<p>sem2的初始值为1，sem1的初始值为0，以保证先写入再进行读取，源代码如下，稍后挑关键内容进行解释：</p>
+<figure class="highlight c"><figcaption><span>mmap_fork_sync.c</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUF_SIZE 30</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">readfile</span><span class="params">(<span class="keyword">sem_t</span>* psem1,<span class="keyword">sem_t</span>* psem2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    FILE* fp;</span><br><span class="line">    <span class="keyword">char</span> buf[BUF_SIZE];</span><br><span class="line">    <span class="keyword">int</span> str_len,str_seek=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        sem_wait(psem1);</span><br><span class="line">        fp=fopen(<span class="string">"data.txt"</span>,<span class="string">"r+"</span>);</span><br><span class="line">        <span class="keyword">if</span>(fp==<span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">        <span class="built_in">memset</span>(buf,<span class="number">0</span>,<span class="keyword">sizeof</span>(BUF_SIZE));</span><br><span class="line">        fseek(fp,str_seek,SEEK_SET);</span><br><span class="line">        str_len=fread(buf,<span class="keyword">sizeof</span>(<span class="keyword">char</span>),BUF_SIZE<span class="number">-1</span>,fp);</span><br><span class="line">        buf[str_len]=<span class="number">0</span>;</span><br><span class="line">        str_seek+=str_len;</span><br><span class="line">        <span class="built_in">fputs</span>(<span class="string">"output:"</span>,<span class="built_in">stdout</span>);</span><br><span class="line">        <span class="built_in">puts</span>(buf);</span><br><span class="line">        fclose(fp);</span><br><span class="line">        sem_post(psem2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writefile</span><span class="params">(<span class="keyword">sem_t</span>* psem1,<span class="keyword">sem_t</span>* psem2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        FILE* fp;</span><br><span class="line">        <span class="keyword">char</span> buf[BUF_SIZE];</span><br><span class="line">        <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            sem_wait(psem2);</span><br><span class="line">            fp=fopen(<span class="string">"data.txt"</span>,<span class="string">"a"</span>);</span><br><span class="line">            <span class="keyword">if</span>(fp==<span class="literal">NULL</span>)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">            <span class="built_in">memset</span>(buf,<span class="number">0</span>,BUF_SIZE);</span><br><span class="line">            <span class="built_in">fputs</span>(<span class="string">"Input:"</span>,<span class="built_in">stdout</span>);</span><br><span class="line">            fgets(buf,BUF_SIZE,<span class="built_in">stdin</span>);</span><br><span class="line">            fwrite(buf,<span class="keyword">sizeof</span>(<span class="keyword">char</span>),<span class="built_in">strlen</span>(buf),fp);</span><br><span class="line">            fclose(fp);</span><br><span class="line">            sem_post(psem1);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> pid;</span><br><span class="line">    <span class="keyword">int</span> fd1,fd2;</span><br><span class="line">    <span class="keyword">void</span>* pv;</span><br><span class="line">    <span class="keyword">sem_t</span>* psem1;</span><br><span class="line">    <span class="keyword">sem_t</span>* psem2;</span><br><span class="line">    fd1=open(<span class="string">"data1"</span>,O_CREAT|O_RDWR|O_TRUNC,<span class="number">0666</span>);</span><br><span class="line">    fd2=open(<span class="string">"data2"</span>,O_CREAT|O_RDWR|O_TRUNC,<span class="number">0666</span>);\</span><br><span class="line">    ftruncate(fd1,<span class="number">8192</span>);</span><br><span class="line">    ftruncate(fd2,<span class="number">8192</span>);</span><br><span class="line">    <span class="comment">//lseek(fd,5000,SEEK_SET);</span></span><br><span class="line">    psem1=(<span class="keyword">sem_t</span>*)mmap(<span class="literal">NULL</span>,<span class="keyword">sizeof</span>(<span class="keyword">sem_t</span>),PROT_READ|PROT_WRITE,MAP_SHARED,fd1,<span class="number">0</span>);</span><br><span class="line">    psem2=(<span class="keyword">sem_t</span>*)mmap(<span class="literal">NULL</span>,<span class="keyword">sizeof</span>(<span class="keyword">sem_t</span>),PROT_READ|PROT_WRITE,MAP_SHARED,fd2,<span class="number">0</span>);</span><br><span class="line">    sem_init(psem1,<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    sem_init(psem2,<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">    pid=fork();</span><br><span class="line">    <span class="keyword">if</span>(pid==<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">"进入子进程"</span>);</span><br><span class="line">        writefile(psem1,psem2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">"进入父进程"</span>);</span><br><span class="line">        readfile(psem1,psem2);</span><br><span class="line">    &#125;</span><br><span class="line">    sem_destroy(psem1);</span><br><span class="line">    sem_destroy(psem2);</span><br><span class="line">    munmap(psem1,<span class="keyword">sizeof</span>(<span class="keyword">sem_t</span>));</span><br><span class="line">    munmap(psem2,<span class="keyword">sizeof</span>(<span class="keyword">sem_t</span>));</span><br><span class="line">    close(fd1);</span><br><span class="line">    close(fd2);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了能够跨进程使用 semaphore ，我们引入了跨进程的技术mmap,第61、第62行分别打开了两个mmap需要映射的文件，和我们平时用的open函数不同，这里面为程序赋予了该文件的666权限。这点很重要，因为mmap需要映射的本地文件必须明确赋予其可读写的权限，否则无法通信。</p>
+<ul>
+<li>第63行和第64行分别设置两个本地映射文件的大小，以保证有充分的空间在mmap中映射并容纳我们定义的sem_t变量。这点也很重要，如果空间不够会造成总线错误。</li>
+<li>第66行和第67行分别利用mmap在共享内存中映射了两个sem_t类型的指针，这就是我们需要sem_init的信号量。</li>
+<li>第68、69行开始初始化信号量。</li>
+<li>70行fork了两个进程，在子进程中我们进行写操作，在主进程中我们进行读操作。读写操作的代码比较简单，在这里不再多说。</li>
+<li>第81到86行在使用完信号量后分别是销毁信号量、释放共享内存、关闭文件操作符。</li>
+</ul>
+<p>程序写到这里基本上完成了这个实验，可以考察程序的输出结果，<br>编译命令 : <code>gcc mmap_fork_sync.c -o mmap_fork_sync -pthread</code> , 体会父子进程匿名共享内存：</p>
+<pre><code>b@b-VirtualBox:~/tc/mmap_test$ ./mmap_fork_sync
+进入父进程
+进入子进程
+Input:4
+output:4
+
+Input:5
+output:5
+
+Input:6
+output:6
+
+Input:7
+output:7
+
+Input:7
+output:7
+
+...
+</code></pre><p>我们可以顺便可以简单总结下在多进程中使用信号量的步骤：</p>
+<p>（1）open()用于进行mmap映射的文件，得到文件操作符fd；<br>（2）把映射文件用ftruncate或者fseek重新设置大小，以保证有足够的空间容纳我们需要传递的sem_t变量；<br>（3）利用mmap函数在共享内存中创建sen_t类型的指针。<br>（4）用sem_init()函数初始化第（3）步中创建的指针，也就得到了我们需要的信号量。<br>（5）用sem_wait()和sem_post()函数进行信号量的等待和释放。<br>（6）用sem_destroy()销毁信号量。<br>（7）用munmap()释放共享内存以及用close()函数关闭文件操作符。</p>
+<h2 id="理解页式管理机制"><a href="#理解页式管理机制" class="headerlink" title="理解页式管理机制"></a>理解页式管理机制</h2><p>前面对范例运行结构的讨论中已经提到，linux 采用的是页式管理机制。对于用 mmap() 映射普通文件来说，进程会在自己的地址空间新增一块空间，空间大小由 mmap() 的 len 参数指定，注意，进程并不一定能够对全部新增空间都能进行有效访问。进程能够访问的有效地址大小取决于文件被映射部分的大小。简单的说，能够容纳文件被映射部分大小的最少页面个数决定了进程从 mmap() 返回的地址开始，能够有效访问的地址空间大小。超过这个空间大小，内核会根据超过的严重程度返回发送不同的信号给进程。可用如下图示说明：</p>
+<p><img src="/img/ipc/mmap.jpg" alt></p>
+<p>注意：文件被映射部分而不是整个文件决定了进程能够访问的空间大小，另外，如果指定文件的偏移部分，一定要注意为页面大小的整数倍。下面是对进程映射地址空间的访问范例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> name[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">int</span>  age;</span><br><span class="line">&#125;people;</span><br><span class="line"></span><br><span class="line">main(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> fd,i;</span><br><span class="line">    <span class="keyword">int</span> pagesize,offset;</span><br><span class="line">    people *p_map;</span><br><span class="line">     </span><br><span class="line">    pagesize = sysconf(_SC_PAGESIZE);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"pagesize is %d\n"</span>,pagesize);</span><br><span class="line">    fd = open(argv[<span class="number">1</span>],O_CREAT|O_RDWR|O_TRUNC,<span class="number">00777</span>);</span><br><span class="line">    lseek(fd,pagesize*<span class="number">2</span><span class="number">-100</span>,SEEK_SET);</span><br><span class="line">    write(fd,<span class="string">""</span>,<span class="number">1</span>);</span><br><span class="line">    offset = <span class="number">0</span>; <span class="comment">//此处offset = 0编译成版本1；offset = pagesize编译成版本2</span></span><br><span class="line">    p_map = (people*)mmap(<span class="literal">NULL</span>,pagesize*<span class="number">3</span>,PROT_READ|PROT_WRITE,MAP_SHARED,fd,offset);</span><br><span class="line">    close(fd);</span><br><span class="line">     </span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>; i&lt;<span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        (*(p_map+pagesize/<span class="keyword">sizeof</span>(people)*i<span class="number">-2</span>)).age = <span class="number">100</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"access page %d over\n"</span>,i);</span><br><span class="line">        (*(p_map+pagesize/<span class="keyword">sizeof</span>(people)*i<span class="number">-1</span>)).age = <span class="number">100</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"access page %d edge over, now begin to access page %d\n"</span>,i, i+<span class="number">1</span>);</span><br><span class="line">        (*(p_map+pagesize/<span class="keyword">sizeof</span>(people)*i)).age = <span class="number">100</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"access page %d over\n"</span>,i+<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    munmap(p_map,<span class="keyword">sizeof</span>(people)*<span class="number">10</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如程序中所注释的那样，把程序编译成两个版本，两个版本主要体现在文件被映射部分的大小不同。文件的大小介于一个页面与两个页面之间（大小为：pagesize<em>2-99），版本 1 的被映射部分是整个文件，版本 2 的文件被映射部分是文件大小减去一个页面后的剩余部分，不到一个页面大小 (大小为：pagesize-99)。程序中试图访问每一个页面边界，两个版本都试图在进程空间中映射 pagesize</em>3 的字节数。</p>
+<p>版本 1 的输出结果如下：</p>
+<pre><code>pagesize is 4096
+access page 1 over
+access page 1 edge over, now begin to access page 2
+access page 2 over
+access page 2 over
+access page 2 edge over, now begin to access page 3
+Bus error       //被映射文件在进程空间中覆盖了两个页面，此时，进程试图访问第三个页面
+</code></pre><p>版本 2 的输出结果如下：</p>
+<pre><code>pagesize is 4096
+access page 1 over
+access page 1 edge over, now begin to access page 2
+Bus error       //被映射文件在进程空间中覆盖了一个页面，此时，进程试图访问第二个页面
+</code></pre><p>结论：采用系统调用 mmap() 实现进程间通信是很方便的，在应用层上接口非常简洁。内部实现机制区涉及到了 linux 存储管理以及文件系统等方面的内容，可以参考一下相关重要数据结构来加深理解。在本专题的后面部分，将介绍系统 v 共享内存的实现。</p>
+<h1 id="System-V共享内存"><a href="#System-V共享内存" class="headerlink" title="System V共享内存"></a>System V共享内存</h1><p>说一下System V共享内存.</p>
+<p>顾名思义，共享内存就是允许两个不相关的进程访问同一个逻辑内存。 共享内存是在两<br>个正在运行的进程之间共享和传递数据的一种非常有效的方式 。 不同进程之间共享的内存通<br>常安排在同－段物理内存中 。 进程可以将同一段共享内存连接到它们 自己 的地址空间中，所<br>有进程都可以访问共享内存中的地址，就好像它们是由用 C 语言 函数 malloc 分配的内存一<br>样。 而如果某个进程向共享内存写入数据，所做的改动将立即影响到可以访问同一段共享内<br>存的任何其他进程 。</p>
+<p>不过，共享内存并未提供同步机制，也就是说，在第一个进程对共享内存的写操作结束<br>之前，并无自动机制可以阻止第二个进程对它进行读取。 所以通常需要用其他的机制来同步<br>对共享内存的访问 。</p>
+<h2 id="shmget"><a href="#shmget" class="headerlink" title="shmget"></a>shmget</h2><p>在 Linux 中也提供了一组函数接口用于使用共享 内存， 首先常用的函数是 shmget ， 该函<br>数用来创建共享内存，它用到的头文件是 ：</p>
+<p><code>#include &lt;sys/shm .h&gt;</code></p>
+<p>函数原型是：<br><code>int shmget(key_ t key, int size , int flag) ;</code></p>
+<ul>
+<li><p>第一个参数，程序需要提供一个参数 key （非 0 整数），它有效地为共享内存段命名，<br>shmget 函数运行成功时会返回一个与 key 相关的共享内存标识符（非负整数），用于后续的共<br>享内存函数；调用失败返回－ 1 。<br>不相关的进程可以通过该函数的返回值访问同一共享内存，它代表程序可能要使用的某<br>个资源，程序对所有共享内存的访问都是间接的 。 程序先通过调用 shmget 函数并提供一个<br>键，再由系统生成一个相应的共享内存标识符（ shmget 函数的返回值） 。</p>
+</li>
+<li><p>第二个参数， size 以字节为单位指定需要共享的内存容量。</p>
+</li>
+<li><p>第三个参数， shmfl.g 是权限标志，它的作用与 open 函数的 mode 参数一样，如果要想在<br>key 标识的共享 内存不存在的条件下创建它的话，可以与 IPC_CREAT 做或操作 。 共享内存<br>的权限标志与文件的读写权限一样，举例来说， 0644 表示允许一个进程创建的共享内存被内<br>存创建者所拥有的进程向共享内存读取和写人数据，同时其他用户创建的进程只能读取共享<br>内存 。</p>
+</li>
+</ul>
+<h2 id="shmat"><a href="#shmat" class="headerlink" title="shmat"></a>shmat</h2><p>当共享 内存创建后，其余进程可以调用 shmat 将其连接到自身的地址空间中，它的函数<br>原型是 ：<br><code>void *shmat(int shmid , void *addr , int flag) ;</code></p>
+<p>shmid 为 shmget 函数返回的共享存储标识符， addr 和 flag 参数决定了以什么方式来确定<br>连接的地址，函数的返回值即是该进程数据段所连接的实际地址， 其他进程可以对此进程进<br>行读写操作 。</p>
+<h2 id="shmdt"><a href="#shmdt" class="headerlink" title="shmdt"></a>shmdt</h2><p>shmdt 函数用于将共享 内存从当前进程中分离 。 注意，将共享内存分离并不是删除它，<br>只是使该共享内存对当前进程不再可用 。 它的原型如下：<br><code>int shmdt(const void *shmaddr) ;</code></p>
+<p>参数 shmaddr 是 shmat 函数返回的地址指针，调用成功时返回 0 ，失败时返回－ 1 。</p>
+<h2 id="例子程序"><a href="#例子程序" class="headerlink" title="例子程序"></a>例子程序</h2><p>共享 内存是进程间通信的最快的方式，但是共享 内存的同步问题自身无法解决（即进<br>程该何时去共享内存取得数据，而何时不能取），但用信号量即可轻易解决这个问题 。 下<br>面使用例来说明如何使用信号量解决共享内存的同步问题 。 这个例子的主要功能是<br>writer 向 reader 传递数据，并且只有在 writer 发送完毕后， reader 才取数据，否则阻塞<br>等待 。</p>
+<figure class="highlight c++"><figcaption><span>reader.cpp</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/sem.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/shm.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SEM_KEY 4001</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SHM_KEY 5678</span></span><br><span class="line"><span class="keyword">union</span> semun &#123;</span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">	<span class="comment">/*create a shm*/</span></span><br><span class="line">	<span class="keyword">int</span> semid,shmid;</span><br><span class="line">	shmid = shmget(SHM_KEY,<span class="keyword">sizeof</span>(<span class="keyword">int</span>),IPC_CREAT|<span class="number">0666</span>);</span><br><span class="line">	<span class="keyword">if</span>(shmid&lt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"create shm error\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">void</span> * shmptr;</span><br><span class="line">	shmptr =shmat(shmid,<span class="literal">NULL</span>,<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">if</span>(shmptr == (<span class="keyword">void</span> *)<span class="number">-1</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"shmat error:%s\n"</span>,strerror(errno));</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> * data = (<span class="keyword">int</span> *)shmptr;	</span><br><span class="line">	semid = semget(SEM_KEY,<span class="number">2</span>,IPC_CREAT|<span class="number">0666</span>);<span class="comment">/*这里是创建一个semid，并且有两个信号量*/</span></span><br><span class="line">	<span class="keyword">union</span> semun semun1;<span class="comment">/*下面这四行就是初始化那两个信号量，一个val=0,另一个val=1*/</span></span><br><span class="line">	semun1.val=<span class="number">0</span>;</span><br><span class="line">	semctl(semid,<span class="number">0</span>,SETVAL,semun1);</span><br><span class="line">	semun1.val=<span class="number">1</span>;</span><br><span class="line">	semctl(semid,<span class="number">1</span>,SETVAL,semun1);</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sembuf</span> <span class="title">sembuf1</span>;</span></span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">	  sembuf1.sem_num=<span class="number">0</span>;<span class="comment">/*sem_num=0指的是下面操作指向第一个信号量，上面设置可知其 val=0*/</span></span><br><span class="line">	  sembuf1.sem_op=<span class="number">-1</span>; <span class="comment">/*初始化值为0，再-1的话就会等待*/</span></span><br><span class="line">	  sembuf1.sem_flg=SEM_UNDO;</span><br><span class="line">	  semop(semid,&amp;sembuf1,<span class="number">1</span>);<span class="comment">/*reader在这里会阻塞,直到收到信号*/</span></span><br><span class="line">	  <span class="built_in">printf</span>(<span class="string">"the NUM:%d\n"</span>,*data);<span class="comment">/*输出结果*/</span></span><br><span class="line">	  sembuf1.sem_num=<span class="number">1</span>;<span class="comment">/*这里让writer再次就绪，就这样循环*/</span></span><br><span class="line">	  sembuf1.sem_op=<span class="number">1</span>;</span><br><span class="line">	  sembuf1.sem_flg=SEM_UNDO;</span><br><span class="line">	  semop(semid,&amp;sembuf1,<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后是writer</p>
+<figure class="highlight c++"><figcaption><span>writer.cpp</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/sem.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/shm.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SEM_KEY 4001</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SHM_KEY 5678</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">union</span> semun </span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">int</span> val;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">/*create a shm*/</span></span><br><span class="line">  <span class="keyword">int</span> semid,shmid;</span><br><span class="line">  shmid = shmget(SHM_KEY,<span class="keyword">sizeof</span>(<span class="keyword">int</span>),IPC_CREAT|<span class="number">0666</span>);</span><br><span class="line">  <span class="keyword">if</span>(shmid&lt;<span class="number">0</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"create shm error\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">void</span> * shmptr;</span><br><span class="line">  shmptr =shmat(shmid,<span class="literal">NULL</span>,<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">if</span>(shmptr == (<span class="keyword">void</span> *)<span class="number">-1</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"shmat error:%s\n"</span>,strerror(errno));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">int</span> * data = (<span class="keyword">int</span> *)shmptr;	</span><br><span class="line">  semid = semget(SEM_KEY,<span class="number">2</span>,<span class="number">0666</span>);</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">sembuf</span> <span class="title">sembuf1</span>;</span></span><br><span class="line">  <span class="keyword">union</span> semun semun1;</span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    sembuf1.sem_num=<span class="number">1</span>;<span class="comment">//这里指向第2个信号量（sem_num=1）</span></span><br><span class="line">    sembuf1.sem_op=<span class="number">-1</span>;<span class="comment">//操作是-1，因为第2个信号量初始值为1，所以下面不会阻塞</span></span><br><span class="line">    sembuf1.sem_flg=SEM_UNDO;</span><br><span class="line">    semop(semid,&amp;sembuf1,<span class="number">1</span>);<span class="comment">/*继续*/</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,data);  <span class="comment">/*用户在终端输入数据*/</span></span><br><span class="line">    sembuf1.sem_num=<span class="number">0</span>;<span class="comment">/*这里指向第一个信号量*/</span></span><br><span class="line">    sembuf1.sem_op=<span class="number">1</span>;<span class="comment">/*操作加1*/</span>	</span><br><span class="line">    sembuf1.sem_flg=SEM_UNDO;</span><br><span class="line">    semop(semid,&amp;sembuf1,<span class="number">1</span>);</span><br><span class="line">    <span class="comment">//执行+1后，我们发现，reader阻塞正是由于第一个信号量为0，</span></span><br><span class="line">    <span class="comment">//无法减一，而现在writer先为其加1，那reader就绪！writer继续循环，</span></span><br><span class="line">    <span class="comment">//发现第二个信号量已经减为0，则阻塞了，我们回到reader*/</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>多打开几个终端，同时执行 writer 程序，看是否 reader 能够正确地读到数据</p>
+<p>writer :</p>
+<pre><code>[b@host 1105]$ ./writer
+51
+09
+977
+</code></pre><p>writer :</p>
+<pre><code>[b@host 1105]$ ./writer
+22
+11
+55
+55
+5
+</code></pre><p>reader :</p>
+<pre><code>[b@host 1105]$ ./reader
+the NUM:22
+the NUM:11
+the NUM:55
+the NUM:55
+the NUM:5
+the NUM:51
+the NUM:9
+the NUM:977
+</code></pre><p>要想让程序安全地执行，就要有一种进程同步的进制，保证在进入临界区的操作是原子<br>操作 。<br>例如，<strong>使用<a href="#System-V信号量">信号量</a>来进行进程的同步 。 因为对信号量的操作都是原子性的 。</strong></p>
+<h1 id="System-V信号量"><a href="#System-V信号量" class="headerlink" title="System V信号量"></a>System V信号量</h1><p>在 Linux 中提供了一组函数接口用于使用System V信号量 ，首先常用的函数是 semget，该函数用<br>来创建和打开信号量 ，它用到的头文件是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys / types . h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt; sys / ipc . h &gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/sem. h &gt;</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="semget"><a href="#semget" class="headerlink" title="semget"></a>semget</h2><p>函数原型是：<br><code>int semget( key_ t key , int nsems , int semflg) ;</code></p>
+<p>该函数执行成功返回信号量标示符，失败则返回－ 1 。 参数 key 是函数通过调用负ok 函<br>数得到的键值， nsems 代表创建信号量的个数，如果只是访问而不创建则可以指定该参数为<br>0 ；但一旦创建了该信号量 ，就不能更改其信号量个数。 只要不删除该信号量 ，就可以重新<br>调用该函数创建该键值的信号量 ，该函数只是返回以前创建的值，而不会重新创建。</p>
+<p>semflg指定该信号茸的读写权限， 当创建信号量时不许加 IPC<em>C阻AT ，若指定 IPC CREAT IIPC</em><br>EXCL 后创建时发现存在该信号量 ，创建失败 。</p>
+<h2 id="semop"><a href="#semop" class="headerlink" title="semop"></a>semop</h2><p>semop 函数，用于改变信号量的值，原型是：<br><code>int semop(int semid, struct sembuf *sops , unsigned nsops) ;</code></p>
+<p>sem_id 是 由 semget 返回的信号量标识符， sembuf 结构的定义如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sembuf</span> &#123;</span></span><br><span class="line">    <span class="keyword">short</span> sem_num;  <span class="comment">// 除非使用一组信号量，否则它为 O</span></span><br><span class="line">    <span class="keyword">short</span> sem_op ;  <span class="comment">// 信号量在一次操作中需要改变的数据，通常是两个数，</span></span><br><span class="line">                    <span class="comment">// 一个是－ 1 ，即 p （等待）操作，一个是＋ 1 ，即 v （发送信号）操作 。</span></span><br><span class="line">    <span class="keyword">short</span> sem_flg;  <span class="comment">// 通常为 SEM_UNDO ， 使操作系统跟踪信号，</span></span><br><span class="line">                    <span class="comment">// 并在进程没有释放该信号量而终止时 ， 操作系统释放信号量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="semctl"><a href="#semctl" class="headerlink" title="semctl"></a>semctl</h2><p>semctl 函数，该函数用来直接控制信号量信息，它的原型是：<br><code>int semctl (int semid, int semnum, int cmd , ... ) ;</code></p>
+<p>如果有第 4 个参数，它通常是一个 union semum 结构，定义如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">union</span> semun&#123;</span><br><span class="line">    <span class="keyword">int</span> val ;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">semid_ds</span> *<span class="title">buf</span>;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> *arry ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>前两个参数与前面一个函数中的一样， cmd 通常是 SETVAL 或 IPC RMID 。 SETVAL<br>用来把信号量初始化为一个己知的值 。 p 值通过 union semun 中的 val 成员设置，其作用是<br>在信号量第一次使用前对它进行设置 。 IPC_RMID 用于删除一个已经无须继续使用的信号量<br>标识符 </p>
+<h1 id="ipcs命令"><a href="#ipcs命令" class="headerlink" title="ipcs命令"></a>ipcs命令</h1><p>ipcs 是一个 UINX/Linux 的命令 ，用于报告系统的消息队列、信号量、共享内存等 。 下<br>面列举一些常用命令。</p>
+<ul>
+<li><p>ipcs -a 用于列出本用户所有相关的 ipcs 参数，结果如下所示 :</p>
+<pre><code>[b@host ~]$ ipcs -a
+
+------ Shared Memory Segments --------
+key        shmid      owner      perms      bytes      nattch     status
+0x000004d1 32768      b          666        2052       0
+0x000004d2 65537      b          666        2052       0
+
+------ Semaphore Arrays --------
+key        semid      owner      perms      nsems
+
+------ Message Queues --------
+key        msqid      owner      perms      used-bytes   messages
+</code></pre></li>
+<li><p>ipcs -l 用于列出系统的限额</p>
+<pre><code>[b@host ~]$ ipcs -l
+
+------ Shared Memory Limits --------
+max number of segments = 4096
+max seg size (kbytes) = 4194303
+max total shared memory (kbytes) = 1073741824
+min seg size (bytes) = 1
+
+------ Semaphore Limits --------
+max number of arrays = 32000
+max semaphores per array = 32000
+max semaphores system wide = 1024000000
+max ops per semop call = 500
+semaphore max value = 32767
+
+------ Messages: Limits --------
+max queues system wide = 32000
+max size of message (bytes) = 65536
+default max size of queue (bytes) = 65536
+</code></pre></li>
+<li><p>ipcs -u 用于列出当前的使用情况</p>
+<pre><code>[b@host ~]$ ipcs -u
+
+------ Shared Memory Status --------
+segments allocated 2
+pages allocated 2
+pages resident  2
+pages swapped   0
+Swap performance: 0 attempts     0 successes
+
+------ Semaphore Status --------
+used arrays = 3
+allocated semaphores = 3
+
+------ Messages: Status --------
+allocated queues = 0
+used headers = 0
+used space = 0 bytes
+</code></pre></li>
+<li><p>ipcs -t 用于列出最后的访问时间</p>
+<pre><code>[b@host ~]$ ipcs -t
+
+------ Shared Memory Attach/Detach/Change Times --------
+shmid      owner      attached             detached             changed
+32768      b          May 18 06:46:54      May 18 06:47:43      May 18 06:45:48
+65537      b          May 18 06:45:57      May 18 06:46:08      May 18 06:45:57
+
+------ Semaphore Operation/Change Times --------
+semid    owner      last-op                    last-changed
+
+------ Message Queues Send/Recv/Change Times --------
+msqid    owner      send                 recv                 change
+</code></pre></li>
+</ul>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/noodle/" rel="tag"><i class="fa fa-tag"></i> noodle</a>
+            
+              <a href="/tags/IPC/" rel="tag"><i class="fa fa-tag"></i> IPC</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2017/01/26/state_synchronization/" rel="next" title="网络物理模拟六之状态同步">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    网络物理模拟六之状态同步
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2017/02/08/多级指针与多维数组详解/" rel="prev" title="多级指针与多维数组详解">
+                <p class="post-nav-pre-next-title">
+                    多级指针与多维数组详解
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概绍"><span class="nav-number">1.</span> <span class="nav-text">概绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#共享内存概绍"><span class="nav-number">2.</span> <span class="nav-text">共享内存概绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内核怎样保证各个进程寻址到同一个共享内存区域的内存页面"><span class="nav-number">2.1.</span> <span class="nav-text">内核怎样保证各个进程寻址到同一个共享内存区域的内存页面</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#共享内存的优缺点"><span class="nav-number">3.</span> <span class="nav-text">共享内存的优缺点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mmap"><span class="nav-number">4.</span> <span class="nav-text">mmap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mmap-系统调用形式如下"><span class="nav-number">4.1.</span> <span class="nav-text">mmap() 系统调用形式如下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统调用-mmap-用于共享内存的两种方式"><span class="nav-number">4.2.</span> <span class="nav-text">系统调用 mmap() 用于共享内存的两种方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统调用-munmap"><span class="nav-number">4.3.</span> <span class="nav-text">系统调用 munmap()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统调用-msync"><span class="nav-number">4.4.</span> <span class="nav-text">系统调用 msync()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mmap-范例"><span class="nav-number">4.5.</span> <span class="nav-text">mmap() 范例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#范例1两个进程通过映射普通文件实现共享内存通信"><span class="nav-number">4.5.1.</span> <span class="nav-text">范例1两个进程通过映射普通文件实现共享内存通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#范例2父子进程通过匿名映射实现共享内存并用semaphore同步"><span class="nav-number">4.5.2.</span> <span class="nav-text">范例2父子进程通过匿名映射实现共享内存并用semaphore同步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理解页式管理机制"><span class="nav-number">4.6.</span> <span class="nav-text">理解页式管理机制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#System-V共享内存"><span class="nav-number">5.</span> <span class="nav-text">System V共享内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shmget"><span class="nav-number">5.1.</span> <span class="nav-text">shmget</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shmat"><span class="nav-number">5.2.</span> <span class="nav-text">shmat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shmdt"><span class="nav-number">5.3.</span> <span class="nav-text">shmdt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子程序"><span class="nav-number">5.4.</span> <span class="nav-text">例子程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出"><span class="nav-number">5.5.</span> <span class="nav-text">输出</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#System-V信号量"><span class="nav-number">6.</span> <span class="nav-text">System V信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#semget"><span class="nav-number">6.1.</span> <span class="nav-text">semget</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#semop"><span class="nav-number">6.2.</span> <span class="nav-text">semop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#semctl"><span class="nav-number">6.3.</span> <span class="nav-text">semctl</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ipcs命令"><span class="nav-number">7.</span> <span class="nav-text">ipcs命令</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

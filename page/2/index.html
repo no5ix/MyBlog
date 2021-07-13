@@ -1,0 +1,2320 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="烫">
+<meta property="og:url" content="https://hulinhong.com/page/2/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="烫">
+<meta name="twitter:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>烫 - 烫烫烫烫烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/05/08/python_reload_func_closure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/05/08/python_reload_func_closure/" itemprop="url">python的reload对于func_closure的处理踩坑</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-08T17:55:26+00:00">
+                2021-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Script/" itemprop="url" rel="index">
+                    <span itemprop="name">Script</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <p>带着问题学习动力是较强的, 直接上例子</p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/04/20/self_cultivation_redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/04/20/self_cultivation_redis/" itemprop="url">服务器开发自我修养专栏-Redis实现原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-20T19:08:06+00:00">
+                2021-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self-cultivation/" itemprop="url" rel="index">
+                    <span itemprop="name">Self-cultivation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="redis-数据结构有哪些？分别怎么实现的？"><a href="#redis-数据结构有哪些？分别怎么实现的？" class="headerlink" title="redis 数据结构有哪些？分别怎么实现的？"></a>redis 数据结构有哪些？分别怎么实现的？</h2><ul>
+<li>String: <ul>
+<li>全是整数的时候用<code>整数编码int</code></li>
+<li>当有字符串的时候用<code>简单动态字符串sds</code>编码</li>
+</ul>
+</li>
+<li>HashTable: <ul>
+<li>元素比较少或者元素比较短的时候用<code>压缩表ziplist</code>(key1|val1|key2|val2|…这样存储), </li>
+<li>其他时候就用<code>字典ht</code></li>
+</ul>
+</li>
+<li>Set: <ul>
+<li>元素全是整数的时候用<code>整数集合</code>编码(一种特殊的编码, 会使用各种规则来利用位空间, 来节省内存), </li>
+<li>其他时候用<code>字典ht</code>编码(键为Set的元素, 值都为Null)</li>
+</ul>
+</li>
+<li>List: <ul>
+<li>元素比较少或者元素比较短的时候用<code>压缩表ziplist</code>,</li>
+<li>其他时候就用<code>双端列表LinkedList</code>编码</li>
+</ul>
+</li>
+<li>ZSet: <ul>
+<li>参考 <a href="http://redisbook.com/preview/object/sorted_set.html" target="_blank" rel="noopener">http://redisbook.com/preview/object/sorted_set.html</a></li>
+<li>参考 <a href="https://redisbook.readthedocs.io/en/latest/datatype/sorted_set.html" target="_blank" rel="noopener">https://redisbook.readthedocs.io/en/latest/datatype/sorted_set.html</a></li>
+<li>元素比较少或者元素比较短的时候用<code>压缩表ziplist</code>(member1|score1|member2|score2|…, 按照score从小到大排列), </li>
+<li>其他时候就用<code>跳跃表SkipList编码</code>, 这个编码里包含一个字典结构和一个跳表结构, 但这两种数据结构都会通过指针来共享相同元素的成员和分值， 所以同时使用跳跃表和字典来保存集合元素不会产生任何重复成员或者分值， 也不会因此而浪费额外的内存:  <ul>
+<li>字典用于快速查找, 如<code>ZScore</code>查询member成员的 score 值, 或者快速确定是否有某个member</li>
+<li>跳表用于<code>zrank</code>/<code>zrange</code>等</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="zset各种问题"><a href="#zset各种问题" class="headerlink" title="zset各种问题"></a>zset各种问题</h2><h3 id="为什么zset用跳表不用红黑树"><a href="#为什么zset用跳表不用红黑树" class="headerlink" title="为什么zset用跳表不用红黑树"></a>为什么zset用跳表不用红黑树</h3><p>现在我们看看，对于这个问题，Redis的作者 @antirez 是怎么说的：</p>
+<p>There are a few reasons:</p>
+<ul>
+<li>They are not very memory intensive. It’s up to you basically. Changing parameters about the probability of a node to have a given number of levels will make then less memory intensive than btrees.</li>
+<li>A sorted set is often target of many ZRANGE or ZREVRANGE operations, that is, traversing the skip list as a linked list. With this operation the cache locality of skip lists is at least as good as with other kind of balanced trees.</li>
+<li>They are simpler to implement, debug, and so forth. For instance thanks to the skip list simplicity I received a patch (already in Redis master) with augmented skip lists implementing ZRANK in O(log(N)). It required little changes to the code.</li>
+</ul>
+<p>可参考:  本博客文章<a href="/2018/10/23/algo_newbie/#跳表">跳表</a><br>总结:<br><!-- * 在做范围查找的时候，平衡树比skiplist操作要复杂。在平衡树上，我们找到指定范围的小值之后，还需要以中序遍历的顺序继续寻找其它不超过大值的节点。如果不对平衡树进行一定的改造，这里的中序遍历并不容易实现。而在skiplist上进行范围查找就非常简单，只需要在找到小值之后，对第1层链表进行若干步的遍历就可以实现。 --></p>
+<ul>
+<li>平衡树的插入和删除操作可能引发子树的调整，逻辑复杂，而skiplist的插入和删除只需要修改相邻节点的指针，操作简单又快速。</li>
+<li>从内存占用上来说，skiplist比平衡树更灵活一些。一般来说，平衡树每个节点包含2个指针（分别指向左右子树），而skiplist每个节点包含的指针数目平均为1/(1-p)，具体取决于参数p的大小。如果像Redis里的实现一样，取p=1/4，那么平均每个节点包含1.33个指针，比平衡树更有优势。</li>
+<li>从算法实现难度上来比较，skiplist比平衡树要简单得多。</li>
+</ul>
+<h3 id="zset是怎么支持查询排名的"><a href="#zset是怎么支持查询排名的" class="headerlink" title="zset是怎么支持查询排名的"></a>zset是怎么支持查询排名的</h3><p><a href="/2018/10/23/algo_newbie/#跳表怎么支持查询排名的">跳表怎么支持查询排名的</a></p>
+<h3 id="延时队列用redis怎么做"><a href="#延时队列用redis怎么做" class="headerlink" title="延时队列用redis怎么做"></a>延时队列用redis怎么做</h3><p>用zset，拿时间戳作为score，消息内容作为key调用zadd来生产消息，消费者轮询zset用zrangebyscore指令获取N秒之前的数据轮询进行处理。</p>
+<h3 id="ZSET做排行榜时要实现分数相同时按时间顺序排序怎么实现"><a href="#ZSET做排行榜时要实现分数相同时按时间顺序排序怎么实现" class="headerlink" title="ZSET做排行榜时要实现分数相同时按时间顺序排序怎么实现"></a>ZSET做排行榜时要实现分数相同时按时间顺序排序怎么实现</h3><p>说了一个将 score 拆成高 32 位和低 32 位，高 32 位存分数，低 32 位存时间的方法。</p>
+<h2 id="哈希表渐进式rehash"><a href="#哈希表渐进式rehash" class="headerlink" title="哈希表渐进式rehash"></a>哈希表渐进式rehash</h2><ul>
+<li><p>当以下条件中的任意一个被满足时， 程序会自动开始对哈希表执行扩展操作：  </p>
+<ul>
+<li>服务器目前没有在执行 BGSAVE 命令或者 BGREWRITEAOF 命令， 并且哈希表的负载因子大于等于 1 ；</li>
+<li><p>服务器目前正在执行 BGSAVE 命令或者 BGREWRITEAOF 命令， 并且哈希表的负载因子大于等于 5 ；</p>
+<p>根据 BGSAVE 命令或 BGREWRITEAOF 命令是否正在执行， 服务器执行扩展操作所需的负载因子并不相同， 这是因为在执行 BGSAVE 命令或 BGREWRITEAOF 命令的过程中， Redis 需要创建当前服务器进程的子进程， 所以在子进程存在期间， 服务器会提高执行扩展操作所需的负载因子， 从而尽可能地避免在子进程存在期间进行哈希表扩展操作， 这可以避免不必要的内存写入操作， 最大限度地节约内存。</p>
+</li>
+</ul>
+</li>
+<li>另一方面， 当哈希表的负载因子小于 0.1 时， 程序自动开始对哈希表执行收缩操作。</li>
+</ul>
+<p>以下是哈希表渐进式 rehash 的详细步骤：  </p>
+<ol>
+<li>为 <code>ht[1]</code> 分配空间， 让字典同时持有 <code>ht[0]</code> 和 <code>ht[1]</code> 两个哈希表。</li>
+<li>在字典中维持一个索引计数器变量 rehashidx ， 并将它的值设置为 0 ， 表示 rehash 工作正式开始。</li>
+<li>在 rehash 进行期间， 每次对字典执行删除、查找或者更新操作时， 程序除了执行指定的操作以外， 还会顺带将 <code>ht[0]</code> 哈希表在 rehashidx 索引上的所有键值对 rehash 到 <code>ht[1]</code> ， 当 rehash 工作完成之后， 程序将 rehashidx 属性的值增一。</li>
+<li>随着字典操作的不断执行， 最终在某个时间点上， <code>ht[0]</code> 的所有键值对都会被 rehash 至 <code>ht[1]</code> ， 这时程序将 rehashidx 属性的值设为 -1 ， 表示 rehash 操作已完成。</li>
+</ol>
+<p>渐进式 rehash 的好处在于它采取分而治之的方式， 将 rehash 键值对所需的计算工作均滩到对字典的每个添加、删除、查找和更新操作上， 从而避免了集中式 rehash 而带来的庞大计算量。</p>
+<p>因为在进行渐进式 rehash 的过程中， 字典会同时使用 <code>ht[0]</code> 和 <code>ht[1]</code> 两个哈希表， 所以在渐进式 rehash 进行期间， 字典的删除（delete）、查找（find）、更新（update）等操作会在两个哈希表上进行： 比如说， 要在字典里面查找一个键的话， 程序会先在 <code>ht[0]</code> 里面进行查找， 如果没找到的话， 就会继续到 <code>ht[1]</code> 里面进行查找， 诸如此类。</p>
+<p>另外， 在渐进式 rehash 执行期间， 新添加到字典的键值对一律会被保存到 <code>ht[1]</code> 里面， 而 <code>ht[0]</code> 则不再进行任何添加操作： 这一措施保证了 <code>ht[0]</code> 包含的键值对数量会只减不增， 并随着 rehash 操作的执行而最终变成空表。</p>
+<h2 id="redis-持久化有哪几种方式，怎么选？"><a href="#redis-持久化有哪几种方式，怎么选？" class="headerlink" title="redis 持久化有哪几种方式，怎么选？"></a>redis 持久化有哪几种方式，怎么选？</h2><ul>
+<li>混合持久化<ul>
+<li>原因: 重启 Redis 时，我们很少使用 rdb 来恢复内存状态，因为会丢失大量数据。如果使用 AOF 日志重放，性能则相对 rdb 来说要慢很多，这样在 Redis 实例很大的情况下，启动的时候需要花费很长的时间。</li>
+<li>原理: 混合持久化同样也是通过bgrewriteaof完成的，不同的是当开启混合持久化时，fork出的子进程先将共享的内存副本全量的以RDB方式写入aof文件，然后在将aof_rewrite_buf重写缓冲区的增量命令以AOF方式写入到文件，写入完成后通知主进程更新统计信息，并将新的含有RDB格式和AOF格式的AOF文件替换旧的的AOF文件。</li>
+<li>简单的说：新的AOF文件前半段是RDB格式的全量数据后半段是AOF格式的增量数据，</li>
+</ul>
+</li>
+<li>rdb<ul>
+<li>优势: <ul>
+<li>RDB文件紧凑，全量备份，非常适合用于进行备份和灾难恢复。</li>
+<li>生成RDB文件的时候，redis主进程会fork()一个子进程来处理所有保存工作，主进程不需要进行任何磁盘IO操作。</li>
+<li>RDB 在恢复大数据集时的速度比 AOF 的恢复速度要快。</li>
+</ul>
+</li>
+<li>劣势:<ul>
+<li>当进行快照持久化时，会开启一个子进程专门负责快照持久化，子进程会拥有父进程的内存数据，父进程修改内存子进程不会反应出来，所以在快照持久化期间修改的数据不会被保存，可能丢失数据。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>aof<ul>
+<li>优势: <ul>
+<li>AOF可以更好的保护数据不丢失，一般AOF会每隔1秒，通过一个<strong>后台刷盘线程</strong>执行一次fsync操作(这种一秒刷盘一次的策略, 可能会造成<strong>追加阻塞</strong>: 当硬盘资源繁忙时，即主线程发现距离上次fsync时间超过2秒, 为了数据安全性, 主线程会阻塞直到后台刷盘线程执行fsync操作完成)，保证最多丢失1秒钟的数据。所以这也是redis重启优先加载aof的理由</li>
+<li>AOF日志文件没有任何磁盘寻址的开销，写入性能非常高，文件不容易破损。</li>
+<li>AOF日志文件即使过大的时候，出现后台重写操作，也不会影响客户端的读写。</li>
+<li>AOF日志文件的命令通过可读的方式进行记录，这个特性非常适合做灾难性的误删除的紧急恢复。比如某人不小心用flushall命令清空了所有数据，只要这个时候后台rewrite还没有发生，那么就可以立即拷贝AOF文件，将最后一条flushall命令给删了，然后再将该AOF文件放回去，就可以通过恢复机制，自动恢复所有数据</li>
+</ul>
+</li>
+<li>劣势:<ul>
+<li>对于同一份数据来说，AOF日志文件通常比RDB数据快照文件更大</li>
+<li>AOF开启后，支持的写QPS会比RDB支持的写QPS低，因为AOF一般会配置成每秒fsync一次日志文件，当然，每秒一次fsync，性能也还是很高的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="bgsave流程说一下"><a href="#bgsave流程说一下" class="headerlink" title="bgsave流程说一下"></a>bgsave流程说一下</h3><p><img src="/img/noodle_plan/redis/bgsave.png" alt></p>
+<p>子进程创建RDB文件, 根据父进程内存生成临时快照文件, 完成后对原有RDB文件进行<a href="#如何做rdb和aof的原子替换的">原子替换</a>. 然后子进程发送信号给父进程表示完成</p>
+<h3 id="aof流程说一下以及aof追加阻塞是啥"><a href="#aof流程说一下以及aof追加阻塞是啥" class="headerlink" title="aof流程说一下以及aof追加阻塞是啥"></a>aof流程说一下以及aof追加阻塞是啥</h3><p><img src="/img/noodle_plan/redis/aof.png" alt></p>
+<p>追加阻塞: </p>
+<p>AOF可以更好的保护数据不丢失，一般AOF会每隔1秒，通过一个后台刷盘线程执行一次fsync操作(这种一秒刷盘一次的策略, 可能会造成追加阻塞: 当硬盘资源繁忙时，即主线程发现距离上次fsync时间超过2秒, 为了数据安全性, 主线程会阻塞直到后台刷盘线程执行fsync操作完成)，保证最多丢失1秒钟的数据。</p>
+<h3 id="AOF重写的实现"><a href="#AOF重写的实现" class="headerlink" title="AOF重写的实现"></a>AOF重写的实现</h3><ul>
+<li><strong>所谓的“重写”其实是一个有歧义的词语, AOF重写并不需要对原有AOF文件进行任何的读取，写入，分析等操作，这个功能是通过读取服务器当前的数据库状态来实现的。</strong></li>
+<li>如当前列表键list在数据库中的值就为<code>[&quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;F&quot;, &quot;G&quot;]</code>。要使用尽量少的命令来记录list键的状态，最简单的方式不是去读取和分析现有AOF文件的内容，，而是直接读取list键在数据库中的当前值，然后用一条<code>RPUSH list &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot;</code>代替前面的6条命令</li>
+</ul>
+<p>AOF 重写程序可以很好地完成创建一个新 AOF 文件的任务， 但是， 在执行这个程序的时候， 调用者线程会被阻塞。很明显， 作为一种辅佐性的维护手段， Redis 不希望 AOF 重写造成服务器无法处理请求， 所以 Redis 决定将 AOF 重写程序放到（后台）子进程里执行， 这样处理的最大好处是：  </p>
+<ul>
+<li>子进程进行 AOF 重写期间，主进程可以继续处理命令请求。</li>
+<li>子进程带有主进程的数据副本，使用子进程而不是线程，可以在避免锁的情况下，保证数据的安全性。</li>
+</ul>
+<p>不过， 使用子进程也有一个问题需要解决： 因为子进程在进行 AOF 重写期间， 主进程还需要继续处理命令， 而新的命令可能对现有的数据进行修改， 这会让当前数据库的数据和重写后的 AOF 文件中的数据不一致。为了解决这个问题， <strong>Redis 增加了一个 AOF 重写缓存， 这个缓存在 fork 出子进程之后开始启用， Redis 主进程在接到新的写命令之后， 除了会将这个写命令的协议内容追加到现有的 AOF 文件之外， 还会追加到这个重写缓存中</strong>, 换言之， 当子进程在执行 AOF 重写时， 主进程需要执行以下三个工作：  </p>
+<ol>
+<li>处理命令请求。</li>
+<li>将写命令追加到现有的 AOF 文件中。</li>
+<li>将写命令追加到 AOF 重写缓存中。</li>
+</ol>
+<p>当子进程完成 AOF 重写之后， 它会向父进程发送一个完成信号， 父进程在接到完成信号之后， 会调用一个信号处理函数， 并完成以下工作：  </p>
+<ol>
+<li>将 AOF 重写缓存中的内容全部写入到新 AOF 文件中。</li>
+<li>对新的 AOF 文件进行改名<code>rename</code>，覆盖原有的 AOF 文件。这就是aof的<a href="#如何做rdb和aof的原子替换的">原子替换</a>.</li>
+</ol>
+<p>在整个 AOF 后台重写过程中， 只有最后的写入缓存和改名操作会造成主进程阻塞， 在其他时候， AOF 后台重写都不会对主进程造成阻塞， 这将 AOF 重写对性能造成的影响降到了最低。以上就是 AOF 后台重写， 也即是 BGREWRITEAOF 命令的工作原理。</p>
+<h3 id="如何做rdb和aof的原子替换的"><a href="#如何做rdb和aof的原子替换的" class="headerlink" title="如何做rdb和aof的原子替换的"></a>如何做rdb和aof的原子替换的</h3><p>比如想要将temp文件原子替换origin文件, 则直接<code>rename</code> tmp文件到origin文件即可实现.<br><code>rename</code>通过来说, 直接修改 file system metadata, 如inode信息. <strong>在posix标准里, <code>rename</code>实现是原子的</strong>, 即:  </p>
+<ul>
+<li><code>rename</code>成功, 原文件名 指向 temp 文件; 原文件内容被删除.</li>
+<li><code>rename</code>失败, 原文件名 仍指向原来的文件内容.</li>
+</ul>
+<h2 id="redis-主从同步是怎样的过程？"><a href="#redis-主从同步是怎样的过程？" class="headerlink" title="redis 主从同步是怎样的过程？"></a>redis 主从同步是怎样的过程？</h2><ol>
+<li>从redis发出sync要求</li>
+<li>主redis开始bgsave(并且一边开启指令buffer来存储bgsave过程中的写指令们记为<code>cmd</code>)</li>
+<li>主redis把bgsave生成的rdb发给从redis</li>
+<li>把<code>cmd</code>发送给从redis</li>
+<li>从服务器完成对快照的载入，开始接收命令请求，并执行来自主服务器缓冲区的写命令</li>
+</ol>
+<p>总结:<br>主从刚刚连接的时候，进行全量同步；全量同步结束后，进行增量同步。当然，如果有需要，slave 在任何时候都可以发起全量同步。redis 策略是，无论如何，首先会尝试进行增量同步，如不成功，要求从机进行全量同步。</p>
+<h2 id="redis-key-的过期策略"><a href="#redis-key-的过期策略" class="headerlink" title="redis key 的过期策略"></a>redis key 的过期策略</h2><p>Redis键的过期策略，是有定期删除+惰性删除两种。</p>
+<ul>
+<li>定期好理解，默认100ms就 随机 抽一些设置了过期时间的key，去检查是否过期，过期了就删了。</li>
+<li>惰性删除，查询时再判断是否过期，过期就删除键不返回值。</li>
+</ul>
+<h2 id="内存淘汰机制"><a href="#内存淘汰机制" class="headerlink" title="内存淘汰机制"></a>内存淘汰机制</h2><p>当新增数据发现内存达到限制时，Redis触发内存淘汰机制。</p>
+<ul>
+<li>lru</li>
+<li>lfu(least frequency used, redis 4新增)</li>
+<li>random</li>
+<li>ttl</li>
+</ul>
+<h3 id="redis的LRU算法说一下"><a href="#redis的LRU算法说一下" class="headerlink" title="redis的LRU算法说一下"></a>redis的LRU算法说一下</h3><ul>
+<li><strong>普通的LRU算法</strong>:<br>  <strong>一般是用哈希表+双向链表来实现的</strong>:<br>  <img src="/img/noodle_plan/redis/lru_cache_algo.jpg" alt><br>  基于 HashMap 和 双向链表实现 LRU 的整体的设计思路是，可以使用 HashMap 存储 key，这样可以做到 save 和 get key的时间都是 O(1)，而 HashMap 的 Value 指向双向链表实现的 LRU 的 Node 节点. 其核心操作的步骤是:  <ul>
+<li>save(key, value):<br>首先在 HashMap 找到 Key 对应的节点，如果节点存在，更新节点的值，并把这个节点移动队头。如果不存在，需要构造新的节点，并且尝试把节点塞到队头，如果LRU空间不足，则通过 tail 淘汰掉队尾的节点，同时在 HashMap 中移除 Key。</li>
+<li>get(key):<br>通过 HashMap 找到 LRU 链表节点，因为根据LRU 原理，这个节点是最新访问的，所以要把节点插入到队头，然后返回缓存的值。</li>
+</ul>
+</li>
+<li><strong>Redis的LRU实现</strong>:<ul>
+<li>如果按照HashMap和双向链表实现，需要额外的存储存放 next 和 prev 指针，牺牲比较大的存储空间，显然是不划算的。所以Redis采用了一个近似的做法，就是定时每隔一段时间就随机取出若干个key，然后按照访问时间排序后，淘汰掉最不经常使用的.  </li>
+<li>Redis 3.0之后又改善了算法的性能，会提供一个待淘汰候选key的pool，里面默认有16个key，按照空闲时间排好序。更新时从Redis键空间随机选择N个key，分别计算它们的空闲时间 idle，key只会在pool不满或者空闲时间大于pool里最小的时，才会进入pool，然后从pool中选择空闲时间最大的key淘汰掉。</li>
+</ul>
+</li>
+</ul>
+<h2 id="redis哨兵"><a href="#redis哨兵" class="headerlink" title="redis哨兵"></a>redis哨兵</h2><ul>
+<li>Redis Sentinel是Redis的高可用实现方案：故障发现、故障自动转移、配置中心 客户端通知。 </li>
+<li>Redis Sentinel从Redis 2.8版本开始才正式生产可用，之前版本生产不可用。 </li>
+<li>尽可能在不同物理机上部署Redis Sentinel所有节点。 </li>
+<li><strong>Redis Sentinel中的Sentinel节点个数应该为大于等于3且最好为奇数。</strong></li>
+<li>Redis Sentinel中的数据节点与普通数据节点没有区别。</li>
+<li><strong>哨兵是一个配置提供者，而不是代理。在引入哨兵之后，客户端会先连接哨兵，再获取到主节点之后，客户端会和主节点直接通信。如果发生了故障转移，哨兵会通知到客户端。所以这也需要客户端的实现对哨兵的显式支持。</strong> </li>
+<li>Redis Sentinel通过三个定时任务实现了Sentinel节点对于主节点、从节点、其余 Sentinel节点的监控。</li>
+<li><strong>Redis Sentinel在对节点做失败判定时分为主观下线和客观下线。</strong></li>
+<li>Redis Sentinel实现读写分离高可用可以依赖Sentinel节点的消息通知，获取Redis 数据节点的状态变化。 </li>
+</ul>
+<p>用文字描述一下故障切换（failover）的过程:</p>
+<ul>
+<li>假设主服务器宕机，哨兵1先检测到这个结果，系统并不会马上进行failover过程，仅仅是哨兵1主观的认为主服务器不可用，这个现象成为<strong>主观下线</strong>。</li>
+<li>当后面的哨兵也检测到主服务器不可用，并且数量达到一定值时，就对这个主节点故障达成一致, 这个过程称为<strong>客观下线</strong>。</li>
+<li>这样对于客户端而言，一切都是透明的。然后通过<strong>raft算法</strong>从哨兵中选出一个哨兵来执行<strong>故障转移</strong></li>
+</ul>
+<h2 id="redis集群"><a href="#redis集群" class="headerlink" title="redis集群"></a>redis集群</h2><p>redis集群是一个由多个主从节点群组成的分布式服务器群，它具有复制、高可用和分片特性。Redis集群不需要sentinel哨兵也能完成节点移除和故障转移的功能。需要将每个节点设置成集群模式，这种集群模式没有中心节点，可水平扩展，据官方文档称可以线性扩展到上万个节点(官方推荐不超过1000个节点)。redis集群的性能和高可用性均优于之前版本的哨兵模式，且集群配置非常简单。<br>集群模式有以下几个特点：</p>
+<ul>
+<li>由多个Redis服务器组成的分布式网络服务集群；</li>
+<li>集群之中有多个Master主节点，每一个主节点都可读可写；</li>
+<li>节点之间会互相通信，两两相连, 采用gossip协议来通信；</li>
+<li>Redis集群无中心节点。</li>
+<li>集群的伸缩本质是: 槽数据在节点中的移动</li>
+</ul>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>在哨兵模式中，仍然只有一个Master节点。当并发写请求较大时，哨兵模式并不能缓解写压力。 我们知道只有主节点才具有写能力，那如果在一个集群中，能够配置多个主节点，缓解写压力，redis-cluster集群模式能达到此类要求。</p>
+<p>在Redis-Cluster集群中，可以给每一个主节点添加从节点，主节点和从节点直接遵循主从模型的特性。<br>当用户需要处理更多读请求的时候，添加从节点开启read-only来读写分离可以扩展系统的读性能。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>Redis 集群不支持那些需要同时处理多个键的 Redis 命令， 因为执行这些命令需要在多个 Redis 节点之间移动数据， 并且在高负载的情况下， 这些命令将降低 Redis 集群的性能， 并导致不可预测的行为。</li>
+<li>不能用redis事务机制(不过就算不用redis集群一般也不推荐用redis的事务, 毕竟假事务无法回滚嘛, 比如multi之后那些在 EXEC 命令执行之后所产生的错误， 并没有对它们进行特别处理： 即使事务中有某个/某些命令在执行时产生了错误， 事务中的其他命令仍然会继续执行。)。因为一个事务中有涉及到多个key操作的时候，这多个key不一定都存储在同一个redis-server上。</li>
+</ul>
+<h3 id="故障转移"><a href="#故障转移" class="headerlink" title="故障转移"></a>故障转移</h3><p>Redis集群的主节点内置了类似Redis Sentinel的节点故障检测和自动故障转移功能，当集群中的某个主节点下线时，集群中的其他在线主节点会注意到这一点，并对已下线的主节点进行故障转移。<br>集群进行故障转移的方法和Redis Sentinel进行故障转移的方法基本一样(也有<code>主观下线</code>和<code>客观下线</code>)，不同的是，在集群里面，故障转移的过程是:</p>
+<ol>
+<li>在集群内广播选举消息</li>
+<li>集群中其他在线的持有槽的主节点投票到故障主节点的从节点们</li>
+<li>被选出来的从节点变成主节点</li>
+</ol>
+<p>所以集群不必另外使用Redis Sentinel。</p>
+<h3 id="集群分片策略"><a href="#集群分片策略" class="headerlink" title="集群分片策略"></a>集群分片策略</h3><p>常见的集群分片算法有：</p>
+<ul>
+<li>一般哈希算法</li>
+<li>一致性哈希算法</li>
+<li>Hash Slot算法</li>
+</ul>
+<p>Redis采用的是Hash Slot</p>
+<h4 id="一般哈希算法"><a href="#一般哈希算法" class="headerlink" title="一般哈希算法"></a>一般哈希算法</h4><p>计算方式：hash(key)%N<br>缺点：如果增加一个redis，映射公式变成了 hash(key)%(N+1)<br>​     如果一个redis宕机了，映射公式变成了 hash(key)%(N-1)<br>​     在以上两种情况下，几乎所有的缓存都失效了。</p>
+<h4 id="一致性哈希算法"><a href="#一致性哈希算法" class="headerlink" title="一致性哈希算法"></a>一致性哈希算法</h4><p>先构造出一个长度为2^32整数环，根据节点名称的hash值（分布在[0,2^32-1]）放到这个环上。现在要存放资源，根据资源的Key的Hash值（也是分布在[0,2^32-1]），在环上顺时针的找到离它最近的一个节点，就建立了资源和节点的映射关系。</p>
+<ul>
+<li>优点：一个节点宕机时，上面的数据转移到顺时针的下一个节点中，新增一个节点时，也只需要将部分数据迁移到这个节点中，对其他节点的影响很小</li>
+<li>缺点：由于数据在环上分布不均，可能存在某个节点存储的数据比较多，那么当他宕机的时候，会导致大量数据涌入下一个节点中，把另一个节点打挂了，然后所有节点都挂了</li>
+<li>改进：引进了虚拟节点的概念，想象在这个环上有很多“虚拟节点”，数据的存储是沿着环的顺时针方向找一个虚拟节点，每个虚拟节点都会关联到一个真实节点</li>
+</ul>
+<h4 id="HashSlot算法"><a href="#HashSlot算法" class="headerlink" title="HashSlot算法"></a>HashSlot算法</h4><p>Redis采用的是Hash Slot分片算法，用来计算key存储位置的。集群将整个数据库分为16384个槽位slot，所有key-value数据都存储在这些slot中的某一个上。一个slot槽位可以存放多个数据，key的槽位计算公式为：slot_number=CRC16(key)%16384，其中CRC16为16位的循环冗余校验和函数。<br><strong>客户端可能会挑选任意一个redis实例去发送命令，每个redis实例接收到命令，都会计算key对应的hash slot，如果在本地就在本地处理，否则返回moved给客户端，让客户端进行重定向到对应的节点执行命令(实现得好一点的smart客户端会缓存键-slot-节点的映射关系来获得性能提升).</strong></p>
+<p><strong>那为什么是16384个槽呢?</strong></p>
+<p>ps:CRC16算法产生的hash值有16bit，该算法可以产生2^16-=65536个值。换句话说，值是分布在0~65535之间。那作者在做mod运算的时候，为什么不mod65536，而选择mod16384？<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fgithub.com%2Fantirez%2Fredis%2Fissues%2F2576" target="_blank" rel="noopener">作者解答</a></p>
+<p>在redis节点发送心跳包时需要把所有的槽放到这个心跳包里，以便让节点知道当前集群信息，16384=16k，在发送心跳包时使用char进行bitmap压缩后是<code>2k（2 * 8 (8 bit) * 1024(1k) = 2K）</code>，也就是说使用2k的空间创建了16k的槽数。</p>
+<p>虽然使用CRC16算法最多可以分配65535（2^16-1）个槽位，65535=65k，压缩后就是<code>8k（8 * 8 (8 bit) * 1024(1k) = 8K）</code>，也就是说需要需要8k的心跳包，作者认为这样做不太值得；并且一般情况下一个redis集群不会有超过1000个master节点，所以16k的槽位是个比较合适的选择。</p>
+<h2 id="Cache和DB如何一致"><a href="#Cache和DB如何一致" class="headerlink" title="Cache和DB如何一致"></a>Cache和DB如何一致</h2><p>详细的请参考: <a href="https://segmentfault.com/a/1190000015804406" target="_blank" rel="noopener">https://segmentfault.com/a/1190000015804406</a><br>本博客也有一份: <a href="/2018/09/25/cache_db_consistency/" title="Cache和DB一致性">Cache和DB一致性</a></p>
+<p>总结:</p>
+<ul>
+<li>使用<code>cache aside pattern</code><ul>
+<li>对于读请求<br>  <img src="/img/cache_db_consistency/cache_db_consistency_9.png" alt title="读请求"><br>  先读 cache，再读 db<br>  如果，cache hit，则直接返回数据<br>  如果，cache miss，则访问 db，并将数据 set 回缓存</li>
+<li>对于写请求<br>  <img src="/img/cache_db_consistency/cache_db_consistency_1.png" alt title="写请求"><br>  先操作数据库，再淘汰缓存（淘汰缓存，而不是更新缓存, 如果更新缓存，在并发写时，可能出现数据不一致。）</li>
+</ul>
+</li>
+<li>Cache Aside Pattern 方案存在什么问题？<ul>
+<li><strong>问题1</strong>: 如果先写数据库，再淘汰缓存，在原子性被破坏时：<ol>
+<li>修改数据库成功了</li>
+<li>淘汰缓存失败了<br>导致，数据库与缓存的数据不一致。</li>
+</ol>
+<ul>
+<li>如何解决问题1?<ul>
+<li>在淘汰缓存的时候，如果失败，则重试一定的次数。如果失败一定次数还不行，那就是其他原因了。比如说 redis 故障、内网出了问题。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>问题2</strong>: 主从同步延迟导致的缓存和数据不一致问题<ul>
+<li>问题: 发生写请求后（不管是先操作 DB，还是先淘汰 Cache），在主从数据库同步完成之前，如果有读请求，都可能发生读 Cache Miss，读从库把旧数据存入缓存的情况。此时怎么办呢？</li>
+<li>解决思路: 在主从时延的时间段内，读取修改过的数据的话，强制读主，并且更新缓存，这样子缓存内的数据就是最新。在主从时延过后，这部分数据继续读从库，从而继续利用从库提高读取能力。</li>
+<li>具体解决方案: <ul>
+<li>写请求发生的时候: 将哪个库，哪个表，哪个主键三个信息拼装一个 key 设置到 cache 里，这条记录的超时时间，设置为 “主从同步时延”, PS：key 的格式为 “db:table:PK”，假设主从延时为 1s，这个 key 的 cache 超时时间也为 1s。</li>
+<li>当读请求发生时：这是要读哪个库，哪个表，哪个主键的数据呢，也将这三个信息拼装一个 key，到 cache 里去查询，如果，<ul>
+<li>（1）cache 里有这个 key，说明 1s 内刚发生过写请求，数据库主从同步可能还没有完成，此时就应该去主库查询。并且把主库的数据 set 到缓存中，防止下一次 cache miss。</li>
+<li>（2）cache 里没有这个 key，说明最近没有发生过写请求，此时就可以去从库查询</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="缓存雪崩是啥-咋处理"><a href="#缓存雪崩是啥-咋处理" class="headerlink" title="缓存雪崩是啥?咋处理?"></a>缓存雪崩是啥?咋处理?</h2><p>是指<strong>大面积的缓存失效，打崩了DB.</strong></p>
+<p>如果缓存挂掉，所有的请求会压到数据库，如果未提前做容量预估，可能会把数据库压垮（在缓存恢复之前，数据库可能一直都起不来），导致系统整体不可服务。<br>又或者打个比方, 如果所有首页的Key失效时间都是12小时，中午12点刷新的，我零点有个秒杀活动大量用户涌入，假设当时每秒 6000 个请求，本来缓存在可以扛住每秒 5000 个请求，但是缓存当时所有的Key都失效了。此时 1 秒 6000 个请求全部落数据库，数据库必然扛不住.</p>
+<p>处理方案: </p>
+<ul>
+<li>key随机过期</li>
+<li>key永不过期, 比如开个单独线程去定时更新缓存</li>
+<li>高可用, 如果Redis是集群部署，将热点数据均匀分布在不同的Redis库中也能避免全部失效的问题</li>
+<li>隔离服务, 限流降级</li>
+</ul>
+<h2 id="缓存穿透是啥-咋处理"><a href="#缓存穿透是啥-咋处理" class="headerlink" title="缓存穿透是啥?咋处理?"></a>缓存穿透是啥?咋处理?</h2><p>是指<strong>缓存和数据库中都没有的数据，而用户不断发起请求，严重会击垮数据库</strong> </p>
+<p>我们数据库的 id 都是1开始自增上去的，如发起为id值为 -1 的数据或 id 为特别大不存在的数据。这时的用户很可能是攻击者，攻击会导致数据库压力过大，严重会击垮数据库。</p>
+<p>处理方案:</p>
+<ul>
+<li>缓存穿透我会在接口层增加校验，比如用户鉴权校验，参数做校验，不合法的参数直接代码Return，比如：id 做基础校验，id &lt;=0的直接拦截等。</li>
+<li>布隆过滤器, 把存在的key提前存放好在布隆过滤器中, 当查询的时候快速判断出你这个Key是否在数据库中存在, 不存在则直接return</li>
+</ul>
+<h2 id="缓存击穿是啥-咋处理"><a href="#缓存击穿是啥-咋处理" class="headerlink" title="缓存击穿是啥?咋处理?"></a>缓存击穿是啥?咋处理?</h2><p>是指<strong>持续的大并发的访问一个热点数据, 当这个Key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库</strong></p>
+<p>这个跟缓存雪崩有点像，但是又有一点不一样，缓存雪崩是因为大面积的缓存失效，打崩了DB，而缓存击穿不同的是缓存击穿是指一个Key非常<strong>热点</strong>，在不停的扛着大并发，大并发集中对这一个点进行访问，当这个Key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库，就像在一个完好无损的桶上凿开了一个洞。</p>
+<p>处理方案:</p>
+<ul>
+<li>key永不过期, 比如开个单独线程去定时更新缓存</li>
+<li>互斥锁, 在key失效的瞬间, 只允许一个查询操作的线程A去查询数据库并重建缓存并上互斥锁, 其他的查询操作线程全部等待线程A操作完了再从缓存里取数据</li>
+</ul>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/04/18/self_cultivation_encoding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/04/18/self_cultivation_encoding/" itemprop="url">服务器开发自我修养专栏-编码知识</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-18T19:08:06+00:00">
+                2021-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self-cultivation/" itemprop="url" rel="index">
+                    <span itemprop="name">Self-cultivation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="编码知识"><a href="#编码知识" class="headerlink" title="编码知识"></a>编码知识</h1><h2 id="Base64-的原理？编码后比编码前是大了还是小了。"><a href="#Base64-的原理？编码后比编码前是大了还是小了。" class="headerlink" title="Base64 的原理？编码后比编码前是大了还是小了。"></a>Base64 的原理？编码后比编码前是大了还是小了。</h2><p>结论:</p>
+<p>大了. 因为Base64 编码本质上是一种将二进制数据转成文本数据的方案。<strong>对于非二进制数据，是先将其转换成二进制形式，然后每连续 6 比特（2 的 6 次方 = 64）计算其十进制值，根据该值在上面的索引表中找到对应的字符，最终得到一个文本字符串。</strong>也就是说, 每 3 个原始字符编码成 4 个字符，如果原始字符串长度不能被 3 整除，那怎么办？使用 0 值来补充原始字符串。</p>
+<h3 id="base64的原理"><a href="#base64的原理" class="headerlink" title="base64的原理"></a>base64的原理</h3><p>Base64 编码之所以称为 Base64，是因为其使用 64 个字符来对任意数据进行编码，同理有 Base32、Base16 编码。标准 Base64 编码使用的 64 个字符为：<br><img src="/img/noodle_plan/http/XHFMRvxfez4OVtr.jpg" alt></p>
+<p>这 64 个字符是各种字符编码（比如 ASCII 编码）所使用字符的子集，基本，并且可打印。唯一有点特殊的是最后两个字符，因对最后两个字符的选择不同，Base64 编码又有很多变种，比如 Base64 URL 编码。</p>
+<p>Base64 编码本质上是一种将二进制数据转成文本数据的方案。对于非二进制数据，是先将其转换成二进制形式，然后每连续 6 比特（2 的 6 次方 = 64）计算其十进制值，根据该值在上面的索引表中找到对应的字符，最终得到一个文本字符串。</p>
+<p>假设我们要对 <code>Hello!</code> 进行 Base64 编码，按照 ASCII 表，其转换过程如下图所示：<br><img src="/img/noodle_plan/http/tJnClQsjc4WMGhB.jpg" alt></p>
+<p>可知 <code>Hello!</code> 的 Base64 编码结果为 <code>SGVsbG8h</code> ，原始字符串长度为 6 个字符，编码后长度为 8 个字符，每 3 个原始字符经 Base64 编码成 4 个字符，编码前后长度比 4/3，这个长度比很重要 - 比原始字符串长度短，则需要使用更大的编码字符集，这并不我们想要的；长度比越大，则需要传输越多的字符，传输时间越长。Base64 应用广泛的原因是在字符集大小与长度比之间取得一个较好的平衡，适用于各种场景。</p>
+<p>是不是觉得 Base64 编码原理很简单？</p>
+<p>但这里需要注意一个点：Base64 编码是每 3 个原始字符编码成 4 个字符，如果原始字符串长度不能被 3 整除，那怎么办？使用 0 值来补充原始字符串。</p>
+<p>以 <code>Hello!!</code> 为例，其转换过程为：<br><img src="/img/noodle_plan/http/5URB8nVis9ljwYe.jpg" alt></p>
+<p><em>注：图表中蓝色背景的二进制 0 值是额外补充的。</em></p>
+<p><code>Hello!!</code> Base64 编码的结果为 <code>SGVsbG8hIQAA</code> 。最后 2 个零值只是为了 Base64 编码而补充的，在原始字符中并没有对应的字符，那么 Base64 编码结果中的最后两个字符 <code>AA</code> 实际不带有效信息，所以需要特殊处理，以免解码错误。</p>
+<p>标准 Base64 编码通常用 <code>=</code> 字符来替换最后的 <code>A</code>，即编码结果为 <code>SGVsbG8hIQ==</code>。因为 <code>=</code> 字符并不在 Base64 编码索引表中，其意义在于结束符号，在 Base64 解码时遇到 <code>=</code> 时即可知道一个 Base64 编码字符串结束。</p>
+<p>如果 Base64 编码字符串不会相互拼接再传输，那么最后的 <code>=</code> 也可以省略，解码时如果发现 Base64 编码字符串长度不能被 4 整除，则先补充 <code>=</code> 字符，再解码即可。</p>
+<p>解码是对编码的逆向操作，但注意一点：<strong>对于最后的两个 <code>=</code> 字符，转换成两个 <code>A</code> 字符，再转成对应的两个 6 比特二进制 0 值，接着转成原始字符之前，需要将最后的两个 6 比特二进制 0 值丢弃，因为它们实际上不携带有效信息</strong>。</p>
+<h2 id="utf8编码和unicode字符集"><a href="#utf8编码和unicode字符集" class="headerlink" title="utf8编码和unicode字符集"></a>utf8编码和unicode字符集</h2><p>总结:  </p>
+<ul>
+<li>unicode是个字符集, 只是一个符号对应表, 它只规定了符号的二进制代码，却没有规定这个二进制代码应该如何存储</li>
+<li>utf8是unicode符号具体的编码方式, 规定了该怎么存储</li>
+</ul>
+<p>说到utf8，就不得不说一下unicode了。  Unicode是一个很大的集合，每一个unicode对应一个符号，不管是中文的汉字，英文字符，日文，韩文等等。现在的规模可以容纳100多万个符号。每个符号的编码都不一样，比如，U+0639表示阿拉伯字母 Ain，U+0041表示英语的大写字母A，U+4E25表示汉字“严”。具体的符号对应表，可以查询unicode.org，或者专门的汉字对应表。</p>
+<p><strong>需要注意的是，Unicode只是一个符号集，它只规定了符号的二进制代码，却没有规定这个二进制代码应该如何存储。</strong></p>
+<p>比如，汉字“严”的unicode是十六进制数4E25，转换成二进制数足足有15位（100111000100101），也就是说这个符号的表示至少需要2个字节。表示其他更大的符号，可能需要3个字节或者4个字节，甚至更多。</p>
+<p>这里就有两个严重的问题，第一个问题是：如何才能区别unicode和ascii？计算机怎么知道三个字节表示一个符号，而不是分别表示三个符号呢？第二个问题是：我们已经知道，英文字母只用一个字节表示就够了，如果unicode统一规定，每个符号用三个或四个字节表示，那么每个英文字母前都必然有二到三个字节是0，这对于存储来说是极大的浪费，文本文件的大小会因此大出二三倍，这是无法接受的。</p>
+<p>它们造成的结果是：</p>
+<p>1）出现了unicode的多种存储方式，也就是说有许多种不同的二进制格式，可以用来表示unicode。</p>
+<p>2）unicode在很长一段时间内无法推广，直到互联网的出现。</p>
+<h3 id="UTF-8"><a href="#UTF-8" class="headerlink" title="UTF-8"></a>UTF-8</h3><p>互联网的普及，强烈要求出现一种统一的编码方式。UTF-8就是在互联网上使用最广的一种unicode的实现方式。其他实现方式还包括UTF-16和UTF-32，不过在互联网上基本不用。重复一遍，这里的关系是，UTF-8是Unicode的实现方式之一。</p>
+<p>UTF-8最大的一个特点，就是它是一种变长的编码方式。它可以使用1~4个字节表示一个符号，根据不同的符号而变化字节长度。</p>
+<p>UTF-8的编码规则很简单，只有二条：</p>
+<ul>
+<li><p>1）对于单字节的符号，字节的第一位（字节的最高位）设为0，后面7位为这个符号的unicode码。因此对于英语字母，UTF-8编码和ASCII码是相同的。</p>
+</li>
+<li><p>2）对于n字节的符号（n&gt;1），第一个字节的前n位都设为1，第n+1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的unicode码。</p>
+</li>
+</ul>
+<p>下表总结了编码规则，字母x表示可用编码的位。</p>
+<p>Unicode符号范围 UTF-8编码方式(十六进制) | （二进制）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">—————+———————————————————————</span><br><span class="line">0000 0000-0000 007F | 0xxxxxxx</span><br><span class="line">0000 0080-0000 07FF | 110xxxxx 10xxxxxx</span><br><span class="line">0000 0800-0000 FFFF | 1110xxxx 10xxxxxx 10xxxxxx</span><br><span class="line">0001 0000-0010 FFFF | 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</span><br></pre></td></tr></table></figure></p>
+<p>下面，还是以汉字“严”为例，演示如何实现UTF-8编码：<br>已知“严”的unicode是4E25（100111000100101），根据上表，可以发现4E25处在第三行的范围内（0000 0800-0000 FFFF），因此“严”的UTF-8编码需要三个字节，即格式是“1110xxxx 10xxxxxx 10xxxxxx”。然后，从“严”的最后一个二进制位开始，依次从后向前填入格式中的x，多出的位补0。这样就得到了，“严”的UTF-8编码是“11100100 10111000 10100101”，转换成十六进制就是E4B8A5。</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/04/18/cpp_func_traits_intro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/04/18/cpp_func_traits_intro/" itemprop="url">rpclib源码阅读笔记之浅谈cpp func traits</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-18T01:59:01+00:00">
+                2021-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Misc/" itemprop="url" rel="index">
+                    <span itemprop="name">Misc</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://light-city.club/2019/10/07/traits/#!" target="_blank" rel="noopener">原文出处</a></p>
+<hr>
+<h2 id="0-导语"><a href="#0-导语" class="headerlink" title="0. 导语"></a><strong>0. 导语</strong></h2><p>大家好，我是光城，欢迎关注公众号：<strong>guangcity</strong>。在 STL 编程中，容器和算法是独立设计的，即数据结构和算法是独立设计的，连接容器和算法的桥梁就是迭代器了，迭代器使其独立设计成为可能。如下图所示：</p>
+<p>上图给出了 STL 的目标就是要把数据和算法分开，分别对其进行设计，之后通过一种名为 iterator 的东西，把这二者再粘接到一起。</p>
+<p>设计模式中，关于 iterator 的描述为：<strong>一种能够顺序访问容器中每个元素的方法，使用该方法不能暴露容器内部的表达方式。而类型萃取技术就是为了要解决和 iterator 有关的问题的。</strong></p>
+<p>它将范型算法 (find, count, find_if) 用于某个容器中, 最重要的是要给算法提供一个访问容器元素的工具，iterator 就扮演着这个重要的角色。</p>
+<p>而在算法中我们可能会定义简单的中间变量或者设定算法的返回变量类型，这时候需要知道迭代器所指元素的类型是什么，但是由于没有 typeof 这类判断类型的函数, 我们无法直接获取，那该如何是好？本文就来具体阐述。</p>
+<p>对于迭代器来说就是一种智能指针，因此，它也就拥有了一般指针的所有特点——能够对其进行 * 和 -&gt; 操作。但是在遍历容器的时候，不可避免的要对遍历的容器内部有所了解，所以，干脆把迭代器的开发工作交给容器的设计者好了，如此以来，所有实现细节反而得以封装起来不被使用者看到，这正是为什么每一种 STL 容器都提供有专属迭代器的缘故。</p>
+<p>而 Traits 在<code>bits/stl_iterator_base_types.h</code>中：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span>&lt;_Tp*&gt;</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span> difference_type;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">typename</span> _Tp::value_type value_type;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">typename</span> _Tp::pointer pointer;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">typename</span> _Tp::reference reference;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">typename</span> _Tp::iterator_category iterator_category;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>看的一脸懵逼吧，没事，看完本节，入门 STL，哈哈~</p>
+<h2 id="1-template-参数推导"><a href="#1-template-参数推导" class="headerlink" title="1.template 参数推导"></a><strong>1.template 参数推导</strong></h2><p>首先，在算法中运用迭代器时，很可能会用到<strong>其相应型别（associated type）</strong>（迭代器所指之物的型别）。假设算法中有必要声明一个变量，以 “迭代器所指对象的型别” 为型别，该<strong>怎么办呢？</strong></p>
+<p><strong>解决方法是：利用 function template 的参数推导机制。</strong></p>
+<p>例如：</p>
+<p>如果 T 是某个指向特定对象的指针，那么在 func 中需要指针所指向对象的型别的时候，怎么办呢？这个还比较容易，模板的参数推导机制可以完成任务，</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">I</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">inline</span></span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">func</span>(<span class="title">I</span> <span class="title">iter</span>) &#123;</span></span><br><span class="line">    func_impl(iter, *iter); <span class="comment">// 传入iter和iter所指的值，class自动推导</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过模板的推导机制，我们轻而易举的或得了指针所指向的对象的类型。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">I</span>, <span class="title">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">func_impl</span>(<span class="title">I</span> <span class="title">iter</span>, <span class="title">T</span> <span class="title">t</span>) &#123;</span></span><br><span class="line">        T tmp; <span class="comment">// 这里就是迭代器所指物的类别</span></span><br><span class="line">        <span class="comment">// ... 功能实现</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    func(&amp;i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是，<strong>函数的 “template 参数推导机制” 推导的只是参数，无法推导函数的返回值类型。万一需要推导函数的传回值，就无能为力了</strong>。因此，我们引出下面的方法。</p>
+<h2 id="2-声明内嵌型别"><a href="#2-声明内嵌型别" class="headerlink" title="2. 声明内嵌型别"></a><strong>2. 声明内嵌型别</strong></h2><p><strong>迭代器所指对象的型别，称之为迭代器的 value type。</strong></p>
+<p>尽管在 func_impl 中我们可以把 T 作为函数的返回值，但是问题是用户需要调用的是 func。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">I</span>, <span class="title">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">T</span> <span class="title">func_impl</span>(<span class="title">I</span> <span class="title">iter</span>, <span class="title">T</span> <span class="title">t</span>) &#123;</span></span><br><span class="line">        T tmp; <span class="comment">// 这里就是迭代器所指物的类别</span></span><br><span class="line">        <span class="comment">// ... 功能实现</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class">(*<span class="title">T</span>) <span class="title">func</span>(<span class="title">T</span> <span class="title">t</span>) &#123;</span> <span class="comment">// !!!Wrong code</span></span><br><span class="line">    <span class="keyword">return</span> func_impl(t, *t); <span class="comment">// forward the task to func_impl</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i  =<span class="number">10</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;func(&amp;i)&lt;&lt;<span class="built_in">endl</span>; <span class="comment">// !!! Can’t pass compile</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果去编译上述代码，编译失败！</p>
+<p>这个问题解决起来也不难，声明内嵌型别似乎是个好主意，这样我们就可以直接获取。只要做一个 iterator，然后在定义的时候为其指向的对象类型制定一个别名，就好了，像下面这样：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">MyIter</span> &#123;</span></span><br><span class="line">    <span class="keyword">typedef</span> T value_type; <span class="comment">// 内嵌型别声明</span></span><br><span class="line">    T* ptr;</span><br><span class="line">    MyIter(T* p = <span class="number">0</span>) : ptr(p) &#123;&#125;</span><br><span class="line">    T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123; <span class="keyword">return</span> *ptr; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">I</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">typename</span> <span class="title">I</span>:</span>:value_type</span><br><span class="line">func(I ite) &#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"class version"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> *ite;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    MyIter&lt;<span class="keyword">int</span>&gt; ite(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">8</span>));</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; func(ite);    <span class="comment">// 输出8</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>很漂亮的解决方案，看上去一切都很完美。但是，实际上还是有问题，因为 func 如果是一个泛型算法，那么它也绝对要接受一个原生指针作为迭代器，但是显然，你无法让下面的代码编译通过：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">5</span>);</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;func(p)&lt;&lt;<span class="built_in">endl</span>; <span class="comment">// error</span></span><br></pre></td></tr></table></figure>
+<p>我们的 func 无法支持原生指针，这显然是不能接受的。此时，template partial specialization 就派上了用场。</p>
+<h2 id="3-救世主-Traits"><a href="#3-救世主-Traits" class="headerlink" title="3. 救世主 Traits"></a><strong>3. 救世主 Traits</strong></h2><p>前面也提到了，如果直接使用<code>typename I::value_type</code>，算法就无法接收原生指针，因为原生指针根本就没有 value_type 这个内嵌类型。</p>
+<p>因此，我们还需要加入一个中间层对其进行判断，看它是不是原生指针，注意，这就是 traits 技法的妙处所在。</p>
+<p>如果我们只使用上面的做法，也就是内嵌 value_type，那么对于没有 value_type 的指针，我们只能对其进行偏特化，这种偏特化是针对可调用函数 func 的偏特化，假如 func 有 100 万行行代码，那么就会造成极大的视觉污染。</p>
+<p><strong>（1）函数偏特化</strong></p>
+<p>函数偏特化：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">MyIter</span> &#123;</span></span><br><span class="line">    <span class="keyword">typedef</span> T value_type; <span class="comment">// 内嵌型别声明</span></span><br><span class="line">    T* ptr;</span><br><span class="line">    MyIter(T* p = <span class="number">0</span>) : ptr(p) &#123;&#125;</span><br><span class="line">    T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123; <span class="keyword">return</span> *ptr; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">I</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">typename</span> <span class="title">I</span>:</span>:value_type</span><br><span class="line">func(I ite) &#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"class version"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> *ite;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">I</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">I</span></span></span><br><span class="line"><span class="class"><span class="title">func</span>(<span class="title">I</span>* <span class="title">ite</span>) &#123;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"pointer version"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> *ite;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">I</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">I</span> <span class="title">func</span>(<span class="title">const</span> <span class="title">I</span>* <span class="title">ite</span>) &#123;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"const pointer version"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> *ite;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    MyIter&lt;<span class="keyword">int</span>&gt; ite(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">8</span>));</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; func(ite)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">52</span>);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;func(p)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> k = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;func(&amp;k)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class version</span><br><span class="line">8</span><br><span class="line">pointer version</span><br><span class="line">52</span><br><span class="line">const pointer version</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+<p><strong>（2）加入中间层</strong></p>
+<p>在 STL 中 Traits 是什么呢？看下图：</p>
+<p>利用一个中间层<code>iterator_traits</code>固定了<code>func</code>的形式，使得重复的代码大量减少，唯一要做的就是稍稍特化一下 iterator_tartis 使其支持 pointer 和 const pointer:)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">MyIter</span> &#123;</span></span><br><span class="line">    <span class="keyword">typedef</span> T value_type; <span class="comment">// 内嵌型别声明</span></span><br><span class="line">    T* ptr;</span><br><span class="line">    MyIter(T* p = <span class="number">0</span>) : ptr(p) &#123;&#125;</span><br><span class="line">    T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123; <span class="keyword">return</span> *ptr; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// class type</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span> &#123;</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">typename</span> T::value_type value_type;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 偏特化1</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span>&lt;T*&gt; &#123;</span></span><br><span class="line">    <span class="keyword">typedef</span> T value_type;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 偏特化2</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span>&lt;const T*&gt; &#123;</span></span><br><span class="line">    <span class="keyword">typedef</span> T value_type;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">I</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">typename</span> <span class="title">iterator_traits</span>&lt;I&gt;:</span>:value_type</span><br><span class="line"><span class="comment">// 首先询问iterator_traits&lt;I&gt;::value_type,如果传递的I为指针,则进入特化版本,iterator_traits直接回答;如果传递进来的I为class type,就去询问T::value_type.</span></span><br><span class="line">func(I ite) &#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"normal version"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> *ite;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    MyIter&lt;<span class="keyword">int</span>&gt; ite(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">8</span>));</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; func(ite)&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">52</span>);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;func(p)&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> k = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;func(&amp;k)&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述的过程是首先询问<code>iterator_traits&lt;I&gt;::value_type</code>，如果传递的 I 为指针, 则进入特化版本,<code>iterator_traits</code>直接回答<code>T</code>; 如果传递进来的<code>I</code>为<code>class type</code>, 就去询问<code>T::value_type</code>.</p>
+<p>上述的通俗解释为算法 (func) 问 iterator_traits(我)，但是 iterator_traits(我)发现手上是指针的时候，就由我来替它回答。如果是 class type，iterator_traits(我)就继续问(他 —T::value_type)。</p>
+<p><strong>总结：通过定义内嵌类型，我们获得了知晓 iterator 所指元素类型的方法，通过 traits 技法，我们将函数模板对于原生指针和自定义 iterator 的定义都统一起来，我们使用 traits 技法主要是为了解决原生指针和自定义 iterator 之间的不同所造成的代码冗余，这就是 traits 技法的妙处所在。</strong></p>
+<p>学习书籍：</p>
+<blockquote>
+<p>侯捷《 STL 源码剖析》  </p>
+</blockquote>
+<p>学习文章：</p>
+<blockquote>
+<p><a href="https://link.zhihu.com/?target=https%3A//juejin.im/post/5b1a43fb51882513bf1795c6" target="_blank" rel="noopener">https://juejin.im/post/5b1a43fb51882513bf1795c6</a><br><a href="https://link.zhihu.com/?target=https%3A//www.cnblogs.com/mangoyuan/p/6446046.html" target="_blank" rel="noopener">https://www.cnblogs.com/mangoyuan/p/6446046.html</a><br><a href="https://link.zhihu.com/?target=http%3A//www.cppblog.com/nacci/archive/2005/11/03/911.aspx" target="_blank" rel="noopener">http://www.cppblog.com/nacci/archive/2005/11/03/911.aspx</a>  </p>
+</blockquote>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/03/27/self_cultivation_python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/03/27/self_cultivation_python/" itemprop="url">服务器开发自我修养专栏-Python精要</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-27T19:08:06+00:00">
+                2021-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self-cultivation/" itemprop="url" rel="index">
+                    <span itemprop="name">Self-cultivation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="python"><a href="#python" class="headerlink" title="python"></a>python</h1><ul>
+<li>mro问题</li>
+<li>怎么实现一个协程库?</li>
+<li>mock是啥: <a href="https://zhuanlan.zhihu.com/p/30380243" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/30380243</a></li>
+</ul>
+<h2 id="import流程"><a href="#import流程" class="headerlink" title="import流程"></a>import流程</h2><ul>
+<li>当Python的解释器遇到import语句或者其他上述导入语句时,它会先去查看sys.modules中是否已经有同名模块被导入了,</li>
+<li>如果有就直接取来用;没有就去查阅sys.path里面所有已经储存的目录.<ul>
+<li>sys.path这个列表初始化的时候,通常包含一些来自外部的库(external libraries)或者是来自操作系统的一些库,当然也会有一些类似于dist-package的标准库在里面.这些目录通常是被按照顺序或者是直接去搜索想要的–如果说他们当中的一个包含有期望的package或者是module,这个package或者是module将会在整个过程结束的时候被直接提取出来保存在sys.modules中(sys.modules是一个模块名:模块对象的字典结构).</li>
+<li>当然，这个 sys.path 是可以修改的（正如上文提到的一种解决办法）。值得注意的是，如果当前目录包含有和标准库同名的模块，会直接使用当前目录的模块而不是标准模块。</li>
+<li>当在这些个地址中实在是找不着时,它就会抛出一个ModuleNotFoundError错误.</li>
+</ul>
+</li>
+<li>当我们要导入一个模块（比如 foo ）时，解释器首先会根据命名查找内置模块，如果没有找到，它就会去查找 sys.path 列表中的目录，看目录中是否有 foo.py 。sys.path 的初始值来自于：  <ul>
+<li>运行脚本所在的目录（如果打开的是交互式解释器则是当前目录）</li>
+<li>PYTHONPATH 环境变量（类似于 PATH 变量，也是一组目录名组成）</li>
+<li>Python 安装时的默认设置</li>
+</ul>
+</li>
+</ul>
+<h2 id="为啥字符串join比加号连接快"><a href="#为啥字符串join比加号连接快" class="headerlink" title="为啥字符串join比加号连接快"></a>为啥字符串join比加号连接快</h2><p>字符串是不可变对象，当用操作符<code>+</code>连接字符串的时候，每执行一次<code>+</code>都会申请一块新的内存，然后复制上一个<code>+</code>操作的结果和本次操作的右操作符到这块内存空间，因此用<code>+</code>连接字符串的时候会涉及好几次内存申请和复制。而<code>join</code>在连接字符串的时候，会先计算需要多大的内存存放结果，然后一次性申请所需内存并将字符串复制过去，这是为什么<code>join</code>的性能优于<code>+</code>的原因。所以在连接字符串数组的时候，我们应考虑优先使用<code>join</code>。</p>
+<h2 id="is和-的区别"><a href="#is和-的区别" class="headerlink" title="is和==的区别"></a>is和==的区别</h2><p>官方文档中说 is 表示的是对象标示符（object identity），而 == 表示的是相等（equality）。is 的作用是用来检查对象的标示符是否一致，也就是比较两个对象在内存中的地址是否一样，而 == 是用来检查两个对象是否相等。</p>
+<p>我们在检查 a is b 的时候，其实相当于检查 id(a) == id(b)。而检查 a == b 的时候，实际是调用了对象 a 的 <strong>eq()</strong> 方法，a == b 相当于 a.<strong>eq</strong>(b)。</p>
+<p>一般情况下，如果 a is b 返回True的话，即 a 和 b 指向同一块内存地址的话，a == b 也返回True，即 a 和 b 的值也相等。</p>
+<h2 id="元类"><a href="#元类" class="headerlink" title="元类"></a>元类</h2><p>参考: <a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017592449371072" target="_blank" rel="noopener">https://www.liaoxuefeng.com/wiki/1016959663602400/1017592449371072</a></p>
+<p>python元类的使用场景, 比如orm框架, ORM全称“Object Relational Mapping”，即对象-关系映射，就是把关系数据库的一行映射为一个对象，也就是一个类对应一个表，这样，写代码更简单，不用直接操作SQL语句。</p>
+<p><code>type()</code>函数既可以返回一个对象的类型，又可以创建出新的类型，比如，我们可以通过<code>type()</code>函数创建出<code>Hello</code>类，而无需通过<code>class Hello(object)...</code>的定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">\&gt;&gt;&gt; def fn(self, name=&apos;world&apos;): # 先定义函数</span><br><span class="line">...     print(&apos;Hello, %s.&apos; % name)</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; Hello = type(&apos;Hello&apos;, (object,), dict(hello=fn)) # 创建Hello class</span><br><span class="line">&gt;&gt;&gt; h = Hello()</span><br><span class="line">&gt;&gt;&gt; h.hello()</span><br><span class="line">Hello, world.</span><br><span class="line">&gt;&gt;&gt; print(type(Hello))</span><br><span class="line">&lt;class &apos;type&apos;&gt;</span><br><span class="line">&gt;&gt;&gt; print(type(h))</span><br><span class="line">&lt;class &apos;__main__.Hello&apos;&gt;</span><br></pre></td></tr></table></figure>
+<p>要创建一个 class 对象，<code>type()</code>函数依次传入 3 个参数：</p>
+<ol>
+<li>class 的名称；</li>
+<li>继承的父类集合，注意 Python 支持多重继承，如果只有一个父类，别忘了 tuple 的单元素写法；</li>
+<li>class 的方法名称与函数绑定，这里我们把函数<code>fn</code>绑定到方法名<code>hello</code>上。</li>
+</ol>
+<p><strong>通过<code>type()</code>函数创建的类和直接写 class 是完全一样的，因为 Python 解释器遇到 class 定义时，仅仅是扫描一下 class 定义的语法，然后调用<code>type()</code>函数创建出 class</strong>。</p>
+<p>正常情况下，我们都用<code>class Xxx...</code>来定义类，但是，<code>type()</code>函数也允许我们动态创建出类来，也就是说，动态语言本身支持运行期动态创建类，这和静态语言有非常大的不同，要在静态语言运行期创建类，必须构造源代码字符串再调用编译器，或者借助一些工具生成字节码实现，本质上都是动态编译，会非常复杂。</p>
+<h3 id="metaclass"><a href="#metaclass" class="headerlink" title="metaclass"></a>metaclass</h3><p>除了使用<code>type()</code>动态创建类以外，要控制类的创建行为，还可以使用 metaclass。<br>metaclass，直译为元类，简单的解释就是：<br>当我们定义了类以后，就可以根据这个类创建出实例，所以：先定义类，然后创建实例。<br>但是如果我们想创建出类呢？那就必须根据 metaclass 创建出类，所以：先定义 metaclass，然后创建类。<br>连接起来就是：<strong>先定义 metaclass，就可以创建类，最后创建实例。</strong><br>所以，metaclass 允许你创建类或者修改类。换句话说，你可以把类看成是 metaclass 创建出来的 “实例”。<br>我们先看一个简单的例子，这个 metaclass 可以给我们自定义的 MyList 增加一个<code>add</code>方法：<br>定义<code>ListMetaclass</code>，按照默认习惯，metaclass 的类名总是以 Metaclass 结尾，以便清楚地表示这是一个 metaclass：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListMetaclass</span><span class="params">(type)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, name, bases, attrs)</span>:</span></span><br><span class="line">        attrs\[<span class="string">'add'</span>\] = <span class="keyword">lambda</span> self, value: self.append(value)</span><br><span class="line">        <span class="keyword">return</span> type.__new__(cls, name, bases, attrs)</span><br></pre></td></tr></table></figure></p>
+<p>有了 ListMetaclass，我们在定义类的时候还要指示使用 ListMetaclass 来定制类，传入关键字参数<code>metaclass</code>：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyList</span><span class="params">(list, metaclass=ListMetaclass)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></p>
+<p>当我们传入关键字参数<code>metaclass</code>时，魔术就生效了，它指示 Python 解释器在创建<code>MyList</code>时，要通过<code>ListMetaclass.__new__()</code>来创建，在此，我们可以修改类的定义，比如，加上新的方法，然后，返回修改后的定义。</p>
+<p><code>__new__()</code>方法接收到的参数依次是：</p>
+<ol>
+<li>当前准备创建的类的对象；</li>
+<li>类的名字；</li>
+<li>类继承的父类集合；</li>
+<li>类的方法集合。</li>
+</ol>
+<p>测试一下<code>MyList</code>是否可以调用<code>add()</code>方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">\&gt;&gt;&gt; L = MyList()</span><br><span class="line">&gt;&gt;&gt; L.add(1)</span><br><span class="line">&gt;&gt; L</span><br><span class="line">\[1\]</span><br></pre></td></tr></table></figure></p>
+<p>而普通的<code>list</code>没有<code>add()</code>方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">\&gt;&gt;&gt; L2 = list()</span><br><span class="line">&gt;&gt;&gt; L2.add(1)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">AttributeError: &apos;list&apos; object has no attribute &apos;add&apos;</span><br></pre></td></tr></table></figure></p>
+<h2 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kw)</span>:</span></span><br><span class="line">        print(<span class="string">'call %s():'</span> % func.__name__)</span><br><span class="line">        <span class="keyword">return</span> func(*args, **kw)</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br></pre></td></tr></table></figure>
+<p>观察上面的log，因为它是一个decorator，所以接受一个函数作为参数，并返回一个函数。我们要借助Python的@语法，把decorator置于函数的定义处：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@log</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">now</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'2015-3-25'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>调用now()函数，不仅会运行now()函数本身，还会在运行now()函数前打印一行日志：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; now()</span><br><span class="line">call now():</span><br><span class="line">2015-3-25</span><br></pre></td></tr></table></figure>
+<p>把@log放到now()函数的定义处，相当于执行了语句：<br><code>now = log(now)</code><br>由于log()是一个decorator，返回一个函数，所以，原来的now()函数仍然存在，只是现在同名的now变量指向了新的函数，于是调用now()将执行新函数，即在log()函数中返回的wrapper()函数。</p>
+<p>wrapper()函数的参数定义是(<em>args, *</em>kw)，因此，wrapper()函数可以接受任意参数的调用。在wrapper()函数内，首先打印日志，再紧接着调用原始函数。</p>
+<p>如果decorator本身需要传入参数，那就需要编写一个返回decorator的高阶函数，写出来会更复杂。比如，要自定义log的文本：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log</span><span class="params">(text)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decorator</span><span class="params">(func)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kw)</span>:</span></span><br><span class="line">            print(<span class="string">'%s %s():'</span> % (text, func.__name__))</span><br><span class="line">            <span class="keyword">return</span> func(*args, **kw)</span><br><span class="line">        <span class="keyword">return</span> wrapper</span><br><span class="line">    <span class="keyword">return</span> decorator</span><br></pre></td></tr></table></figure></p>
+<p>这个3层嵌套的decorator用法如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@log('execute')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">now</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'2015-3-25'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>执行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; now()</span><br><span class="line">execute now():</span><br><span class="line">2015-3-25</span><br></pre></td></tr></table></figure></p>
+<p>和两层嵌套的decorator相比，3层嵌套的效果是这样的：<br><code>now = log(&#39;execute&#39;)(now)</code><br>我们来剖析上面的语句，首先执行log(‘execute’)，返回的是decorator函数，再调用返回的函数，参数是now函数，返回值最终是wrapper函数。</p>
+<h2 id="python命令行参数"><a href="#python命令行参数" class="headerlink" title="python命令行参数"></a>python命令行参数</h2><ul>
+<li>-u参数的使用：python命令加上-u（unbuffered）参数后会强制其标准输出也同标准错误一样不通过缓存直接打印到屏幕。</li>
+<li>-c参数，支持执行单行命令/脚本。如: <code>python -c &quot;import os;print(&#39;hello&#39;),print(&#39;world&#39;)&quot;</code></li>
+</ul>
+<h3 id="python-m-test-folder-test-py与python-test-folder-test有什么不同"><a href="#python-m-test-folder-test-py与python-test-folder-test有什么不同" class="headerlink" title="python -m test_folder/test.py与python test_folder/test有什么不同"></a><code>python -m test_folder/test.py</code>与<code>python test_folder/test</code>有什么不同</h3><p>桌面的test_folder文件夹下有个test.py<br><figure class="highlight python"><figcaption><span>test.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">print(sys.path)</span><br></pre></td></tr></table></figure></p>
+<p>运行看看:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hulinhong@GIH-D-14531 MINGW64 ~/Desktop</span><br><span class="line">$ python test_folder/test.py</span><br><span class="line">[&apos;C:\\Users\\hulinhong\\Desktop\\test_folder&apos;, &apos;C:\\Program Files\\Python37\\python37.zip&apos;, &apos;C:\\Program Files\\Python37\\DLLs&apos;, &apos;C:\\Program Files\\Python37\\lib&apos;, &apos;C:\\Program Files\\Python37&apos;, &apos;C:\\Program Files\\Python37\\lib\\site-packages&apos;, &apos;C:\\Program Files\\Python37\\lib\\site-packages\\redis_py_cluster-2.1.0-py3.7.egg&apos;]</span><br><span class="line"></span><br><span class="line">hulinhong@GIH-D-14531 MINGW64 ~/Desktop</span><br><span class="line">$ python -m test_folder.test</span><br><span class="line">[&apos;C:\\Users\\hulinhong\\Desktop&apos;, &apos;C:\\Program Files\\Python37\\python37.zip&apos;, &apos;C:\\Program Files\\Python37\\DLLs&apos;, &apos;C:\\Program Files\\Python37\\lib&apos;, &apos;C:\\Program Files\\Python37&apos;, &apos;C:\\Program Files\\Python37\\lib\\site-packages&apos;, &apos;C:\\Program Files\\Python37\\lib\\site-packages\\redis_py_cluster-2.1.0-py3.7.egg&apos;]</span><br></pre></td></tr></table></figure></p>
+<p>细心的同学会发现，<strong>区别</strong>就是在第一个路径:  </p>
+<ul>
+<li>python直接启动是把test.py文件所在的目录放到了sys.path属性中。</li>
+<li>模块启动是把你输入命令的目录（也就是当前路径），放到了sys.path属性中</li>
+</ul>
+<p>所以就会有下面的情况:</p>
+<p>目录结构如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">package/</span><br><span class="line">    __init__.py</span><br><span class="line">    mod1.py</span><br><span class="line">package2/</span><br><span class="line">    __init__.py</span><br><span class="line">    run.py</span><br></pre></td></tr></table></figure></p>
+<p>run.py 内容如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> package <span class="keyword">import</span> mod1</span><br><span class="line">print(sys.path)</span><br></pre></td></tr></table></figure></p>
+<p>如何才能启动run.py文件？</p>
+<ul>
+<li><p>直接启动（失败）</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  test_import_project git:(master) ✗ python package2/run.py</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;package2/run.py&quot;, line 2, in &lt;module&gt;</span><br><span class="line">    from package import mod1</span><br><span class="line">ImportError: No module named package</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以模块方式启动（成功）</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  test_import_project git:(master) ✗ python -m package2.run</span><br><span class="line">[&apos;C:\\Users\\hulinhong\\Desktop&apos;,</span><br><span class="line">&apos;/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/lib/python27.zip&apos;,</span><br><span class="line">...]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>当需要启动的py文件引用了一个模块。你需要注意：在启动的时候需要考虑sys.path中有没有你import的模块的路径！<br>这个时候，到底是使用直接启动，还是以模块的启动？目的就是把import的那个模块的路径放到sys.path中。你是不是明白了呢？</p>
+<blockquote>
+<p>官方文档参考： <a href="http://www.pythondoc.com/pythontutorial3/modules.html" target="_blank" rel="noopener">http://www.pythondoc.com/pythontutorial3/modules.html</a></p>
+</blockquote>
+<p>导入一个叫 mod1 的模块时，解释器先在当前目录中搜索名为 mod1.py 的文件。如果没有找到的话，接着会到 sys.path 变量中给出的目录列表中查找。 sys.path 变量的初始值来自如下：</p>
+<p>输入脚本的目录（当前目录）。</p>
+<ul>
+<li>环境变量 PYTHONPATH 表示的目录列表中搜索(这和 shell 变量 PATH 具有一样的语法，即一系列目录名的列表)。</li>
+<li>Python 默认安装路径中搜索。</li>
+<li>实际上，解释器由 sys.path 变量指定的路径目录搜索模块，该变量初始化时默认包含了输入脚本（或者当前目录）， PYTHONPATH 和安装目录。这样就允许 Python程序了解如何修改或替换模块搜索目录。</li>
+</ul>
+<h2 id="在python程序中调用cpp的库创建的线程是否受制于GIL"><a href="#在python程序中调用cpp的库创建的线程是否受制于GIL" class="headerlink" title="在python程序中调用cpp的库创建的线程是否受制于GIL?"></a>在python程序中调用cpp的库创建的线程是否受制于GIL?</h2><p>首先要理解什么是GIL.<br>Python 的多线程是真的多线程，只不过在任意时刻，它们中只有一个线程能够取得 GIL 从而被允许执行 Python 代码。其它线程要么等着，要么干别的和 Python 无关的事情（比如等待系统 I/O，或者算点什么东西）。</p>
+<p>那如果是通过CPP扩展创建出来的线程，可以摆脱这个限制么？<br>很简单，不访问 Python 的数据和方法，就和 GIL 没任何关系。如果需要访问 Python，还是需要先取得 GIL.</p>
+<p>GIL 是为了保护 Python 数据不被并发访问破坏，所以当你不访问 Python 的数据的时候自然就可以释放（或者不取得）GIL。反过来，如果需要访问 Python 的数据，就一定要取得 GIL 再访问。PyObject 等不是线程安全的。多线程访问任何非线程安全的数据都需要先取得对应的锁。Python 所有的 PyObject 什么的都共享一个锁，它就叫 GIL。</p>
+<h2 id="new-与-del-与-init"><a href="#new-与-del-与-init" class="headerlink" title="__new__ 与 __del__ 与 __init__"></a><code>__new__</code> 与 <code>__del__</code> 与 <code>__init__</code></h2><p>先来看一个单例模式的实现<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span>:</span></span><br><span class="line">    __isinstance = <span class="keyword">False</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> cls.__isinstance:  <span class="comment"># 如果被实例化了</span></span><br><span class="line">            cls.__isinstance = object.__new__(cls)  <span class="comment"># 否则实例化</span></span><br><span class="line">        <span class="keyword">return</span> cls.__isinstance  <span class="comment"># 返回实例化的对象</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        print(<span class="string">'my name is %s'</span>%(name))</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__del__</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'886, %s'</span>%(self.name))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">d1 = Demo(<span class="string">'Alice'</span>)</span><br><span class="line">d2 = Demo(<span class="string">'Anew'</span>)</span><br><span class="line">print(d1)</span><br><span class="line">print(d2)</span><br></pre></td></tr></table></figure></p>
+<p>打印:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">my name is Alice</span><br><span class="line">my name is Anew</span><br><span class="line">&lt;__main__.Demo object at 0x000001446604D3C8&gt;</span><br><span class="line">&lt;__main__.Demo object at 0x000001446604D3C8&gt;</span><br><span class="line">886, Anew</span><br></pre></td></tr></table></figure></p>
+<p><code>__new__</code> 是负责对当前类进行实例化，并将实例返回，并传给<code>__init__</code>方法，<code>__init__</code>方法中的self就是指代<code>__new__</code>传过来的对象，所以再次强调，<code>__init__</code>是实例化后调用的第一个方法。</p>
+<p><code>__del__</code>在对象销毁时被调用，往往用于清除数据或还原环境等操作，比如在类中的其他普通方法中实现了插入数据库的语句，当对象被销毁时我们需要将数据还原，那么这时可以在<code>__del__</code>方法中实现还原数据库数据的功能。<code>__del__</code>被成为析构方法，同样和C++中的析构方法类似。</p>
+<h2 id="python垃圾回收"><a href="#python垃圾回收" class="headerlink" title="python垃圾回收"></a>python垃圾回收</h2><p>总体来说，在Python中，主要通过引用计数进行垃圾回收；通过 “标记-清除” 解决容器对象可能产生的循环引用问题；通过 “分代回收” 以空间换时间的方法提高垃圾回收效率。</p>
+<ul>
+<li>引用计数</li>
+<li>标记清除(Mark and Sweep)</li>
+<li>分代回收</li>
+</ul>
+<h3 id="标记清除咋弄的"><a href="#标记清除咋弄的" class="headerlink" title="标记清除咋弄的"></a>标记清除咋弄的</h3><p>参考: <a href="https://zhuanlan.zhihu.com/p/83251959" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/83251959</a></p>
+<p>Python 采用了 <strong>“标记-清除”(Mark and Sweep)</strong> 算法，解决容器对象可能产生的循环引用问题。(注意，只有容器对象才会产生循环引用的情况，比如列表、字典、用户自定义类的对象、元组等。而像数字，字符串这类简单类型不会出现循环引用。作为一种优化策略，对于只包含简单类型的元组也不在标记清除算法的考虑之列)</p>
+<p>跟其名称一样，该算法在进行垃圾回收时分成了两步，分别是：</p>
+<ul>
+<li>A）标记阶段，遍历所有的对象，如果是可达的（reachable），也就是还有对象引用它，那么就标记该对象为可达；</li>
+<li>B）清除阶段，再次遍历对象，如果发现某个对象没有标记为可达，则就将其回收。</li>
+</ul>
+<p>如下图所示，在标记清除算法中，为了追踪容器对象，需要每个容器对象维护两个额外的指针，用来将容器对象组成一个双端链表，指针分别指向前后两个容器对象，方便插入和删除操作。python 解释器 (Cpython) 维护了两个这样的双端链表，一个链表存放着需要被扫描的容器对象，另一个链表存放着临时不可达对象。在图中，这两个链表分别被命名为”Object to Scan”和”Unreachable”。图中例子是这么一个情况：link1,link2,link3 组成了一个引用环，同时 link1 还被一个变量 A(其实这里称为名称 A 更好)引用。link4 自引用，也构成了一个引用环。从图中我们还可以看到，每一个节点除了有一个记录当前引用计数的变量 ref_count 还有一个 gc_ref 变量，这个 gc_ref 是 ref_count 的一个副本，所以初始值为 ref_count 的大小。</p>
+<p><img src="/img/noodle_plan/python/v2-0d5071093adaa02bc03fa3dfd91aa5bc_720w.jpg" alt></p>
+<p>gc 启动的时候，会逐个遍历”Object to Scan” 链表中的容器对象，并且将当前对象所引用的所有对象的 gc_ref 减一。(扫描到 link1 的时候，由于 link1 引用了 link2, 所以会将 link2 的 gc_ref 减一，接着扫描 link2, 由于 link2 引用了 link3, 所以会将 link3 的 gc_ref 减一…..) 像这样将”Objects to Scan” 链表中的所有对象考察一遍之后，两个链表中的对象的 ref_count 和 gc_ref 的情况如下图所示。这一步操作就相当于解除了循环引用对引用计数的影响。</p>
+<p><img src="https://pic3.zhimg.com/v2-d7314ead6b303f08a91687577c045585_b.jpg" alt></p>
+<p>接着，gc 会再次扫描所有的容器对象，如果对象的 gc_ref 值为 0，那么这个对象就被标记为 GC_TENTATIVELY_UNREACHABLE，并且被移至”Unreachable” 链表中。下图中的 link3 和 link4 就是这样一种情况。</p>
+<p><img src="https://pic1.zhimg.com/v2-d3c3f52615fb704c26bd53dbb178767c_b.jpg" alt></p>
+<p>如果对象的 gc_ref 不为 0，那么这个对象就会被标记为 GC_REACHABLE。同时当 gc 发现有一个节点是可达的，那么他会递归式的将从该节点出发可以到达的所有节点标记为 GC_REACHABLE, 这就是下图中 link2 和 link3 所碰到的情形。</p>
+<p><img src="https://pic1.zhimg.com/v2-510f4d2d37aabdbc8978d9e47630237d_b.jpg" alt></p>
+<p>除了将所有可达节点标记为 GC_REACHABLE 之外，如果该节点当前在”Unreachable” 链表中的话，还需要将其移回到”Object to Scan” 链表中，下图就是 link3 移回之后的情形。</p>
+<p><img src="/img/noodle_plan/python/v2-6fd40c055a6633c654acaf05f472c1b2_720w.jpg" alt></p>
+<p>第二次遍历的所有对象都遍历完成之后，存在于”Unreachable” 链表中的对象就是真正需要被释放的对象。如上图所示，此时 link4 存在于 Unreachable 链表中，gc 随即释放之。</p>
+<p><strong>上面描述的垃圾回收的阶段，会暂停整个应用程序，等待标记清除结束后才会恢复应用程序的运行。</strong></p>
+<h4 id="为啥标记清除回收无法回收重写了-del-方法的类对象"><a href="#为啥标记清除回收无法回收重写了-del-方法的类对象" class="headerlink" title="为啥标记清除回收无法回收重写了__del__方法的类对象"></a>为啥标记清除回收无法回收重写了<code>__del__</code>方法的类对象</h4><blockquote>
+<p>Circular references which are garbage are detected when the option cycle detector is enabled (it’s on by default), but can only be cleaned up if there are no Python-level <code>__del__</code>() methods involved.</p>
+</blockquote>
+<p>官方文档中表明启用周期检测器时会检测到垃圾的循环引用（默认情况下它是打开的)，但只有在没有涉及 Python <code>__del__()</code> 方法的情况下才能清除。Python 不知道破坏彼此保持循环引用的对象的安全顺序，因此它则不会为这些方法调用析构函数。简而言之，如果定义了 <code>__del__</code> 函数，那么在循环引用中Python解释器无法判断析构对象的顺序，因此就不做处理。</p>
+<h3 id="分代回收"><a href="#分代回收" class="headerlink" title="分代回收"></a>分代回收</h3><p>在循环引用对象的回收中，整个应用程序会被暂停，为了减少应用程序暂停的时间，Python 通过“分代回收”(Generational Collection)以空间换时间的方法提高垃圾回收效率。</p>
+<p>分代回收是基于这样的一个统计事实，对于程序，存在一定比例的内存块的生存周期比较短；而剩下的内存块，生存周期会比较长，甚至会从程序开始一直持续到程序结束。生存期较短对象的比例通常在 80%～90% 之间，这种思想简单点说就是：对象存在时间越长，越可能不是垃圾，应该越少去收集。这样在执行标记-清除算法时可以有效减小遍历的对象数，从而提高垃圾回收的速度。</p>
+<p>python gc给对象定义了三种世代(0,1,2),每一个新生对象在generation zero中，如果它在一轮gc扫描中活了下来，那么它将被移至generation one,在那里他将较少的被扫描，如果它又活过了一轮gc,它又将被移至generation two，在那里它被扫描的次数将会更少。</p>
+<p>gc的扫描在什么时候会被触发呢?答案是当某一世代中被分配的对象与被释放的对象之差达到某一阈值的时候，就会触发gc对某一世代的扫描。值得注意的是当某一世代的扫描被触发的时候，比该世代年轻的世代也会被扫描。也就是说如果世代2的gc扫描被触发了，那么世代0,世代1也将被扫描，如果世代1的gc扫描被触发，世代0也会被扫描。</p>
+<p>该阈值可以通过下面两个函数查看和调整:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gc.get_threshold() <span class="comment"># (threshold0, threshold1, threshold2).</span></span><br><span class="line">gc.set_threshold(threshold0[, threshold1[, threshold2]])</span><br></pre></td></tr></table></figure>
+<p>下面对set_threshold()中的三个参数threshold0, threshold1, threshold2进行介绍。gc会记录自从上次收集以来新分配的对象数量与释放的对象数量，当两者之差超过threshold0的值时，gc的扫描就会启动，初始的时候只有世代0被检查。如果自从世代1最近一次被检查以来，世代0被检查超过threshold1次，那么对世代1的检查将被触发。相同的，如果自从世代2最近一次被检查以来，世代1被检查超过threshold2次，那么对世代2的检查将被触发。get_threshold()是获取三者的值，默认值为(700,10,10).</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

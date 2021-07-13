@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="NAT,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="NAT类型 锥NAT 对称NAT   NAT作用 穿透锥NAT 网络拓扑结构 使用UDP穿透NAT 使用TCP穿透NAT   穿透对称NAT 同时开放TCP（ Simultaneous TCP open ）策略 UDP端口猜测策略   问题总结 参考  NAT类型注 : 我们本文主要讨论穿越锥NAT 锥NAT 全锥NAT ：全锥NAT 把所有来自相同内部IP 地址和端口的请求映射到相同的外部IP">
+<meta name="keywords" content="NAT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NAT穿越基础">
+<meta property="og:url" content="https://hulinhong.com/2016/06/21/NAT穿越基础/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="NAT类型 锥NAT 对称NAT   NAT作用 穿透锥NAT 网络拓扑结构 使用UDP穿透NAT 使用TCP穿透NAT   穿透对称NAT 同时开放TCP（ Simultaneous TCP open ）策略 UDP端口猜测策略   问题总结 参考  NAT类型注 : 我们本文主要讨论穿越锥NAT 锥NAT 全锥NAT ：全锥NAT 把所有来自相同内部IP 地址和端口的请求映射到相同的外部IP">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hulinhong.com/2016/06/21/NAT穿越基础/nat1.jpg">
+<meta property="og:image" content="https://hulinhong.com/2016/06/21/NAT穿越基础/nat2.jpg">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.030Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NAT穿越基础">
+<meta name="twitter:description" content="NAT类型 锥NAT 对称NAT   NAT作用 穿透锥NAT 网络拓扑结构 使用UDP穿透NAT 使用TCP穿透NAT   穿透对称NAT 同时开放TCP（ Simultaneous TCP open ）策略 UDP端口猜测策略   问题总结 参考  NAT类型注 : 我们本文主要讨论穿越锥NAT 锥NAT 全锥NAT ：全锥NAT 把所有来自相同内部IP 地址和端口的请求映射到相同的外部IP">
+<meta name="twitter:image" content="https://hulinhong.com/2016/06/21/NAT穿越基础/nat1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>NAT穿越基础 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/06/21/NAT穿越基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">NAT穿越基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-21T12:51:46+00:00">
+                2016-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Misc/" itemprop="url" rel="index">
+                    <span itemprop="name">Misc</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/NAT/" rel="tag"><i class="fa fa-tag"></i> NAT</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/16/MySQL进阶二/" rel="next" title="MySQL进阶二">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  MySQL进阶二
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/30/MongoDB能取代MySQL或者Redis能取代memcached么/" rel="prev" title="MongoDB能取代MySQL或者Redis能取代memcached么">
+              <p class="post-nav-pre-next-title">
+                  MongoDB能取代MySQL或者Redis能取代memcached么
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <ol>
+<li><a href="#NAT类型">NAT类型</a><ol>
+<li><a href="#锥NAT"><em>锥NAT</em></a></li>
+<li><a href="#对称NAT"><em>对称NAT</em></a></li>
+</ol>
+</li>
+<li><a href="#NAT作用">NAT作用</a></li>
+<li><a href="#穿透锥NAT">穿透锥NAT</a><ol>
+<li><a href="#网络拓扑结构"><em>网络拓扑结构</em></a></li>
+<li><a href="#使用UDP穿透NAT"><em>使用UDP穿透NAT</em></a></li>
+<li><a href="#使用TCP穿透NAT"><em>使用TCP穿透NAT</em></a></li>
+</ol>
+</li>
+<li><a href="#穿透对称NAT">穿透对称NAT</a><ol>
+<li><a href="#同时开放TCP（ Simultaneous TCP open ）策略"><em>同时开放TCP（ Simultaneous TCP open ）策略</em></a></li>
+<li><a href="#UDP端口猜测策略"><em>UDP端口猜测策略</em></a></li>
+</ol>
+</li>
+<li><a href="#问题总结">问题总结</a></li>
+<li><a href="#参考">参考</a></li>
+</ol>
+<h1 id="NAT类型"><a href="#NAT类型" class="headerlink" title="NAT类型"></a>NAT类型</h1><p><strong>注</strong> : 我们本文主要讨论穿越<strong>锥NAT</strong></p>
+<h2 id="锥NAT"><a href="#锥NAT" class="headerlink" title="锥NAT"></a><em>锥NAT</em></h2><ul>
+<li>全锥NAT ：全锥NAT 把所有来自相同内部IP 地址和端口的请求映射到相同的外部IP 地址和端口。任何一个外部主机均可通过该映射发送数据包到该内部主机。</li>
+<li>限制性锥NAT ：限制性锥NAT 把所有来自相同内部IP 地址和端口的请求映射到相同的外部IP 地址和端口。但是, 和全锥NAT 不同的是：只有当内部主机先给外部主机发送数据包, 该外部主机才能向该内部主机发送数据包。</li>
+<li>端口限制性锥NAT ：端口限制性锥NAT 与限制性锥NAT 类似, 只是多了端口号的限制, 即只有内部主机先向外部地址：端口号对发送数据包, 该外部主机才能使用特定的端口号向内部主机发送数据包。</li>
+</ul>
+<h2 id="对称NAT"><a href="#对称NAT" class="headerlink" title="对称NAT"></a><em>对称NAT</em></h2><p>对称NAT 与上述3 种类型都不同, 不管是全锥NAT ，限制性锥NAT 还是端口限制性锥NAT ，它们都属于锥NAT （Cone NAT ）。当同一内部主机使用相同的端口与不同地址的外部主机进行通信时, 对称NAT 会重新建立一个Session ，为这个Session 分配不同的端口号，或许还会改变IP 地址。</p>
+<p><strong>. . .</strong><a id="more"></a></p>
+<h1 id="NAT作用"><a href="#NAT作用" class="headerlink" title="NAT作用"></a>NAT作用</h1><p>NAT 不仅实现地址转换，同时还起到防火墙的作用，隐藏内部网络的拓扑结构，保护内部主机。</p>
+<p>NAT 不仅完美地解决了 lP 地址不足的问题，而且还能够有效地避免来自网络外部的攻击，隐藏并保护网络内部的计算机。</p>
+<p>这样对于外部主机来说，内部主机是不可见的。</p>
+<p>但是，对于P2P 应用来说，却要求能够建立端到端的连接，所以如何穿透NAT 也是P2P 技术中的一个关键。</p>
+<h1 id="穿透锥NAT"><a href="#穿透锥NAT" class="headerlink" title="穿透锥NAT"></a>穿透锥NAT</h1><p>要让处于NAT 设备之后的拥有私有IP 地址的主机之间建立P2P 连接，就必须想办法穿<br>透NAT ，现在常用的传输层协议主要有TCP 和UDP ，下面就是用这两种协议来介绍穿透NAT 的策略。</p>
+<h2 id="网络拓扑结构"><a href="#网络拓扑结构" class="headerlink" title="网络拓扑结构"></a><em>网络拓扑结构</em></h2><p>下面假设有如图1 所示网络拓扑结构图。</p>
+<img src="/2016/06/21/NAT穿越基础/nat1.jpg" title="图1.网络拓扑结构图">
+<p>Server （129.208.12.38 ）是公网上的服务器，NAT-A 和NAT-B 是两个NAT 设备（可能是集成NAT 功能的路由器，防火墙等），它们具有若干个合法公网IP ，在NAT-A 阻隔的私有网络中有若干台主机【ClientA-1 ，ClientA-N 】，在NAT-B 阻隔的私有网络中也有若干台主机【ClientB-1 ，ClientB-N 】。</p>
+<p>为了以后说明问题方便，只讨论主机ClientA-1 和ClientB-1 。</p>
+<p>假设主机ClientA-1 和主机ClientB-1 都和服务器Server 建立了“连接”，如图2 所示。</p>
+<img src="/2016/06/21/NAT穿越基础/nat2.jpg" title="图2.ClientA-1 ，ClientB-1 和Server 之间通信">
+<p>由于NAT 的透明性，所以ClientA-1 和ClientB-1 不用关心和Server 通信的过程，它们只需要知道Server 开放服务的地址和端口号即可。</p>
+<p>根据图1 ，假设在ClientA-1 中有进程使用socket （192.168.0.2 ：7000 ）和Server 通信，在ClientB-1 中有进程使用socket （192.168.1.12:8000 ）和Server 通信。</p>
+<p>它们通过各自的NAT 转换后分别变成了socket （202.103.142.29 ：5000 ）和socket （221.10.145.84 ：6000 ）。</p>
+<h2 id="使用UDP穿透NAT"><a href="#使用UDP穿透NAT" class="headerlink" title="使用UDP穿透NAT"></a><em>使用UDP穿透NAT</em></h2><p>通常情况下，当进程使用UDP 和外部主机通信时，NAT 会建立一个Session ，这个Session 能够保留多久并没有标准，或许几秒，几分钟，几个小时。</p>
+<p>假设ClientA-1 在应用程序中看到了ClientB-1 在线，并且想和ClientB-1 通信，一种办法是Server 作为中间人，负责转发ClientA-1 和ClientB-1 之间的消息，但是这样服务器太累，会吃不消。</p>
+<p>另一种方法就是让ClientA-1 何ClientB-1 建立端到端的连接，然后他们自己通信。</p>
+<p>这也就是P2P 连接。</p>
+<p>根据不同类型的NAT ，下面分别讲解。</p>
+<ul>
+<li>全锥NAT ，穿透全锥型NAT 很容易，根本称不上穿透，因为全锥型NAT 将内部主机的映射到确定的地址，不会阻止从外部发送的连接请求，所以可以不用任何辅助手段就可以建立连接。</li>
+</ul>
+<ul>
+<li>限制性锥NAT 和端口限制性锥NAT （简称限制性NAT ），穿透限制性锥NAT 会丢弃它未知的源地址发向内部主机的数据包。</li>
+</ul>
+<p>所以如果现在ClientA-1 直接发送UDP 数据包到ClientB-1 ，那么数据包将会被NAT-B 无情的丢弃。</p>
+<p>所以采用下面的方法来建立ClientA-1 和ClientB-1 之间的通信。</p>
+<ol>
+<li>ClientA-1 （202.103.142.29:5000 ）发送数据包给Server ，请求和ClientB-1 （221.10.145.84:6000 ）通信。</li>
+<li>Server 将ClientA-1 的地址和端口（202.103.142.29:5000 ）发送给ClientB-1 ，告诉ClientB-1 ，ClientA-1 想和它通信。</li>
+<li>ClientB-1 向ClientA-1 （202.103.142.29:5000 ）发送UDP 数据包，当然这个包在到达NAT-A 的时候，还是会被丢弃，这并不是关键的，因为发送这个UDP 包只是为了让NAT-B 记住这次通信的目的地址：端口号，当下次以这个地址和端口为源的数据到达的时候就不会被NAT-B 丢弃，这样就在NAT-B 上打了一个从ClientB-1 到ClientA-1 的孔。</li>
+<li>为了让ClientA-1 知道什么时候才可以向ClientB-1 发送数据，所以ClientB-1 在向ClientA-1 （202.103.142.29:5000 ）打孔之后还要向Server 发送一个消息，告诉Server 它已经准备好了。</li>
+<li>Server 发送一个消息给ClientA-1 ，内容为：ClientB-1 已经准备好了，你可以向ClientB-1 发送消息了。</li>
+<li>ClientA-1 向ClientB-1 发送UDP 数据包。</li>
+</ol>
+<p>这个数据包不会被NAT-B 丢弃，以后ClientB-1 向ClientA-1 发送的数据包也不会被ClientA-1 丢弃，因为NAT-A 已经知道是ClientA-1 首先发起的通信。</p>
+<p>至此，ClientA-1 和ClientB-1 就可以进行通信了。</p>
+<h2 id="使用TCP穿透NAT"><a href="#使用TCP穿透NAT" class="headerlink" title="使用TCP穿透NAT"></a><em>使用TCP穿透NAT</em></h2><p>使用TCP 协议穿透NAT 的方式和使用UDP 协议穿透NAT 的方式几乎一样，没有什么本质上的区别，只是将无连接的UDP 变成了面向连接的TCP 。</p>
+<p>值得注意是：</p>
+<ol>
+<li>ClientB-1 在向ClientA-1 打孔时，发送的SYN 数据包，而且同样会被NAT-A 丢弃。同时，ClientB-1 需要在原来的socket 上监听，由于重用socket ，所以需要将socket 属性设置为SO_REUSEADDR 。</li>
+<li>ClientA-1 向ClientB-1 发送连接请求。同样，由于ClientB-1 到ClientA-1 方向的孔已经打好，所以连接会成功，经过3 次握手后，ClientA-1 到ClientB-1 之间的连接就建立起来了。</li>
+</ol>
+<h1 id="穿透对称NAT"><a href="#穿透对称NAT" class="headerlink" title="穿透对称NAT"></a>穿透对称NAT</h1><p>上面讨论的都是怎样穿透锥（Cone ）NAT ，对称NAT 和锥NAT 很不一样。</p>
+<p>对于 对称NAT ，当一个私网内主机和外部多个不同主机通信时，对称NAT 并不会像锥（Cone ，全锥，限制性锥，端口限制性锥）NAT 那样分配同一个端口。</p>
+<p>而是会新建立一个Session ，重新分配一个端口。</p>
+<p>参考上面穿透限制性锥NAT 的过程，在步骤3 时：ClientB-1 （221.10.145.84: ？）向ClientA-1 打孔的时候，对称NAT 将给ClientB-1 重新分配一个端口号，而这个端口号对于Server 、ClientB-1 、ClientA-1 来说都是未知的。</p>
+<p>同样， ClientA-1 根本不会收到这个消息，同时在步骤4 ，ClientB-1 发送给Server 的通知消息中，ClientB-1 的socket 依旧是（221.10.145.84:6000 ）。</p>
+<p>而且，在步骤6 时：ClientA-1 向它所知道但错误的ClientB-1 发送数据包时，NAT-1 也会重新给ClientA-1 分配端口号。</p>
+<p>所以，穿透对称NAT 的机会很小。</p>
+<p>下面是两种有可能穿透对称NAT 的策略。</p>
+<h2 id="同时开放TCP（-Simultaneous-TCP-open-）策略"><a href="#同时开放TCP（-Simultaneous-TCP-open-）策略" class="headerlink" title="同时开放TCP（ Simultaneous TCP open ）策略"></a><em>同时开放TCP（ Simultaneous TCP open ）策略</em></h2><p>如果一个 对称 NAT 接收到一个来自 本地 私有网 络 外面的 TCP SYN 包， 这 个包想 发 起一个 “ 引入” 的 TCP 连 接，一般来 说 ， NAT 会拒 绝这 个 连 接 请 求并扔掉 这 个 SYN 包，或者回送一个TCP RST （connection reset ，重建 连 接）包 给请 求方。</p>
+<p>但是，有一 种 情况 却会接受这个“引入”连接。</p>
+<p>RFC 规定：对于对称NAT ， 当 这 个接收到的 SYN 包中的源IP 地址 ： 端口、目 标 IP 地址 ： 端口都与NAT 登 记 的一个已 经 激活的 TCP 会 话 中的地址信息相符 时 ， NAT 将会放行 这 个 SYN 包。</p>
+<p>需要 特 别 指出 的是：怎样才是一个已经激活的TCP 连接？除了真正已经建立完成的TCP 连接外，RFC 规范指出： 如果 NAT 恰好看到一个 刚刚发 送出去的一个 SYN 包和 随之 接收到的SYN 包中的地址 ：端口 信息相符合的 话 ，那 么 NAT 将会 认为这 个 TCP 连 接已 经 被激活，并将允 许这 个方向的 SYN 包 进 入 NAT 内部。</p>
+<p>同时开放TCP 策略就是利用这个时机来建立连接的。</p>
+<p>如果 Client A -1 和 Client B -1 能 够 彼此正确的 预 知 对 方的 NAT 将会 给 下一个 TCP 连 接分配的公网 TCP 端口，并且两个客 户 端能 够 同 时 地 发 起一 个面向对方的 “ 外出 ” 的 TCP 连 接 请求 ，并在 对 方的 SYN 包到达之前，自己 刚发 送出去的 SYN 包都能 顺 利的穿 过 自己的 NAT 的 话 ，一条端 对 端的 TCP 连 接就 能 成功地建立了 。</p>
+<h2 id="UDP端口猜测策略"><a href="#UDP端口猜测策略" class="headerlink" title="UDP端口猜测策略"></a><em>UDP端口猜测策略</em></h2><p>同时开放TCP 策略非常依赖于猜测对方的下一个端口，而且强烈依赖于发送连接请求的时机，而且还有网络的不确定性，所以能够建立的机会很小，即使Server 充当同步时钟的角色。</p>
+<p>下面是一种通过UDP 穿透的方法，由于UDP 不需要建立连接，所以也就不需要考虑“同时开放”的问题。</p>
+<p>为了介绍ClientB-1 的诡计，先介绍一下STUN 协议。</p>
+<p>STUN （Simple Traversal of UDP Through NATs ）协议是一个轻量级协议，用来探测被NAT 映射后的地址：端口。</p>
+<p>STUN 采用C/S 结构，需要探测自己被NAT 转换后的地址：端口的Client 向Server 发送请求，Server 返回Client 转换后的地址：端口。</p>
+<p>参考4.2 节中穿透NAT 的步骤2 ，当ClientB-1 收到Server 发送给它的消息后，ClientB-1 即打开3 个socket 。</p>
+<p>socket-0 向STUN Server 发送请求，收到回复后，假设得知它被转换后的地址：端口（ 221.10.145.84:600 5 ），socket-1 向ClientA-1 发送一个UDP 包，socket-2 再次向另一个STUN Server 发送请求，假设得到它被转换后的地址：端口（ 221.10.145.84:60 20 ）。</p>
+<p>通常，对称NAT 分配端口有两种策略，一种是按顺序增加，一种是随机分配。</p>
+<p>如果这里对称NAT 使用顺序增加策略，那么，ClientB-1 将两次收到的地址：端口发送给Server 后，Server 就可以通知ClientA-1 在这个端口范围内猜测刚才ClientB-1 发送给它的socket-1 中被NAT 映射后的地址：端口，ClientA-1 很有可能在孔有效期内成功猜测到端口号，从而和ClientB-1 成功通信。</p>
+<h1 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h1><p>从上面两种穿透对称NAT 的方法来看，都建立在了严格的假设条件下。</p>
+<p>但是现实中多数的NAT 都是锥NAT ，因为资源毕竟很重要，反观对称NAT ，由于太不节约端口号所以相对来说成本较高。</p>
+<p>所以，不管是穿透锥NAT ，还是对称NAT ，现实中都是可以办到的。</p>
+<p>除非对称NAT 真的使用随机算法来分配可用的端口。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://blog.csdn.net/leisure512/article/details/4900191" title="P2P，UDP和TCP穿透NAT" target="_blank" rel="noopener">这篇博客</a></p>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/NAT/" rel="tag"><i class="fa fa-tag"></i> NAT</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2016/06/16/MySQL进阶二/" rel="next" title="MySQL进阶二">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    MySQL进阶二
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2016/06/30/MongoDB能取代MySQL或者Redis能取代memcached么/" rel="prev" title="MongoDB能取代MySQL或者Redis能取代memcached么">
+                <p class="post-nav-pre-next-title">
+                    MongoDB能取代MySQL或者Redis能取代memcached么
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NAT类型"><span class="nav-number">1.</span> <span class="nav-text">NAT类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#锥NAT"><span class="nav-number">1.1.</span> <span class="nav-text">锥NAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对称NAT"><span class="nav-number">1.2.</span> <span class="nav-text">对称NAT</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NAT作用"><span class="nav-number">2.</span> <span class="nav-text">NAT作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#穿透锥NAT"><span class="nav-number">3.</span> <span class="nav-text">穿透锥NAT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络拓扑结构"><span class="nav-number">3.1.</span> <span class="nav-text">网络拓扑结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用UDP穿透NAT"><span class="nav-number">3.2.</span> <span class="nav-text">使用UDP穿透NAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用TCP穿透NAT"><span class="nav-number">3.3.</span> <span class="nav-text">使用TCP穿透NAT</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#穿透对称NAT"><span class="nav-number">4.</span> <span class="nav-text">穿透对称NAT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#同时开放TCP（-Simultaneous-TCP-open-）策略"><span class="nav-number">4.1.</span> <span class="nav-text">同时开放TCP（ Simultaneous TCP open ）策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UDP端口猜测策略"><span class="nav-number">4.2.</span> <span class="nav-text">UDP端口猜测策略</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题总结"><span class="nav-number">5.</span> <span class="nav-text">问题总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

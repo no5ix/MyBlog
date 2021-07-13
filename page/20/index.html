@@ -1,0 +1,1899 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="烫">
+<meta property="og:url" content="https://hulinhong.com/page/20/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="烫">
+<meta name="twitter:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>烫 - 烫烫烫烫烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/04/09/client_server_connection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/09/client_server_connection/" itemprop="url">构建游戏网络协议六之客户端与服务器的连接</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-09T23:13:35+00:00">
+                2017-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GS/" itemprop="url" rel="index">
+                    <span itemprop="name">GS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="本篇自我总结"><a href="#本篇自我总结" class="headerlink" title="本篇自我总结"></a>本篇自我总结</h1><p>这篇文章网上找不到翻译, 我也没时间详细翻译, 大概总结一下吧.<br>本篇主要讲了把本系列之前五篇文章的技术应用到实战中处理客户端与服务器的的连接.<br>请看总结, 不明之处再看文中具体讲解.</p>
+<h2 id="简单的连接协议"><a href="#简单的连接协议" class="headerlink" title="简单的连接协议"></a>简单的连接协议</h2><p>First up we have the client state machine.<br>The client is in one of three states:</p>
+<ul>
+<li>Disconnected</li>
+<li>Connecting</li>
+<li>Connected</li>
+</ul>
+<p>The goal is to create an abstraction on top of a UDP socket where our server presents a number of virtual slots for clients to connect to.</p>
+<p>When a client requests a connection, it gets assigned to one of these slots.</p>
+<p>If a client requests connection, but no slots are available, the server is full and the connection request is denied.</p>
+<p>On the server, we have the following data structure:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MaxClients = <span class="number">64</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Server</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> m_maxClients;</span><br><span class="line">    <span class="keyword">int</span> m_numConnectedClients;</span><br><span class="line">    <span class="keyword">bool</span> m_clientConnected[MaxClients];</span><br><span class="line">    Address m_clientAddress[MaxClients];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="这个简单协议存在的问题"><a href="#这个简单协议存在的问题" class="headerlink" title="这个简单协议存在的问题"></a>这个简单协议存在的问题</h2><ul>
+<li>易被攻击者利用我们的服务器当做DDos放大攻击的工具</li>
+<li>攻击者可以很轻松的占满我们的client slots</li>
+<li>Traffic between the client and server can be read and modified in transit by a third party. </li>
+<li>一旦被攻击者知道了客户端或者服务器的地址, 他就可以伪装服务器或客户端来欺骗对方获取利益</li>
+<li>没有一个明确的断开连接的方式, 只能等time out</li>
+</ul>
+<p>这些问题需要用授权系统和加密系统来解决.</p>
+<h2 id="如何改进这个连接协议"><a href="#如何改进这个连接协议" class="headerlink" title="如何改进这个连接协议"></a>如何改进这个连接协议</h2><ul>
+<li><p>we no longer accept client connections immediately on connection request, instead we send back a challenge packet, and only complete connection when a client replies with information that can only be obtained by receiving the challenge packet.</p>
+</li>
+<li><p>为了防止攻击者利用我们的服务器当做DDos放大攻击的工具, 我们让客户端发的包比服务器发的包要大些.</p>
+</li>
+<li><p>We’ll add some unique random identifiers, or ‘salts’, to make each client connection unique from previous ones coming from the same IP address and port.</p>
+</li>
+<li><p>一旦彼此连接上之后, 就用 client salt 和 server salt 的异或值来标识彼此.</p>
+</li>
+<li><p>以上的防御措施让我们的服务器做到了 no longer able to be used as port of DDoS amplification attacks, and with a trivial xor based authentication, 但对于一个经验丰富的会抓包分析的攻击者来说, 还存在以下问题 : </p>
+<ul>
+<li>This attacker can read and modify packets in flight.</li>
+<li>This breaks the trivial identification based around salt values…</li>
+<li>giving an attacker the power to disconnect any client at will.</li>
+</ul>
+</li>
+</ul>
+<p>To solve this, we need to get serious with cryptography to encrypt and sign packets so they can’t be read or modified by a third party.</p>
+<h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="https://gafferongames.com/post/client_server_connection/" target="_blank" rel="noopener">原文出处</a></p>
+<p>原文标题 : <strong>Client Server Connection</strong> (<em>How to create a client/server connection over UDP</em>)</p>
+<hr>
+<p></p><h2 id="introduction">Introduction</h2><p></p>
+<p>Hi, I’m <a href="https://gafferongames.com/about" target="_blank" rel="noopener">Glenn Fiedler</a> and welcome to <strong><a href="https://gafferongames.com/categories/building-a-game-network-protocol/" target="_blank" rel="noopener">Building a Game Network Protocol</a></strong>.</p><br><p>So far in this article series we&rsquo;ve discussed how games read and write packets, how to unify packet read and write into a single function, how to fragment and re-assemble packets, and how to send large blocks of data over UDP.</p><br><p>Now in this article we&rsquo;re going to bring everything together and build a client/server connection on top of UDP.</p><br><h2 id="background">Background</h2><br><p>Developers from a web background often wonder why games go to such effort to build a client/server connection on top of UDP, when for many applications, TCP is good enough. </p>
+
+<blockquote>
+<p>These days even web servers are transitioning to UDP via <a href="https://ma.ttias.be/googles-quic-protocol-moving-web-tcp-udp/" target="_blank" rel="noopener">Google&rsquo;s QUIC</a>. If you still think TCP is good enough for time critical data in 2016, I encourage you to put that in your pipe and smoke it :)</p>
+</blockquote>
+<p>The reason is that games send <strong>time critical data</strong>.</p><br><p>Why don&rsquo;t games use TCP for time critical data? The answer is that TCP delivers data reliably and in-order, and to do this on top of IP (which is unreliable, unordered) it holds more recent packets hostage in a queue while older packets are resent over the network.</p><br><p>This is known as <strong>head of line blocking</strong> and it&rsquo;s a <em>huuuuuge</em> problem for games. To understand why, consider a game server broadcasting the state of the world to clients 10 times per-second. Each client advances time forward and wants to display the most recent state it receives from the server.</p><br><p><img src="/img/client_server_connection/client-time.png" width="100%"></p><br><p>But if the packet containing state for time t = 10.0 is lost, under TCP we must wait for it to be resent before we can access t = 10.1 and 10.2, even though those packets have already arrived and contain the state the client wants to display.</p><br><p>Worse still, by the time the resent packet arrives, it&rsquo;s far too late for the client to actually do anything useful with it. The client has already advanced past 10.0 and wants to display something around 10.3 or 10.4!</p><br><p>So why resend dropped packets at all? <strong>BINGO!</strong> What we&rsquo;d really like is an option to tell TCP: &ldquo;Hey, I don&rsquo;t care about old packets being resent, by they time they arrive I can&rsquo;t use them anyway, so just let me skip over them and access the most recent data&rdquo;.</p><br><p>Unfortunately, TCP simply does not give us this option :(</p><br><p><strong>All data must be delivered reliably and in-order</strong>.</p><br><p>This creates terrible problems for time critical data where packet loss <em>and</em> latency exist. Situations like, you know, The Internet, where people play FPS games.</p><br><p>Large hitches corresponding to multiples of round trip time are added to the stream of data as TCP waits for dropped packets to be resent, which means additional buffering to smooth out these hitches, or long pauses where the game freezes and is non-responsive.</p><br><p>Neither option is acceptable for first person shooters, which is why virtually all first person shooters are networked using UDP. UDP doesn&rsquo;t provide any reliability or ordering, so protocols built on top it can access the most recent data without waiting for lost packets to be resent, implementing whatever reliability they need in <em>radically</em> different ways to TCP.</p><br><p>But, using UDP comes at a cost:</p><br><p><strong>UDP doesn&rsquo;t provide any concept of connection.</strong></p><br><p>We have to build that ourselves. This is a lot of work! So strap in, get ready, because we&rsquo;re going to build it all up from scratch using the same basic techniques first person shooters use when creating their protocols over UDP. You can use this client/server protocol for games or non-gaming applications and, provided the data you send is time critical, I promise you, it&rsquo;s well worth the effort.</p>
+
+<p></p><h2 id="client-server-abstraction">Client/Server Abstraction</h2><p></p>
+<p>The goal is to create an abstraction on top of a UDP socket where our server presents a number of <em>virtual slots</em> for clients to connect to:</p><br><p><img src="/img/client_server_connection/connection-request.png" width="100%"></p><br><p>When a client requests a connection, it gets assigned to one of these slots:</p><br><p><img src="/img/client_server_connection/connection-accepted.png" width="100%"></p><br><p>If a client requests connection, but no slots are available, the server is full and the connection request is denied:</p><br><p><img src="/img/client_server_connection/server-is-full.png" width="100%"></p><br><p>Once a client is connected, packets are exchanged in both directions. These packets form the basis for the custom protocol between the client and server which is game specific.</p><br><p><img src="/img/client_server_connection/client-server-packets.png" width="100%"></p><br><p>In a first person shooter, packets are sent continuously in both directions. Clients send input to the server as quickly as possible, often 30 or 60 times per-second, and the server broadcasts the state of the world to clients 10, 20 or even 60 times per-second.</p><br><p>Because of this steady flow of packets in both directions there is no need for keep-alive packets. If at any point packets stop being received from the other side, the connection simply times out. No packets for 5 seconds is a good timeout value in my opinion, but you can be more aggressive if you want.</p><br><p>When a client slot times out on the server, it becomes available for other clients to connect. When the client times out, it transitions to an error state.</p><br><h2 id="simple-connection-protocol">Simple Connection Protocol</h2><br><p>Let&rsquo;s get started with the implementation of a simple protocol. It&rsquo;s a bit basic and more than a bit naive, but it&rsquo;s a good starting point and we&rsquo;ll build on it during the rest of this article, and the next few articles in this series.</p><br><p>First up we have the client state machine.</p><br><p>The client is in one of three states:</p><br><ul><br><li>Disconnected</li><br><li>Connecting</li><br><li>Connected</li><br></ul><br><p>Initially the client starts in <em>disconnected</em>.</p><br><p>When a client connects to a server, it transitions to the <em>connecting</em> state and sends <strong>connection request</strong> packets to the server:</p><br><p><img src="/img/client_server_connection/connection-request-packet.png" width="100%"></p><br><p>The CRC32 and implicit protocol id in the packet header allow the server to trivially reject UDP packets not belonging to this protocol or from a different version of it.</p><br><p>Since connection request packets are sent over UDP, they may be lost, received out of order or in duplicate.</p><br><p>Because of this we do two things: 1) we keep sending packets for the client state until we get a response from the server or the client times out, and 2) on both client and server we ignore any packets that don&rsquo;t correspond to what we are expecting, since a lot of redundant packets are flying over the network.</p><br><p>On the server, we have the following data structure:</p><br><pre><code>const int MaxClients = 64;<br><br>class Server<br>{<br>    int m_maxClients;<br>    int m_numConnectedClients;<br>    bool m_clientConnected[MaxClients];<br>    Address m_clientAddress[MaxClients];<br>};<br></code></pre><br><p>Which lets the server lookup a free slot for a client to join (if any are free):</p><br><pre><code>int Server::FindFreeClientIndex() const<br>{<br>    for ( int i = 0; i &lt; m_maxClients; ++i )<br>    {<br>        if ( !m_clientConnected[i] )<br>            return i;<br>    }<br>    return -1;<br>}<br></code></pre><br><p>Find the client index corresponding to an IP address and port:</p><br><pre><code>int Server::FindExistingClientIndex( const Address &amp; address ) const<br>{<br>    for ( int i = 0; i &lt; m_maxClients; ++i )<br>    {<br>        if ( m_clientConnected[i] &amp;&amp; m_clientAddress[i] == address )<br>            return i;<br>    }<br>    return -1;<br>}<br></code></pre><br><p>Check if a client is connected to a given slot:</p><br><pre><code>bool Server::IsClientConnected( int clientIndex ) const<br>{<br>    return m_clientConnected[clientIndex];<br>}<br></code></pre><br><p>&hellip; and retrieve a client’s IP address and port by client index:</p><br><pre><code>const Address &amp; Server::GetClientAddress( int clientIndex ) const<br>{<br>    return m_clientAddress[clientIndex];<br>}<br></code></pre><br><p>Using these queries we implement the following logic when the server processes a <strong>connection request</strong> packet:</p><br><ul><br><li><p>If the server is full, reply with <strong>connection denied</strong>.</p></li><br><li><p>If the connection request is from a new client and we have a slot free, assign the client to a free slot and respond with <strong>connection accepted</strong>.</p></li><br><li><p>If the sender corresponds to the address of a client that is already connected, <em>also</em> reply with <strong>connection accepted</strong>. This is necessary because the first response packet may not have gotten through due to packet loss. If we don&rsquo;t resend this response, the client gets stuck in the <em>connecting</em> state until it times out.</p></li><br></ul><br><p>The connection accepted packet tells the client which client index it was assigned, which the client needs to know which player it is in the game:</p><br><p><img src="/img/client_server_connection/connection-accepted-packet.png" width="100%"></p><br><p>Once the server sends a connection accepted packet, from its point of view it considers that client connected. As the server ticks forward, it watches connected client slots, and if no packets have been received from a client for 5 seconds, the slot times out and is reset, ready for another client to connect.</p><br><p>Back to the client. While the client is in the <em>connecting</em> state the client listens for <strong>connection denied</strong> and <strong>connection accepted</strong> packets from the server. Any other packets are ignored.</p><br><p>If the client receives <strong>connection accepted</strong>, it transitions to connected. If it receives <strong>connection denied</strong>, or after 5 seconds hasn&rsquo;t received any response from the server, it transitions to disconnected.</p><br><p>Once the client hits <em>connected</em> it starts sending connection payload packets to the server. If no packets are received from the server in 5 seconds, the client times out and transitions to <em>disconnected</em>.</p><br><h2 id="naive-protocol-is-naive">Naive Protocol is Naive</h2><br><p>While this protocol is easy to implement, we can&rsquo;t use a protocol like this in production. It&rsquo;s way too naive. It simply has too many weaknesses to be taken seriously:</p><br><ul><br><li><p>Spoofed packet source addresses can be used to redirect connection accepted responses to a target (victim) address. If the connection accepted packet is larger than the connection request packet, attackers can use this protocol as part of a <a href="https://www.us-cert.gov/ncas/alerts/TA14-017A" target="_blank" rel="noopener">DDoS amplification attack</a>.</p></li><br><li><p>Spoofed packet source addresses can be used to trivially fill all client slots on a server by sending connection request packets from n different IP addresses, where n is the number of clients allowed per-server. This is a real problem for dedicated servers. Obviously you want to make sure that only real clients are filling slots on servers you are paying for.</p></li><br><li><p>An attacker can trivially fill all slots on a server by varying the client UDP port number on each client connection. This is because clients are considered unique on an address + port basis. This isn&rsquo;t easy to fix because due to NAT (network address translation), different players behind the same router collapse to the same IP address with only the port being different, so we can&rsquo;t just consider clients to be unique at the IP address level sans port.</p></li><br><li><p>Traffic between the client and server can be read and modified in transit by a third party. While the CRC32 protects against packet corruption, an attacker would simply recalculate the CRC32 to match the modified packet.</p></li><br><li><p>If an attacker knows the client and server IP addresses and ports, they can impersonate the client or server. This gives an attacker the power to completely a hijack a client’s connection and perform actions on their behalf.</p></li><br><li><p>Once a client is connected to a server there is no way for them to disconnect cleanly, they can only time out. This creates a delay before the server realizes a client has disconnected, or before a client realizes the server has shut down. It would be nice if both the client and server could indicate a clean disconnect, so the other side doesn’t need to wait for timeout in the common case.</p></li><br><li><p>Clean disconnection is usually implemented with a disconnect packet, however because an attacker can impersonate the client and server with spoofed packets, doing so would give the attacker the ability to disconnect a client from the server whenever they like, provided they know the client and server IP addresses and the structure of the disconnect packet.</p></li><br><li><p>If a client disconnects dirty and attempts to reconnect before their slot times out on the server, the server still thinks that client is connected and replies with <strong>connection accepted</strong> to handle packet loss. The client processes this response and thinks it&rsquo;s connected to the server, but it&rsquo;s actually in an undefined state.</p></li><br></ul><br><p>While some of these problems require authentication and encryption before they can be fully solved, we can make some small steps forward to improve the protocol before we get to that. These changes are instructive.</p><br><h2 id="improving-the-connection-protocol">Improving The Connection Protocol</h2><br><p>The first thing we want to do is only allow clients to connect if they can prove they are actually at the IP address and port they say they are.</p><br><p>To do this, we no longer accept client connections immediately on connection request, instead we send back a challenge packet, and only complete connection when a client replies with information that can only be obtained by receiving the challenge packet.</p><br><p>The sequence of operations in a typical connect now looks like this:</p><br><p><img src="/img/client_server_connection/challenge-response.png" width="100%"></p><br><p>To implement this we need an additional data structure on the server. Somewhere to store the challenge data for pending connections, so when a challenge response comes in from a client we can check against the corresponding entry in the data structure and make sure it&rsquo;s a valid response to the challenge sent to that address.</p><br><p>While the pending connect data structure can be made larger than the maximum number of connected clients, it&rsquo;s still ultimately finite and is therefore subject to attack. We&rsquo;ll cover some defenses against this in the next article. But for the moment, be happy at least that attackers can&rsquo;t progress to the <strong>connected</strong> state with spoofed packet source addresses.</p><br><p>Next, to guard against our protocol being used in a DDoS amplification attack, we&rsquo;ll inflate client to server packets so they&rsquo;re large relative to the response packet sent from the server. This means we add padding to both <strong>connection request</strong> and <strong>challenge response</strong> packets and enforce this padding on the server, ignoring any packets without it. Now our protocol effectively has DDoS <em>minification</em> for requests -&gt; responses, making it highly unattractive for anyone thinking of launching this kind of attack.</p><br><p>Finally, we&rsquo;ll do one last small thing to improve the robustness and security of the protocol. It&rsquo;s not perfect, we need authentication and encryption for that, but it at least it ups the ante, requiring attackers to actually sniff traffic in order to impersonate the client or server. We&rsquo;ll add some unique random identifiers, or &lsquo;salts&rsquo;, to make each client connection unique from previous ones coming from the same IP address and port.</p><br><p>The connection request packet now looks like this:</p><br><p><img src="/img/client_server_connection/connection-request-packet-2.0.png" width="100%"></p><br><p>The client salt in the packet is a random 64 bit integer rolled each time the client starts a new connect. Connection requests are now uniquely identified by the IP address and port combined with this client salt value. This distinguishes packets from the current connection from any packets belonging to a previous connection, which makes connection and reconnection to the server much more robust.</p><br><p>Now when a connection request arrives and a pending connection entry can&rsquo;t be found in the data structure (according to IP, port and client salt) the server rolls a server salt and stores it with the rest of the data for the pending connection before sending a challange packet back to the client. If a pending connection is found, the salt value stored in the data structure is used for the challenge. This way there is always a consistent pair of client and server salt values corresponding to each client session.</p><br><p><img src="/img/client_server_connection/challenge-packet.png" width="100%"></p><br><p>The client state machine has been expanded so <em>connecting</em> is replaced with two new states: <em>sending connection request</em> and <em>sending challenge response</em>, but it&rsquo;s the same idea as before. Client states repeatedly send the packet corresponding to that state to the server while listening for the response that moves it forward to the next state, or back to an error state. If no response is received, the client times out and transitions to <em>disconnected</em>.</p><br><p>The challenge response sent from the client to the server looks like this:</p><br><p><img src="/img/client_server_connection/challenge-response-packet.png" width="100%"></p><br><p>The utility of this being that once the client and server have established connection, we prefix all payload packets with the xor of the client and server salt values and discard any packets with the incorrect salt values. This neatly filters out packets from previous sessions and requires an attacker to sniff packets in order to impersonate a client or server.</p><br><p><img src="/img/client_server_connection/connection-payload-packet.png" width="100%"></p><br><p>Now that we have at least a <em>basic</em> level of security, it&rsquo;s not much, but at least it&rsquo;s <em>something</em>, we can implement a disconnect packet:</p><br><p><img src="/img/client_server_connection/disconnect-packet.png" width="100%"></p><br><p>And when the client or server want to disconnect clean, they simply fire 10 of these over the network to the other side, in the hope that some of them get through, and the other side disconnects cleanly instead of waiting for timeout.</p><br><h2 id="conclusion">Conclusion</h2><br><p>We now have a much more robust protocol. It&rsquo;s secure against spoofed IP packet headers. It&rsquo;s no longer able to be used as port of DDoS amplification attacks, and with a trivial xor based authentication, we are protected against <em>casual</em> attackers while client reconnects are much more robust.</p><br><p>But it&rsquo;s still vulnerable to a sophisticated actors who can sniff packets:</p><br><ul><br><li><p>This attacker can read and modify packets in flight.</p></li><br><li><p>This breaks the trivial identification based around salt values&hellip;</p></li><br><li><p>&hellip; giving an attacker the power to disconnect any client at will.</p></li><br></ul><br><p>To solve this, we need to get serious with cryptography to encrypt and sign packets so they can&rsquo;t be read or modified by a third party.</p>
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/04/01/kbe_note_one/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/01/kbe_note_one/" itemprop="url">kbe服务端笔记(一)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-01T19:48:28+00:00">
+                2017-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Misc/" itemprop="url" rel="index">
+                    <span itemprop="name">Misc</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="main"><a href="#main" class="headerlink" title="main"></a><strong>main</strong></h1><p>看起来似乎所有的组件都有一个这样的宏(KBENGINE_MAIN)来包裹main函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">intKBENGINE_MAIN(intargc, char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	ENGINE_COMPONENT_INFO&amp;info = g_kbeSrvConfig.getXXX();</span><br><span class="line">	returnkbeMainT&lt;XXX&gt;(argc, argv, YYY, info.externalPorts_min, </span><br><span class="line">		info.externalPorts_max, info.externalInterface, 0, info.internalInterface);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/03/29/reliable_ordered_messages/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/29/reliable_ordered_messages/" itemprop="url">构建游戏网络协议五之可靠的有序消息</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-29T13:13:35+00:00">
+                2017-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GS/" itemprop="url" rel="index">
+                    <span itemprop="name">GS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="本篇自我总结"><a href="#本篇自我总结" class="headerlink" title="本篇自我总结"></a>本篇自我总结</h1><p>本篇主要讲了数据包的分包和重组问题, 到底数据包多大才好呢?是不是越大越好呢?包太大了怎么办呢?<br>请看总结, 不明之处再看文中具体讲解.</p>
+<h2 id="为什么需要做这个可靠UDP协议"><a href="#为什么需要做这个可靠UDP协议" class="headerlink" title="为什么需要做这个可靠UDP协议"></a>为什么需要做这个可靠UDP协议</h2><p>网络协议在动作游戏类型（FPS）中的典型特征就是一个持续发送的数据包，在两个方向上以稳定的速度如20或30包每秒发送。这些数据包都包含有不可靠的无序数据例如t时间内的世界状态；所以，当一个数据包丢失，重新发送它并不是特别有用。当重新发送的数据包到达时，时间t已经过去了。</p>
+<p>所以这就是我们将要实现可靠性的现状。对于我们90%的数据包，仅丢弃并不再重新发送它会更好。对于10%或更少（误差允许范围内）的情况，我们确实需要可靠性，但这样的数据是非常罕见的，很少被发送而且比不可靠的数据的平均大小要小得多。这个使用案例适用于所有过去十五年来发布的AAA级的FPS游戏。</p>
+<h2 id="应答系统是实现可靠UDP的最重要的部分"><a href="#应答系统是实现可靠UDP的最重要的部分" class="headerlink" title="应答系统是实现可靠UDP的最重要的部分"></a>应答系统是实现可靠UDP的最重要的部分</h2><p>为实现数据包层级的应答，在每个包的前面添加如下的报头：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Header</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">uint16_t</span> sequence;</span><br><span class="line">    <span class="keyword">uint16_t</span> ack;</span><br><span class="line">    <span class="keyword">uint32_t</span> ack_bits;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这些报头元素组合起来以创建应答系统：</p>
+<ul>
+<li>sequence 是一个数字，随每个数据包发送而增长（并且在达到65535后回往复）。</li>
+<li>ack 是从另一方接收到的最新的数据包序列号。</li>
+<li>ack_bits 是一个位字段，它编码与ack相关的收到的数据包组合：如果位n已经设置，即 ack– n 数据包被接收了。</li>
+</ul>
+<p>ack_bits 不仅是一个节省带宽的巧妙的编码，它同样也增加了信息冗余来抵御包的丢失。每个应答码要被发送32次。如果有一个包丢失了，仍然有其他31个包有着相同的应答码。从统计上来说，应答码还是非常有可能送达的。</p>
+<p>但突发的传送数据包的丢失还是有可能发生的，所以重要的是要注意：</p>
+<ul>
+<li>如果你收到一个数据包n的应答码，那么这个包肯定已经收到了。</li>
+<li>如果你没有收到应答码，那么这个包就很有可能 没有被收到。但是…它也许会是，仅是应答码没有送达。这种情况是极其罕见的。</li>
+</ul>
+<p>以我的经验，没有必要设计完善的应答机制。在一个极少丢应答码的系统上构建一个可靠性系统并不会增加什么大问题。</p>
+<h2 id="发送方如何追踪数据包是否已经被应答"><a href="#发送方如何追踪数据包是否已经被应答" class="headerlink" title="发送方如何追踪数据包是否已经被应答"></a>发送方如何追踪数据包是否已经被应答</h2><p>为实现这个应答系统，我们在发送方还需要一个数据结构来追踪一个数据包是否已经被应答，这样我们就可以忽略冗余的应答（每个包会通过 <code>ack_bits</code>多次应答)。我们同样在接收方也还需要一个数据结构来追踪那些已经收到的包，这样我们就可以在数据包的报头填写<code>ack_bits</code>的值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> BufferSize = <span class="number">1024</span>;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">uint32_t</span> sequence_buffer[BufferSize];</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PacketData</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">bool</span> acked;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">PacketData packet_data[BufferSize];</span><br><span class="line"> </span><br><span class="line"><span class="function">PacketData * <span class="title">GetPacketData</span><span class="params">( <span class="keyword">uint16_t</span> sequence )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> index = sequence % BufferSize;</span><br><span class="line">    <span class="keyword">if</span> ( sequence_buffer[index] == sequence )</span><br><span class="line">        <span class="keyword">return</span> &amp;packet_data[index];</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你在这可以看到的窍门是这个滚动的缓冲区是以序列号来作为索引的：</p>
+<p><code>const int index =sequence % BufferSize;</code></p>
+<p>当条目被顺序添加，就像一个被发送的队列，对插入所需要做的就是把这个序列缓冲区的值更新为新的序列号并且在该索引处重写这个数据：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">PacketData &amp; <span class="title">InsertPacketData</span><span class="params">( <span class="keyword">uint16_t</span> sequence )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> index = sequence % BufferSize;</span><br><span class="line">    sequence_buffer[index] = sequence;</span><br><span class="line">    <span class="keyword">return</span> packet_data[index];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="https://gafferongames.com/post/reliable_ordered_messages/" target="_blank" rel="noopener">原文出处</a></p>
+<p>原文标题 : <strong>Reliable Ordered Messages</strong> (<em>How to implement reliable-ordered messages on top of UDP</em>)</p>
+<hr>
+<p></p><h2 id="introduction">Introduction</h2><p></p>
+<p>Hi, I’m <a href="https://gafferongames.com/about" target="_blank" rel="noopener">Glenn Fiedler</a> and welcome to <strong><a href="https://gafferongames.com/categories/building-a-game-network-protocol/" target="_blank" rel="noopener">Building a Game Network Protocol</a></strong>.</p><br><p>Many people will tell you that implementing your own reliable message system on top of UDP is foolish. After all, why reimplement TCP?</p><br><p>But why limit ourselves to how TCP works? But there are so many different ways to implement reliable-messages and most of them work <em>nothing</em> like TCP!</p><br><p>So let&rsquo;s get creative and work out how we can implement a reliable message system that&rsquo;s <em>better</em> and <em>more flexible</em> than TCP for real-time games.</p><br><h2 id="different-approaches">Different Approaches</h2><br><p>A common approach to reliability in games is to have two packet types: reliable-ordered and unreliable. You&rsquo;ll see this approach in many network libraries.</p><br><p>The basic idea is that the library resends reliable packets until they are received by the other side. This is the option that usually ends up looking a bit like TCP-lite for the reliable-packets. It&rsquo;s not that bad, but you can do much better.</p><br><p>The way I prefer to think of it is that messages are smaller bitpacked elements that know how to serialize themselves. This makes the most sense when the overhead of length prefixing and padding bitpacked messages up to the next byte is undesirable (eg. lots of small messages included in each packet). Sent messages are placed in a queue and each time a packet is sent some of the messages in the send queue are included in the outgoing packet. This way there are no reliable packets that need to be resent. Reliable messages are simply included in outgoing packets until they are received.</p><br><p>The easiest way to do this is to include all unacked messages in each packet sent. It goes something like this: each message sent has an id that increments each time a message is sent. Each outgoing packet includes the start <em>message id</em> followed by the data for <em>n</em> messages. The receiver continually sends back the most recent received message id to the sender as an ack and only messages newer than the most recent acked message id are included in packets.</p><br><p>This is simple and easy to implement but if a large burst of packet loss occurs while you are sending messages you get a spike in packet size due to unacked messages.</p><br><p>You can avoid this by extending the system to have an upper bound on the number of messages included per-packet <em>n</em>. But now if you have a high packet send rate (like 60 packets per-second) you are sending the same message multiple times until you get an ack for that message.</p><br><p>If your round trip time is 100ms each message will be sent 6 times redundantly before being acked on average. Maybe you really need this amount of redundancy because your messages are extremely time critical, but in most cases, your bandwidth would be better spent on other things.</p><br><p>The approach I prefer combines packet level acks with a prioritization system that picks the n most important messages to include in each packet. This combines time critical delivery and the ability to send only n messages per-packet, while distributing sends across all messages in the send queue.</p><br><h2 id="packet-level-acks">Packet Level Acks</h2><br><p>To implement packet level acks, we add the following packet header:</p><br><pre>struct Header<br>{<br>    uint16_t sequence;<br>    uint16_t ack;<br>    uint32_t ack_bits;<br>};<br></pre><br><p>These header elements combine to create the ack system: <strong>sequence</strong> is a number that increases with each packet sent, <strong>ack</strong> is the most recent packet sequence number received, and <strong>ack_bits</strong> is a bitfield encoding the set of acked packets.</p><br><p>If bit <strong>n</strong> is set in <strong>ack_bits</strong>, then <strong>ack - n</strong> is acked. Not only is <strong>ack_bits</strong> a smart encoding that saves bandwidth, it also adds <em>redundancy</em> to combat packet loss. Each ack is sent 32 times. If one packet is lost, there&rsquo;s 31 other packets with the same ack. Statistically speaking, acks are very likely to get through.</p><br><p>But bursts of packet loss do happen, so it&rsquo;s important to note that:</p><br><ol><br><li><p>If you receive an ack for packet n then that packet was <strong>definitely received</strong>.</p></li><br><li><p>If you don&rsquo;t receive an ack, the packet was <em>most likely</em> not received. But, it might have been, and the ack just didn&rsquo;t get through. <strong>This is extremely rare</strong>.</p></li><br></ol><br><p>In my experience it&rsquo;s not necessary to send perfect acks. Building a reliability system on top of a system that very rarely drops acks adds no significant problems. But it does create a challenge for testing this system works under all situations because of the edge cases when acks are dropped.</p><br><p>So please if you do implement this system yourself, setup a soak test with terrible network conditions to make sure your ack system is working correctly. You&rsquo;ll find such a soak test in the <a href="http://www.patreon.com/gafferongames" target="_blank" rel="noopener">example source code</a> for this article, and the open source network libraries <a href="https://github.com/networkprotocol/reliable.io" target="_blank" rel="noopener">reliable.io</a> and <a href="http://www.libyojimbo.com" target="_blank" rel="noopener">yojimbo</a> which also implement this technique.</p><br><h2 id="sequence-buffers">Sequence Buffers</h2><br><p>To implement this ack system we need a data structure on the sender side to track whether a packet has been acked so we can ignore redundant acks (each packet is acked multiple times via <strong>ack_bits</strong>. We also need a data structure on the receiver side to keep track of which packets have been received so we can fill in the <strong>ack_bits</strong> value in the packet header.</p><br><p>The data structure should have the following properties:</p><br><ul><br><li>Constant time insertion (inserts may be <em>random</em>, for example out of order packets&hellip;)</li><br><li>Constant time query if an entry exists given a packet sequence number</li><br><li>Constant time access for the data stored for a given packet sequence number</li><br><li>Constant time removal of entries</li><br></ul><br><p>You might be thinking. Oh of course, <em>hash table</em>. But there&rsquo;s a much simpler way:</p><br><pre>const int BufferSize = 1024;<br><br>uint32_t sequence_buffer[BufferSize];<br><br>struct PacketData<br>{<br>    bool acked;<br>};<br><br>PacketData packet_data[BufferSize];<br><br>PacketData <em> GetPacketData( uint16_t sequence )<br>{<br>    const int index = sequence % BufferSize;<br>    if ( sequence_buffer[index] == sequence )<br>        return &amp;packet_data[index];<br>    else<br>        return NULL;<br>}<br></em></pre><br><p>As you can see the trick here is a rolling buffer indexed by sequence number:</p><br><pre>const int index = sequence % BufferSize;<br></pre><br><p>This works because we don&rsquo;t care about being destructive to old entries. As the sequence number increases older entries are naturally overwritten as we insert new ones. The sequence_buffer[index] value is used to test if the entry at that index actually corresponds to the sequence number you&rsquo;re looking for. A sequence buffer value of 0xFFFFFFFF indicates an empty entry and naturally returns NULL for any sequence number query without an extra branch.</p><br><p>When entries are added in order like a send queue, all that needs to be done on insert is to update the sequence buffer value to the new sequence number and overwrite the data at that index:</p><br><pre>PacketData &amp; InsertPacketData( uint16_t sequence )<br>{<br>    const int index = sequence % BufferSize;<br>    sequence_buffer[index] = sequence;<br>    return packet_data[index];<br>}<br></pre><br><p>Unfortunately, on the receive side packets arrive out of order and some are lost. Under ridiculously high packet loss (99%) I&rsquo;ve seen old sequence buffer entries stick around from before the previous sequence number wrap at 65535 and break my ack logic (leading to false acks and broken reliability where the sender thinks the other side has received something they haven&rsquo;t&hellip;).</p><br><p>The solution to this problem is to walk between the previous highest insert sequence and the new insert sequence (if it is more recent) and clear those entries in the sequence buffer to 0xFFFFFFFF. Now in the common case, insert is <em>very close</em> to constant time, but worst case is linear where n is the number of sequence entries between the previous highest insert sequence and the current insert sequence.</p><br><p>Before we move on I would like to note that you can do much more with this data structure than just acks. For example, you could extend the per-packet data to include time sent:</p><br><pre>struct PacketData<br>{<br>    bool acked;<br>    double send_time;<br>};<br></pre><br><p>With this information you can create your own estimate of round trip time by comparing send time to current time when packets are acked and taking an <a href="https://en.wikipedia.org/wiki/Exponential_smoothing" target="_blank" rel="noopener">exponentially smoothed moving average</a>. You can even look at packets in the sent packet sequence buffer older than your RTT estimate (you should have received an ack for them by now&hellip;) to create your own packet loss estimate.</p><br><h2 id="ack-algorithm">Ack Algorithm</h2><br><p>Now that we have the data structures and packet header, here is the algorithm for implementing packet level acks:</p><br><p><strong>On packet send:</strong></p><br><ol><br><li><p>Insert an entry for for the current send packet sequence number in the sent packet sequence buffer with data indicating that it hasn&rsquo;t been acked yet</p></li><br><li><p>Generate <strong>ack</strong> and <strong>ack_bits</strong> from the contents of the local received packet sequence buffer and the most recent received packet sequence number</p></li><br><li><p>Fill the packet header with <strong>sequence</strong>, <strong>ack</strong> and <strong>ack_bits</strong></p></li><br><li><p>Send the packet and increment the send packet sequence number</p></li><br></ol><br><p><strong>On packet receive:</strong></p><br><ol><br><li><p>Read in <strong>sequence</strong> from the packet header</p></li><br><li><p>If <strong>sequence</strong> is more recent than the previous most recent received packet sequence number, update the most recent received packet sequence number</p></li><br><li><p>Insert an entry for this packet in the received packet sequence buffer</p></li><br><li><p>Decode the set of acked packet sequence numbers from <strong>ack</strong> and <strong>ack_bits</strong> in the packet header.</p></li><br><li><p>Iterate across all acked packet sequence numbers and for any packet that is not already acked call <strong>OnPacketAcked</strong>( uint16_t sequence ) and mark that packet as <em>acked</em> in the sent packet sequence buffer.</p></li><br></ol><br><p>Importantly this algorithm is done on both sides so if you have a client and a server then each side of the connection runs the same logic, maintaining its own sequence number for sent packets, tracking most recent received packet sequence # from the other side and a sequence buffer of received packets from which it generates <strong>sequence</strong>, <strong>ack</strong> and <strong>ack_bits</strong> to send to the other side.</p><br><p>And that&rsquo;s really all there is to it. Now you have a callback when a packet is received by the other side: <strong>OnPacketAcked</strong>. The main benefit of this ack system is now that you know which packets were received, you can build <em>any</em> reliability system you want on top. It&rsquo;s not limited to just reliable-ordered messages. For example, you could use it to implement delta encoding on a per-object basis.</p><br><h2 id="message-objects">Message Objects</h2><br><p>Messages are small objects (smaller than packet size, so that many will fit in a typical packet) that know how to serialize themselves. In my system they perform serialization using a <a href="https://gafferongames.com/building-a-game-network-protocol/serialization-strategies" target="_blank" rel="noopener">unified serialize function</a>unified serialize function.</p><br><p>The serialize function is templated so you write it once and it handles read, write and <em>measure</em>.</p><br><p>Yes. Measure. One of my favorite tricks is to have a dummy stream class called <strong>MeasureStream</strong> that doesn&rsquo;t do any actual serialization but just measures the number of bits that <em>would</em> be written if you called the serialize function. This is particularly useful for working out which messages are going to fit into your packet, especially when messages themselves can have arbitrarily complex serialize functions.</p><br><pre>struct TestMessage : public Message<br>{<br>    uint32_t a,b,c;<br><br>    TestMessage()<br>    {<br>        a = 0;<br>        b = 0;<br>        c = 0;<br>    }<br><br>    template &lt;typename Stream&gt; bool Serialize( Stream &amp; stream )<br>    {<br>        serialize_bits( stream, a, 32 );<br>        serialize_bits( stream, b, 32 );<br>        serialize_bits( stream, c, 32 );<br>        return true;<br>    }<br><br>    virtual SerializeInternal( WriteStream &amp; stream )<br>    {<br>        return Serialize( stream );<br>    }<br><br>    virtual SerializeInternal( ReadStream &amp; stream )<br>    {<br>        return Serialize( stream );<br>    }<br><br>    virtual SerializeInternal( MeasureStream &amp; stream )<br>    {<br>        return Serialize( stream );<br>    }<br>};<br></pre><br><p>The trick here is to bridge the unified templated serialize function (so you only have to write it once) to virtual serialize methods by calling into it from virtual functions per-stream type. I usually wrap this boilerplate with a macro, but it&rsquo;s expanded in the code above so you can see what&rsquo;s going on.</p><br><p>Now when you have a base message pointer you can do this and it <em>just works</em>:</p><br><pre>Message  message = CreateSomeMessage();<br>message-&gt;SerializeInternal( stream );<br></pre><br><p>An alternative if you know the full set of messages at compile time is to implement a big switch statement on message type casting to the correct message type before calling into the serialize function for each type. I&rsquo;ve done this in the past on console platform implementations of this message system (eg. PS3 SPUs) but for applications today (2016) the overhead of virtual functions is neglible.</p><br><p>Messages derive from a base class that provides a common interface such as serialization, querying the type of a message and reference counting. Reference counting is necessary because messages are passed around by pointer and stored not only in the message send queue until acked, but also in outgoing packets which are themselves C++ structs.</p><br><p>This is a strategy to avoid copying data by passing both messages and packets around by pointer. Somewhere else (ideally on a separate thread) packets and the messages inside them are serialized to a buffer. Eventually, when no references to a message exist in the message send queue (the message is acked) and no packets including that message remain in the packet send queue, the message is destroyed.</p><br><p>We also need a way to create messages. I do this with a message factory class with a virtual function overriden to create a message by type. It&rsquo;s good if the packet factory also knows the total number of message types, so we can serialize a message type over the network with tight bounds and discard malicious packets with message type values outside of the valid range:</p><br><pre>enum TestMessageTypes<br>{<br>    TEST_MESSAGE_A,<br>    TEST_MESSAGE_B,<br>    TEST_MESSAGE_C,<br>    TEST_MESSAGE_NUM_TYPES<br>};<br><br>// message definitions omitted<br><br>class TestMessageFactory : public MessageFactory<br>{<br>public:<br><br>    Message <em> Create( int type )<br>    {<br>        switch ( type )<br>        {<br>            case TEST_MESSAGE_A: return new TestMessageA();<br>            case TEST_MESSAGE_B: return new TestMessageB();<br>            case TEST_MESSAGE_C: return new TestMessageC();<br>        }<br>    }<br><br>    virtual int GetNumTypes() const<br>    {<br>        return TEST_MESSAGE_NUM_TYPES;<br>    }<br>};<br></em></pre><br><p>Again, this is boilerplate and is usually wrapped by macros, but underneath this is what&rsquo;s going on.</p><br><h2 id="reliable-ordered-message-algorithm">Reliable Ordered Message Algorithm</h2><br><p>The algorithm for sending reliable-ordered messages is as follows:</p><br><p><strong>On message send:</strong></p><br><ol><br><li><p>Measure how many bits the message serializes to using the measure stream</p></li><br><li><p>Insert the message pointer and the # of bits it serializes to into a sequence buffer indexed by message id. Set the time that message has last been sent to -1</p></li><br><li><p>Increment the send message id</p></li><br></ol><br><p><strong>On packet send:</strong></p><br><ol><br><li><p>Walk across the set of messages in the send message sequence buffer between the oldest unacked message id and the most recent inserted message id from left -&gt; right (increasing message id order).</p></li><br><li><p>Never send a message id that the receiver can&rsquo;t buffer or you&rsquo;ll break message acks (since that message won&rsquo;t be buffered, but the packet containing it will be acked, the sender thinks the message has been received, and will not resend it). This means you must <em>never</em> send a message id equal to or more recent than the oldest unacked message id plus the size of the message receive buffer.</p></li><br><li><p>For any message that hasn&rsquo;t been sent in the last 0.1 seconds <em>and</em> fits in the available space we have left in the packet, add it to the list of messages to send. Messages on the left (older messages) naturally have priority due to the iteration order.</p></li><br><li><p>Include the messages in the outgoing packet and add a reference to each message. Make sure the packet destructor decrements the ref count for each message.</p></li><br><li><p>Store the number of messages in the packet <strong>n</strong> and the array of message ids included in the packet in a sequence buffer indexed by the outgoing packet sequence number so they can be used to map packet level acks to the set of messages included in that packet.</p></li><br><li><p>Add the packet to the packet send queue.</p></li><br></ol><br><p><strong>On packet receive:</strong></p><br><ol><br><li><p>Walk across the set of messages included in the packet and insert them in the receive message sequence buffer indexed by their message id.</p></li><br><li><p>The ack system automatically acks the packet sequence number we just received.</p></li><br></ol><br><p><strong>On packet ack:</strong></p><br><ol><br><li><p>Look up the set of messages ids included in the packet by sequence number.</p></li><br><li><p>Remove those messages from the message send queue if they exist and decrease their ref count.</p></li><br><li><p>Update the last unacked message id by walking forward from the previous unacked message id in the send message sequence buffer until a valid message entry is found, or you reach the current send message id. Whichever comes first.</p></li><br></ol><br><p><strong>On message receive:</strong></p><br><ol><br><li><p>Check the receive message sequence buffer to see if a message exists for the current receive message id.</p></li><br><li><p>If the message exists, remove it from the receive message sequence buffer, increment the receive message id and return a pointer to the message.</p></li><br><li><p>Otherwise, no message is available to receive. Return <strong>NULL</strong>.</p></li><br></ol><br><p>In short, messages keep getting included in packets until a packet containing that message is acked. We use a data structure on the sender side to map packet sequence numbers to the set of message ids to ack. Messages are removed from the send queue when they are acked. On the receive side, messages arriving out of order are stored in a sequence buffer indexed by message id, which lets us receive them in the order they were sent.</p><br><h2 id="the-end-result">The End Result</h2><br><p>This provides the user with an interface that looks something like this on send:</p><br><pre>TestMessage  message = (TestMessage<em>) factory.Create( TEST_MESSAGE );<br>if ( message )<br>{<br>    message-&gt;a = 1;<br>    message-&gt;b = 2;<br>    message-&gt;c = 3;<br>    connection.SendMessage( message );<br>}</em></pre><br><p>And on the receive side:</p><br><pre>while ( true )<br>{<br>    Message  message = connection.ReceiveMessage();<br>    if ( !message )<br>        break;<br><br>    if ( message-&gt;GetType() == TEST_MESSAGE )<br>    {<br>        TestMessage <em> testMessage = (TestMessage</em>) message;<br>        // process test message<br>    }<br><br>    factory.Release( message );<br>}<br></pre><br><p>Which is flexible enough to implement whatever you like on top of it.</p>
+
+
+<h1 id="译文">译文</h1>
+
+
+<p><a href="http://gad.qq.com/program/translateview/7168700" target="_blank" rel="noopener">译文出处</a></p>
+<div class="WordSection1"><div><p class="MsoNormal" align="left" style="vertical-align: baseline; border: none; padding: 0cm;"><span style="font-family:微软雅黑;font-size:medium;"><span style="color: rgb(34, 34, 34);">译者：翁僖骏（</span><span style="color: rgb(34, 34, 34);"><a href="http://gad.qq.com/user/index?id=304098" target="_blank" rel="noopener"><span><span>∈星际长途←</span></span></a></span><span style="color: rgb(34, 34, 34);">）</span><span style="color: rgb(34, 34, 34);">  </span><span style="color: rgb(34, 34, 34);">审校：侯鹏（</span><span style="color: rgb(34, 34, 34);"><a href="http://gad.qq.com/user/index?id=391222" target="_blank" rel="noopener"><span><span>叶落&amp;</span></span><span><span>无痕</span></span></a></span><span style="color: rgb(34, 34, 34);">）</span><span style="color: rgb(34, 34, 34);"> </span></span> </p></div><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">嗨，我是格伦费德勒，欢迎来到</span><u><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#DD3333">创建一个游戏网络协议</span></u><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">第五篇文章。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">从<span><a rel="noopener" href="http://gafferongames.com/building-a-game-network-protocol/sending-large-blocks-of-data/" target="_blank"><span style="color:#DD3333"><span>上一篇文章</span></span></a></span>到现在已经有很长一段时间了，上次我已经率先而且实现了余下的这一系列文章所需的源码并创建了开源库<span><a rel="noopener" href="https://github.com/networkprotocol/libyojimbo" target="_blank"><span style="color:#DD3333">libyojimbo</span></a></span>，是本系列文章所要描述的网络协议的一个质量有保证的的和经过单元测试的版本。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">如果你想要有一个开源库来为自己在<span>UDP</span>之上实现可靠消息或是为了其他更多，看看<span><a rel="noopener" href="https://github.com/networkprotocol/libyojimbo" target="_blank"><span style="color:#DD3333">libyojimbo</span></a></span>。但是，如果你像我这样是想理解它具体是怎么工作的并且可能自己去实现它，阅读下去，因为我们将要从头到脚地去建立一个在<span>UDP</span>之上用来发送可靠有序消息的完整的系统！</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"></p><h2 id="说明"><span style="font-size:18.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">说明</span></h2> <p></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">很多人也许会跟你说，要在<span>UDP</span>之上实现你自己的可靠消息系统是愚蠢的。为什么要撰写你特有的简化版本的<span>TCP</span>？这些人深信，任何可靠性的实现<i><u><span style="border:none windowtext 1.0pt;padding:0cm">不可避免地</span></u></i><span> </span>最终会成为一个（简化的）<span>TCP</span>的重实现。 </span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">但也有很多不同的方法来在<span>UDP</span>之上实现可靠消息，各有不同的优势和劣势。<span>TCP</span>的方法并不是唯一的选择。事实上，我所了解到的大多数可靠有序信息的选择的原理和<span>TCP</span>并不相同。所以让我们为我们的目标发挥创造力并弄懂我们该如何充分利用我们的现状来实现一个比<span>TCP</span><i><u><span style="border:none windowtext 1.0pt;padding:0cm">更好</span></u></i><span> </span>的可靠性系统。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">网络协议在动作游戏类型（<span>FPS</span>）中的典型特征就是一个<u><span style="border:none windowtext 1.0pt;padding:0cm">持续发送的数据包，</span></u>在两个方向上以稳定的速度如<span>20</span>或<span>30</span>包每秒发送。这些数据包都包含有不可靠的无序数据例如<span>t</span>时间内的世界状态；所以，当一个数据包丢失，重新发送它并不是特别有用。当重新发送的数据包到达时，时间<span>t</span>已经过去了。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">所以这就是我们将要实现可靠性的现状。对于我们<span>90%</span>的数据包，仅丢弃并不再重新发送它会更好。对于<span>10%</span>或更少（误差允许范围内）的情况，我们确实需要可靠性，但这样的数据是非常罕见的，很少被发送而且比不可靠的数据的平均大小要小得多。这个使用案例适用于所有过去十五年来发布的<span>AAA</span>级的<span>FPS</span>游戏。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"></p><h2 id="不同的方法"><span style="font-size:18.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">不同的方法</span></h2> <p></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">可靠性的一个常用的方法是使用两种包类型：可靠有序的和不可靠的。你在众多网络库中都会看到这个方法。它基本的想法是，这个库不断重新发送可靠的数据包直到它的另一方接收到为止。这是一个最终看起来会有一点像<span>TCP</span>方式传输的可靠包的选择。这并没有很糟糕，但你也可以做得更好。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">我更愿意去考虑的方法就是消息其实是更小的位包装元素，它知道如何使它们自己序列化。这就显得非常有意义了，因为按位打包的消息中，用于描述下个字节的前缀或者后缀的字节开销在大部分的情况下是不必需的（例如每个包中包含的许多小的消息）。被发送的消息会被放在一个队列并且每次一个包被发送时，发送队列中的一些消息就会被包含在外发的包中。这样一来，就没有可靠的数据包需要被重新发送了。可靠消息也只会包含在数据包里直到它们被接收。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">要做到这样最简单的方法就是，把所有未应答的消息包含到每个被发送的包中。它是这样的：每个被发送的消息都有一个随每当一个消息被发送时递增的<span>id</span>。每个输出数据包包含起始<b><span style="border:none windowtext 1.0pt;padding:0cm">消息<span>id</span></span></b><span> </span>，紧跟着的是<b><span style="border:none windowtext 1.0pt;padding:0cm">n</span></b><span> </span>个消息的数据。接收方不断发回最新收到消息的<span>id</span>给发送方作为一个应答信号，并且消息要当且仅当比最新的应答消息<span>id</span>要更新，才会被包含在数据包中。 </span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这很简单也易于实现，但当你正在发送消息时如果突发一个很大的包丢失情况，你会遇到一个数据包大小的峰值，因为有很多未应答的消息。。正如在<span><a rel="noopener" href="http://gafferongames.com/building-a-game-network-protocol/packet-fragmentation-and-reassembly/" target="_blank"><span style="color:#DD3333"><span>数据包分割</span></span><span style="color:#DD3333"><span>和重组</span></span></a></span>中讨论的需要按照<span>MTU</span>分割包的方式来发送大的数据包会增加丢包的情况。在高丢包率下你最不想做的就是增大包的规格并引起更多的包的丢失。这是一个潜在的无底洞。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">你可以通过扩展系统来给每个包的消息数量<span>n</span>设置一个上限，来避免这种情况。但现在如果你有一个高数据包发送率（如每秒<span>60</span>包）你就要多次发送同样的消息直到你得到该消息的应答信号。如果的往返时间是<span>100ms</span>，每条消息在被应答之前将要平均被多余发送六次。也许你真的需要这些多余的发送数量因为你的消息是对时间极其敏感的，但在大多数情况下，你应该给队列里的其他消息分配合理的带宽。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">我比较喜欢的方法是用一个优先次序系统整合每包的应答信号，这个系统检出<span>n</span>条最重要的消息并包含在每个包中。在散布的消息穿过所有在发送队列中的消息发送时，这样就把对时间敏感的递送与每包仅发送<span>n</span>条消息的能力联合起来了。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"></p><h2 id="数据包层级应答"><span style="font-size:18.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">数据包层级应答</span></h2> <p></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="line-height: 150%; font-size: 12pt; font-family: 微软雅黑, sans-serif; color: rgb(34, 34, 34);">让我们行动起来实现它。</span> <span style="line-height: 150%; color: rgb(34, 34, 34); font-family: 微软雅黑, sans-serif; font-size: 12pt;">这种可靠性系统的基础是每个包的应答。</span></p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">但为什么应答是在数据包层级而不是在消息层级呢？简要截说原因就是包的数量会远远少于消息的数量。假设每个包中有<span>32</span>或<span>64</span>条消息，显然让一个包含<span>32</span>或<span>64</span>条消息的包来应答会比让每个消息都分别应答要高效得多。</span> </p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这样同样也增加了灵活性，因为你可以在数据包层级应答上构建其他可靠性系统，不仅仅是为了可靠有序的消息。例如，使用了数据包层级应答，你就知道哪一个时间先决的不可靠状态更新已结束，所以你可以轻易地构建一个系统，在一旦一个数据包所包含的最后一个状态更新已经应答时，停止发送不再改变的对象状态。</span> </p><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">为实现数据包层级的应答，在每个包的前面添加如下的报头：</span></p><div><div id="highlighter_102525" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp keyword bold">struct</code> <code class="cpp plain">Header</code></div><div class="line number2 index1 alt1"><code class="cpp plain">{</code></div><div class="line number3 index2 alt2"><code class="cpp spaces">    </code><code class="cpp plain">uint16_t sequence;</code></div><div class="line number4 index3 alt1"><code class="cpp spaces">    </code><code class="cpp plain">uint16_t ack;</code></div><div class="line number5 index4 alt2"><code class="cpp spaces">    </code><code class="cpp plain">uint32_t ack_bits;</code></div><div class="line number6 index5 alt1"><code class="cpp plain">};</code></div></div></td></tr></table></div></div><p class="MsoNormal" align="left" style="line-height: 150%; vertical-align: baseline;"><br></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这些报头元素组合起来以创建应答系统：</span> </p><ul type="disc"><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;     border:none windowtext 1.0pt;padding:0cm">sequence</span></b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"> </span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">是一个数字，随每个数据包发送而增长（并且在达到<span>65535</span>后回往复）。</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;     border:none windowtext 1.0pt;padding:0cm">ack</span></b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"> </span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">是从另一方接收到的最新的数据包序列号。</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;     border:none windowtext 1.0pt;padding:0cm">ack_bits</span></b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"> </span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">是一个位字段，它编码与<b><span style="border:none windowtext 1.0pt;padding:0cm">ack</span></b>相关的收到的数据包组合：如果位<b><span style="border:none windowtext 1.0pt;padding:0cm">n</span></b>已经设置，即<span> <b><span style="border:none windowtext 1.0pt;padding:     0cm">ack–</span></b> <b><span style="border:none windowtext 1.0pt;     padding:0cm">n</span></b> </span>数据包被接收了。</span> </li></ul><p class="MsoNormal" align="left" style="vertical-align: baseline;"><b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">ack_bits</span></b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"> </span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">不仅是一个节省带宽的巧妙的编码，它同样也增加了<u><span style="border:none windowtext 1.0pt;padding:0cm">信息冗余</span></u>来抵御包的丢失。每个应答码要被发送<span>32</span>次。如果有一个包丢失了，仍然有其他<span>31</span>个包有着相同的应答码。从统计上来说，应答码还是非常有可能送达的。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">但突发的传送数据包的丢失还是有可能发生的，所以重要的是要注意：</span> </p><ol type="1"><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果你收到一个数据包<span>n</span>的应答码，那么这个包<u><span style="border:none windowtext 1.0pt;     padding:0cm">肯定已经收到</span></u>了。</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果你没有收到应答码，那么这个包就<i><span style="border:none windowtext 1.0pt;padding:0cm">很有可能</span></i><span> </span>没有被收到。但是<span>…</span>它也许会是，仅是应答码没有送达。<u><span style="border:none windowtext 1.0pt;padding:0cm">这种情况是极其罕见的。</span></u> </span> </li></ol><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">以我的经验，没有必要设计完善的应答机制。在一个极少丢应答码的系统上构建一个可靠性系统并不会增加什么大问题。但对于在所有情况下来测试这个系统的工作将会成为很大的挑战，因为还要考虑应答码丢失的边界情况。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">所以如果你自己实现这个系统的话，请设置一个浸泡测试来覆盖糟糕的网络情况，用来确保你的应答系统是在正确的工作，相关地，你的消息系统的执行实际上是在这些网络情况下<i><u>可靠地而且有序的</u></i>交付可靠有序消息。以我之见（并且我已经写了许多这样的系统的变式至少有十次了），这是确保正确行为的一个必要步骤。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">你在这篇文章的示例源代码中会找到这样一个浸泡测试，它对<span><a rel="noopener" href="https://www.patreon.com/gafferongames" target="_blank"><span style="color:#DD3333">patreon</span><span style="color:#DD3333"><span>支持</span></span></a></span>是有效的，并且也在开源网络库<span><a rel="noopener" href="http://www.libyojimbo.com/" target="_blank"><span style="color:#DD3333">libyojimbo</span></a></span>中。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"></p><h2 id="序列缓冲区"><span style="font-size:18.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">序列缓冲区</span></h2> <p></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">为实现这个应答系统，我们在发送方还需要一个数据结构来追踪一个数据包是否已经被应答，这样我们就可以忽略冗余的应答（每个包会通过<span> <b><span style="border:none windowtext 1.0pt;padding:0cm">ack_bits</span></b></span>多次应答）。我们同样在接收方也还需要一个数据结构来追踪那些已经收到的包，这样我们就可以在数据包的报头填写<b><span style="border:none windowtext 1.0pt;padding:0cm">ack_bits</span></b>的值。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这个数据结构应该具有以下属性：</span> </p><ul type="disc"><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">常量时间内插入（插入可能会是<i><u><span style="border:none windowtext 1.0pt;padding:0cm">随机</span></u></i>的，例如乱序数据包<span>…</span>）</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">给定的数据包的序列号在常量时间内查询一个条目是否存在</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">对给定的数据包序列号，在常量时间内访问数据存储</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">常量时间内删除条目</span> </li></ul><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">你可能会想。哦，当然，<i><u><span style="border:none windowtext 1.0pt;padding:0cm">哈希表</span></u></i>。但还有一个更简单的方法：</span></p><div><div id="highlighter_389542" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp keyword bold">const</code> <code class="cpp color1 bold">int</code> <code class="cpp plain">BufferSize = 1024;</code></div><div class="line number2 index1 alt1"> </div><div class="line number3 index2 alt2"><code class="cpp plain">uint32_t sequence_buffer[BufferSize];</code></div><div class="line number4 index3 alt1"> </div><div class="line number5 index4 alt2"><code class="cpp keyword bold">struct</code> <code class="cpp plain">PacketData</code></div><div class="line number6 index5 alt1"><code class="cpp plain">{</code></div><div class="line number7 index6 alt2"><code class="cpp spaces">    </code><code class="cpp color1 bold">bool</code> <code class="cpp plain">acked;</code></div><div class="line number8 index7 alt1"><code class="cpp plain">};</code></div><div class="line number9 index8 alt2"> </div><div class="line number10 index9 alt1"><code class="cpp plain">PacketData packet_data[BufferSize];</code></div><div class="line number11 index10 alt2"> </div><div class="line number12 index11 alt1"><code class="cpp plain"><code>PacketData * GetPacketData( uint16_t sequence )</code></code></div><div class="line number13 index12 alt2"><code class="cpp plain">{</code></div><div class="line number14 index13 alt1"><code class="cpp spaces">    </code><code class="cpp keyword bold">const</code> <code class="cpp color1 bold">int</code> <code class="cpp plain">index = sequence % BufferSize;</code></div><div class="line number15 index14 alt2"><code class="cpp spaces">    </code><code class="cpp keyword bold">if</code> <code class="cpp plain">( sequence_buffer[index] == sequence )</code></div><div class="line number16 index15 alt1"><code class="cpp spaces">        </code><code class="cpp keyword bold">return</code> <code class="cpp plain">&amp;packet_data[index];</code></div><div class="line number17 index16 alt2"><code class="cpp spaces">    </code><code class="cpp keyword bold">else</code></div><div class="line number18 index17 alt1"><code class="cpp spaces">        </code><code class="cpp keyword bold">return</code> <code class="cpp plain">NULL;</code></div><div class="line number19 index18 alt2"><code class="cpp plain">}</code></div></div></td></tr></table></div></div><p class="MsoNormal" align="left" style="vertical-align: baseline;"><br></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">你在这可以看到的窍门是这个滚动的缓冲区是以序列号来作为索引的：</span> </p><div style="border:solid #F0F0F0 1.0pt;border-left:solid #E0E0E0 2.25pt;padding:0cm 0cm 0cm 0cm;background:whitesmoke"><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline; border: none; padding: 0cm; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family:&quot;Courier New&quot;;color:#222222">const int index =sequence % BufferSize;</span> </p></div><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这是可行的，因为我们并不在意旧条目破坏。随着序列号的递增，旧的条目也自然而然地随着我们插入了新条目而被重写。<span>sequence_buffer[index]</span>的值是用来测试该索引的条目是否实际上与你所搜寻的序列号相符。一个缓冲序列的值是<span>0xFFFFFFFF </span>就表示一个空的条目并自然地对任何序列号查询返回<span>NULL</span>，没有任何其他（代码）分支。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">当条目被顺序添加，就像一个被发送的队列，对插入所需要做的就是把这个序列缓冲区的值更新为新的序列号并且在该索引处重写这个数据：</span></p><div><div id="highlighter_839387" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp plain">PacketData &amp; InsertPacketData( uint16_t sequence )</code></div><div class="line number2 index1 alt1"><code class="cpp plain">{</code></div><div class="line number3 index2 alt2"><code class="cpp spaces">    </code><code class="cpp keyword bold">const</code> <code class="cpp color1 bold">int</code> <code class="cpp plain">index = sequence % BufferSize;</code></div><div class="line number4 index3 alt1"><code class="cpp spaces">    </code><code class="cpp plain">sequence_buffer[index] = sequence;</code></div><div class="line number5 index4 alt2"><code class="cpp spaces">    </code><code class="cpp keyword bold">return</code> <code class="cpp plain">packet_data[index];</code></div><div class="line number6 index5 alt1"><code class="cpp plain">}</code></div></div></td></tr></table></div></div><p class="MsoNormal" align="left" style="vertical-align: baseline;"><br></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">但在接收端数据包以乱序到达并且有一部分丢失。在高得离谱的丢包率下（<span>99%</span>），我就会看到旧的序列缓冲区条目还存在，但是新条目的序列号已经超过了<span>65535</span>并且循环到达了旧条目之前，并且打破了我的应答逻辑（导致错误应答并打破了可靠性，这时发送方会真的认为对方已经接收到了一些东西但其实并不是<span>…</span>）</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">解决这个问题的办法是遍历上一个最高的插入序列与最新收到的插入序列之间的条目（如果它是更加新的话）并在缓冲区清除这些条目即都置为<span>0xFFFFFFFF</span>。现在，在一般情况下，插入操作是<i><u><span style="border:none windowtext 1.0pt;padding:0cm">非常接近</span></u></i><span> </span>时间常量的，但最糟的情况是，在先前最高的序列号和当前插入的序列号之间线性遍历的次数<span>n</span>等于缓冲区的长度。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">在我们继续之前，我想指出，你可以用这个数据结构做更多事情而不仅是对于应答码。例如，你可以加入发送时间，来扩展每个包的数据：</span></p><div><div id="highlighter_615471" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp keyword bold">struct</code> <code class="cpp plain">PacketData</code></div><div class="line number2 index1 alt1"><code class="cpp plain">{</code></div><div class="line number3 index2 alt2"><code class="cpp spaces">    </code><code class="cpp color1 bold">bool</code> <code class="cpp plain">acked;</code></div><div class="line number4 index3 alt1"><code class="cpp spaces">    </code><code class="cpp color1 bold">double</code> <code class="cpp plain">send_time;</code></div><div class="line number5 index4 alt2"><code class="cpp plain">};</code></div></div></td></tr></table></div></div><p class="MsoNormal" align="left" style="vertical-align: baseline;"><br></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">有了这些信息你可以对往返时间通过做指数级的平滑取平均数做修正，最终得到合理的预期往返时间。你甚至可以看到在发送数据包的序列缓存区的数据包会比你<span>RTT</span>预计的（你现在应该已经收到了它们的应答码<span>…</span>）要旧，通过这个往返时间对还没有应答的包做判断，来决定创建你的数据包丢失预计。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"></p><h2 id="应答算法"><span style="font-size:18.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">应答算法</span></h2> <p></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">现在我们来把注意力集中在数据包层级应答的实际算法上。</span><span style="color: rgb(34, 34, 34); font-family: 微软雅黑, sans-serif; font-size: 12pt;">该算法如下：</span></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">在数据包发送端：</span></b> </p><ol type="1"><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">在数据包发送缓冲区插入一个为当前发送的数据包序列号的条目，并且带着表示它还没有被应答的字段</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">从本地接收到的数据包序列缓存和最新接收到的数据包序列号中生成<span> <b><span style="border:none windowtext 1.0pt;padding:     0cm">ack</span></b> </span>和<b><span style="border:none windowtext 1.0pt;     padding:0cm">ack_bits</span></b><span> </span></span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">填写数据包报头的<b><span style="border:none windowtext 1.0pt;padding:0cm">sequence, ack</span></b><span> </span>和<span> <b><span style="border:     none windowtext 1.0pt;padding:0cm">ack_bits</span></b> </span>值</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">发送数据包并递增发送数据包的序列号</span> </li></ol><p class="MsoNormal" align="left" style="vertical-align: baseline;"><b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">在数据包接收端：</span></b> </p><ol type="1"><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">从数据包报头读取<span> <b><span style="border:none windowtext 1.0pt;padding:     0cm">sequence</span></b> </span></span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果<span> <b><span style="border:none windowtext 1.0pt;padding:     0cm">sequence</span></b> </span>比之前的最新收到的数据包序列号要新，就更新最新的接收到的数据包序列号</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">在接收数据包序列缓冲区中为这个数据包插入一个条目</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">从数据包报头中的<b><span style="border:none windowtext 1.0pt;padding:0cm">ack</span></b>和<b><span style="border:none windowtext 1.0pt;padding:0cm">ack_bits</span></b>解码应答的数据包序列号组合</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">迭代应答的数据包序列号以及任何还没有被应答的数据包调用<span> <b><span style="border:none windowtext 1.0pt;padding:     0cm">OnPacketAcked</span></b>( uint16_t sequence ) </span>在数据包发送缓冲区把这个数据包设置为<span>‘</span>已应答的<span>’</span>。</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></li></ol><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">重要的一点是这个算法是在两端都可以执行的，所以如果你有一个客户端和一个服务端，然后每一方的连接运行着同样的逻辑，维护自己的序列号发送的数据包，跟踪最新从另一方收到的数据包序列<span>#</span>还有从一个序列缓冲区里接收到的数据包中生成<b><span style="border:none windowtext 1.0pt;padding:0cm">sequence, ack</span></b><span> </span>和<b><span style="border:none windowtext 1.0pt;padding:0cm">ack_bits</span></b><span> </span>来发送到另一方。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">并且这真的就是和它有关的全部了。现在当一个数据包被另一方接收到时，你有一个回调：<b><span style="border:none windowtext 1.0pt;padding:0cm">OnPacketAcked</span></b><span> </span>。这个可靠性系统的关键就在于你得知道哪个数据包被接收，你可以在你想的媒介之上创建<i><u><span style="border:none windowtext 1.0pt;padding:0cm">任何</span></u></i><span> </span>可靠性系统。它不仅限于可靠有序的消息。例如，你可以用它确认哪个不可靠的状态更新已经完成了，用以实现基于每个物体的增量编码。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"></p><h2 id="消息对象"><span style="font-size:18.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">消息对象</span></h2> <p></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">消息是小型的对象（比数据包大小要小，所以很多消息装配在一个典型的数据包中）并且知道如何将它们自己序列化。在我的系统里，它们使用一个</span><u><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#DD3333">统一的序列化函数</span></u><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">来执行序列化。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这个序列化的函数是模板化的，所以你只要写它一次它就会处理读、写以及<i><u><span style="border:none windowtext 1.0pt;padding:0cm">测量</span></u></i> 。<i><span style="border:none windowtext 1.0pt;padding:0cm"> </span></i></span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">是的。测量。我喜欢的一个技巧就是有一个虚拟流类叫做<b><span style="border:none windowtext 1.0pt;padding:0cm">MeasureStream</span></b>，如果你调用了序列化函数，它不参与任何的序列化，而只是测量<i><u><span style="border:none windowtext 1.0pt;padding:0cm">可能</span></u></i>被写入的比特数。这对于解决哪个消息要装载到你的数据包里，特别是当消息可以有任意复杂的序列化函数的情况时是特别有用的。</span></p><div><div id="highlighter_699334" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div><div class="line number33 index32 alt2">33</div><div class="line number34 index33 alt1">34</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp keyword bold">struct</code> <code class="cpp plain">TestMessage : </code><code class="cpp keyword bold">public</code> <code class="cpp plain">Message</code></div><div class="line number2 index1 alt1"><code class="cpp plain">{</code></div><div class="line number3 index2 alt2"><code class="cpp spaces">    </code><code class="cpp plain">uint32_t a,b,c;</code></div><div class="line number4 index3 alt1"> </div><div class="line number5 index4 alt2"><code class="cpp spaces">    </code><code class="cpp plain">TestMessage()</code></div><div class="line number6 index5 alt1"><code class="cpp spaces">    </code><code class="cpp plain">{</code></div><div class="line number7 index6 alt2"><code class="cpp spaces">        </code><code class="cpp plain">a = 0;</code></div><div class="line number8 index7 alt1"><code class="cpp spaces">        </code><code class="cpp plain">b = 0;</code></div><div class="line number9 index8 alt2"><code class="cpp spaces">        </code><code class="cpp plain">c = 0;</code></div><div class="line number10 index9 alt1"><code class="cpp spaces">    </code><code class="cpp plain">}</code></div><div class="line number11 index10 alt2"> </div><div class="line number12 index11 alt1"><code class="cpp spaces">    </code><code class="cpp keyword bold">template</code> <code class="cpp plain">&lt;</code><code class="cpp keyword bold">typename</code> <code class="cpp plain">stream</code><code class="cpp string"></code><code class="cpp plain">&gt; </code><code class="cpp color1 bold">bool</code> <code class="cpp plain">Serialize( Stream &amp; stream )</code></div><div class="line number13 index12 alt2"><code class="cpp spaces">    </code><code class="cpp plain">{ </code></div><div class="line number14 index13 alt1"><code class="cpp spaces">        </code><code class="cpp plain">serialize_bits( stream, a, 32 );</code></div><div class="line number15 index14 alt2"><code class="cpp spaces">        </code><code class="cpp plain">serialize_bits( stream, b, 32 );</code></div><div class="line number16 index15 alt1"><code class="cpp spaces">        </code><code class="cpp plain">serialize_bits( stream, c, 32 );</code></div><div class="line number17 index16 alt2"><code class="cpp spaces">        </code><code class="cpp keyword bold">return</code> <code class="cpp keyword bold">true</code><code class="cpp plain">;</code></div><div class="line number18 index17 alt1"><code class="cpp spaces">    </code><code class="cpp plain">}</code></div><div class="line number19 index18 alt2"> </div><div class="line number20 index19 alt1"><code class="cpp spaces">    </code><code class="cpp keyword bold">virtual</code> <code class="cpp plain">SerializeInternal( WriteStream &amp; stream )</code></div><div class="line number21 index20 alt2"><code class="cpp spaces">    </code><code class="cpp plain">{</code></div><div class="line number22 index21 alt1"><code class="cpp spaces">        </code><code class="cpp keyword bold">return</code> <code class="cpp plain">Serialize( stream );</code></div><div class="line number23 index22 alt2"><code class="cpp spaces">    </code><code class="cpp plain">}</code></div><div class="line number24 index23 alt1"> </div><div class="line number25 index24 alt2"><code class="cpp spaces">    </code><code class="cpp keyword bold">virtual</code> <code class="cpp plain">SerializeInternal( ReadStream &amp; stream )</code></div><div class="line number26 index25 alt1"><code class="cpp spaces">    </code><code class="cpp plain">{</code></div><div class="line number27 index26 alt2"><code class="cpp spaces">        </code><code class="cpp keyword bold">return</code> <code class="cpp plain">Serialize( stream );</code></div><div class="line number28 index27 alt1"><code class="cpp spaces">    </code><code class="cpp plain">}</code></div><div class="line number29 index28 alt2"> </div><div class="line number30 index29 alt1"><code class="cpp spaces">    </code><code class="cpp keyword bold">virtual</code> <code class="cpp plain">SerializeInternal( MeasureStream &amp; stream )</code></div><div class="line number31 index30 alt2"><code class="cpp spaces">    </code><code class="cpp plain">{</code></div><div class="line number32 index31 alt1"><code class="cpp spaces">        </code><code class="cpp keyword bold">return</code> <code class="cpp plain">Serialize( stream );        </code></div><div class="line number33 index32 alt2"><code class="cpp spaces">    </code><code class="cpp plain">}</code></div><div class="line number34 index33 alt1"><code class="cpp plain">};</code><code class="cpp keyword bold"></code><code class="cpp plain"></code></div></div></td></tr></table></div></div><p class="MsoNormal" align="left" style="vertical-align: baseline;"><br></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这里的技巧是桥接统一模板的序列化函数（所以你只需要写一次）与虚拟序列化方法，这通过从虚函数每个流类型中调入它。我通常用一个宏来打包这个引用，但它在上文的代码中这个宏已经被展开，所以你可以看到发生了什么。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">现在，假设你有一个基于消息的指针可以让你做到这样并且它只是通过重载来工作：</span></p><div><div id="highlighter_300994" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp plain">Message <em> message = CreateSomeMessage();</em></code></div><div class="line number2 index1 alt1"><code class="cpp plain">message-&gt;SerializeInternal( stream );</code></div></div></td></tr></table></div></div><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">另外一个就是如果你在编译时间知道了消息的完整组合，就可以为每个类型在被调入序列化函数之前实现一个关于消息类型转换为确切消息类型的大的<span>switch</span>语句。我在过去已经在控制台平台实现的这个消息系统这么做了（如<span>PS3 SPUs</span>），但对于现在（<span>2016</span>）的应用程序，虚函数的总开销是忽略不计的。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">消息从一个基类派生，这个基类提供一个通用的接口例如序列化、消息的查询类型还有引用计数。引用计数是必要的，因为消息是通过指针传递的并且在应答之前不只是存储在消息发送队列，而且也存储在外发的数据包中，包本身是<span>C++</span>结构体。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这是一个策略，就是避免通过指针传递消息和数据包来复制数据。别的一些场景（理想的情况是在一个单独的线程）它们里面的数据包和消息会序列化到一个缓冲区。最终，当不再有对存在消息发送队列的消息的引用时（消息已经被应答）并且没有数据包包含保留在数据包发送队列里的消息，消息即是被销毁的。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">我们也需要一种方式来创建消息。我用一个消息的工厂类来做这件事情，它有一个被复写的虚函数来根据类型创建一个消息。如果这个数据包工厂还知道消息类型的总数量就好了，那样我们就可以在网络上序列化一个消息类型，因为有严格的界限和在有效范围之外的消息类型值的包的恶意丢弃：</span></p><div><div id="highlighter_935705" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp keyword bold">enum</code> <code class="cpp plain">TestMessageTypes</code></div><div class="line number2 index1 alt1"><code class="cpp plain">{</code></div><div class="line number3 index2 alt2"><code class="cpp spaces">    </code><code class="cpp plain">TEST_MESSAGE_A,</code></div><div class="line number4 index3 alt1"><code class="cpp spaces">    </code><code class="cpp plain">TEST_MESSAGE_B,</code></div><div class="line number5 index4 alt2"><code class="cpp spaces">    </code><code class="cpp plain">TEST_MESSAGE_C,</code></div><div class="line number6 index5 alt1"><code class="cpp spaces">    </code><code class="cpp plain">TEST_MESSAGE_NUM_TYPES</code></div><div class="line number7 index6 alt2"><code class="cpp plain">};</code></div><div class="line number8 index7 alt1"> </div><div class="line number9 index8 alt2"><code class="cpp comments">// message definitions omitted</code></div><div class="line number10 index9 alt1"> </div><div class="line number11 index10 alt2"><code class="cpp keyword bold">class</code> <code class="cpp plain">TestMessageFactory : </code><code class="cpp keyword bold">public</code> <code class="cpp plain">MessageFactory</code></div><div class="line number12 index11 alt1"><code class="cpp plain">{ </code></div><div class="line number13 index12 alt2"><code class="cpp keyword bold">public</code><code class="cpp plain">:</code></div><div class="line number14 index13 alt1"> </div><div class="line number15 index14 alt2"><code class="cpp spaces">    </code><code class="cpp plain">Message  Create( </code><code class="cpp color1 bold">int</code> <code class="cpp plain">type )</code></div><div class="line number16 index15 alt1"><code class="cpp spaces">    </code><code class="cpp plain">{</code></div><div class="line number17 index16 alt2"><code class="cpp spaces">        </code><code class="cpp keyword bold">switch</code> <code class="cpp plain">( type )</code></div><div class="line number18 index17 alt1"><code class="cpp spaces">        </code><code class="cpp plain">{</code></div><div class="line number19 index18 alt2"><code class="cpp spaces">            </code><code class="cpp keyword bold">case</code> <code class="cpp plain">TEST_MESSAGE_A: </code><code class="cpp keyword bold">return</code> <code class="cpp keyword bold">new</code> <code class="cpp plain">TestMessageA();</code></div><div class="line number20 index19 alt1"><code class="cpp spaces">            </code><code class="cpp keyword bold">case</code> <code class="cpp plain">TEST_MESSAGE_B: </code><code class="cpp keyword bold">return</code> <code class="cpp keyword bold">new</code> <code class="cpp plain">TestMessageB();</code></div><div class="line number21 index20 alt2"><code class="cpp spaces">            </code><code class="cpp keyword bold">case</code> <code class="cpp plain">TEST_MESSAGE_C: </code><code class="cpp keyword bold">return</code> <code class="cpp keyword bold">new</code> <code class="cpp plain">TestMessageC();</code></div><div class="line number22 index21 alt1"><code class="cpp spaces">        </code><code class="cpp plain">}</code></div><div class="line number23 index22 alt2"><code class="cpp spaces">    </code><code class="cpp plain">}</code></div><div class="line number24 index23 alt1"> </div><div class="line number25 index24 alt2"><code class="cpp spaces">    </code><code class="cpp keyword bold">virtual</code> <code class="cpp color1 bold">int</code> <code class="cpp plain">GetNumTypes() </code><code class="cpp keyword bold">const</code></div><div class="line number26 index25 alt1"><code class="cpp spaces">    </code><code class="cpp plain">{</code></div><div class="line number27 index26 alt2"><code class="cpp spaces">        </code><code class="cpp keyword bold">return</code> <code class="cpp plain">TEST_MESSAGE_NUM_TYPES;</code></div><div class="line number28 index27 alt1"><code class="cpp spaces">    </code><code class="cpp plain">}</code></div><div class="line number29 index28 alt2"><code class="cpp plain">};</code></div></div></td></tr></table></div></div><p class="MsoNormal" align="left" style="vertical-align: baseline;"><br></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">再次重申，这是一个引用并且通常是被包裹在宏里面的，但下面要说明的就是它具体是怎么回事了。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"></p><h2 id="可靠的有序消息算法"><span style="font-size:18.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">可靠的有序消息算法</span></h2> <p></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">现在让我们来着手于如何在应答系统中实现可靠有序消息的细节。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">发送可靠有序消息的算法如下：</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">对于消息发送：</span></b> </p><ol type="1"><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">使用测量流测量消息序列化后的大小</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">插入消息指针和它序列化的位数到一个序列缓冲区，它以消息<span>id</span>为索引。设置消息最后被发送的时间为<span>-1</span></span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">递增发送的消息的<span>id</span></span> </li></ol><p class="MsoNormal" align="left" style="vertical-align: baseline;"><b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">对于数据包发送：</span></b> </p><ol type="1"><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">从左<span>-&gt;</span>右（递增的消息<span>id</span>顺序）遍历在最早的未应答消息<span>id</span>和最新插入的消息<span>id</span>之间的发送消息序列缓冲区的这组消息。</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;     padding:0cm">超级重要的：</span></b><span style="font-size:12.0pt;     font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"> </span><span style="font-size:12.0pt;     font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">不要发送一个接收方不能缓冲的消息<span>id</span>，不然你会破坏消息的应答（由于这个消息不能被缓冲，但包含它的数据包会被应答，发送方就会认为这个消息已经被接收了，就不再重新发送它了）。这意味着你必须不能发送一个消息<span>id</span>等于或比最早的未应答消息的<span>id</span>加上消息接收缓冲区大小要新。</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">对于那些在最后<span>0.1</span>秒没有被发送的消息<u><span style="border:none windowtext 1.0pt;     padding:0cm">并且</span></u>适合我们留在数据包的有效空间，就把它追加到消息列表去发送。根据迭代顺序得到优先级。</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">包括在外发数据包中的消息，并且要为每个消息添加一个引用。确保每个数据包的析构函数中减了引用计数。</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">在数据包<b><span style="border:none windowtext 1.0pt;padding:0cm">n</span></b>存储消息的数量并且消息的标识数组包含在一个序列缓冲区的数据包中，以外发数据包的序列号为索引。</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">把数据包添加到数据包发送队列。</span> </li></ol><p class="MsoNormal" align="left" style="vertical-align: baseline;"><b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">对于数据包接收：</span></b> </p><ol type="1"><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">遍历包含在数据包中的消息组合并且把它们插入到消息接收队列缓冲区，以它们的消息<span>id</span>为索引。</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">前面的应答系统自动地应答我们刚刚收到的数据包序列号。</span> </li></ol><p class="MsoNormal" align="left" style="vertical-align: baseline;"><b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">对于数据包应答：</span></b> </p><ol type="1"><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">用序列号查找包含在数据包中消息组合的标识部分。</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">从消息发送队列中移除那些已经存在的消息，并减少它们的引用计数。</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">通过从发送消息队列缓冲区中之前未应答消息的<span>id</span>的转寄来更新最后一个未应答的消息的<span>id</span>，直到发现一个有效的消息条目，或者你会到达当前发送消息的<span>id</span>。以先到者为准。 </span> </li></ol><p class="MsoNormal" align="left" style="vertical-align: baseline;"><b><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">对于消息接收：</span></b> </p><ol type="1"><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">检查接受消息缓冲区确保当前收到消息的<span>id</span>对应的消息是否存在。</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果消息存在，将它从消息队列缓冲区中移除，递增接收消息的<span>id</span>并给这个消息返回一个指针。</span> </li><li class="MsoNormal" style="color:#222222;text-align:left;vertical-align:baseline"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果否，就是没有有效的消息可接收。返回<b><span style="border:none windowtext 1.0pt;padding:0cm">NULL</span></b>。</span> </li></ol><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">总之，消息要保持被包含在数据包中直到这个数据包包含的消息得到应答。我们在发送者方使用一个数据结构来给消息标识的组合映射数据包序列号以便应答。当消息被应答时，要从发送队列中移除。对于接收方，以乱序到达的消息会被存储在一个序列缓冲区，并以消息<span>id</span>为索引，这个<span>id</span>会让我们以它们被发送的顺序接收它们。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"></p><h2 id="最终的结果"><span style="font-size:18.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">最终的结果</span></h2> <p></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">在发送方，这为用户提供了一个像这样的接口：</span></p><div><div id="highlighter_731637" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp plain">TestMessage <em> message = (TestMessage</em>) factory.Create( TEST_MESSAGE );</code></div><div class="line number2 index1 alt1"><code class="cpp keyword bold">if</code> <code class="cpp plain">( message )</code></div><div class="line number3 index2 alt2"><code class="cpp plain">{</code></div><div class="line number4 index3 alt1"><code class="cpp spaces">    </code><code class="cpp plain">message-&gt;a = 1;</code></div><div class="line number5 index4 alt2"><code class="cpp spaces">    </code><code class="cpp plain">message-&gt;b = 2;</code></div><div class="line number6 index5 alt1"><code class="cpp spaces">    </code><code class="cpp plain">message-&gt;c = 3;</code></div><div class="line number7 index6 alt2"><code class="cpp spaces">    </code><code class="cpp plain">connection.SendMessage( message );</code></div><div class="line number8 index7 alt1"><code class="cpp plain">}</code></div></div></td></tr></table></div></div><p class="MsoNormal" align="left" style="vertical-align: baseline;"><br></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">还有在接收方：</span></p><div><div id="highlighter_315020" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp keyword bold">while</code> <code class="cpp plain">( </code><code class="cpp keyword bold">true</code> <code class="cpp plain">)</code></div><div class="line number2 index1 alt1"><code class="cpp plain">{</code></div><div class="line number3 index2 alt2"><code class="cpp spaces">    </code><code class="cpp plain">Message <em> message = connection.ReceiveMessage();</em></code></div><div class="line number4 index3 alt1"><code class="cpp spaces">    </code><code class="cpp keyword bold">if</code> <code class="cpp plain">( !message )</code></div><div class="line number5 index4 alt2"><code class="cpp spaces">        </code><code class="cpp keyword bold">break</code><code class="cpp plain">;</code></div><div class="line number6 index5 alt1"> </div><div class="line number7 index6 alt2"><code class="cpp spaces">    </code><code class="cpp keyword bold">if</code> <code class="cpp plain">( message-&gt;GetType() == TEST_MESSAGE )</code></div><div class="line number8 index7 alt1"><code class="cpp spaces">    </code><code class="cpp plain">{</code></div><div class="line number9 index8 alt2"><code class="cpp spaces">        </code><code class="cpp plain">TestMessage  testMessage = (TestMessage*) message;</code></div><div class="line number10 index9 alt1"><code class="cpp spaces">        </code><code class="cpp comments">// process test message</code></div><div class="line number11 index10 alt2"><code class="cpp spaces">    </code><code class="cpp plain">}</code></div><div class="line number12 index11 alt1"> </div><div class="line number13 index12 alt2"><code class="cpp spaces">    </code><code class="cpp plain">factory.Release( message );</code></div><div class="line number14 index13 alt1"><code class="cpp plain">}</code></div></div></td></tr></table></div></div><p class="MsoNormal" align="left" style="vertical-align: baseline;"><br></p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">正如你所看到的，它已经是简单得不能再简单了。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">如果这几个接口有引起你的兴趣，请看看我的新开源库<span> <a rel="noopener" href="https://github.com/networkprotocol/libyojimbo" target="_blank"><span style="color:#DD3333">libyojimbo</span></a></span>。</span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">我希望你到现在为止对这个系列的文章是享受的<span><a rel="noopener" href="http://www.patreon.com/gafferongames" target="_blank"><span style="color:#DD3333"><span>请在 patreon</span></span><span style="color:#DD3333"><span>上支持我的写作</span></span></a></span>，并且我将更快写新的文章，再者你会在加州大学伯克利分校软件的开源许可证下获得这篇文章的示例源代码。<b><u><span style="border:none windowtext 1.0pt;padding:0cm">谢谢你的支持！</span></u></b></span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;Lucida Sans Unicode&quot;,&quot;sans-serif&quot;;color:#222222"> </span> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><b><span style="font-size:18.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;border:none windowtext 1.0pt;padding:0cm">即将到来：</span></b><b><span style="font-size:18.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><a rel="noopener" href="http://gafferongames.com/building-a-game-network-protocol/client-server-connection/" target="_blank"><span style="color:#DD3333"><span>客户端与服务器的连接</span></span></a></span></b> </p><p class="MsoNormal" align="left" style="vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">在<span>“</span>创建一个游戏网络协议<span>”</span>的下一篇文章会展示你如何在<span>UDP</span>之上创建你自己的客户端<span>/</span>服务器连接层，它会实现挑战<span>/</span>响应，会在服务器上分配客户端插槽，当服务器爆满或检测超时就拒绝客户端的连接。</span> </p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"> </span> </p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"> </span> </p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">【版权声明】</span> </p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">原文作者未做权利声明，视为共享知识产权进入公共领域，自动获得授权；</span> </p><p class="MsoNormal"><span> </span> </p></div>                    <br>                
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/03/12/ssl_tls_illustrated/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/12/ssl_tls_illustrated/" itemprop="url">SSL/TLS详解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-12T06:00:54+00:00">
+                2017-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NP/" itemprop="url" rel="index">
+                    <span itemprop="name">NP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <p>互联网的通信安全，建立在 SSL/TLS 协议之上。</p>
+<p>本文简要介绍 SSL/TLS 协议的运行机制。文章的重点是设计思想和运行过程，不涉及具体的实现细节。如果想了解这方面的内容，请参阅 <a href="http://tools.ietf.org/html/rfc5246" target="_blank" rel="noopener">RFC 文档</a>。</p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/03/11/kbe_ue4_demo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/11/kbe_ue4_demo/" itemprop="url">KBE的UE4的demo大体解读</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-11T11:41:58+00:00">
+                2017-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/UE4/" itemprop="url" rel="index">
+                    <span itemprop="name">UE4</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <p>写到一半发现论坛的热门帖子里官方写了个u3d的demo源码解析,  内容几乎重复, u3d跟ue4的demo框架流程几乎都是差不多的, 直接给出官方帖子的链接好了, 尴尬:<br><a href="http://bbs.kbengine.org/forum.php?mod=viewthread&amp;tid=166" target="_blank" rel="noopener">http://bbs.kbengine.org/forum.php?mod=viewthread&amp;tid=166</a></p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

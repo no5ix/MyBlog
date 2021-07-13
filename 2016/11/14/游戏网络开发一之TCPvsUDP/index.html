@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="GafferOnGames,TCP,UDP,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="原文原文出处 Introduction Hi, I&amp;rsquo;m Glenn Fiedler and welcome to Networking for Game Programmers.In this article we start with the most basic aspect of network programming: sending and receiving data ov">
+<meta name="keywords" content="GafferOnGames,TCP,UDP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="游戏网络开发一之TCPvsUDP">
+<meta property="og:url" content="https://hulinhong.com/2016/11/14/游戏网络开发一之TCPvsUDP/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="原文原文出处 Introduction Hi, I&amp;rsquo;m Glenn Fiedler and welcome to Networking for Game Programmers.In this article we start with the most basic aspect of network programming: sending and receiving data ov">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://gameweb-img.qq.com/gad/20160809/image001.1470706683.gif">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="游戏网络开发一之TCPvsUDP">
+<meta name="twitter:description" content="原文原文出处 Introduction Hi, I&amp;rsquo;m Glenn Fiedler and welcome to Networking for Game Programmers.In this article we start with the most basic aspect of network programming: sending and receiving data ov">
+<meta name="twitter:image" content="http://gameweb-img.qq.com/gad/20160809/image001.1470706683.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>游戏网络开发一之TCPvsUDP | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/11/14/游戏网络开发一之TCPvsUDP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">游戏网络开发一之TCPvsUDP</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-14T22:20:34+00:00">
+                2016-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GS/" itemprop="url" rel="index">
+                    <span itemprop="name">GS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/GafferOnGames/" rel="tag"><i class="fa fa-tag"></i> GafferOnGames</a>
+              
+                <a href="/tags/TCP/" rel="tag"><i class="fa fa-tag"></i> TCP</a>
+              
+                <a href="/tags/UDP/" rel="tag"><i class="fa fa-tag"></i> UDP</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/01/快速编译技巧/" rel="next" title="快速编译技巧">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  快速编译技巧
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/15/游戏网络开发二之数据的发送与接收/" rel="prev" title="游戏网络开发二之数据的发送与接收">
+              <p class="post-nav-pre-next-title">
+                  游戏网络开发二之数据的发送与接收
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="https://gafferongames.com/post/udp_vs_tcp/" target="_blank" rel="noopener">原文出处</a></p>
+<p></p><h2 id="introduction">Introduction</h2><p></p>
+<p>Hi, I&rsquo;m <a href="https://gafferongames.com/about" target="_blank" rel="noopener">Glenn Fiedler</a> and welcome to <a href="https://gafferongames.com/categories/game-networking/" target="_blank" rel="noopener"><strong>Networking for Game Programmers</strong></a>.</p><br><p>In this article we start with the most basic aspect of network programming: sending and receiving data over the network. This is perhaps the simplest and most basic part of what network programmers do, but still it is quite intricate and non-obvious as to what the best course of action is.</p><br><p>You have most likely heard of sockets, and are probably aware that there are two main types: TCP and UDP. When writing a network game, we first need to choose what type of socket to use. Do we use TCP sockets, UDP sockets or a mixture of both? Take care because if you get this wrong it will have terrible effects on your multiplayer game!</p><br><p>The choice you make depends entirely on what sort of game you want to network. So from this point on and for the rest of this article series, I assume you want to network an action game. You know, games like Halo, Battlefield 1942, Quake, Unreal, CounterStrike and Team Fortress.</p><br><p>In light of the fact that we want to network an action game, we&rsquo;ll take a very close look at the properties of each protocol, and dig a bit into how the internet actually works. Once we have all this information, the correct choice is clear.</p><br><h2 id="tcp-ip">TCP/IP</h2><br><p>TCP stands for &ldquo;transmission control protocol&rdquo;. IP stands for &ldquo;internet protocol&rdquo;. Together they form the backbone for almost everything you do online, from web browsing to IRC to email, it&rsquo;s all built on top of TCP/IP.</p><br><p>If you have ever used a TCP socket, then you know it&rsquo;s a reliable connection based protocol. This means you create a connection between two machines, then you exchange data much like you&rsquo;re writing to a file on one side, and reading from a file on the other.</p><br><p>TCP connections are reliable and ordered. All data you send is guaranteed to arrive at the other side and in the order you wrote it. It&rsquo;s also a stream protocol, so TCP automatically splits your data into packets and sends them over the network for you.</p><br><h2 id="ip">IP</h2><br><p>The simplicity of TCP is in stark contrast to what actually goes on underneath TCP at the IP or &ldquo;internet protocol&rdquo; level.</p><br><p>Here there is no concept of connection, packets are simply passed from one computer to the next. You can visualize this process being somewhat like a hand-written note passed from one person to the next across a crowded room, eventually, reaching the person it&rsquo;s addressed to, but only after passing through many hands.</p><br><p>There is also no guarantee that this note will actually reach the person it is intended for. The sender just passes the note along and hopes for the best, never knowing whether or not the note was received, unless the other person decides to write back!</p><br><p>Of course IP is in reality a little more complicated than this, since no one computer knows the exact sequence of computers to pass the packet along to so that it reaches its destination quickly. Sometimes IP passes along multiple copies of the same packet and these packets make their way to the destination via different paths, causing packets to arrive out of order and in duplicate.</p><br><p>This is because the internet is designed to be self-organizing and self-repairing, able to route around connectivity problems rather than relying on direct connections between computers. It&rsquo;s actually quite cool if you think about what&rsquo;s <em>really</em> going on at the low level. You can read all about this in the classic book <a href="http://www.cs.newpaltz.edu/~pletcha/NET_PY/the-protocols-tcp-ip-illustrated-volume-1.9780201633467.24290.pdf" target="_blank" rel="noopener">TCP/IP Illustrated</a>.</p><br><h2 id="udp">UDP</h2><br><p>Instead of treating communications between computers like writing to files, what if we want to send and receive packets directly?</p><br><p>We can do this using UDP.</p><br><p>UDP stands for &ldquo;user datagram protocol&rdquo; and it&rsquo;s another protocol built on top of IP, but unlike TCP, instead of adding lots of features and complexity, UDP is a very thin layer over IP.</p><br><p>With UDP we can send a packet to a destination IP address (eg. 112.140.20.10) and port (say 52423), and it gets passed from computer to computer until it arrives at the destination or is lost along the way.</p><br><p>On the receiver side, we just sit there listening on a specific port (eg. 52423) and when a packet arrives from <em>any</em> computer (remember there are no connections!), we get notified of the address and port of the computer that sent the packet, the size of the packet, and can read the packet data.</p><br><p>Like IP, UDP is an unreliable protocol. In practice however, most packets that are sent <em>will</em> get through, but you&rsquo;ll usually have around 1-5% packet loss, and occasionally you&rsquo;ll get periods where no packets get through at all (remember there are lots of computers between you and your destination where things can go wrong&hellip;)</p><br><p>There is also no guarantee of ordering of packets with UDP. You could send 5 packets in order 1,2,3,4,5 and they could arrive completely out of order like 3,1,2,5,4. In practice, packets tend to arrive in order <em>most</em> of the time, but you cannot rely on this!</p><br><p>UDP also provides a 16 bit checksum, which in theory is meant to protect you from receiving invalid or truncated data, but you can&rsquo;t even trust this, since 16 bits is just not enough protection when you are sending UDP packets rapidly over a long period of time. Statistically, you can&rsquo;t even rely on this checksum and must add your own.</p><br><p>So in short, when you use UDP you&rsquo;re pretty much on your own!</p><br><h2 id="tcp-vs-udp">TCP vs. UDP</h2><br><p>We have a decision to make here, do we use TCP sockets or UDP sockets?</p><br><p>Lets look at the properties of each:</p><br><p>TCP:</p><br><ul><br><li>Connection based</li><br><li>Guaranteed reliable and ordered</li><br><li>Automatically breaks up your data into packets for you</li><br><li>Makes sure it doesn’t send data too fast for the internet connection to handle (flow control)</li><br><li>Easy to use, you just read and write data like its a file</li><br></ul><br><p>UDP:</p><br><ul><br><li>No concept of connection, you have to code this yourself</li><br><li>No guarantee of reliability or ordering of packets, they may arrive out of order, be duplicated, or not arrive at all!</li><br><li>You have to manually break your data up into packets and send them</li><br><li>You have to make sure you don’t send data too fast for your internet connection to handle</li><br><li>If a packet is lost, you need to devise some way to detect this, and resend that data if necessary</li><br><li>You can’t even rely on the UDP checksum so you must add your own</li><br></ul><br><p>The decision seems pretty clear then, TCP does everything we want and its super easy to use, while UDP is a huge pain in the ass and we have to code everything ourselves from scratch.</p><br><p>So obviously we just use TCP right?</p><br><p>Wrong!</p><br><p>Using TCP is the worst possible mistake you can make when developing a multiplayer game! To understand why, you need to see what TCP is actually doing above IP to make everything look so simple.</p><br><h2 id="how-tcp-really-works">How TCP really works</h2><br><p>TCP and UDP are both built on top of IP, but they are radically different. UDP behaves very much like the IP protocol underneath it, while TCP abstracts everything so it looks like you are reading and writing to a file, hiding all complexities of packets and unreliability from you.</p><br><p>So how does it do this?</p><br><p>Firstly, TCP is a stream protocol, so you just write bytes to a stream, and TCP makes sure that they get across to the other side. Since IP is built on packets, and TCP is built on top of IP, TCP must therefore break your stream of data up into packets. So, some internal TCP code queues up the data you send, then when enough data is pending the queue, it sends a packet to the other machine.</p><br><p>This can be a problem for multiplayer games if you are sending very small packets. What can happen here is that TCP may decide it&rsquo;s not going to send data until you have buffered up enough data to make a reasonably sized packet to send over the network.</p><br><p>This is a problem because you want your client player input to get to the server <em>as quickly as possible</em>, if it is delayed or &ldquo;clumped up&rdquo; like TCP can do with small packets, the client&rsquo;s user experience of the multiplayer game will be very poor. Game network updates will arrive late and infrequently, instead of on-time and frequently like we want.</p><br><p>TCP has an option to fix this behavior called <a href="https://en.wikipedia.org/wiki/Nagle%27s_algorithm" target="_blank" rel="noopener">TCP_NODELAY</a>. This option instructs TCP not to wait around until enough data is queued up, but to flush any data you write to it immediately. This is referred to as disabling Nagle&rsquo;s algorithm.</p><br><p>Unfortunately, even if you set this option TCP still has serious problems for multiplayer games and it all stems from how TCP handles lost and out of order packets to present you with the &ldquo;illusion&rdquo; of a reliable, ordered stream of data.</p><br><h2 id="how-tcp-implements-reliability">How TCP implements reliability</h2><br><p>Fundamentally TCP breaks down a stream of data into packets, sends these packets over unreliable IP, then takes the packets received on the other side and reconstructs the stream.</p><br><p>But what happens when a packet is lost?</p><br><p>What happens when packets arrive out of order or are duplicated?</p><br><p>Without going too much into the details of how TCP works because its super-complicated (please refer to <a href="http://www.cs.newpaltz.edu/~pletcha/NET_PY/the-protocols-tcp-ip-illustrated-volume-1.9780201633467.24290.pdf" target="_blank" rel="noopener">TCP/IP Illustrated</a>) in essence TCP sends out a packet, waits a while until it detects that packet was lost because it didn&rsquo;t receive an ack (or acknowledgement), then resends the lost packet to the other machine. Duplicate packets are discarded on the receiver side, and out of order packets are resequenced so everything is reliable and in order.</p><br><p>The problem is that if we were to send our time critical game data over TCP, whenever a packet is dropped it has to stop and wait for that data to be resent. Yes, even if more recent data arrives, that new data gets put in a queue, and you cannot access it until that lost packet has been retransmitted. How long does it take to resend the packet?</p><br><p>Well, it&rsquo;s going to take <em>at least</em> round trip latency for TCP to work out that data needs to be resent, but commonly it takes 2*RTT, and another one way trip from the sender to the receiver for the resent packet to get there. So if you have a 125ms ping, you&rsquo;ll be waiting roughly 1/5th of a second for the packet data to be resent <em>at best</em>, and in worst case conditions you could be waiting up to half a second or more (consider what happens if the attempt to resend the packet fails to get through?). What happens if TCP decides the packet loss indicates network congestion and it backs off? Yes it actually does this. Fun times!</p><br><h2 id="never-use-tcp-for-time-critical-data">Never use TCP for time critical data</h2><br><p>The problem with using TCP for realtime games like FPS is that unlike web browsers, or email or most other applications, these multiplayer games have a <em>real time requirement</em> on packet delivery.</p><br><p>What this means is that for many parts of a game, for example player input and character positions, it really doesn&rsquo;t matter what happened a second ago, the game only cares about the most recent data.</p><br><p>TCP was simply not designed with this in mind.</p><br><p>Consider a very simple example of a multiplayer game, some sort of action game like a shooter. You want to network this in a very simple way. Every frame you send the input from the client to the server (eg. keypresses, mouse input controller input), and each frame the server processes the input from each player, updates the simulation, then sends the current position of game objects back to the client for rendering.</p><br><p>So in our simple multiplayer game, whenever a packet is lost, everything has to <em>stop and wait</em> for that packet to be resent. On the client game objects stop receiving updates so they appear to be standing still, and on the server input stops getting through from the client, so the players cannot move or shoot. When the resent packet finally arrives, you receive this stale, out of date information that you don&rsquo;t even care about! Plus, there are packets backed up in queue waiting for the resend which arrive at same time, so you have to process all of these packets in one frame. Everything is clumped up!</p><br><p>Unfortunately, there is nothing you can do to fix this behavior, it&rsquo;s just the fundamental nature of TCP. This is just what it takes to make the unreliable, packet-based internet look like a reliable-ordered stream.</p><br><p>Thing is we don&rsquo;t want a reliable ordered stream.</p><br><p>We want our data to get as quickly as possible from client to server without having to wait for lost data to be resent.</p><br><p>This is why you should <strong>never</strong> use TCP when networking time-critical data!</p><br><h2 id="wait-why-can-t-i-use-both-udp-and-tcp">Wait? Why can&rsquo;t I use <em>both</em> UDP and TCP?</h2><br><p>For realtime game data like player input and state, only the most recent data is relevant, but for other types of data, say perhaps a sequence of commands sent from one machine to another, reliability and ordering can be very important.</p><br><p>The temptation then is to use UDP for player input and state, and TCP for the reliable ordered data. If you&rsquo;re sharp you&rsquo;ve probably even worked out that you may have multiple &ldquo;streams&rdquo; of reliable ordered commands, maybe one about level loading, and another about AI. Perhaps you think to yourself, &ldquo;Well, I&rsquo;d really not want AI commands to stall out if a packet is lost containing a level loading command - they are completely unrelated!&rdquo;. You are right, so you may be tempted to create one TCP socket for each stream of commands.</p><br><p>On the surface, this seems like a great idea. The problem is that since TCP and UDP are both built on top of IP, the underlying packets sent by each protocol will affect each other. Exactly how they affect each other is quite complicated and relates to how TCP performs reliability and flow control, but fundamentally you should remember that TCP tends to <em>induce</em> packet loss in UDP packets. For more information, read <a href="http://www.isoc.org/INET97/proceedings/F3/F3_1.HTM" target="_blank" rel="noopener">this paper</a> on the subject.</p><br><p>Also, it&rsquo;s pretty complicated to mix UDP and TCP. If you mix UDP and TCP you lose a certain amount of control. Maybe you can implement reliability in a more efficient way that TCP does, better suited to your needs? Even if you need reliable-ordered data, it&rsquo;s possible, provided that data is small relative to the available bandwidth to get that data across faster and more reliably that it would if you sent it over TCP. Plus, if you have to do NAT to enable home internet connections to talk to each other, having to do this NAT once for UDP and once for TCP (not even sure if this is possible&hellip;) is kind of painful.</p><br><h2 id="conclusion">Conclusion</h2><br><p>My recommendation is not only that you use UDP, but that you <em>only</em> use UDP for your game protocol. Don&rsquo;t mix TCP and UDP! Instead, learn how to implement the specific features of TCP that you need <em>inside</em> your own custom UDP based protocol.</p><br><p>Of course, it is no problem to use HTTP to talk to some RESTful services while your game is running. I&rsquo;m not saying you can&rsquo;t do that. A few TCP connections running while your game is running isn&rsquo;t going to bring everything down. The point is, don&rsquo;t split your <em>game protocol</em> across UDP and TCP. Keep your game protocol running over UDP so you are fully in control of the data you send and receive and how reliability, ordering and congestion avoidance are implemented.</p><br><p>The rest of this article series show you how to do this, from creating your own virtual connection on top of UDP, to creating your own reliability, flow control and congestion avoidance.</p>
+
+
+<h1 id="译文"><a href="#译文" class="headerlink" title="译文"></a>译文</h1><p><a href="http://gad.qq.com/program/translateview/7167380" target="_blank" rel="noopener">译文出处</a></p>
+<div style="display:none"><br><br><!--     把下文中的 $hhd$ 改为 <h 就可以恢复原状, 当时把 <h 改为 $hhd$ 是为了防止生成toc      --><br><br><div><div class="WordSection1">$hhd$2 style=”margin: 11.25pt 0cm 1.5pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;”&gt;<span style="font-weight: normal;font-size:medium;font-family:微软雅黑;">翻译：<a rel="noopener" href="http://www.cnblogs.com/xueweihan/p/5452873.html" target="_blank">削微寒</a>     审校：<a rel="noopener" href="http://www.cnblogs.com/xueweihan/p/5452873.html" target="_blank">削微寒</a></span><div><span style="font-family: 微软雅黑, sans-serif;"><br></span></div>$hhd$2 style=”margin: 11.25pt 0cm 1.5pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;”&gt;<span style="font-family: 微软雅黑, sans-serif;">介绍</span><p style="margin: 0cm 0cm 0.0001pt; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">你一定听说过<span>sokcet(</span></span><span><a rel="noopener" href="http://www.cnblogs.com/xueweihan/p/5445483.html" target="_blank"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:black"><span>初探socket</span></span></a></span><span style="font-family: 微软雅黑, sans-serif;">)</span><span style="font-family: 微软雅黑, sans-serif;">，它分为两种常用类型：<span>TCP</span>和<span>UDP</span>。当要写一个网络游戏，我们首先要选择使用哪种类型的<span>socket</span>。是用<span>TCP</span>、<span>UDP</span>还是两者都用？</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">选择哪种类型，完全取决于你要写的游戏的类型。后面的文章，我都将假设你要写一个<span>‘</span>动作<span>’</span>网游。就像：光环系列，战地<span>1942</span>，雷神之锤，这些游戏。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">我们将非常仔细的分析这两种<span>socket</span>类型的优劣，并且深入到底层，弄清楚互联网是如何工作的什么。当我们弄清楚这些信息后，就很容易做出正确的选择了。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;"> </span></p>$hhd$2 style=”margin: 11.25pt 0cm 1.5pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;”&gt;<span style="font-family: 微软雅黑, sans-serif;">TCP/IP</span><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">TCP</span><span style="font-family: 微软雅黑, sans-serif;">代表<span>“</span>传输控制协议<span>”</span>，<span>IP</span>代表：<span>“</span>互联网协议<span>”</span>，你在互联网上做任何事情，都是建立在这两者的基础上，比如：浏览网页、收发邮件等等。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;"> </span></p>$hhd$4 style=”margin: 11.25pt 0cm 1.5pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;”&gt;<span style="font-size:16.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">TCP</span><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">如果你曾经用过<span>TCP socket</span>，你肯定知道它是可靠连接的协议，面向连接的传输协议。简单的说：两台机器先建立起连接，然后两台机器相互发送数据，就像你在一台计算机上写文件，在另外一个台读文件一样。（我是这么理解的：<span>TCP socket</span>就像建立起连接的计算机，之间共享的一个<span>‘</span>文件<span>‘</span>对象，两者通过读写这个<span>‘</span>文件<span>‘</span>实现数据的传输）</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">这个连接是可靠的、有序的，代表着：发送的所有的数据，保证到达传输的另一端的时候。另一端得到的数据，和发送数据一摸一样（可靠，有序。例如：<span>A</span>发送数据<span>‘abc’</span>，通过<span>TCPsocket</span>传输数据到<span>B</span>，<span>B</span>得到数据一定是：<span>‘abc’</span>。而不是<span>‘bca’</span>或者<span>‘xueweihan’</span>之类的鬼！）。传输的数据是<span>‘</span>数据流<span>’</span>的形式<span>(</span>数据流：用于操作数据集合的最小的有序单位，与操作本地文件中的<span>stream</span>一样。所以<span>TCP socket</span>和文件对象很像<span>)</span>，也就是说：<span>TCP</span>把你的数据拆分后，包装成数据包，然后通过网络发送出去。</span></p><p style="margin: 0cm 0cm 0.0001pt; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><strong><span style="font-family: 微软雅黑, sans-serif;">注意</span></strong><span style="font-family: 微软雅黑, sans-serif;">：就像读写文件那样，这样比较好理解。</span></p><p style="margin: 0cm 0cm 0.0001pt; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;"> </span></p>$hhd$4 style=”margin: 11.25pt 0cm 1.5pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;”&gt;<span style="font-size:16.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">IP</span><p style="margin: 0cm 0cm 0.0001pt; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">“IP”</span><span style="font-family: 微软雅黑, sans-serif;">协议是在<span>TCP</span>协议的下面（这个牵扯到七层互联网协议栈，我就简单的贴个图不做详细的介绍）<span><br><img width="713" height="442" id="图片 8" src="http://gameweb-img.qq.com/gad/20160809/image001.1470706683.gif" alt="游戏网络开发(一)：UDP vs. TCP"></span></span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">“IP”</span><span style="font-family: 微软雅黑, sans-serif;">协议是没有连接的概念，它做的只是把上一层<span>(</span>传输层<span>)</span>的数据包从一个计算传递到下一个计算机。你可以理解成：这个过程就像一堆人手递手传递纸条一样，传递了很多次，最终到达纸条上标记的<span>xxx</span>手里（纸条上写着<span>‘xxx</span>亲启，偷看者<span>3cm’</span>）。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">在传递的过程中，不保证这个纸条<span>(</span>信件<span>)</span>能能够准确的送到收信人的手上。发信人发送信件，但是永远不知道信件是否可以准确到达收件人的手上，除非收件人回信告诉他（发信人）：<span>“</span>兄弟我收到信了！<span>”</span>（<span>IP</span>层只是用于传递信息，并不做信息的校验等其它操作）</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">当然，传递信息的这个过程还是还是很复杂的。因为，不知道具体的传递次序，也就是说，因为不知道最优的传递路线（能够让数据包快速的到达目的地的最优路径）所以，有些时候<span>“IP”</span>协议就传递多份一样的数据，这些数据通过不同的路线到达目的地，从而发现最优的传递路线。</span></p><p style="margin: 0cm 0cm 0.0001pt; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">这就是互联网设计中的：自动优化和自动修复，解决了连接的问题。这真的是一个很酷的设计，如果你想知道更多的底层实现，可以阅读关于<span>TCP/IP</span>的书。（推荐</span><span><a rel="noopener" href="http://item.jd.com/11519010.html" target="_blank"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:black"><span>上野宣的图解系列</span></span></a></span><span style="font-family: 微软雅黑, sans-serif;">)</span></p><p style="margin: 0cm 0cm 0.0001pt; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;"> </span></p>$hhd$4 style=”margin: 11.25pt 0cm 1.5pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;”&gt;<span style="font-size:16.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">UDP</span><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">如果我们想要直接发送和接受数据包，那么就要使用另一种<span>socket</span>。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">我们叫它<span>UDP</span>。<span>UDP</span>代表<span>“</span>用户数据包协议<span>”</span>，它是另外一种建立在<span>IP</span>协议之上的协议，就像<span>TCP</span>一样，但是没有<span>TCP</span>那么多功能（例如：建立连接，信息的校验，数据流的拆分合并等）</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">使用<span>UDP</span>我们能够向目标<span>IP</span>和端口（例如<span>80</span>），发送数据包。数据包会达到目标计算机或者丢失。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">收件人（目标计算机），我们只需要监听具体的端口（例如：<span>80</span>），当从任意一台计算机（注意：<span>UDP</span>是不建立连接的）接受到数据包后，我们会得知发送数据包的计算机地址（<span>IP</span>地址）和端口、数据包的大小、内容。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">UDP</span><span style="font-family: 微软雅黑, sans-serif;">是不可靠协议。现实使用的过程中，发送的大多数的数据包都会被接收到，但是通常会丢失<span>1-5%</span>，偶尔，有的时候还可能啥都接收不到（数据包全部丢失一个都没接收到，传递数据的计算机之间的计算机的数量越多，出错的概率越大）。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">UDP</span><span style="font-family: 微软雅黑, sans-serif;">协议中的数据包也是没有顺序的。比如：你发送<span>5</span>个包，顺序是<span>1</span>，<span>2</span>，<span>3</span>，<span>4</span>，<span>5</span>。但是，即接收到的顺序可能是<span>3</span>，<span>1</span>，<span>4</span>，<span>2</span>，<span>5</span>。现实使用的过程中，大多时候，接收到的数据的顺序是正确的，但是并不是每次都是这样。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">最后，尽管<span>UDP</span>并没有比<span>“IP”</span>协议高级多少，而且不可靠。但是你发送的数据，要么全部到达，要么全部丢失。比如：你发送一个大小为<span>256 byte</span>的数据包给另外一台计算机，这台计算机不会只接收到<span>100 byte</span>的数据包，它只可能接收到<span>256 byte</span>的数据包，或者什么都没接收到。这是<span>UDP</span>唯一可以保证的事情，其它所有的事情都需要你来决定（我的理解，<span>UDP</span>协议只是个简单的传输协议，只保证数据包的完整性，注意是数据包而不是信息。其他的事情需要自己去做，完善这个协议，达到自己使用的需求。）</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;"> </span></p>$hhd$2 style=”margin: 11.25pt 0cm 1.5pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;”&gt;<span style="font-family: 微软雅黑, sans-serif;">TCP vs. UDP</span><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">我们如何选择是使用<span>TCP socket</span>还是<span>UDPsocket</span>呢？</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">我们先看看两者的特征吧：</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">TCP</span><span style="font-family: 微软雅黑, sans-serif;">：</span></p><p style="margin: 7.5pt 0cm 7.5pt 22.5pt; t : initial; background-repeat: initial;"><span style="font-size: 10pt; font-family: Symbol;">·<span style="font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">      </span></span><span style="font-family: 微软雅黑, sans-serif;">面向连接</span></p><p style="margin: 7.5pt 0cm 7.5pt 22.5pt; t : initial; background-repeat: initial;"><span style="font-size: 10pt; font-family: Symbol;">·<span style="font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">      </span></span><span style="font-family: 微软雅黑, sans-serif;">可靠、有序</span></p><p style="margin: 7.5pt 0cm 7.5pt 22.5pt; t : initial; background-repeat: initial;"><span style="font-size: 10pt; font-family: Symbol;">·<span style="font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">      </span></span><span style="font-family: 微软雅黑, sans-serif;">自动把数据拆分成数据包</span></p><p style="margin: 7.5pt 0cm 7.5pt 22.5pt; t : initial; background-repeat: initial;"><span style="font-size: 10pt; font-family: Symbol;">·<span style="font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">      </span></span><span style="font-family: 微软雅黑, sans-serif;">确保数据的发送一直在控制中（流量控制）</span></p><p style="margin: 7.5pt 0cm 7.5pt 22.5pt; t : initial; background-repeat: initial;"><span style="font-size: 10pt; font-family: Symbol;">·<span style="font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">      </span></span><span style="font-family: 微软雅黑, sans-serif;">使用简单，就像读写文件一样</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">UDP</span><span style="font-family: 微软雅黑, sans-serif;">：</span></p><p style="margin: 7.5pt 0cm 7.5pt 22.5pt; t : initial; background-repeat: initial;"><span style="font-size: 10pt; font-family: Symbol;">·<span style="font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">      </span></span><span style="font-family: 微软雅黑, sans-serif;">没有连接的概念，你需要自己通过代码实现（这个我也没自己实现过，应该还会讲）</span></p><p style="margin: 7.5pt 0cm 7.5pt 22.5pt; t : initial; background-repeat: initial;"><span style="font-size: 10pt; font-family: Symbol;">·<span style="font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">      </span></span><span style="font-family: 微软雅黑, sans-serif;">不可靠，数据包无序，数据包可能无序，重复，或者丢失</span></p><p style="margin: 7.5pt 0cm 7.5pt 22.5pt; t : initial; background-repeat: initial;"><span style="font-size: 10pt; font-family: Symbol;">·<span style="font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">      </span></span><span style="font-family: 微软雅黑, sans-serif;">你需要手动地把数据拆分成数据包，然后发送数据包</span></p><p style="margin: 7.5pt 0cm 7.5pt 22.5pt; t : initial; background-repeat: initial;"><span style="font-size: 10pt; font-family: Symbol;">·<span style="font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">      </span></span><span style="font-family: 微软雅黑, sans-serif;">你需要自己做流量控制</span></p><p style="margin: 7.5pt 0cm 7.5pt 22.5pt; t : initial; background-repeat: initial;"><span style="font-size: 10pt; font-family: Symbol;">·<span style="font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">      </span></span><span style="font-family: 微软雅黑, sans-serif;">如果数据包太多，你需要设计重发和统计机制</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">通过上面的描述，不难发现：<span>TCP</span>做了所有我们想做的事情，而且使用十分简单。反观<span>UDP</span>就十分难用了，我们需要自己编写设计一切。很显然，我们只要用<span>TCP</span>就好了！</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">不，你想的简单了（原来，是我太年轻了！）</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">当你开发一个像上面说过的<span>FPS</span>（动作网游）的时候使用<span>TCP</span>协议，会是一个错误的决定，这个<span>TCP</span>协议就不好用了！为什么这么说？那么你就需要知道<span>TCP</span>到底做了什么，使得一起看起来十分简单。（让我们继续往下看，这是我最好奇的地方！！！有没有兴奋起来？）</span></p>$hhd$4 style=”margin: 11.25pt 0cm 1.5pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;”&gt;<span style="font-size:16.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">TCP</span><span style="font-size:16.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">内部的工作原理</span><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">TCP</span><span style="font-family: 微软雅黑, sans-serif;">和<span>UDP</span>都是建立在<span>“IP”</span>协议上的，但是它俩完全不同。<span>UDP</span>和<span>“IP”</span>协议很像，然而<span>TCP</span>隐藏了数据包的所有的复杂和不可靠的部分，抽象成了类似文件的对象。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">那么<span>TCP</span>是如何做到这一点呢？</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">首先，<span>TCP</span>是一个数据流的协议，所以你只需要把输入的内容变成数据流，然后<span>TCP</span>协议就会确保数据会到达发送的目的地。因为<span>“IP”</span>协议是通过数据包传递信息，<span>TCP</span>是建立在<span>“IP”</span>协议之上，所以<span>TCP</span>必须把用户输入的数据流分成数据包的形式。<span>TCP</span>协议会对需要发送的数据进行排队，然后当有足够的排除数据的时候，就发送数据包到目标计算机。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;"> </span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">当在多人在线的网络游戏中发送非常小的数据包的时候，这样做就有一个问题。这个时候会发生什么？如果数据没有达到缓冲区设定的数值，数据包是不会发送的。这就会出现个问题：因为客户端的用户输入请求后，需要尽快的从服务器得到响应，如果像上面<span>TCP </span>等待缓冲区满后才发送的话，就会出现延时，那么客户端的用户体验就会非常差！网络游戏几乎不能出现延时，我们希望看到的是<span>“</span>实时<span>”</span>和流畅。</span></p><p style="margin: 0cm 0cm 0.0001pt; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">TCP</span><span style="font-family: 微软雅黑, sans-serif;">有一个选项可以修复，上面说的那种等待缓冲区满才发送的情况，就是<strong><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">TCP_NODELAY</span></strong>。这个选项使得<span>TCP socket</span>不需要等待缓冲区满才发送，而是输入数据后就立即发送。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">然而，即使你已经设置了<span>TCP_NODELAY</span>选项，在多人网游中还是会有一系列的问题。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">这一切的源头都由于<span>TCP</span>处理丢包和乱序包的方式。使得你产生有序和可靠的<span>“</span>错觉<span>”</span>。</span></p>$hhd$4 style=”margin: 11.25pt 0cm 1.5pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;”&gt;<span style="font-size:16.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">TCP</span><span style="font-size:16.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">如何保证数据的可靠性</span><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">本质上<span>TCP</span>做的事情，分解数据流，成为数据包，使用在不可靠的<span>“IP”</span>协议，发送这些数据包。然后使得数据包到达目标计算机，然后重组成数据流。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">但是，如何处理当丢包？如何处理重复的数据包和乱序数据包？</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">这里不会介绍<span>TCP</span>处理这些事情的细节，因为这些都是非常复杂的（想弄清楚的同学可以看我上面推荐的书单），大体上：<span>TCP</span>发送一个数据包，等待一段时间，直到检测到数据包丢失了，因为没有接收到它的<span>ACK</span>（一种传输类控制符号，用于确认接收无误），接下来就重新发送丢失的数据包到目标计算机。重复的数据包将被丢弃在接收端，乱序的数据包将被重新排序。所以保证了数据包的可靠性和有序性。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">如果我们用<span>TCP</span>实现数据的实时传输，就会出现一个问题：<span>TCP</span>无论什么情况，只要数据包出错，就必须等待数据包的重发。也就是说，即使最新的数据已经到达，但还是不能访问这些数据包，新到的数据会被放在一个队列中，需要等待丢失的包重新发过来之后，所有数据没有丢失才可以访问。需要等待多长时间才能重新发送数据包？举个例子：如果的延时是<span>125ms</span>，那么需要最好的情况下重发数据包需要<span>250ms</span>，但是如果遇到糟糕的情况，将会等待<span>500ms</span>以上，比如：网络堵塞等情况。那就没救了。。。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;"> </span></p>$hhd$4 style=”margin: 11.25pt 0cm 1.5pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;”&gt;<span style="font-size:16.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">为什么<span>TCP</span>不应该用于对网络延时要求极高的条件下</span><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">如果<span>FPS</span>（第一人称射击）这类的网络游戏使用<span>TCP</span>就出现问题，但是<span>web</span>浏览器、邮箱、大多数应用就没问题，因为多人网络游戏有实时性的要求。比如：玩家输入角色的位置，重要的不是前一秒发生了什么，而是最新的情况！<span>TCP</span>并没有考虑这类需求，它并不是为这种需求而设计的。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">这里举一个简单的多人网游的例子，比如射击的游戏。对网络的要求很简单。玩家通过客户端发送给服务器的每个场景（用鼠标和键盘输入的行走的位置），服务器处理每个用户发送过来的所有场景，处理完再返回给客户端，客户端解析响应，渲染最新的场景展示给玩家。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">在上面说的哪个多人游戏的例子中，如果出现一个数据包丢失，所有事情都需要停下来等待这个数据包重发。客户端会出现等待接收数据，所以玩家操作的任务就会出现站着不动的情况（卡！卡！卡！），不能射击也不能移动。当重发的数据包到达后，你接收到这个过时的数据包，然而玩家并不关心过期的数据（激战中，卡了<span>1</span>秒，等能动了，都已经死了）</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">不幸的是，没有办法修复<span>TCP</span>的这个问题，这是它本质的东西，没办法修复。这就是<span>TCP</span>如何做到让不可靠，无序的数据包，看起来像有序，可靠的数据流。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">我并不需要可靠，有序的数据流，我们希望的是客户端和服务端之间的延时越低越好，不需要等待重发丢失的包。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">所以，这就是为什么在对数据的实时性要求的下，我们不用<span>TCP</span>。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;"> </span></p>$hhd$4 style=”margin: 11.25pt 0cm 1.5pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;”&gt;<span style="font-size:16.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">那为什么不<span>UDP</span>和<span>TCP</span>一起用呢？</span><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">像玩家输入实时游戏数据和状态的变更，只和最新的数据有关（这些数据强调实时性）。但是另外的一些数据，例如，从一台计算机发送给另外一个台计算机的一些列指令（交易请求，聊天？），可靠、有序的传输还是非常重要的！</span></p><p style="margin: 0cm 0cm 0.0001pt; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">那么，用户输入和状态用<span>UDP</span>，<span>TCP</span>用于可靠、有序的数据传输，看起来是个不错的点子。但是，问题在于<span>TCP</span>和<span>UDP</span>都是建立<span>“IP”</span>协议之上，所以协议之间都是发送数据包，从而相互通信。协议之间的互相影响是相当复杂的，涉及到<span>TCP</span>性能、可靠性和流量控制。简而言之，<span>TCP</span>会导致<span>UDP</span>丢包，请参考</span><span><a rel="noopener" href="http://www.isoc.org/INET97/proceedings/F3/F3_1.HTM" target="_blank"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:black"><span>这篇论文</span></span></a></span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">此外，<span>UDP</span>和<span>TCP</span>混合使用是非常复杂的，而且实现起来是非常痛苦的。（这段我就不翻译了，总而言之：不要混用<span>UDP</span>和<span>TCP</span>，容易失去对传输数据的控制）</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;"> </span></p>$hhd$2 style=”margin: 11.25pt 0cm 1.5pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;”&gt;<span style="font-size: 24pt; font-family: 微软雅黑, sans-serif;">总结</span><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">我的建议并不是就一定要使用<span>UDP</span>，但是<span>UDP</span>协议应该用于游戏。请不要混合使用<span>TCP</span>和<span>UDP</span>，你应该学习<span>TCP</span>中一些地方是如何实现的技巧，然后可以把这些技巧用在<span>UDP</span>上，从而实现适合你的需求的协议（借鉴<span>TCP</span>中的实现，在<span>UDP</span>上，完善功能，从而达到你的需求）。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;"> </span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;">这个系列，接下来会讲到：如何在<span>UDP</span>上创建一个虚拟的连接（因为<span>UDP</span>本身，是没有连接的概念的）、如何使得<span>UDP</span>实现可靠性，流量控制，非阻塞。</span></p><p style="margin: 7.5pt 0cm; line-height: 16.2pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;"><span style="font-family: 微软雅黑, sans-serif;"> </span></p>$hhd$2 style=”margin: 11.25pt 0cm 1.5pt; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;”&gt;<span style="font-size: 24pt; font-family: 微软雅黑, sans-serif;">参考</span><p class="MsoNormal" align="left" style="margin-l : initial; background-repeat: initial;"><span style="font-size: 10pt; font-family: Symbol;">·<span style="font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">         </span></span><span><a rel="noopener" href="http://wiki.mbalib.com/wiki/%C3%A6%E2%80%A2%C2%B0%C3%A6%C2%8D%C2%AE%C3%A6%C2%B5%C2%81" target="_blank"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:black">MBA lib</span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:black"><span>数据流</span></span></a></span></p><p class="MsoNormal" align="left" style="margin-l : initial; background-repeat: initial;"><span style="font-size: 10pt; font-family: Symbol;">·<span style="font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">         </span></span><span><a rel="noopener" href="https://zh.wikipedia.org/wiki/TCP/IP%C3%A5%C2%8D%C2%8F%C3%A8%C2%AE%C2%AE%C3%A6%E2%80%94%C2%8F" target="_blank"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:black">WiKi TCP/IP</span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:black"><span>协议族</span></span></a></span></p><p class="MsoNormal" align="left" style="margin-l : initial; background-repeat: initial;"><span style="font-size: 10pt; font-family: Symbol;">·<span style="font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">         </span></span><span><a rel="noopener" href="http://www.w3school.com.cn/tcpip/tcpip_protocols.asp" target="_blank"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:black">W3SchoolTCP/IP </span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:black"><span>协议</span></span></a></span></p><p class="MsoNormal" align="left" style="margin-l : initial; background-repeat: initial;"><span style="font-size: 10pt; font-family: Symbol;">·<span style="font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &#39;Times New Roman&#39;;">         </span></span><span><a rel="noopener" href="http://liangjiabin.com/blog/2015/03/difference-between-tcp-vs-udp-protocol.html" target="_blank"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:black">UDP</span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:black"><span>和TCP</span></span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:black"><span>的区</span></span></a></span></p><p class="MsoNormal"><span style="font-size:16.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"> </span></p><p class="MsoNormal"><span style="font-size:16.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></p></div></div>                    </div><br>                
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/GafferOnGames/" rel="tag"><i class="fa fa-tag"></i> GafferOnGames</a>
+            
+              <a href="/tags/TCP/" rel="tag"><i class="fa fa-tag"></i> TCP</a>
+            
+              <a href="/tags/UDP/" rel="tag"><i class="fa fa-tag"></i> UDP</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2016/11/01/快速编译技巧/" rel="next" title="快速编译技巧">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    快速编译技巧
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2016/11/15/游戏网络开发二之数据的发送与接收/" rel="prev" title="游戏网络开发二之数据的发送与接收">
+                <p class="post-nav-pre-next-title">
+                    游戏网络开发二之数据的发送与接收
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原文"><span class="nav-number">1.</span> <span class="nav-text">原文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tcp-ip"><span class="nav-number">1.2.</span> <span class="nav-text">TCP/IP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ip"><span class="nav-number">1.3.</span> <span class="nav-text">IP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#udp"><span class="nav-number">1.4.</span> <span class="nav-text">UDP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tcp-vs-udp"><span class="nav-number">1.5.</span> <span class="nav-text">TCP vs. UDP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#how-tcp-really-works"><span class="nav-number">1.6.</span> <span class="nav-text">How TCP really works</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#how-tcp-implements-reliability"><span class="nav-number">1.7.</span> <span class="nav-text">How TCP implements reliability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#never-use-tcp-for-time-critical-data"><span class="nav-number">1.8.</span> <span class="nav-text">Never use TCP for time critical data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wait-why-can-t-i-use-both-udp-and-tcp"><span class="nav-number">1.9.</span> <span class="nav-text">Wait? Why can’t I use both UDP and TCP?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conclusion"><span class="nav-number">1.10.</span> <span class="nav-text">Conclusion</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#译文"><span class="nav-number">2.</span> <span class="nav-text">译文</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

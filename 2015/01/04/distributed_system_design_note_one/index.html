@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Distributed,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="分布式系统中的概念最简单的分布式系统分布式可繁也可以简，最简单的分布式就是大家最常用的， 在负载均衡服务器后加一堆web服务器，然后在上面搞一个缓存服务器来保存临时状态， 后面共享一个数据库，其实很多号称分布式专家的人也就停留于此， 大致结构如下图所示：  这种环境下真正进行分布式的只是web server而已， 并且web server之间没有任何联系，所以结构和实现都非常简单。 最完备的分布式">
+<meta name="keywords" content="Distributed">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式系统设计概要笔记-一">
+<meta property="og:url" content="https://hulinhong.com/2015/01/04/distributed_system_design_note_one/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="分布式系统中的概念最简单的分布式系统分布式可繁也可以简，最简单的分布式就是大家最常用的， 在负载均衡服务器后加一堆web服务器，然后在上面搞一个缓存服务器来保存临时状态， 后面共享一个数据库，其实很多号称分布式专家的人也就停留于此， 大致结构如下图所示：  这种环境下真正进行分布式的只是web server而已， 并且web server之间没有任何联系，所以结构和实现都非常简单。 最完备的分布式">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hulinhong.com/2015/01/04/distributed_system_design_note_one/distribution13.png">
+<meta property="og:image" content="https://hulinhong.com/2015/01/04/distributed_system_design_note_one/distribution11.png">
+<meta property="og:image" content="https://hulinhong.com/2015/01/04/distributed_system_design_note_one/distribution12.png">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.050Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式系统设计概要笔记-一">
+<meta name="twitter:description" content="分布式系统中的概念最简单的分布式系统分布式可繁也可以简，最简单的分布式就是大家最常用的， 在负载均衡服务器后加一堆web服务器，然后在上面搞一个缓存服务器来保存临时状态， 后面共享一个数据库，其实很多号称分布式专家的人也就停留于此， 大致结构如下图所示：  这种环境下真正进行分布式的只是web server而已， 并且web server之间没有任何联系，所以结构和实现都非常简单。 最完备的分布式">
+<meta name="twitter:image" content="https://hulinhong.com/2015/01/04/distributed_system_design_note_one/distribution13.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>分布式系统设计概要笔记-一 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/01/04/distributed_system_design_note_one/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">分布式系统设计概要笔记-一</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-04T01:28:42+00:00">
+                2015-01-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NP/" itemprop="url" rel="index">
+                    <span itemprop="name">NP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Distributed/" rel="tag"><i class="fa fa-tag"></i> Distributed</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/01/02/why_not_recursion_and_what_is_tail_recursion/" rel="next" title="为什么不推荐递归以及什么是尾递归">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  为什么不推荐递归以及什么是尾递归
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/01/05/distributed_system_design_note_two/" rel="prev" title="分布式系统设计概要笔记-二">
+              <p class="post-nav-pre-next-title">
+                  分布式系统设计概要笔记-二
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="分布式系统中的概念"><a href="#分布式系统中的概念" class="headerlink" title="分布式系统中的概念"></a>分布式系统中的概念</h1><h2 id="最简单的分布式系统"><a href="#最简单的分布式系统" class="headerlink" title="最简单的分布式系统"></a>最简单的分布式系统</h2><p>分布式可繁也可以简，最简单的分布式就是大家最常用的，</p>
+<p>在负载均衡服务器后加一堆web服务器，然后在上面搞一个缓存服务器来保存临时状态，</p>
+<p>后面共享一个数据库，其实很多号称分布式专家的人也就停留于此，</p>
+<p>大致结构如下图所示：</p>
+<img src="/2015/01/04/distributed_system_design_note_one/distribution13.png">
+<p>这种环境下真正进行分布式的只是web server而已，</p>
+<p>并且web server之间没有任何联系，所以结构和实现都非常简单。</p>
+<h2 id="最完备的分布式体系的模块组成"><a href="#最完备的分布式体系的模块组成" class="headerlink" title="最完备的分布式体系的模块组成"></a>最完备的分布式体系的模块组成</h2><p>有些情况下，对分布式的需求就没这么简单，</p>
+<p>在每个环节上都有分布式的需求，</p>
+<p>比如Load Balance、DB、Cache和文件等等，</p>
+<p>并且当分布式节点之间有关联时，</p>
+<p>还得考虑之间的通讯，</p>
+<p>另外，</p>
+<p>节点非常多的时候，</p>
+<p>得有监控和管理来支撑。这样看起来，</p>
+<p>分布式是一个非常庞大的体系，</p>
+<p>只不过你可以根据具体需求进行适当地裁剪。按照最完备的分布式体系来看，</p>
+<p>可以由以下模块组成：</p>
+<ul>
+<li><p>分布式任务处理服务：负责具体的业务逻辑处理</p>
+</li>
+<li><p>分布式节点注册和查询：负责管理所有分布式节点的命名和物理信息的注册与<br>询，是节点之间联系的桥梁</p>
+</li>
+<li><p>分布式DB：分布式结构化数据存取</p>
+</li>
+<li><p>分布式Cache：分布式缓存数据（非持久化）存取</p>
+</li>
+<li><p>分布式文件：分布式文件存取</p>
+</li>
+<li><p>网络通信：节点之间的网络数据通信</p>
+</li>
+<li><p>监控管理：搜集、监控和诊断所有节点运行状态</p>
+</li>
+<li><p>分布式编程语言：用于分布式环境下的专有编程语言，比如Elang、Scala</p>
+</li>
+<li><p>分布式算法：为解决分布式环境下一些特有问题的算法，比如解决一致性问题的Paxos算法</p>
+</li>
+</ul>
+<h2 id="三元组"><a href="#三元组" class="headerlink" title="三元组"></a>三元组</h2><p>其实，分布式系统说白了，就是很多机器组成的集群，靠彼此之间的网络通信，担当的角色可能不同，共同完成同一个事情的系统。</p>
+<p><strong>. . .</strong><a id="more"></a></p>
+<p>如果按”实体“来划分的话，就是如下这几种：</p>
+<ul>
+<li><p>1、节点 – 系统中按照协议完成计算工作的一个逻辑实体，可能是执行某些工作的进程或机器</p>
+</li>
+<li><p>2、网络 – 系统的数据传输通道，用来彼此通信。</p>
+</li>
+</ul>
+<p>通信是具有方向性的。</p>
+<ul>
+<li>3、存储 – 系统中持久化数据的数据库或者文件存储。</li>
+</ul>
+<img src="/2015/01/04/distributed_system_design_note_one/distribution11.png">
+<h2 id="状态特性"><a href="#状态特性" class="headerlink" title="状态特性"></a>状态特性</h2><p>各个节点的状态可以是“无状态”或者“有状态的”, </p>
+<p>一般认为，节点是偏计算和通信的模块，一般是无状态的。</p>
+<p>这类应用一般不会存储自己的中间状态信息，比如Nginx，一般情况下是转发请求而已，不会存储中间信息。</p>
+<p>另一种“有状态”的，如MySQL等数据库，状态和数据全部持久化到磁盘等介质。</p>
+<p>“无状态”的节点一般我们认为是可随意重启的，因为重启后只需要立刻工作就好。</p>
+<p>“有状态”的则不同，需要先读取持久化的数据，才能开始服务。</p>
+<p>所以，“无状态”的节点一般是可以随意扩展的，“有状态”的节点需要一些控制协议来保证扩展。</p>
+<h2 id="系统异常"><a href="#系统异常" class="headerlink" title="系统异常"></a>系统异常</h2><p>异常，可认为是节点因为某种原因不能工作，此为节点异常。</p>
+<p>还有因为网络原因，临时、永久不能被其他节点所访问，此为网络异常。</p>
+<p>在分布式系统中，要有对异常的处理，保证集群的正常工作。</p>
+<h1 id="分布式系统与单节点的不同"><a href="#分布式系统与单节点的不同" class="headerlink" title="分布式系统与单节点的不同"></a>分布式系统与单节点的不同</h1><h2 id="从linux-write-系统调用说起"><a href="#从linux-write-系统调用说起" class="headerlink" title="从linux write()系统调用说起"></a>从linux write()系统调用说起</h2><p>众所周知，在unix/linux/mac(类Unix)环境下，两个机器通信，最常用的就是通过socket连接对方。</p>
+<p>传输数据的话，无非就是调用write()这个系统调用，把一段内存缓冲区发出去。</p>
+<p>但是可以进一步想一下，write()之后能确认对方收到了这些数据吗？</p>
+<p>答案肯定是不能，原因就是发送数据需要走内核-&gt;网卡-&gt;链路-&gt;对端网卡-&gt;内核，这一路径太长了，所以只能是异步操作。</p>
+<p>write()把数据写入内核缓冲区之后就返回到应用层了，具体后面何时发送、怎么发送、TCP怎么做滑动窗口、流控都是tcp/ip协议栈内核的事情了。</p>
+<p>所以在应用层，能确认对方受到了消息只能是对方应用返回数据，逻辑确认了这次发送才认为是成功的。</p>
+<p>这就却别与单系统编程，大部分系统调用、库调用只要返回了就说明已经确认完成了。</p>
+<h2 id="TCP-IP协议是“不可靠”的"><a href="#TCP-IP协议是“不可靠”的" class="headerlink" title="TCP/IP协议是“不可靠”的"></a>TCP/IP协议是“不可靠”的</h2><p>教科书上明确写明了互联网是不可靠的，TCP实现了可靠传输。</p>
+<p>何来“不可靠”呢？先来看一下网络交互的例子，有A、B两个节点，之间通过TCP连接，现在A、B都想确认自己发出的任何一条消息都能被对方接收并反馈，于是开始了如下操作：<br>A-&gt;B发送数据，然后A需要等待B收到数据的确认，B收到数据后发送确认消息给A，然后B需要等待A收到数据的确认，A收到B的数据确认消息后再次发送确认消息给B，然后A又去需要等待B收到的确认。</p>
+<p>死循环了！！</p>
+<p>其实，这就是<a href="http://baike.baidu.com/link?url=6iPrbRxHLOo9an1hT-s6DvM5kAoq7RxclIrzgrS34W1fRq1h507RDWJOxfhkDOcihVFRZ2c7ybCkUosWQeUoS_" target="_blank" rel="noopener">著名的“拜占庭将军”问题</a></p>
+<p>所以，通信双方是“不可能”同时确认对方受到了自己的信息。</p>
+<p>而教科书上定义的其实是指“单向”通信是成立的，比如A向B发起Http调用，</p>
+<p>收到了HttpCode 200的响应包，这只能确认，A确认B收到了自己的请求，并且B正常处理了，不能确认的是B确认A受到了它的成功的消息。</p>
+<h2 id="不可控的状态"><a href="#不可控的状态" class="headerlink" title="不可控的状态"></a>不可控的状态</h2><p>在单系统编程中，我们对系统状态是非常可控的。</p>
+<p>比如函数调用、逻辑运算，要么成功，要么失败，因为这些操作被框在一个机器内部，cpu/总线/内存都是可以快速得到反馈的。</p>
+<p>开发者可以针对这两个状态很明确的做出程序上的判断和后续的操作。</p>
+<p>而在分布式的网络环境下，这就变得微妙了。</p>
+<p>比如一次rpc、http调用，可能成功、失败，还有可能是“超时”，这就比前者的状态多了一个不可控因素，导致后面的代码不是很容易做出判断。</p>
+<p>试想一下，用A用支付宝向B转了一大笔钱，当他按下“确认”后，界面上有个圈在转啊转，然后显示请求超时了，然后A就抓狂了，不知道到底钱转没转过去，开始确认自己的账户、确认B的账户、打电话找客服等等。</p>
+<p>所以分布式环境下，我们的其实要时时刻刻考虑面对这种不可控的“第三状态”设计开发，这也是挑战之一。</p>
+<h2 id="视异常为正常"><a href="#视异常为正常" class="headerlink" title="视异常为正常"></a>视异常为正常</h2><p>单系统下，进程/机器的异常概率十分小。</p>
+<p>即使出现了问题，可以通过人工干预重启、迁移等手段恢复。</p>
+<p>但在分布式环境下，机器上千台，每几分钟都可能出现宕机、死机、网络断网等异常，出现的概率很大。</p>
+<p>所以，这种环境下，进程core掉、机器挂掉都是需要我们在编程中认为随时可能出现的，这样才能使我们整个系统健壮起来，所以”容错“是基本需求。</p>
+<p>异常可以分为如下几类：</p>
+<ul>
+<li>节点错误：<pre><code>一般是由于应用导致，一些coredump和系统错误触发，一般重新服务后可恢复。
+</code></pre></li>
+</ul>
+<ul>
+<li>硬件错误：<pre><code>由于磁盘或者内存等硬件设备导致某节点不能服务，需要人工干预恢复。
+</code></pre></li>
+</ul>
+<ul>
+<li>网络错误：<pre><code>由于点对点的网络抖动，暂时的访问错误，一般拓扑稳定后或流量减小可以恢复。
+</code></pre></li>
+</ul>
+<ul>
+<li><p>网络分化：</p>
+<pre><code>网络中路由器、交换机错误导致网络不可达，但是网络两边都正常，这类错误比较难恢复，并且需要在开发时特别处理。
+
+【这种情况也会比较前面的问题较难处理】
+</code></pre></li>
+</ul>
+<img src="/2015/01/04/distributed_system_design_note_one/distribution12.png">
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Distributed/" rel="tag"><i class="fa fa-tag"></i> Distributed</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2015/01/02/why_not_recursion_and_what_is_tail_recursion/" rel="next" title="为什么不推荐递归以及什么是尾递归">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    为什么不推荐递归以及什么是尾递归
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2015/01/05/distributed_system_design_note_two/" rel="prev" title="分布式系统设计概要笔记-二">
+                <p class="post-nav-pre-next-title">
+                    分布式系统设计概要笔记-二
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式系统中的概念"><span class="nav-number">1.</span> <span class="nav-text">分布式系统中的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#最简单的分布式系统"><span class="nav-number">1.1.</span> <span class="nav-text">最简单的分布式系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最完备的分布式体系的模块组成"><span class="nav-number">1.2.</span> <span class="nav-text">最完备的分布式体系的模块组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三元组"><span class="nav-number">1.3.</span> <span class="nav-text">三元组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#状态特性"><span class="nav-number">1.4.</span> <span class="nav-text">状态特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统异常"><span class="nav-number">1.5.</span> <span class="nav-text">系统异常</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式系统与单节点的不同"><span class="nav-number">2.</span> <span class="nav-text">分布式系统与单节点的不同</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#从linux-write-系统调用说起"><span class="nav-number">2.1.</span> <span class="nav-text">从linux write()系统调用说起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-IP协议是“不可靠”的"><span class="nav-number">2.2.</span> <span class="nav-text">TCP/IP协议是“不可靠”的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不可控的状态"><span class="nav-number">2.3.</span> <span class="nav-text">不可控的状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视异常为正常"><span class="nav-number">2.4.</span> <span class="nav-text">视异常为正常</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

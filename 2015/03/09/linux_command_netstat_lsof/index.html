@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Command,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="netstat netstat命令用来打印Linux中网络系统的状态信息，可让你得知整个Linux系统的网络情况。   -a或–all：显示所有连线中的Socket； -A&amp;lt;网络类型&amp;gt;或–&amp;lt;网络类型&amp;gt;：列出该网络类型连线中的相关地址； -c或–continuous：持续列出网络状态； -C或–cache：显示路由器配置的快取信息； -e或–extend：显示网络其他相关信息">
+<meta name="keywords" content="Command">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux常用运维命令(netstat和lsof)笔记整理(二)">
+<meta property="og:url" content="https://hulinhong.com/2015/03/09/linux_command_netstat_lsof/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="netstat netstat命令用来打印Linux中网络系统的状态信息，可让你得知整个Linux系统的网络情况。   -a或–all：显示所有连线中的Socket； -A&amp;lt;网络类型&amp;gt;或–&amp;lt;网络类型&amp;gt;：列出该网络类型连线中的相关地址； -c或–continuous：持续列出网络状态； -C或–cache：显示路由器配置的快取信息； -e或–extend：显示网络其他相关信息">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.058Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux常用运维命令(netstat和lsof)笔记整理(二)">
+<meta name="twitter:description" content="netstat netstat命令用来打印Linux中网络系统的状态信息，可让你得知整个Linux系统的网络情况。   -a或–all：显示所有连线中的Socket； -A&amp;lt;网络类型&amp;gt;或–&amp;lt;网络类型&amp;gt;：列出该网络类型连线中的相关地址； -c或–continuous：持续列出网络状态； -C或–cache：显示路由器配置的快取信息； -e或–extend：显示网络其他相关信息">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>Linux常用运维命令(netstat和lsof)笔记整理(二) | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/03/09/linux_command_netstat_lsof/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux常用运维命令(netstat和lsof)笔记整理(二)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-03-09T23:16:16+00:00">
+                2015-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Command/" rel="tag"><i class="fa fa-tag"></i> Command</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/03/07/linux_command_iostat/" rel="next" title="Linux常用运维命令(iostat)笔记整理(一)">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  Linux常用运维命令(iostat)笔记整理(一)
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/03/11/linux_command_df_free_top/" rel="prev" title="Linux常用运维命令(df和free和top)笔记整理(三)">
+              <p class="post-nav-pre-next-title">
+                  Linux常用运维命令(df和free和top)笔记整理(三)
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h1><blockquote>
+<p>netstat命令用来打印Linux中网络系统的状态信息，可让你得知整个Linux系统的网络情况。</p>
+</blockquote>
+<ul>
+<li>-<strong>a或–all：显示所有连线中的Socket；</strong></li>
+<li>-A&lt;网络类型&gt;或–&lt;网络类型&gt;：列出该网络类型连线中的相关地址；</li>
+<li>-c或–continuous：持续列出网络状态；</li>
+<li>-C或–cache：显示路由器配置的快取信息；</li>
+<li>-e或–extend：显示网络其他相关信息；</li>
+<li>-F或–fib：显示FIB；</li>
+<li>-g或–groups：显示多重广播功能群组组员名单；</li>
+<li>-h或–help：在线帮助；</li>
+<li>-i或–interfaces：显示网络界面信息表单；</li>
+<li>-<strong>l或–listening：显示监控中的服务器的Socket；</strong></li>
+<li>-M或–masquerade：显示伪装的网络连线；</li>
+<li>-<strong>n或–numeric：直接使用ip地址，而不通过域名服务器；</strong></li>
+<li>-N或–netlink或–symbolic：显示网络硬件外围设备的符号连接名称；</li>
+<li>-o或–timers：显示计时器；</li>
+<li>-<strong>p或–programs：显示正在使用Socket的程序识别码和程序名称；</strong></li>
+<li>-r或–route：显示Routing Table；</li>
+<li>-s或–statistice：显示网络工作信息统计表；</li>
+<li>-t或–tcp：显示TCP传输协议的连线状况；</li>
+<li>-u或–udp：显示UDP传输协议的连线状况；</li>
+<li>-v或–verbose：显示指令执行过程；</li>
+<li>-V或–version：显示版本信息；</li>
+<li>-w或–raw：显示RAW传输协议的连线状况；</li>
+<li>-x或–unix：此参数的效果和指定”-A unix”参数相同；</li>
+<li>–ip或–inet：此参数的效果和指定”-A inet”参数相同。</li>
+</ul>
+<p><strong>. . .</strong><a id="more"></a></p>
+<h2 id="netstat常用用法：netstat-anlp"><a href="#netstat常用用法：netstat-anlp" class="headerlink" title="netstat常用用法：netstat -anlp"></a><em>netstat常用用法：netstat -anlp</em></h2><p>netstat -anlpt的含义是 ： 列出所有处于使用tcp协议的 Sockets<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">b@b-VirtualBox:~$ sudo netstat -anlpt</span><br><span class="line">Active Internet connections (servers and established)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name</span><br><span class="line">tcp        0      0 127.0.1.1:53            0.0.0.0:*               LISTEN      1075/dnsmasq    </span><br><span class="line">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      935/sshd        </span><br><span class="line">tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      2271/cupsd      </span><br><span class="line">tcp6       0      0 :::22                   :::*                    LISTEN      935/sshd        </span><br><span class="line">tcp6       0      0 ::1:631                 :::*                    LISTEN      2271/cupsd      </span><br><span class="line">tcp6       1      0 ::1:50654               ::1:631                 CLOSE_WAIT  1027/cups-browsed</span><br></pre></td></tr></table></figure></p>
+<p>查看udp的就是netstat -anlpu；<br>只查看tcp和udp的就是netstat -anlptu</p>
+<h1 id="lsof-（list-open-files）"><a href="#lsof-（list-open-files）" class="headerlink" title="lsof （list open files）"></a>lsof （list open files）</h1><blockquote>
+<p>lsof命令用于查看你进程打开的文件，打开文件的进程，进程打开的端口(TCP、UDP)。找回/恢复删除的文件。是十分方便的系统监视工具，因为lsof命令需要访问核心内存和各种文件，所以需要root用户执行。 </p>
+</blockquote>
+<p>在linux环境下，任何事物都以文件的形式存在，通过文件不仅仅可以访问常规数据，还可以访问网络连接和硬件。<br>所以如传输控制协议 (TCP) 和用户数据报协议 (UDP) 套接字等，系统在后台都为该应用程序分配了一个文件描述符，无论这个文件的本质如何，该文件描述符为应用程序与基础操作系统之间的交互提供了通用接口。<br>因为应用程序打开文件的描述符列表提供了大量关于这个应用程序本身的信息，因此通过lsof工具能够查看这个列表对系统监测以及排错将是很有帮助的。</p>
+<ul>
+<li>-a：列出打开指定文件的进程；</li>
+<li>-c&lt;进程名&gt;：列出指定进程所打开的文件；</li>
+<li>-g：列出GID号进程详情；</li>
+<li>-d&lt;文件号&gt;：列出占用该文件号的进程；</li>
+<li>+d&lt;目录&gt;：列出目录下被打开的文件；</li>
+<li>+D&lt;目录&gt;：递归列出目录下被打开的文件；</li>
+<li>-n&lt;目录&gt;：列出使用NFS的文件；</li>
+<li>-<strong>i&lt;条件&gt;：列出符合条件的进程。（4、6、协议、:端口、 @ip ）</strong></li>
+<li>-<strong>p&lt;进程号&gt;：列出指定进程号所打开的文件；</strong></li>
+<li>-u：列出UID号进程详情；</li>
+<li>-h：显示帮助信息；</li>
+<li>-v：显示版本信息</li>
+<li>-R: 显示PPID（父进程ID）</li>
+</ul>
+<h2 id="lsof常用用法1：lsof-p"><a href="#lsof常用用法1：lsof-p" class="headerlink" title="lsof常用用法1：lsof -p"></a><em>lsof常用用法1：lsof -p</em></h2><p>ps -ef |grep sshd|grep -v grep| awk ‘{print $2}’|xargs sudo lsof -p的含义是：<br>列出sshd进程打开的所有文件描述符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">b@b-VirtualBox:~$ ps -ef |grep sshd|grep -v grep| awk &apos;&#123;print $2&#125;&apos;|xargs sudo lsof -p</span><br><span class="line">lsof: WARNING: can&apos;t stat() fuse.gvfsd-fuse file system /run/user/1000/gvfs</span><br><span class="line">      Output information may be incomplete.</span><br><span class="line">COMMAND PID USER   FD   TYPE DEVICE SIZE/OFF   NODE NAME</span><br><span class="line">sshd    935 root  cwd    DIR    8,1     4096      2 /</span><br><span class="line">sshd    935 root  rtd    DIR    8,1     4096      2 /</span><br><span class="line">sshd    935 root  txt    REG    8,1   770944 301274 /usr/sbin/sshd</span><br><span class="line">sshd    935 root  mem    REG    8,1    43616 136982 /lib/x86_64-linux-gnu/libnss_files-2.19.so</span><br><span class="line">sshd    935 root  mem    REG    8,1    47760 136992 /lib/x86_64-linux-gnu/libnss_nis-2.19.so</span><br><span class="line">sshd    935 root  mem    REG    8,1    39824 136978 /lib/x86_64-linux-gnu/libnss_compat-2.19.so</span><br><span class="line">sshd    935 root  mem    REG    8,1   101240 137033 /lib/x86_64-linux-gnu/libresolv-2.19.so</span><br><span class="line">sshd    935 root  mem    REG    8,1    14256 136950 /lib/x86_64-linux-gnu/libkeyutils.so.1.4</span><br><span class="line">sshd    935 root  mem    REG    8,1    43672 403209 /usr/lib/x86_64-linux-gnu/libkrb5support.so.0.1</span><br><span class="line">sshd    935 root  mem    REG    8,1   186824 403203 /usr/lib/x86_64-linux-gnu/libk5crypto.so.3.1</span><br><span class="line">sshd    935 root  mem    REG    8,1    31792 137035 /lib/x86_64-linux-gnu/librt-2.19.so</span><br><span class="line">sshd    935 root  mem    REG    8,1   141574 137027 /lib/x86_64-linux-gnu/libpthread-2.19.so</span><br><span class="line">sshd    935 root  mem    REG    8,1   252032 137010 /lib/x86_64-linux-gnu/libpcre.so.3.13.1</span><br><span class="line">sshd    935 root  mem    REG    8,1    14664 136924 /lib/x86_64-linux-gnu/libdl-2.19.so</span><br><span class="line">sshd    935 root  mem    REG    8,1    97296 136976 /lib/x86_64-linux-gnu/libnsl-2.19.so</span><br><span class="line">sshd    935 root  mem    REG    8,1  1840928 136907 /lib/x86_64-linux-gnu/libc-2.19.so</span><br><span class="line">sshd    935 root  mem    REG    8,1    14592 136916 /lib/x86_64-linux-gnu/libcom_err.so.2.1</span><br><span class="line">sshd    935 root  mem    REG    8,1   831616 403207 /usr/lib/x86_64-linux-gnu/libkrb5.so.3.3</span><br><span class="line">sshd    935 root  mem    REG    8,1   290520 403037 /usr/lib/x86_64-linux-gnu/libgssapi_krb5.so.2.2</span><br><span class="line">sshd    935 root  mem    REG    8,1    43368 136917 /lib/x86_64-linux-gnu/libcrypt-2.19.so</span><br><span class="line">sshd    935 root  mem    REG    8,1   100728 137070 /lib/x86_64-linux-gnu/libz.so.1.2.8</span><br><span class="line">sshd    935 root  mem    REG    8,1    10680 137062 /lib/x86_64-linux-gnu/libutil-2.19.so</span><br><span class="line">sshd    935 root  mem    REG    8,1  1934624 136919 /lib/x86_64-linux-gnu/libcrypto.so.1.0.0</span><br><span class="line">sshd    935 root  mem    REG    8,1   281552 136921 /lib/x86_64-linux-gnu/libdbus-1.so.3.7.6</span><br><span class="line">sshd    935 root  mem    REG    8,1    14536 440884 /usr/lib/x86_64-linux-gnu/libck-connector.so.0.0.0</span><br><span class="line">sshd    935 root  mem    REG    8,1   134296 137037 /lib/x86_64-linux-gnu/libselinux.so.1</span><br><span class="line">sshd    935 root  mem    REG    8,1    55856 136999 /lib/x86_64-linux-gnu/libpam.so.0.83.1</span><br><span class="line">sshd    935 root  mem    REG    8,1   104936 136897 /lib/x86_64-linux-gnu/libaudit.so.1.0.0</span><br><span class="line">sshd    935 root  mem    REG    8,1    36632 137067 /lib/x86_64-linux-gnu/libwrap.so.0.7.6</span><br><span class="line">sshd    935 root  mem    REG    8,1   149120 136883 /lib/x86_64-linux-gnu/ld-2.19.so</span><br><span class="line">sshd    935 root    0u   CHR    1,3      0t0      6 /dev/null</span><br><span class="line">sshd    935 root    1u   CHR    1,3      0t0      6 /dev/null</span><br><span class="line">sshd    935 root    2u   CHR    1,3      0t0      6 /dev/null</span><br><span class="line">sshd    935 root    3u  IPv4  10479      0t0    TCP *:ssh (LISTEN)</span><br><span class="line">sshd    935 root    4u  IPv6  10481      0t0    TCP *:ssh (LISTEN)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>ps -ef | grep sshd | grep -v grep : 获取ps打印出来的列表中的sshd进程所在的那一行（grep -v grep的含义是清除掉包含“grep”字符串的那一行）, 即为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b@b-VirtualBox:~$ ps -ef | grep sshd | grep -v grep</span><br><span class="line">root       935     1  0 17:37 ?        00:00:00 /usr/sbin/sshd -D</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>awk ‘{print $2}’ : 获取上述命令打印出来结果的第2列（上述结果的第二列为sshd的pid， 是935）</p>
+</li>
+<li>xargs sudo lsof -p ： 列出上述结果pid为935的进程打开的所有文件描述符， 等价于sudo lsof -p 935的结果</li>
+</ul>
+<p>因为在 Linux 中一切皆为文件, socket 不也例外, 我们在上面的例子的最后两行可以看到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sshd    935 root    3u  IPv4  10479      0t0    TCP *:ssh (LISTEN)</span><br><span class="line">sshd    935 root    4u  IPv6  10481      0t0    TCP *:ssh (LISTEN)</span><br></pre></td></tr></table></figure></p>
+<p>10479 和 10481 就是 ssh 打开的两个socket文件描述符了. 用命令 <code>ls -l /proc/命令ID/fd</code> , 也可查看所打开的文件.<br>本例中pid为 935 , 则相应的命令为 <code>ls -l /proc/935/fd</code></p>
+<h2 id="查看指定进程的所有连接信息"><a href="#查看指定进程的所有连接信息" class="headerlink" title="查看指定进程的所有连接信息"></a>查看指定进程的所有连接信息</h2><p>例如我想要查看进程 frps 当前的所有连接信息，先获得进程的 pid：</p>
+<p><code>ps -ef|grep frps</code></p>
+<p>结果为：</p>
+<p><code>wcl       4721     1  0 10:27 ?        00:00:01 ./frps</code><br>可以看到进程 pid 为 4721，之后通过 <code>lsof</code> 命令查看所有 TCP 连接信息：</p>
+<p><code>lsof -p 4721 -nP | grep TCP</code></p>
+<p>显示结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">frps    4721  wcl    4u     IPv6 117051764      0t0     TCP *:7000 (LISTEN)</span><br><span class="line">frps    4721  wcl    6u     IPv6 117051765      0t0     TCP *:7003 (LISTEN)</span><br><span class="line">frps    4721  wcl    7u     IPv6 117092563      0t0     TCP 139.129.11.120:7000-&gt;116.231.70.223:61545 (ESTABLISHED)</span><br><span class="line">frps    4721  wcl    8u     IPv6 117092565      0t0     TCP *:6000 (LISTEN)</span><br><span class="line">frps    4721  wcl    9u     IPv6 117334426      0t0     TCP 139.129.11.120:7000-&gt;116.237.93.230:64898 (ESTABLISHED)</span><br><span class="line">frps    4721  wcl   10u     IPv6 117053538      0t0     TCP 139.129.11.120:7000-&gt;115.231.20.123:41297 (ESTABLISHED)</span><br><span class="line">frps    4721  wcl   11u     IPv6 117053540      0t0     TCP *:6005 (LISTEN)</span><br><span class="line">frps    4721  wcl   12u     IPv6 117334428      0t0     TCP *:6004 (LISTEN)</span><br></pre></td></tr></table></figure>
+<p>从 lsof 的输出结果中可以清楚的看到 frps 进程监听了 5 个端口，并且在 7000 端口上建立了 3 个连接，连接两端的 ip 信息也都可以查到。</p>
+<p>lsof 的 <code>-nP</code> 参数用于将 ip 地址和端口号显示为正常的数值类型，否则可能会用别名表示。</p>
+<h2 id="lsof常用用法：lsof-i"><a href="#lsof常用用法：lsof-i" class="headerlink" title="lsof常用用法：lsof -i:"></a><em>lsof常用用法：lsof -i:</em></h2><p>sudo lsof -i:22含义为列出占用22的进程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">b@b-VirtualBox:~$ sudo lsof -i:22</span><br><span class="line">COMMAND PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME</span><br><span class="line">sshd    935 root    3u  IPv4  10479      0t0  TCP *:ssh (LISTEN)</span><br><span class="line">sshd    935 root    4u  IPv6  10481      0t0  TCP *:ssh (LISTEN)</span><br></pre></td></tr></table></figure></p>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Command/" rel="tag"><i class="fa fa-tag"></i> Command</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2015/03/07/linux_command_iostat/" rel="next" title="Linux常用运维命令(iostat)笔记整理(一)">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    Linux常用运维命令(iostat)笔记整理(一)
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2015/03/11/linux_command_df_free_top/" rel="prev" title="Linux常用运维命令(df和free和top)笔记整理(三)">
+                <p class="post-nav-pre-next-title">
+                    Linux常用运维命令(df和free和top)笔记整理(三)
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#netstat"><span class="nav-number">1.</span> <span class="nav-text">netstat</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#netstat常用用法：netstat-anlp"><span class="nav-number">1.1.</span> <span class="nav-text">netstat常用用法：netstat -anlp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lsof-（list-open-files）"><span class="nav-number">2.</span> <span class="nav-text">lsof （list open files）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lsof常用用法1：lsof-p"><span class="nav-number">2.1.</span> <span class="nav-text">lsof常用用法1：lsof -p</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看指定进程的所有连接信息"><span class="nav-number">2.2.</span> <span class="nav-text">查看指定进程的所有连接信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lsof常用用法：lsof-i"><span class="nav-number">2.3.</span> <span class="nav-text">lsof常用用法：lsof -i:</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

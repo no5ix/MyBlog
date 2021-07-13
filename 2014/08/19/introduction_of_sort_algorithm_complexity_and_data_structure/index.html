@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Algo,Sort,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="因为之前的笔记和书籍相关知识都是零零散散的， 没有一个汇总， 所以写了这篇博客。有些算法很简单，复杂度一眼都能看得出来， 几乎不需要记忆 ， 但是有些算法或者数据结构的操作的复杂度就不是一眼可以看得出来， 推导也是很费时间的， 所谓常识就是应该熟记于心且被认可的知识。 必须掌握的知识 DataStructure 链表 二叉树 二叉搜索树   栈 队列 散列表   算法 二分查找 快速排序 归并排序">
+<meta name="keywords" content="Algo,Sort">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谈一谈各类算法的复杂度和常用数据结构">
+<meta property="og:url" content="https://hulinhong.com/2014/08/19/introduction_of_sort_algorithm_complexity_and_data_structure/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="因为之前的笔记和书籍相关知识都是零零散散的， 没有一个汇总， 所以写了这篇博客。有些算法很简单，复杂度一眼都能看得出来， 几乎不需要记忆 ， 但是有些算法或者数据结构的操作的复杂度就不是一眼可以看得出来， 推导也是很费时间的， 所谓常识就是应该熟记于心且被认可的知识。 必须掌握的知识 DataStructure 链表 二叉树 二叉搜索树   栈 队列 散列表   算法 二分查找 快速排序 归并排序">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hulinhong.com/img/algo_newbie/sort_algo_complexity.png">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.058Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谈一谈各类算法的复杂度和常用数据结构">
+<meta name="twitter:description" content="因为之前的笔记和书籍相关知识都是零零散散的， 没有一个汇总， 所以写了这篇博客。有些算法很简单，复杂度一眼都能看得出来， 几乎不需要记忆 ， 但是有些算法或者数据结构的操作的复杂度就不是一眼可以看得出来， 推导也是很费时间的， 所谓常识就是应该熟记于心且被认可的知识。 必须掌握的知识 DataStructure 链表 二叉树 二叉搜索树   栈 队列 散列表   算法 二分查找 快速排序 归并排序">
+<meta name="twitter:image" content="https://hulinhong.com/img/algo_newbie/sort_algo_complexity.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>谈一谈各类算法的复杂度和常用数据结构 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2014/08/19/introduction_of_sort_algorithm_complexity_and_data_structure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">谈一谈各类算法的复杂度和常用数据结构</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-08-19T17:38:55+00:00">
+                2014-08-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algo/" itemprop="url" rel="index">
+                    <span itemprop="name">Algo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Algo/" rel="tag"><i class="fa fa-tag"></i> Algo</a>
+              
+                <a href="/tags/Sort/" rel="tag"><i class="fa fa-tag"></i> Sort</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/05/09/三种编程命名规范/" rel="next" title="三种编程命名规范">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  三种编程命名规范
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/08/20/bubble_insert_merge_bucket_sort/" rel="prev" title="排序算法二之谈一谈冒泡插入归并桶排序">
+              <p class="post-nav-pre-next-title">
+                  排序算法二之谈一谈冒泡插入归并桶排序
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <p>因为之前的笔记和书籍相关知识都是零零散散的， 没有一个汇总， 所以写了这篇博客。有些算法很简单，复杂度一眼都能看得出来， 几乎不需要记忆 ， 但是有些算法或者数据结构的操作的复杂度就不是一眼可以看得出来， 推导也是很费时间的， 所谓常识就是应该熟记于心且被认可的知识。</p>
+<h1 id="必须掌握的知识"><a href="#必须掌握的知识" class="headerlink" title="必须掌握的知识"></a>必须掌握的知识</h1><ul>
+<li>DataStructure<ul>
+<li>链表</li>
+<li>二叉树<ul>
+<li>二叉搜索树</li>
+</ul>
+</li>
+<li>栈</li>
+<li>队列</li>
+<li>散列表</li>
+</ul>
+</li>
+<li>算法<ul>
+<li>二分查找</li>
+<li>快速排序</li>
+<li>归并排序</li>
+<li>堆排序</li>
+<li>插入排序</li>
+<li>树的插入/查找/删除</li>
+<li>广度优先搜索</li>
+<li>深度优先搜索</li>
+</ul>
+</li>
+</ul>
+<p><strong>. . .</strong><a id="more"></a></p>
+<h1 id="该注意的点"><a href="#该注意的点" class="headerlink" title="该注意的点"></a>该注意的点</h1><ul>
+<li>实用的排序算法有四种：插入、快速、归并、堆。其余的都不值得深究。这几个排序算法都有其特点，涵盖了常见的使用场景，在其特定的使用场景下是效率最高的。<ul>
+<li><strong>插入排序</strong> : 在小数据量或者数据都较为有序的时候比起归并和快速排序有更佳的时间效率, 插入排序在这种情况下，只需要从头到尾扫描一遍，交换、移动少数元素即可；时间复杂度近乎 o(N)))。</li>
+<li><strong>快速排序</strong> : 时间复杂度依赖数据打乱的程度<ul>
+<li>快排最差情形的时间复杂度是O(n2), 平均是O(nlogn)</li>
+<li>就地快速排序使用的空间是O(1)的，也就是个常数级；而真正消耗空间的就是递归调用了，因为每次递归就要保持一些数据；<ul>
+<li>最优的情况下空间复杂度为：O(logn) ；每一次都平分数组的情况</li>
+<li>最差的情况下空间复杂度为：O( n ) ；退化为冒泡排序的情况</li>
+</ul>
+</li>
+<li>选择基准的方式决定了两个分割后两个子序列的长度，进而对整个算法的效率产生决定性影响, 比如当如果一个有序递增序列, 每次选基准都选最后一个, 那肯定效率 很差了啊</li>
+</ul>
+</li>
+<li><strong>归并排序</strong> : 时间复杂度稳定但是占用2N的内存<ul>
+<li>归并的空间复杂度就是那个临时的数组和递归时压入栈的数据占用的空间：n + logn；所以空间复杂度为: O(n)</li>
+<li>还有一种空间复杂度为O(1)的归并排序的实现</li>
+</ul>
+</li>
+<li><strong>堆排序</strong> : 在不能一次排序N个数据并要求选出前M个数据时使用。</li>
+</ul>
+</li>
+<li>插入排序、堆排序、快速排序等都是<strong>原址</strong>排序。归并排序是<strong>非原址</strong>的。</li>
+<li>插入排序、归并排序是<strong>稳定</strong>的, 堆排序、快速排序是<strong>不稳定</strong>的。</li>
+<li>内省排序: std的sort就是用的内省排序. 此算法首先从快速排序开始，当递归深度超过一定深度（深度为排序元素数量的对数值即logN）后转为堆排序。采用这个方法，内省排序既能在常规数据集上实现快速排序的高性能，又能在最坏情况下仍保持o(NlogN)的时间复杂度。</li>
+</ul>
+<h1 id="为什么在平均情况下快速排序比堆排序要优秀"><a href="#为什么在平均情况下快速排序比堆排序要优秀" class="headerlink" title="为什么在平均情况下快速排序比堆排序要优秀"></a>为什么在平均情况下快速排序比堆排序要优秀</h1><p>堆排序是渐进最优的比较排序算法，达到了O(nlgn)这一下界，而快排有一定的可能性会产生最坏划分，时间复杂度可能为O(n^2)，那为什么快排在实际使用中通常优于堆排序？</p>
+<ul>
+<li>虽然quick_sort会n^2（其实有稳定的nlgn的版本），但这毕竟很少出现。heap_sort大多数情况下比较次数都多于quick_sort，尽管大家都是nlgn。那就让倒霉蛋倒霉好了，大多数情况下快才是硬道理。</li>
+<li>堆排比较的几乎都不是相邻元素，对cache极不友好，这才是很少被采用的原因。数学上的时间复杂度不代表实际运行时的情况.快排是分而治之，每次都在同一小段进行比较，最后越来约接近局部性。反观堆排，堆化过程中需要一直拿index的当前元素A和处于index*2 + 1 的子元素B比较, 两个元素距离较远。(局部性原理是指CPU访问存储器时，无论是存取指令还是存取数据，所访问的存储单元都趋于聚集在一个较小的连续区域中。)</li>
+</ul>
+<h1 id="如何解决快排和堆排都不够好的问题"><a href="#如何解决快排和堆排都不够好的问题" class="headerlink" title="如何解决快排和堆排都不够好的问题?"></a>如何解决快排和堆排都不够好的问题?</h1><p>使用 <a href="/2020/03/23/introsort/" title="内省排序">内省排序</a> , std的sort就是用的内省排序.</p>
+<h1 id="各类算法的复杂度汇总表"><a href="#各类算法的复杂度汇总表" class="headerlink" title="各类算法的复杂度汇总表"></a>各类算法的复杂度汇总表</h1><p><img src="/img/algo_newbie/sort_algo_complexity.png" alt title="各类排序算法的复杂度"></p>
+<h1 id="算法与数据结构-综合提-C-版"><a href="#算法与数据结构-综合提-C-版" class="headerlink" title="算法与数据结构-综合提-C++版"></a>算法与数据结构-综合提-C++版</h1><ul>
+<li><a href="https://coding.imooc.com/class/chapter/71.html#Anchor" target="_blank" rel="noopener">课程网址</a></li>
+<li><a href="https://github.com/liuyubobobo/Play-with-Algorithms" target="_blank" rel="noopener">GitHub代码仓库网址</a></li>
+</ul>
+<ul>
+<li>第一章：当我们在讨论算法的时候，我们在讨论什么？<br>  1-1 我们究竟为什么要学习算法<br>  1-2 课程介绍</li>
+<li>第二章：排序基础<br>  2-1 选择排序法<br>  2-2 使用模板（泛型）编写算法<br>  2-3 随机生成算法测试用例<br>  2-4 测试算法的性能<br>  2-5 插入排序法<br>  2-6 插入排序法的改进<br>  2-7 更多关于O（n*2）排序算法的思考</li>
+<li>第三章：高级排序问题<br>  3-1 归并排序法<br>  3-2 归并排序法的实现<br>  3-3 归并排序法的优化<br>  3-4 自底向上的归并排序算法<br>  3-5 快速排序法<br>  3-6 随机化快速排序法<br>  3-7 双路快速排序法<br>  3-8 三路快速排序法<br>  3-9 归并排序和快速排序的衍生问题</li>
+<li>第四章：堆和堆排序<br>  4-1 为什么使用堆<br>  4-2 堆的基本存储<br>  4-3 Shift Up<br>  4-4 Shift Down<br>  4-5 基础堆排序和Heapify<br>  4-6 优化的堆排序<br>  4-7 排序算法总结<br>  4-8 索引堆<br>  4-9 索引堆的优化<br>  4-10 和堆相关的其他问题</li>
+<li>第五章：二分搜索树<br>  5-1 二分查找法<br>  5-2 二分搜索树基础<br>  5-3 二分搜索树的节点插入<br>  5-4 二分搜索书的查找<br>  5-5 二分搜索树的遍历（深度优先遍历）<br>  5-6 层序遍历（广度优先遍历）<br>  5-7 删除最大值，最小值<br>  5-8 二分搜索树的删除<br>  5-9 二分搜索树的顺序性<br>  5-10 二分搜索树的局限性<br>  5-11 树形问题和更多树。</li>
+<li>第六章：并查集<br>  6-1 并查集基础<br>  6-2 Qucik Find<br>  6-3 Quick Union<br>  6-4 基于size的优化<br>  6-5 基于rank的优化<br>  6-6 路径压缩</li>
+<li>第七章：图论<br>  7-1 图论基础<br>  7-2 图的表示<br>  7-3 相邻点迭代器<br>  7-4 图的算法框架<br>  7-5 深度优先遍历和连通分量<br>  7-6 寻路<br>  7-7 广度优先遍历和最短路径<br>  7-8 迷宫生成，ps抠图–更多无权图的应用</li>
+<li>第八章：最小生成树<br>  8-1 有权图<br>  8-2 最小生成树问题和切分定理<br>  8-3 Prim算法的第一个实现<br>  8-4 Prim算法的优化<br>  8-5 优化后的Prim算法的实现<br>  8-6 Krusk算法<br>  8-7 最小生成树算法的思考</li>
+<li>第九章：最短路径<br>  9-1 最短路径问题和松弛操作<br>  9-2 Dijkstra算法的思想<br>  9-3 实现Dijkstra算法<br>  9-4 负权边和Bellman-Ford算法<br>  9-5 实现Bellman-Ford算法<br>  9-6 更多和最短路径相关的思考</li>
+<li>第十章：结束语<br>  10-1 总结，算法思想，大家加油！</li>
+</ul>
+<h1 id="玩转算法面试-从真题到思维全面提升算法思维"><a href="#玩转算法面试-从真题到思维全面提升算法思维" class="headerlink" title="玩转算法面试_从真题到思维全面提升算法思维"></a>玩转算法面试_从真题到思维全面提升算法思维</h1><ul>
+<li><a href="https://coding.imooc.com/class/chapter/82.html#Anchor" target="_blank" rel="noopener">课程网址</a></li>
+<li><a href="https://github.com/liuyubobobo/Play-with-Algorithm-Interview" target="_blank" rel="noopener">GitHub代码仓库网址</a></li>
+</ul>
+<ul>
+<li><p>第1章 算法面试到底是什么鬼?<br>一提起算法面试，很多同学就会心有余悸。可其实，大多数企业的算法面试，并没有那么可怕。并不是一定要啃完整本《算法导论》，才能玩儿转算法面试；也并不是只有ACM参赛选手，才能笑傲算法面试。恰恰相反，大多数算法面试关注的算法思维，其实很基础。在这一章，和大家聊一聊，算法面试，到底是什么鬼？…</p>
+<p>1-1 算法面试不仅仅是正确的回答问题试看<br>1-2 算法面试只是面试的一部分试看<br>1-3 如何准备算法面试试看<br>1-4 如何回答算法面试问题</p>
+</li>
+<li><p>第2章 面试中的复杂度分析<br>很多同学一提起复杂度分析就头疼，马上想起了《算法导论》中复杂的数学推导。但其实在一般的企业面试中，对复杂度的分析要求并没有那么高，但也是绕不过去的坎儿。在这一章，和大家介绍一下，面试中需要掌握的复杂度分析。…</p>
+<p>2-1 究竟什么是大O（Big O）<br>2-2 对数据规模有一个概念<br>2-3 简单的复杂度分析<br>2-4 亲自试验自己算法的时间复杂度<br>2-5 递归算法的复杂度分析<br>2-6 均摊时间复杂度分析（Amortized Time Analysis）<br>2-7 避免复杂度的震荡</p>
+</li>
+<li><p>第3章 数组中的问题其实最常见<br>面试中的算法问题，有很多并不需要复杂的数据结构支撑。就是用数组，就能考察出很多东西了。其实，经典的排序问题，二分搜索等等问题，就是在数组这种最基础的结构中处理问题的。在这一章中，我们学习常见的数组中处理问题的方法。…</p>
+<p>3-1 从二分查找法看如何写出正确的程序<br>3-2 改变变量定义，依然可以写出正确的算法</p>
+<p>3-3 在LeetCode上解决第一个问题 Move Zeros<br>3-4 即使简单的问题，也有很多优化的思路<br>3-5 三路快排partition思路的应用 Sort Color<br>3-6 对撞指针 Two Sum II - Input Array is Sorted<br>3-7 滑动窗口 Minimum Size Subarray Sum<br>3-8 在滑动窗口中做记录 Longest Substring Without Repeating Characters</p>
+</li>
+<li><p>第4章 查找表相关问题<br>查找，是使用计算机处理问题时的一个最基本的任务，因此也是面试中非常常见的一类问题。很多算法问题的本质，就是要能够高效查找。学会使用系统库中的map和set，就已经成功了一半。</p>
+<p>4-1 set的使用 Intersection of Two Arrays<br>4-2 map的使用 Intersection of Two Arrays II<br>4-3 set和map不同底层实现的区别<br>4-4 使用查找表的经典问题 Two Sum<br>4-5 灵活选择键值 4Sum II<br>4-6 灵活选择键值 Number of Boomerangs<br>4-7 查找表和滑动窗口 Contain Duplicate II<br>4-8 二分搜索树底层实现的顺序性 Contain Duplicate III</p>
+</li>
+<li><p>第5章 在链表中穿针引线<br>链表是一种特殊的线性结构，由于不能像数组一样进行随机的访问，所以和链表相关的问题有他自身的特点。我将之称为穿针引线。我们在这一章，就来看一看，如何在链表中穿针引线。</p>
+<p>5-1 链表，在节点间穿针引线 Reverse Linked List<br>5-2 测试你的链表程序<br>5-3 设立链表的虚拟头结点 Remove Linked List Elements<br>5-4 复杂的穿针引线 Swap Nodes in Pairs<br>5-5 不仅仅是穿针引线 Delete Node in a Linked List<br>5-6 链表与双指针 Remove Nth Node Form End of List</p>
+</li>
+<li><p>第6章 栈，队列，优先队列<br>栈和队列虽然是简单的数据结构，但是使用这些简单的数据结构所解决的算法问题不一定简单。在这一章里，我们将来探索，和栈与队列相关的算法问题。</p>
+<p>6-1 栈的基础应用 Valid Parentheses<br>6-2 栈和递归的紧密关系 Binary Tree Preorder, Inorder and Postorder Traversal<br>6-3 运用栈模拟递归<br>6-4 队列的典型应用 Binary Tree Level Order Traversal<br>6-5 BFS和图的最短路径 Perfect Squares<br>6-6 优先队列<br>6-7 优先队列相关的算法问题 Top K Frequent Elements</p>
+</li>
+<li><p>第7章 二叉树和递归<br>递归，是使用计算机解决问题的一种重要的思考方式。而二叉树由于其天然的递归结构，使得基于二叉树的算法，均拥有着递归性质。使用二叉树，是研究学习递归算法的最佳入门方式。在这一章里，我们就来看一看二叉树中的递归算法。…</p>
+<p>7-1 二叉树天然的递归结构, 104, 111, 100, 101, 222, 110<br>7-2 一个简单的二叉树问题引发的血案 Invert Binary Tree<br>7-3 注意递归的终止条件 Path Sum, 112, 111, 404<br>7-4 定义递归问题 Binary Tree Path, 257, 113, 129<br>7-5 稍复杂的递归逻辑 Path Sum III, 437<br>7-6 二分搜索树中的问题 Lowest Common Ancestor of a Binary Search Tree, 235, 98, 450, 108, 230, 236</p>
+</li>
+<li><p>第8章 递归和回溯法<br>回溯法是解决很多算法问题的常见思想，甚至可以说是传统人工智能的基础方法。其本质依然是使用递归的方法在树形空间中寻找解。在这一章，我们来具体看一下将递归这种技术使用在非二叉树的结构中，从而认识回溯这一基础算法思想。…</p>
+<p>8-1 树形问题 Letter Combinations of a Phone Number<br>8-2 什么是回溯, 93, 131<br>8-3 排列问题 Permutations, 47<br>8-4 组合问题 Combinations, 77, 39, 40, 216, 78, 90, 401<br>8-5 回溯法解决组合问题的优化<br>8-6 二维平面上的回溯法 Word Search, 79<br>8-7 floodfill算法，一类经典问题 Number of Islands-<br>8-8 回溯法是经典人工智能的基础 N Queens</p>
+</li>
+<li><p>第9章 动态规划基础<br>很多同学听到“动态规划”的名称可能会望而生畏，觉得动态规划的问题都很复杂。但其实，动态规划本质依然是递归算法，只不过是满足特定条件的递归算法。在这一章里，我们就来逐步解开动态规划的神秘面纱</p>
+<p>9-1 什么是动态规划</p>
+<p>9-2 第一个动态规划问题 Climbing Stairs, 70, 120, 64<br>9-3 发现重叠子问题 Integer Break, 343, 279, 91, 62, 63<br>9-4 状态的定义和状态转移 House Robber, 198, 213, 337, 309,<br>9-5 0-1背包问题<br>9-6 0-1背包问题的优化和变种<br>9-7 面试中的0-1背包问题 Partition Equal Subset Sum, 416, 322, 377, 474, 139, 494<br>9-8 LIS问题 Longest Increasing Subsequence<br>9-9 LCS，最短路，求动态规划的具体解以及更多</p>
+</li>
+<li><p>第10章 贪心算法<br>通常同学们可能会认为贪心算法比较简单。确实，通常贪心算法的实现非常容易，但是，一个问题是否能够使用贪心算法，是一定要小心的。我们在这一章来看一看，贪心算法可能会有哪些坑。</p>
+<p>10-1 贪心基础 Assign Cookies, 455, 392<br>10-2 贪心算法与动态规划的关系 Non-overlapping Intervals, 435<br>10-3 贪心选择性质的证明</p>
+</li>
+<li><p>第11章 课程结语<br>看完整个课程，我不能保证所有的同学都能百分百地对每一个算法面试问题应答自如，但认真学习的同学对大部分问题都应该已经有了一个合理的思维路径。在最后一章，我们再来简单地总结一下，并祝每一位同学都能找到自己喜欢的工作，大展宏图：）…</p>
+<p>11-1 结语</p>
+</li>
+</ul>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Algo/" rel="tag"><i class="fa fa-tag"></i> Algo</a>
+            
+              <a href="/tags/Sort/" rel="tag"><i class="fa fa-tag"></i> Sort</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2014/05/09/三种编程命名规范/" rel="next" title="三种编程命名规范">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    三种编程命名规范
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2014/08/20/bubble_insert_merge_bucket_sort/" rel="prev" title="排序算法二之谈一谈冒泡插入归并桶排序">
+                <p class="post-nav-pre-next-title">
+                    排序算法二之谈一谈冒泡插入归并桶排序
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#必须掌握的知识"><span class="nav-number">1.</span> <span class="nav-text">必须掌握的知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#该注意的点"><span class="nav-number">2.</span> <span class="nav-text">该注意的点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么在平均情况下快速排序比堆排序要优秀"><span class="nav-number">3.</span> <span class="nav-text">为什么在平均情况下快速排序比堆排序要优秀</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何解决快排和堆排都不够好的问题"><span class="nav-number">4.</span> <span class="nav-text">如何解决快排和堆排都不够好的问题?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#各类算法的复杂度汇总表"><span class="nav-number">5.</span> <span class="nav-text">各类算法的复杂度汇总表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法与数据结构-综合提-C-版"><span class="nav-number">6.</span> <span class="nav-text">算法与数据结构-综合提-C++版</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#玩转算法面试-从真题到思维全面提升算法思维"><span class="nav-number">7.</span> <span class="nav-text">玩转算法面试_从真题到思维全面提升算法思维</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

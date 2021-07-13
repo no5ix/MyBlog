@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,GEvent,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content=". . .">
+<meta name="keywords" content="Python,GEvent">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gevent总结">
+<meta property="og:url" content="https://hulinhong.com/2019/07/09/gevent_intro/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content=". . .">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.054Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gevent总结">
+<meta name="twitter:description" content=". . .">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>gevent总结 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2019/07/09/gevent_intro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">gevent总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-09T23:31:26+00:00">
+                2019-07-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Script/" itemprop="url" rel="index">
+                    <span itemprop="name">Script</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+              
+                <a href="/tags/GEvent/" rel="tag"><i class="fa fa-tag"></i> GEvent</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/28/python_with/" rel="next" title="python的with与__enter__以及__exit__关系">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  python的with与__enter__以及__exit__关系
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/10/etcd_api_note/" rel="prev" title="etcd的restful接口">
+              <p class="post-nav-pre-next-title">
+                  etcd的restful接口
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <p><strong>. . .</strong><a id="more"></a></p>
+<p>gevent，它是一个并发网络库。它的协程是基于 <a href="http://www.bjhee.com/greenlet.html" target="_blank" rel="noopener">greenlet</a> 的，并基于 libev 实现快速事件循环（Linux 上是 epoll，FreeBSD 上是 kqueue，Mac OS X 上是 select）。有了 gevent，协程的使用将无比简单，你根本无须像 greenlet 一样显式的切换，每当一个协程阻塞时，程序将自动调度，gevent 处理了所有的底层细节。让我们看个例子来感受下吧。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gevent</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test1</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="number">12</span></span><br><span class="line">    gevent.sleep(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">print</span> <span class="number">34</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="number">56</span></span><br><span class="line">    gevent.sleep(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">print</span> <span class="number">78</span></span><br><span class="line"></span><br><span class="line">gevent.joinall([</span><br><span class="line">    gevent.spawn(test1),</span><br><span class="line">    gevent.spawn(test2),</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<p>解释下，<code>gevent.spawn()</code>方法会创建一个新的 greenlet 协程对象，并运行它。<code>gevent.joinall()</code>方法会等待所有传入的 greenlet 协程运行结束后再退出，这个方法可以接受一个<code>timeout</code>参数来设置超时时间，单位是秒。运行上面的程序，执行顺序如下：</p>
+<ol>
+<li>先进入协程 test1，打印 12</li>
+<li>遇到<code>gevent.sleep(0)</code>时，test1 被阻塞，自动切换到协程 test2，打印 56</li>
+<li>之后 test2 被阻塞，这时 test1 阻塞已结束，自动切换回 test1，打印 34</li>
+<li>当 test1 运行完毕返回后，此时 test2 阻塞已结束，再自动切换回 test2，打印 78</li>
+<li>所有协程执行完毕，程序退出</li>
+</ol>
+<p>所以，程序运行下来的输出就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">12</span><br><span class="line">56</span><br><span class="line">34</span><br><span class="line">78</span><br></pre></td></tr></table></figure>
+<p>注意，这里与<a href="http://www.bjhee.com/greenlet.html" target="_blank" rel="noopener">上一篇 greenlet</a> 中第一个例子运行的结果不一样，greenlet 一个协程运行完后，必须显式切换，不然会返回其父协程。而在 gevent 中，一个协程运行完后，它会自动调度那些未完成的协程。</p>
+<p>我们换一个更有意义的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gevent</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">urls = [<span class="string">'www.baidu.com'</span>, <span class="string">'www.gevent.org'</span>, <span class="string">'www.python.org'</span>]</span><br><span class="line">jobs = [gevent.spawn(socket.gethostbyname, url) <span class="keyword">for</span> url <span class="keyword">in</span> urls]</span><br><span class="line">gevent.joinall(jobs, timeout=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> [job.value <span class="keyword">for</span> job <span class="keyword">in</span> jobs]</span><br></pre></td></tr></table></figure>
+<p>我们通过协程分别获取三个网站的 IP 地址，由于打开远程地址会引起 IO 阻塞，所以 gevent 会自动调度不同的协程。另外，我们可以通过协程对象的”value” 属性，来获取协程函数的返回值。</p>
+<h1 id="猴子补丁MonkeyPatching"><a href="#猴子补丁MonkeyPatching" class="headerlink" title="猴子补丁MonkeyPatching"></a>猴子补丁MonkeyPatching</h1><p>细心的朋友们在运行上面例子时会发现，其实程序运行的时间同不用协程是一样的，是三个网站打开时间的总和。可是理论上协程是非阻塞的，那运行时间应该等于最长的那个网站打开时间呀？其实这是因为 Python 标准库里的 socket 是阻塞式的，DNS 解析无法并发，包括像 urllib 库也一样，所以这种情况下用协程完全没意义。那怎么办？</p>
+<p>一种方法是使用 gevent 下的 socket 模块，我们可以通过<code>from gevent import socket</code>来导入。不过更常用的方法是使用猴子布丁（Monkey patching）:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gevent <span class="keyword">import</span> monkey; monkey.patch_socket()</span><br><span class="line"><span class="keyword">import</span> gevent</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">urls = [<span class="string">'www.baidu.com'</span>, <span class="string">'www.gevent.org'</span>, <span class="string">'www.python.org'</span>]</span><br><span class="line">jobs = [gevent.spawn(socket.gethostbyname, url) <span class="keyword">for</span> url <span class="keyword">in</span> urls]</span><br><span class="line">gevent.joinall(jobs, timeout=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> [job.value <span class="keyword">for</span> job <span class="keyword">in</span> jobs]</span><br></pre></td></tr></table></figure>
+<p>上述代码的第一行就是对 socket 标准库打上猴子补丁，此后 socket 标准库中的类和方法都会被替换成非阻塞式的，所有其他的代码都不用修改，这样协程的效率就真正体现出来了。Python 中其它标准库也存在阻塞的情况，gevent 提供了<code>monkey.patch_all()</code>方法将所有标准库都替换。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gevent <span class="keyword">import</span> monkey; monkey.patch_all()</span><br></pre></td></tr></table></figure>
+<p>使用猴子补丁褒贬不一，但是官网上还是建议使用<code>patch_all()</code>，而且在程序的第一行就执行。</p>
+<h1 id="gevent原理"><a href="#gevent原理" class="headerlink" title="gevent原理"></a>gevent原理</h1><h1 id="获取协程状态"><a href="#获取协程状态" class="headerlink" title="获取协程状态"></a>获取协程状态</h1><p>协程状态有已启动和已停止，分别可以用协程对象的<code>started</code>属性和<code>ready()</code>方法来判断。对于已停止的协程，可以用<code>successful()</code>方法来判断其是否成功运行且没抛异常。如果协程执行完有返回值，可以通过<code>value</code>属性来获取。另外，greenlet 协程运行过程中发生的异常是不会被抛出到协程外的，因此需要用协程对象的<code>exception</code>属性来获取协程中的异常。下面的例子很好的演示了各种方法和属性的使用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gevent</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">win</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'You win!'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fail</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">raise</span> Exception(<span class="string">'You failed!'</span>)</span><br><span class="line"></span><br><span class="line">winner = gevent.spawn(win)</span><br><span class="line">loser = gevent.spawn(fail)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> winner.started </span><br><span class="line"><span class="keyword">print</span> loser.started  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    gevent.joinall([winner, loser])</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">print</span> <span class="string">'This will never be reached'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> winner.ready() </span><br><span class="line"><span class="keyword">print</span> loser.ready()  </span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> winner.value </span><br><span class="line"><span class="keyword">print</span> loser.value  </span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> winner.successful() </span><br><span class="line"><span class="keyword">print</span> loser.successful()  </span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> loser.exception</span><br></pre></td></tr></table></figure>
+<h1 id="协程运行超时"><a href="#协程运行超时" class="headerlink" title="协程运行超时"></a>协程运行超时</h1><p>之前我们讲过在<code>gevent.joinall()</code>方法中可以传入<code>timeout</code>参数来设置超时，我们也可以在全局范围内设置超时时间：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gevent</span><br><span class="line"><span class="keyword">from</span> gevent <span class="keyword">import</span> Timeout</span><br><span class="line"></span><br><span class="line">timeout = Timeout(<span class="number">2</span>)  </span><br><span class="line">timeout.start()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">wait</span><span class="params">()</span>:</span></span><br><span class="line">    gevent.sleep(<span class="number">10</span>)</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    gevent.spawn(wait).join()</span><br><span class="line"><span class="keyword">except</span> Timeout:</span><br><span class="line">    print(<span class="string">'Could not complete'</span>)</span><br></pre></td></tr></table></figure>
+<p>上例中，我们将超时设为 2 秒，此后所有协程的运行，如果超过两秒就会抛出<code>Timeout</code>异常。我们也可以将超时设置在 with 语句内，这样该设置只在 with 语句块中有效：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> Timeout(<span class="number">1</span>):</span><br><span class="line">    gevent.sleep(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p>此外，我们可以指定超时所抛出的异常，来替换默认的<code>Timeout</code>异常。比如下例中超时就会抛出我们自定义的<code>TooLong</code>异常。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TooLong</span><span class="params">(Exception)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> Timeout(<span class="number">1</span>, TooLong):</span><br><span class="line">    gevent.sleep(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="协程间通讯"><a href="#协程间通讯" class="headerlink" title="协程间通讯"></a>协程间通讯</h1><p>greenlet 协程间的异步通讯可以使用事件（Event）对象。该对象的<code>wait()</code>方法可以阻塞当前协程，而<code>set()</code>方法可以唤醒之前阻塞的协程。在下面的例子中，5 个 waiter 协程都会等待事件 evt，当 setter 协程在 3 秒后设置 evt 事件，所有的 waiter 协程即被唤醒。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gevent</span><br><span class="line"><span class="keyword">from</span> gevent.event <span class="keyword">import</span> Event</span><br><span class="line"></span><br><span class="line">evt = Event()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setter</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'Wait for me'</span></span><br><span class="line">    gevent.sleep(<span class="number">3</span>)  </span><br><span class="line">    <span class="keyword">print</span> <span class="string">"Ok, I'm done"</span></span><br><span class="line">    evt.set()  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">waiter</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"I'll wait for you"</span></span><br><span class="line">    evt.wait()  </span><br><span class="line">    <span class="keyword">print</span> <span class="string">'Finish waiting'</span></span><br><span class="line"></span><br><span class="line">gevent.joinall([</span><br><span class="line">    gevent.spawn(setter),</span><br><span class="line">    gevent.spawn(waiter),</span><br><span class="line">    gevent.spawn(waiter),</span><br><span class="line">    gevent.spawn(waiter),</span><br><span class="line">    gevent.spawn(waiter),</span><br><span class="line">    gevent.spawn(waiter)</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<p>除了 Event 事件外，gevent 还提供了<code>AsyncResult</code>事件，它可以在唤醒时传递消息。让我们将上例中的<code>setter</code>和<code>waiter</code>作如下改动:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gevent.event <span class="keyword">import</span> AsyncResult</span><br><span class="line"></span><br><span class="line">aevt = AsyncResult()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setter</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'Wait for me'</span></span><br><span class="line">    gevent.sleep(<span class="number">3</span>)  </span><br><span class="line">    <span class="keyword">print</span> <span class="string">"Ok, I'm done"</span></span><br><span class="line">    aevt.set(<span class="string">'Hello!'</span>)  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">waiter</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"I'll wait for you"</span>)</span><br><span class="line">    message = aevt.get()  </span><br><span class="line">    <span class="keyword">print</span> <span class="string">'Got wake up message: %s'</span> % message</span><br></pre></td></tr></table></figure>
+<h1 id="队列Queue"><a href="#队列Queue" class="headerlink" title="队列Queue"></a>队列Queue</h1><p>队列 Queue 的概念相信大家都知道，我们可以用它的<code>put</code>和<code>get</code>方法来存取队列中的元素。gevent 的队列对象可以让 greenlet 协程之间安全的访问。运行下面的程序，你会看到 3 个消费者会分别消费队列中的产品，且消费过的产品不会被另一个消费者再取到：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gevent</span><br><span class="line"><span class="keyword">from</span> gevent.queue <span class="keyword">import</span> Queue</span><br><span class="line"></span><br><span class="line">products = Queue()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">consumer</span><span class="params">(name)</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> products.empty():</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'%s got product %s'</span> % (name, products.get())</span><br><span class="line">        gevent.sleep(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'%s Quit'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">producer</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">1</span>, <span class="number">10</span>):</span><br><span class="line">        products.put(i)</span><br><span class="line"></span><br><span class="line">gevent.joinall([</span><br><span class="line">    gevent.spawn(producer),</span><br><span class="line">    gevent.spawn(consumer, <span class="string">'steve'</span>),</span><br><span class="line">    gevent.spawn(consumer, <span class="string">'john'</span>),</span><br><span class="line">    gevent.spawn(consumer, <span class="string">'nancy'</span>),</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<p><code>put</code>和<code>get</code>方法都是阻塞式的，它们都有非阻塞的版本：<code>put_nowait</code>和<code>get_nowait</code>。如果调用<code>get</code>方法时队列为空，则抛出<code>gevent.queue.Empty</code>异常。</p>
+<h1 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h1><p>信号量可以用来限制协程并发的个数。它有两个方法，<code>acquire</code>和<code>release</code>。顾名思义，<code>acquire</code>就是获取信号量，而<code>release</code>就是释放。当所有信号量都已被获取，那剩余的协程就只能等待任一协程释放信号量后才能得以运行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gevent</span><br><span class="line"><span class="keyword">from</span> gevent.coros <span class="keyword">import</span> BoundedSemaphore</span><br><span class="line"></span><br><span class="line">sem = BoundedSemaphore(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">worker</span><span class="params">(n)</span>:</span></span><br><span class="line">    sem.acquire()</span><br><span class="line">    print(<span class="string">'Worker %i acquired semaphore'</span> % n)</span><br><span class="line">    gevent.sleep(<span class="number">0</span>)</span><br><span class="line">    sem.release()</span><br><span class="line">    print(<span class="string">'Worker %i released semaphore'</span> % n)</span><br><span class="line"></span><br><span class="line">gevent.joinall([gevent.spawn(worker, i) <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">0</span>, <span class="number">6</span>)])</span><br></pre></td></tr></table></figure>
+<p>上面的例子中，我们初始化了<code>BoundedSemaphore</code>信号量，并将其个数定为<code>2</code>。所以同一个时间，只能有两个 worker 协程被调度。程序运行后的结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Worker 0 acquired semaphore</span><br><span class="line">Worker 1 acquired semaphore</span><br><span class="line">Worker 0 released semaphore</span><br><span class="line">Worker 1 released semaphore</span><br><span class="line">Worker 2 acquired semaphore</span><br><span class="line">Worker 3 acquired semaphore</span><br><span class="line">Worker 2 released semaphore</span><br><span class="line">Worker 3 released semaphore</span><br><span class="line">Worker 4 acquired semaphore</span><br><span class="line">Worker 4 released semaphore</span><br><span class="line">Worker 5 acquired semaphore</span><br><span class="line">Worker 5 released semaphore</span><br></pre></td></tr></table></figure>
+<p>如果信号量个数为 1，那就等同于同步锁。</p>
+<h1 id="协程本地变量"><a href="#协程本地变量" class="headerlink" title="协程本地变量"></a>协程本地变量</h1><p>同线程类似，协程也有本地变量，也就是只在当前协程内可被访问的变量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gevent</span><br><span class="line"><span class="keyword">from</span> gevent.local <span class="keyword">import</span> local</span><br><span class="line"></span><br><span class="line">data = local()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f1</span><span class="params">()</span>:</span></span><br><span class="line">    data.x = <span class="number">1</span></span><br><span class="line">    <span class="keyword">print</span> data.x</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f2</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">print</span> data.x</span><br><span class="line">    <span class="keyword">except</span> AttributeError:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'x is not visible'</span></span><br><span class="line"></span><br><span class="line">gevent.joinall([</span><br><span class="line">    gevent.spawn(f1),</span><br><span class="line">    gevent.spawn(f2)</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<p>通过将变量存放在<code>local</code>对象中，即可将其的作用域限制在当前协程内，当其他协程要访问该变量时，就会抛出异常。不同协程间可以有重名的本地变量，而且互相不影响。因为协程本地变量的实现，就是将其存放在以的<code>greenlet.getcurrent()</code>的返回为键值的私有的命名空间内。</p>
+<h1 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h1><p>讲到这里，大家肯定很想看一个 gevent 的实际应用吧，<a href="https://github.com/sdiehl/minichat" target="_blank" rel="noopener">这里有一个简单的聊天室程序</a>，基于 Flask 实现，大家可以参考下。</p>
+<h1 id="更多参考资料"><a href="#更多参考资料" class="headerlink" title="更多参考资料"></a>更多参考资料</h1><p><a href="http://www.gevent.org/contents.html" target="_blank" rel="noopener">gevent 的官方文档</a><br><a href="http://sdiehl.github.io/gevent-tutorial/" target="_blank" rel="noopener">gevent 社区提供的教程</a></p>
+<p>转自: <a href="http://www.bjhee.com/gevent.html" target="_blank" rel="noopener">http://www.bjhee.com/gevent.html</a></p>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+            
+              <a href="/tags/GEvent/" rel="tag"><i class="fa fa-tag"></i> GEvent</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/06/28/python_with/" rel="next" title="python的with与__enter__以及__exit__关系">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    python的with与__enter__以及__exit__关系
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/07/10/etcd_api_note/" rel="prev" title="etcd的restful接口">
+                <p class="post-nav-pre-next-title">
+                    etcd的restful接口
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#猴子补丁MonkeyPatching"><span class="nav-number">1.</span> <span class="nav-text">猴子补丁MonkeyPatching</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gevent原理"><span class="nav-number">2.</span> <span class="nav-text">gevent原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取协程状态"><span class="nav-number">3.</span> <span class="nav-text">获取协程状态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#协程运行超时"><span class="nav-number">4.</span> <span class="nav-text">协程运行超时</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#协程间通讯"><span class="nav-number">5.</span> <span class="nav-text">协程间通讯</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#队列Queue"><span class="nav-number">6.</span> <span class="nav-text">队列Queue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#信号量"><span class="nav-number">7.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#协程本地变量"><span class="nav-number">8.</span> <span class="nav-text">协程本地变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实际应用"><span class="nav-number">9.</span> <span class="nav-text">实际应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更多参考资料"><span class="nav-number">10.</span> <span class="nav-text">更多参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

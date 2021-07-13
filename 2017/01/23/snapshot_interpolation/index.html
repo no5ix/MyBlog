@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="GafferOnGames,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="自我总结快照插值这种游戏同步技术的要点为 :   视觉模拟 : 每帧从网络的发送侧捕获所有相关状态的快照，并将其传输到网络的接收侧，在那里我们将试图重建一个视觉上近似合理的模拟 缓冲区 : 内插值之前会缓冲一段合适的时间来处理网络抖动 内插值Interpolation : 处理快照之间的拉扯 线性插值 Hermite插值   外插值Extrapolation (文中翻译为”预测”或”推测”) :">
+<meta name="keywords" content="GafferOnGames">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络物理模拟四之快照插值">
+<meta property="og:url" content="https://hulinhong.com/2017/01/23/snapshot_interpolation/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="自我总结快照插值这种游戏同步技术的要点为 :   视觉模拟 : 每帧从网络的发送侧捕获所有相关状态的快照，并将其传输到网络的接收侧，在那里我们将试图重建一个视觉上近似合理的模拟 缓冲区 : 内插值之前会缓冲一段合适的时间来处理网络抖动 内插值Interpolation : 处理快照之间的拉扯 线性插值 Hermite插值   外插值Extrapolation (文中翻译为”预测”或”推测”) :">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.074Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络物理模拟四之快照插值">
+<meta name="twitter:description" content="自我总结快照插值这种游戏同步技术的要点为 :   视觉模拟 : 每帧从网络的发送侧捕获所有相关状态的快照，并将其传输到网络的接收侧，在那里我们将试图重建一个视觉上近似合理的模拟 缓冲区 : 内插值之前会缓冲一段合适的时间来处理网络抖动 内插值Interpolation : 处理快照之间的拉扯 线性插值 Hermite插值   外插值Extrapolation (文中翻译为”预测”或”推测”) :">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>网络物理模拟四之快照插值 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/01/23/snapshot_interpolation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">网络物理模拟四之快照插值</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-23T11:13:35+00:00">
+                2017-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GS/" itemprop="url" rel="index">
+                    <span itemprop="name">GS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/GafferOnGames/" rel="tag"><i class="fa fa-tag"></i> GafferOnGames</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/22/deterministic_lockstep/" rel="next" title="网络物理模拟三之具有确定性的帧同步">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  网络物理模拟三之具有确定性的帧同步
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/24/snapshot_compression/" rel="prev" title="网络物理模拟五之快照压缩">
+              <p class="post-nav-pre-next-title">
+                  网络物理模拟五之快照压缩
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="自我总结"><a href="#自我总结" class="headerlink" title="自我总结"></a>自我总结</h1><p>快照插值这种游戏同步技术的要点为 : </p>
+<ul>
+<li><strong>视觉模拟</strong> : 每帧从网络的发送侧捕获所有相关状态的快照，并将其传输到网络的接收侧，在那里我们将试图重建一个视觉上近似合理的模拟<ul>
+<li>缓冲区 : 内插值之前会缓冲一段合适的时间来处理网络抖动</li>
+<li>内插值Interpolation : 处理快照之间的拉扯<ul>
+<li>线性插值</li>
+<li>Hermite插值</li>
+</ul>
+</li>
+<li>外插值Extrapolation (文中翻译为”预测”或”推测”) : 不可行, 因为外插值无法精准预测刚体运动以及各种物理</li>
+</ul>
+</li>
+<li><strong>降低延迟</strong> : 因为我们发送的快照的频率比较低，这样会带来的一个问题就是对快照进行插值的话会在网络延迟的基础上还要增加插值带来的延迟. 所以我们需要增加发送速率, 为了提高发送速度我们需要压缩快照数据技术的配合, 不然占用太多带宽了</li>
+<li><strong>减少宽带占用</strong> : 因为所有需要在快照中包含所有实体信息, 所以数据量相当大, 得用各种方法压缩快照数据(<a href="/2017/01/24/snapshot_compression/" title="网络物理模拟五之快照压缩">网络物理模拟五之快照压缩</a>)</li>
+</ul>
+<p><strong>. . .</strong><a id="more"></a></p>
+<h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="https://gafferongames.com/post/snapshot_interpolation/" target="_blank" rel="noopener">原文出处</a></p>
+<p>原文标题 : <strong>Snapshot Interpolation</strong> (<em>Interpolating between snapshots of visual state</em>)</p>
+<hr>
+<p></p><h2 id="introduction">Introduction</h2><p></p>
+<p>Hi, I&rsquo;m <a href="https://gafferongames.com/about" target="_blank" rel="noopener">Glenn Fiedler</a> and welcome to <strong><a href="https://gafferongames.com/categories/networked-physics/" target="_blank" rel="noopener">Networked Physics</a></strong>.</p><br><p>In the <a href="https://gafferongames.com/post/deterministic_lockstep/" target="_blank" rel="noopener">previous article</a> we networked a physics simulation using deterministic lockstep. Now, in this article we&rsquo;re going to network the same simulation with a completely different technique: <strong>snapshot interpolation</strong>.</p><br><h2 id="background">Background</h2><br><p>While deterministic lockstep is very efficient in terms of bandwidth, it&rsquo;s not always possible to make your simulation deterministic. Floating point determinism across platforms is <a href="https://gafferongames.com/post/floating_point_determinism/" target="_blank" rel="noopener">hard</a>.</p><br><p>Also, as the player counts increase, deterministic lockstep becomes problematic: you can&rsquo;t simulate frame n until you receive input from <em>all</em> players for that frame, so players end up waiting for the most lagged player. Because of this, I recommend deterministic lockstep for 2-4 players at most.</p><br><p>So if your simulation is not deterministic or you want higher player counts then you need a different technique. Snapshot interpolation fits the bill nicely. It is in many ways the polar opposite of deterministic lockstep: instead of running two simulations, one on the left and one on the right, and using perfect determinism and synchronized inputs keep them in sync, snapshot interpolation doesn&rsquo;t run any simulation on the right side at all!</p><br><h2 id="snapshots">Snapshots</h2><br><p>Instead, we capture a <strong>snapshot</strong> of all relevant state from the simulation on the left and transmit it to the right, then on the right side we use those snapshots to reconstruct a visual approximation of the simulation, all without running the simulation itself.</p><br><p>As a first pass, let&rsquo;s send across the state required to render each cube:</p><br><pre><code>    struct CubeState<br>    {<br>        bool interacting;<br>        vec3f position;<br>        quat4f orientation;<br>    };<br></code></pre><br><p>I&rsquo;m sure you&rsquo;ve worked out by now that the cost of this technique is increased bandwidth usage. Greatly increased bandwidth usage. Hold on to your neckbeards, because a snapshot contains the visual state for the entire simulation. With a bit of math we can see that each cube serializes down to 225 bits or 28.1 bytes. Since there are 900 cubes in our simulation that means each snapshot is roughly 25 kilobytes. That&rsquo;s pretty big!</p><br><p>At this point I would like everybody to relax, take a deep breath, and imagine we live in a world where I can actually send a packet this large 60 times per-second over the internet and not have everything explode. Imagine I have FIOS <em>(I do)</em>, or I&rsquo;m sitting over a backbone link to another computer that is also on the backbone. Imagine I live in South Korea. Do whatever you need to do to suspend disbelief, but most of all, don&rsquo;t worry, because I&rsquo;m going to spend the entire next article showing you how to optimize snapshot bandwidth.</p><br><p>When we send snapshot data in packets, we include at the top a 16 bit sequence number. This sequence number starts at zero and increases with each packet sent. We use this sequence number on receive to determine if the snapshot in a packet is newer or older than the most recent snapshot received. If it&rsquo;s older then it&rsquo;s thrown away.</p><br><p>Each frame we just render the most recent snapshot received on the right:</p><br><video preload="auto" loop="loop" width="100%" controls="controls"><br><source src="/img/snapshot_interpolation_1.mp4" type="video/mp4"><br></video><br><p>Look closely though, and even though we&rsquo;re sending the data as rapidly as possible (one packet per-frame) you can still see hitches on the right side. This is because the internet makes no guarantee that packets sent 60 times per-second arrive nicely spaced <sup>1</sup>&frasl;<sub>60</sub> of a second apart. Packets are jittered. Some frames you receive two snapshot packets. Other frames you receive none.</p><br><h2 id="jitter-and-hitches">Jitter and Hitches</h2><br><p>This is actually a really common thing when you first start networking. You start out playing your game over LAN and notice you can just slam out packets really fast (60pps) and most of the time your game looks great because over the LAN those packets actually do tend to arrive at the same rate they were sent&hellip; and then you start trying to play your game over wireless or the internet and you start seeing hitches. Don&rsquo;t worry. There are ways to handle this!</p><br><p>First, let&rsquo;s look at how much bandwidth we&rsquo;re sending with this naive approach. Each packet is 25312.5 bytes plus 28 bytes for IP + UDP header and 2 bytes for sequence number. That&rsquo;s 25342.5 bytes per-packet and at 60 packets per-second this gives a total of 1520550 bytes per-second or 11.6 megabit/sec. Now there are certainly internet connections out there that can support that amount of traffic&hellip; but since, let&rsquo;s be honest, we&rsquo;re not really getting a lot of benefit blasting packets out 60 times per-second with all the jitter, let&rsquo;s pull it back a bit and send only 10 snapshots per-second:</p><br><video preload="auto" loop="loop" width="100%" controls="controls"><br><source src="/img/snapshot_interpolation_2.mp4" type="video/mp4"><br></video><br><p>You can see how this looks above. Not so great on the right side but at least we&rsquo;ve reduced bandwidth by a factor of six to around 2 megabit/sec. We&rsquo;re definitely headed in the right direction.</p><br><h3 id="linear-interpolation">Linear Interpolation</h3><br><p>Now for the trick with snapshots. What we do is instead of immediately rendering snapshot data received is that we buffer snapshots for a short amount of time in an interpolation buffer. This interpolation buffer holds on to snapshots for a period of time such that you have not only the snapshot you want to render but also, statistically speaking, you are very likely to have the next snapshot as well. Then as the right side moves forward in time we interpolate between the position and orientation for the two slightly delayed snapshots providing the illusion of smooth movement. In effect, we&rsquo;ve traded a small amount of added latency for smoothness.</p><br><p>You may be surprised at just how good it looks with linear interpolation @ 10pps:</p><br><video preload="auto" loop="loop" width="100%" controls="controls"><br><source src="/img/snapshot_interpolation_3.mp4" type="video/mp4"><br></video><br><p>Look closely though and you can see some artifacts on the right side. The first is a subtle position jitter when the player cube is hovering in the air. This is your brain detecting 1st order discontinuity at the sample points of position interpolation. The other artifact occurs when a bunch of cubes are in a katamari ball, you can see a sort of &ldquo;pulsing&rdquo; as the speed of rotation increases and decreases. This occurs because attached cubes interpolate linearly between two sample points rotating around the player cube, effectively interpolating <em>through</em> the player cube as they take the shortest linear path between two points on a circle.</p><br><h3 id="hermite-interpolation">Hermite Interpolation</h3><br><p>I find these artifacts unacceptable but I don&rsquo;t want to increase the packet send rate to fix them. Let&rsquo;s see what we can do to make it look better at the same send rate instead. One thing we can try is upgrading to a more accurate interpolation scheme for position, one that interpolates between position samples while considering the linear velocity at each sample point.</p><br><p>This can be done with an <a href="https://en.wikipedia.org/wiki/Hermite_interpolation" target="_blank" rel="noopener">hermite spline</a> (pronounced &ldquo;air-mitt&rdquo;)</p><br><p>Unlike other splines with control points that affect the curve indirectly, the hermite spline is guaranteed to pass through the start and end points while matching the start and end velocities. This means that velocity is smooth across sample points and cubes in the katamari ball tend to rotate around the cube rather than interpolate through it at speed.</p><br><video preload="auto" loop="loop" width="100%" controls="controls"><br><source src="/img/snapshot_interpolation_4.mp4" type="video/mp4"><br></video><br><p>Above you can see hermite interpolation for position @ 10pps. Bandwidth has increased slightly because we need to include linear velocity with each cube in the snapshot, but we&rsquo;re able to significantly increase the quality at the same send rate. I can no longer see any artifacts. Go back and compare this with the raw, non-interpolated 10pps version. It really is amazing that we&rsquo;re able to reconstruct the simulation with this level of quality at such a low send rate.</p><br><p>As an aside, I found it was not necessary to perform higher order interpolation for orientation quaternions to get smooth interpolation. This is great because I did a lot of research into exactly interpolating between orientation quaternions with a specified angular velocity at sample points and it seemed difficult. All that was needed to achieve an acceptable result was to switch from linear interpolation + normalize (nlerp) to spherical linear interpolation (slerp) to ensure constant angular speed for orientation interpolation.</p><br><p>I believe this is because cubes in the simulation tend to have mostly constant angular velocity while in the air and large angular velocity changes occur only discontinuously when collisions occur. It could also be because orientation tends to change slowly while in the air vs. position which changes rapidly relative to the number of pixels affected on screen. Either way, it seems that slerp is good enough and that&rsquo;s great because it means we don&rsquo;t need to send angular velocity in the snapshot.</p><br><h3 id="handling-real-world-conditions">Handling Real World Conditions</h3><br><p>Now we have to deal with packet loss. After the discussion of UDP vs. TCP in the previous article I&rsquo;m sure you can see why we would never consider sending snapshots over TCP.</p><br><p>Snapshots are time critical but unlike inputs in deterministic lockstep snapshots don&rsquo;t need to be reliable. If a snapshot is lost we can just skip past it and interpolate towards a more recent snapshot in the interpolation buffer. We don&rsquo;t ever want to stop and wait for a lost snapshot packet to be resent. This is why you should always use UDP for sending snapshots.</p><br><p>I&rsquo;ll let you in on a secret. Not only were the linear and hermite interpolation videos above recorded at a send rate of 10 packets per-second, they were also recorded at 5% packet loss with +/- 2 frames of jitter @ 60fps. How I handled packet loss and jitter for those videos is by simply ensuring that snapshots are held in the interpolation buffer for an appropriate amount of time before interpolation.</p><br><p>My rule of thumb is that the interpolation buffer should have enough delay so that I can lose two packets in a row and still have something to interpolate towards. Experimentally I&rsquo;ve found that the amount of delay that works best at 2-5% packet loss is 3X the packet send rate. At 10 packets per-second this is 300ms. I also need some extra delay to handle jitter, which in my experience is typically only one or two frames @ 60fps, so the interpolation videos above were recorded with a delay of 350ms.</p><br><p>Adding 350 milliseconds delay seems like a lot. And it is. But, if you try to skimp you end up hitching for 1/10th of a second each time a packet is lost. One technique that people often use to hide the delay added by the interpolation buffer in other areas (such as FPS, flight simulator, racing games and so on) is to use extrapolation. But in my experience, extrapolation doesn&rsquo;t work very well for rigid bodies because their motion is non-linear and unpredictable. Here you can see an extrapolation of 200ms, reducing overall delay from 350 ms to just 150ms:</p><br><video preload="auto" loop="loop" width="100%" controls="controls"><br><source src="/img/snapshot_interpolation_5.mp4" type="video/mp4"><br></video><br><p>Problem is it&rsquo;s just not very good. The reason is that the extrapolation doesn&rsquo;t know anything about the physics simulation. Extrapolation doesn&rsquo;t know about collision with the floor so cubes extrapolate down through the floor and then spring back up to correct. Prediction doesn&rsquo;t know about the spring force holding the player cube up in the air so it the cube moves slower initially upwards than it should and has to snap to catch up. It also doesn&rsquo;t know anything about collision and how collision response works, so the cube rolling across the floor and other cubes are also mispredicted. Finally, if you watch the katamari ball you&rsquo;ll see that the extrapolation predicts the attached cubes as continuing to move along their tangent velocity when they should rotate with the player cube.</p><br><h3 id="conclusion">Conclusion</h3><br><p>You could conceivably spend a great deal of time to improve the quality of this extrapolation and make it aware of various movement modes for the cubes. You could take each cube and make sure that at minimum the cube doesn&rsquo;t go through the floor. You could add some approximate collision detection or response using bounding spheres between cubes. You could even take the cubes in the katamari ball and make them predict motion to rotate around with the player cube.</p><br><p>But even if you do all this there will still be misprediction because you simply can&rsquo;t accurately match a physics simulation with an approximation. If your simulation is mostly linear motion, eg. fast moving planes, boats, space ships &ndash; you may find that a simple extrapolation works well for short time periods (50-250ms or so), but in my experience as soon as objects start colliding with other non-stationary objects, extrapolation starts to break down.</p><br><p>How can we reduce the amount of delay added for interpolation? 350ms still seems unacceptable and we can&rsquo;t use extrapolation to reduce this delay without adding a lot of inaccuracy. The solution is simple: <em>increase the send rate!</em> If we send 30 snapshots per-second we can get the same amount of packet loss protection with a delay of 150ms. 60 packets per-second needs only 85ms.</p><br><p>In order to increase the send rate we&rsquo;re going to need some pretty good bandwidth optimizations. But don&rsquo;t worry, there&rsquo;s a <em>lot</em> we can do to optimize bandwidth. So much so that there was too much stuff to fit in this article and I had to insert an extra unplanned article just to cover all of it!</p>
+
+
+<h1 id="译文">译文</h1>
+
+<p><a href="http://gad.qq.com/program/translateview/7164498" target="_blank" rel="noopener">译文出处</a></p>
+<div class="WordSection1"><b><span style="font-weight: normal;font-family:微软雅黑;font-size:medium;">翻译：崔国军（飞扬<span style="color: rgb(34, 34, 34);">971</span><span style="color: rgb(34, 34, 34);">）    审校：张乾光</span><span style="color: rgb(34, 34, 34);">(</span><span style="color: rgb(34, 34, 34);">星际迷航</span><span style="color: rgb(34, 34, 34);">)</span></span></b><div><span style="font-weight: normal;font-family:微软雅黑;font-size:medium;"><span style="color: rgb(34, 34, 34);"><br></span></span></div><p class="MsoNormal" align="left"><br></p><h2 id="介绍">介绍</h2><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">大家好，我是格伦·菲德勒。欢迎阅读《网络物理模拟》的系列文章，这个系列文章的主题是关于如何将一个物理模拟通过网络通信进行同步。</span><p></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">在之前的文章中，我们通过具有确定性的帧同步将</span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">物理模拟通过网络通信进行同步。在这一篇文章中我们将使用一种完全不同的技术来</span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">将</span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">物理模拟通过网络通信进行同步，这个技术就是：快照信息插值方法。</span></p><p class="MsoNormal" align="left"><br></p><h2 id="背景">背景</h2><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">为什么需要一种不同的技术？这是因为虽然具有确定性的帧同步这种同步策略在节省带宽方面非常有效，但是要保证你的仿真具有完美的确定性这个事情并不总是可行的，有些时候是不实际的。此外，具有确定性的帧同步这种同步策略在玩家数目增多的情况下会遇到一些问题，因为你要收到所有玩家对应帧的输入才能对这一帧进行模拟。在实践中，这意味着每个人必须等待最滞后的那个玩家。以我的经验来说，我建议在联网环境下只在<span>2</span>到<span>4</span>个玩家的时候使用具有确定性的帧同步这种同步策略。（译者注：其实国内现在已经有<span>20</span>个玩家在互联网环境下使用具有确定性的帧同步这种同步策略的游戏了，就算<span>dota</span>也是支持<span>5v5</span>对战的，原作者太过于谨慎了）。</span><p></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333"><br></span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">如果你想要支持更多数目的玩家或者你的模拟并不具有完美的确定性，那么你就需要一种不同的技术了。快照信息插值技术在许多方面都站在具有确定性的帧同步技术的对立面。它不再需要在网络的两侧同时运行仿真，使用程序的确定性以及同步输入信息来保证网络的两侧的仿真始终保持同步。。。快照信息插值技术根本不需要在接收侧运行任何的模拟！</span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333"><br></span></p><p class="MsoNormal" align="left"><br></p><h2 id="快照">快照</h2><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">我们所要做的就是每帧从网络的发送侧捕获所有相关状态的快照，并将其传输到网络的接收侧，在那里我们将试图重建一个视觉上近似合理的模拟。</span><p></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">作为第一步，让我们把所需的状态直接发送给网络的接收侧，让它可以渲染每一个立方体：<br><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">CubeState</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">bool</span> interacting;</span><br><span class="line">    vec3f position;</span><br><span class="line">    quat4f orientation;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br><br>需要注意的是，我们发送了一个布尔值用来标记这个立方体是否与玩家存在交互。为什么需要这个布尔值？这是因为在网络的接收侧并没有运行一个模拟，因此并不会有碰撞检测来告诉我们什么时候一个立方体应该被标红而什么时候不需要对一个立方体进行标红。如果我们想要一个立方体在它与玩家存在互动的情况下变红的话，我们需要在快照中包含此信息。</span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">我敢肯定这时候你已经明白这项技术的消耗在于增大了带宽的使用。其实是大大增大了对带宽的占用。这是因为快照包含了整个仿真的状态。通过一点数学计算我们可以看到每个立方体序列化下来的话大概占据<span>225</span>比特或者<span>28.1</span>字节。因为在我们的仿真中有大概<span>900</span>个立方体，这意味着每个快照大约需要<span>25k</span>的字节。这个数据量相当大了！</span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">在这一点上，我想每个人都放松、深呼吸，想象我们生活在一个世界里，在这个世界里面我可以在互联网上以<span>60</span>次每秒的速度来实际发送数据包，而不会有什么意外。想象一下我有光纤服务光纤服务或者我坐在骨干网的后面，与另外一台位于骨干网的电脑相连。。想象一下，我使用<span>IPv6</span>，而最大传输单元的大小是<span>100k</span>。可以想象一下，我住在韩国。做你任意想做的，不要有任何的怀疑，而且最重要的是，不用担心网络有任何的问题，这是因为我将在下一篇文章中向你展示如何快速优化快照信息插值这种方法带来的带宽负担。</span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">当我们用数据包的方式发送快照的时候，我们会在数据包的头部包括<span>16</span>位的序列号。这个序列号会从零开始并且随着每个快照的发送而增大。我们在接收的时候使用这个序列号来决定数据包中的快照到底比我们最近收到的快照更新还是更旧。如果比我们最近收到的快照更旧的话，我们就会丢弃这个快照。然后，在网络的接收侧我们只会渲染我们接收到的最新的快照上的信息。</span></p><p class="MsoNormal" align="left"><br><br><video preload="auto" loop="loop" width="100%" controls="controls"><br><source src="/img/snapshot_interpolation_1.mp4" type="video/mp4"><br></video><br><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333"><br></span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">请注意，即使我们尽一切可能的快速发送数据（一帧一个数据包），我们仍然会在网络的接收侧看到物体发生抖动现象。这是因为在互联网上根本就不会保证数据包会按照六十分之一秒的间隔到达网络的另外一侧。数据包的到达时间会发生抖动。在某些帧你会收到两个帧的快照，而在另外一些帧则会根本收不到。</span></p><p class="MsoNormal" align="left"><br></p><h2 id="抖动与拉扯">抖动与拉扯</h2><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">这实际上是当你第一次启动网络一个非常常见的事情。你开始通过局域网来玩你的游戏并注意到你可以以一个非常高的速度来发送数据包并且你的游戏会看上表现的非常非常不错，这是因为你的数据包几乎在发送的同时就会到达网络的接收侧。。。然后你开始尝试通过无线网络或者互联网来玩你的游戏，然后你就看到各种各样的抖动。不用担心，有办法来处理这个问题！</span><p></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">首先，让我们看看使用这种幼稚的方法进行发送数据包，我们会占据多少的带宽。每个数据包是<span>25312.5</span>字节加上<span>IP </span>和<span>UDP</span>包头所占的<span>28</span>个字节并且还要有<span>2</span>个字节用来表示网络包的序号。这就是一个数据包的大小：<span>25342.5</span>字节，每秒<span>60</span>个数据包的话就一共要<span>1520550</span>字节，或者换算下就是<span>11.6M</span>每秒。现在当然也有互联网连接可以支持这种规模的流量。。。但是既然我们每秒发送<span>60</span>个数据包也没有什么太大的益处，还是充满了这种抖动，让我们稍微稳妥一点，只要每秒发送<span>10</span>次快照就可以了。</span></p><p class="MsoNormal" align="left"><br><br><video preload="auto" loop="loop" width="100%" controls="controls"><br><source src="/img/snapshot_interpolation_2.mp4" type="video/mp4"><br></video><br><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333"><br></span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">你可以通过上面的效果看到修改以后的表现效果如何。这对网络的接收侧并没有什么太大的影响，起码我们将带宽减少到了六分之一，大概是<span>2M</span>每秒。我们正在朝着正确的方向继续前进。</span></p><p class="MsoNormal" align="left"><br></p><h3 id="线性插值">线性插值</h3><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">现在是关于处理快照的一些技巧。我们所做的不是在我们接收到快照数据立刻开始进行渲染，而是利用插值缓冲区缓冲了快照数据一小段时间。这个插值缓冲区会持有快照数据一段时间，这样你不仅会持有你准备渲染的这一帧的快照数据，而且从统计数字上看，你很有可能会持有下一帧你需要的快照数据。然后随着网络的接收侧在时间上向前移动，我们会对这两帧轻微延迟的快照数据进行物体位置和方向的插值，提供平滑运动的错觉。实际上，我们通过增加了一小段延迟来交换物体的平滑运动。</span><p></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">你可以会很吃惊，通过每秒<span>10</span>帧的快照数据以及一个简单的线性插值，就可以得到表现如此只好的一个表现：</span></p><p class="MsoNormal" align="left"><br><br><video preload="auto" loop="loop" width="100%" controls="controls"><br><source src="/img/snapshot_interpolation_3.mp4" type="video/mp4"><br></video><br><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333"><br></span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">但是如果你仔细观察的话，你还是可以看到在网络的接收侧里面存在大量的瑕疵。首先是当玩家立方体在空中盘旋的时候，玩家立方体的位置有一个轻微的抖动。这是因为你的大脑在位置插值的采样点那里检测到了<span>1</span>秒左右的中断。另外一个瑕疵出现在一大推立方体出于<span>katamari</span>球之中的时候，你可以看到某种“脉冲<span>“</span>的存在，立方体旋转的速度会出现升高或者降低的情况。这种情况的出现是是因为附加的这些立方体会在围绕玩家立方体的周围旋转的时候在两个采样点之间进行线性的插值，通过玩家立方体进行插值是有效的，这是因为这样两点之间就是最短线性距离。</span></p><p class="MsoNormal" align="left"><br></p><h3 id="Hermite插值">Hermite插值</h3><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">我发现这些瑕疵是不能接受的，但是不希望增加数据包的发送速率来解决这些问题。让我们看看我们能做些什么，让数据包的发送速率不变的情况让整个效果能够看起来更棒。我们可以尝试升级的一个事情是对于位置的一种更加精确的插值方案：这种方案在位置采样点之间进行插值的同时还要考虑每个采样点的线性速度。</span><p></p><p style="margin: 6pt 0cm; line-height: 16.8pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333"><span style="font-size:medium;">可以用于执行这种插值的一种曲线是厄米特曲线。这种曲线和其他需要控制点间接的影响曲线不同，厄米特曲线保证一定会通过起点和终点的同时还能匹配起点和终点的速度。这意味着立方体在通过采样点的速度是平滑的，而且<span>katamari</span>球中的立方体会倾向于围绕立方体旋转，而不是通过它的速度进行插值。</span></span></p><p style="margin: 6pt 0cm; line-height: 16.8pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><br><br><video preload="auto" loop="loop" width="100%" controls="controls"><br><source src="/img/snapshot_interpolation_4.mp4" type="video/mp4"><br></video><br><br><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333"><span style="font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">上面你所看到的效果是通过每秒<span>10</span>次的快照数据进行的厄米特曲线插值。我们的带宽略有增加，但我们能够在显著提高质量的同时保证数据包的发送速率不变。我再也看不到任何的瑕疵。让我们重新回到厄米特曲线插值之前的效果进行下对比。我们能够在如此低的数据包发送速率下重建出来如此质量水平的模拟，这真的是令人惊讶的改变。</span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">顺便说一句，我发现没有必要对方向四元数进行更高阶的插值来得到平滑的插值。因为我做了很多的研究关于对方向四元数使用一个特定的线性速度进行准确的插值，然后我发现这其实非常的困难。为了达到一个可以接收的效果我们所有要做的事情就是从线性插值加归一化（<span>nlerp</span>函数）到球面线性插值插值（<span>slerp</span>函数）来确保方向四元数的插值得到一个固定的角速度。我相信这是因为在仿真中空中的立方体试图保持大体固定的角速度，而在发生碰撞的时候，比较高的角速度会突然变得不连续。它也可能是因为在空中的时候方向趋于变化缓慢而位置会会相对与屏幕上受影响的像素的数目而快速的变化。无论哪种方式，似乎球面插值都表现的不错，这就是很棒的方法因为这意味着我们并不需要在快照数据中发送角速度。</span></p><p class="MsoNormal" align="left"><br></p><h3 id="处理真实世界的情况">处理真实世界的情况</h3><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">现在，我们必须处理的数据包丢失的问题了。在上一篇文章讨论完了<span>UDP</span>和<span>TCP</span>的优劣之后，我敢肯定你可以知道了为什么我们从来不考虑通过<span>TCP</span>来发送我们的快照数据。快照数据是时间敏感的，但是和有确定性的帧同步中的输入信息不一样，这个数据没有必要是可靠的。如果一个快照数据丢失了，我们可以跳过这一帧，并使用一个缓冲区中更新的快照数据进行插值。们再也不想停下来，等待丢失的快照数据包的重发。这就是为什么你总是应该使用<span>UDP</span>发送快照数据的原因。</span><p></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">我要告诉你一个秘密。上面这两个视频不仅仅是在每秒<span>10</span>个数据包的发送频率下用线性插值或厄米特插值的效果，它们也记录了在有<span>2</span>帧抖动、<span>5%</span>丢包率下的效果。我该如何处理丢包和抖动？我的做法是确保快照数据会被保存在插值缓冲区，这样在插值之前会缓冲一段合适的时间。</span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">我的经验法则是，插值缓冲区应该有足够的延迟，这样就算我连续丢失了两个数据包，我仍然有快照数据可以进行插值。在实验中我发现在有<span>2-5%</span>的数据包丢包率的情况下，延迟量大概是数据包发送速度的<span>3</span>倍左右比较合适。如果是每秒发送<span>10</span>个数据包的情况，这个延迟量就是大概<span>300</span>毫秒。我还需要一些额外的延迟来处理抖动的情况，以我的经验来说，如果是在<span>60fps</span>的条件下，大概预留一到两帧就可以了，所以上面的插值效果的视频使用了一个大概<span>350</span>毫秒的延迟。</span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">添加<span>350</span>毫秒的延迟，似乎带来了很大的延迟。但是如果因为觉得不舍得而不在这里使用<span>350</span>毫秒的延迟的话，要么就得到一个充满拉扯的效果，要么就会遇到每秒有十分之一的数据包丢失。人们在其他领域（比如说第一人称设计游戏、飞行模拟游戏、赛车游戏以及其他的游戏）经常使用的用于隐藏由于插值缓冲区带来的延迟的方法是使用预测方法。以我的经验来看，预测方法对于缸体来说效果似乎不太好，这是因为它们的运动不是线性的并且无法预测。在这里，你可以看到使用了<span>200</span>毫秒的预测方法理论上可以将延迟从<span>350</span>毫秒减少到<span>150</span>毫秒：</span></p><p class="MsoNormal" align="left"><br><br><video preload="auto" loop="loop" width="100%" controls="controls"><br><source src="/img/snapshot_interpolation_5.mp4" type="video/mp4"><br></video><br><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333"><br></span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">问题是，它工作起来效果似乎不是太好。当然这个原因在于预测方法根本不知道任何有关物理模拟方面的内容。预测方法不知道立方体需要与地面发生碰撞，立方体在向下遇到地板的时候会反弹回来，当然这是正确的表现。预测方法不知道有关施加在空中的玩家立方体上的反弹力，因此立方体起初会比实际的情况下移动的慢一些，然后开始加速追上自己应该在的位置。预测方法也不知道任何有关碰撞方面的内容以及如果发生碰撞了该发生何种反应，所以如果立方体在地板上或者其他立方体上滚过的时候就会发生预测上的错误。最后，如果你仔细观察<span>katamari</span>球的话，你会看到预测方法会让附着于其上的立方体继续沿着它们的切线速度运动，而这个时候它们应该跟玩家立方体一起转动。</span></p><p class="MsoNormal" align="left"><br></p><h3 id="结论">结论</h3><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">现在，你可以持续的花费大量的时间来改善推测的质量，并通过认识立方体的各种运动模式来持续提高。你可以对每个立方体进行推断，并确保最低程度是立方体不会穿越地面。你还可以添加碰撞检测的一些推断并且利用立方体的球型包围盒做出响应。你甚至可以选取<span>katamari</span>球体里面的立方体并预测当它们在玩家立方体周围的时候会如何运动。</span><p></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">但是，即使你做了所有的这一切，仍然会有预测失误，因为你根本无法精确匹配物理模拟与近似估计之间的差距。如果你的仿真中大多数是直线运动，比如说，快速移动的飞机、轮船、太空飞船等等<span>-</span>你会发现一个简单的外推法非常适用于短时间内（<span>50-250ms</span>左右）的这种运动。以我的经验来看，只要物体开始与非静止的物体开始发生碰撞，这种预测就将完全的不成立。</span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">我们怎样才能减少由于插值带来的延迟？<span>350</span>毫秒似乎仍然是不能接受的延迟，我们不能使用预测和外推来减少这种延迟，因为这样增加了大量的不确定性。解决的办法其实很简单：增加发送速率。如果我们每秒发送<span>30</span>次快照的话，我们可以在相同的数据包丢失率情况将延迟降低到<span>150ms</span>。如果我们把发送速率增大到每秒<span>60</span>个数据包的程度，延迟将只有<span>85ms</span>。</span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">为了提高发送速度，我们会需要进行一些不错的带宽优化。不过不用担心，我们可以做很多很多的事情来优化带宽。但是我们如果把这些东西都放到这篇文章的话，这篇文章就会有太多太多的东西，我不得不插入一个计划之外的文章来涵盖带宽优化方面的东西！</span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"></span></p><p class="MsoNormal" align="left"><br></p><p class="MsoNormal" align="left" style="line-height: 18pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">【版权声明】</span></p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">原文作者未做权利声明，视为共享知识产权进入公共领域，自动获得授权。</span></p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"> </span></p></div>                    <br>                
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/GafferOnGames/" rel="tag"><i class="fa fa-tag"></i> GafferOnGames</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2017/01/22/deterministic_lockstep/" rel="next" title="网络物理模拟三之具有确定性的帧同步">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    网络物理模拟三之具有确定性的帧同步
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2017/01/24/snapshot_compression/" rel="prev" title="网络物理模拟五之快照压缩">
+                <p class="post-nav-pre-next-title">
+                    网络物理模拟五之快照压缩
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自我总结"><span class="nav-number">1.</span> <span class="nav-text">自我总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原文"><span class="nav-number">2.</span> <span class="nav-text">原文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">2.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#background"><span class="nav-number">2.2.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#snapshots"><span class="nav-number">2.3.</span> <span class="nav-text">Snapshots</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jitter-and-hitches"><span class="nav-number">2.4.</span> <span class="nav-text">Jitter and Hitches</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linear-interpolation"><span class="nav-number">2.4.1.</span> <span class="nav-text">Linear Interpolation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hermite-interpolation"><span class="nav-number">2.4.2.</span> <span class="nav-text">Hermite Interpolation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#handling-real-world-conditions"><span class="nav-number">2.4.3.</span> <span class="nav-text">Handling Real World Conditions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#conclusion"><span class="nav-number">2.4.4.</span> <span class="nav-text">Conclusion</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#译文"><span class="nav-number">3.</span> <span class="nav-text">译文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">3.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">3.2.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快照"><span class="nav-number">3.3.</span> <span class="nav-text">快照</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抖动与拉扯"><span class="nav-number">3.4.</span> <span class="nav-text">抖动与拉扯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性插值"><span class="nav-number">3.4.1.</span> <span class="nav-text">线性插值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hermite插值"><span class="nav-number">3.4.2.</span> <span class="nav-text">Hermite插值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理真实世界的情况"><span class="nav-number">3.4.3.</span> <span class="nav-text">处理真实世界的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">3.4.4.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

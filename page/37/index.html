@@ -1,0 +1,2124 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="烫">
+<meta property="og:url" content="https://hulinhong.com/page/37/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="烫">
+<meta name="twitter:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>烫 - 烫烫烫烫烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/05/20/关系型数据库与NoSQL的爱恨情仇/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/05/20/关系型数据库与NoSQL的爱恨情仇/" itemprop="url">关系型数据库与NoSQL的爱恨情仇</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-05-20T13:18:17+00:00">
+                2015-05-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DB/" itemprop="url" rel="index">
+                    <span itemprop="name">DB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="NoSQL因关系数据库的不足而生"><a href="#NoSQL因关系数据库的不足而生" class="headerlink" title="NoSQL因关系数据库的不足而生"></a>NoSQL因关系数据库的不足而生</h1><p>随着互联网的不断发展，各种类型的应用层出不穷，所以导致在这个云计算的时代，</p>
+<p>对技术提出了更多的需求，主要体现在下面这四个方面：</p>
+<ul>
+<li>低延迟的读写速度：应用快速地反应能极大地提升用户的满意度; </li>
+<li>支撑海量的数据和流量：对于搜索这样大型应用而言，需要利用PB级别的数据和能应对百万级的流量; </li>
+<li>大规模集群的管理：系统管理员希望分布式应用能更简单的部署和管理;</li>
+</ul>
+<p>庞大运营成本的考量：IT经理们希望在硬件成本、软件成本和人力成本能够有大幅度地降低;</p>
+<p>目前世界上主流的存储系统大部分还是采用了关系型数据库，其主要有一下优点：</p>
+<ul>
+<li>事务处理—保持数据的一致性；</li>
+<li>由于以标准化为前提，数据更新的开销很小（相同的字段基本上只有一处）；</li>
+<li>可以进行Join等复杂查询。</li>
+</ul>
+<p>虽然关系型数据库已经在业界的数据存储方面占据不可动摇的地位，但是由于其天生的几个限制，</p>
+<p>使其很难满足上面这几个需求： </p>
+<ul>
+<li>扩展困难：由于存在类似Join这样多表查询机制，使得数据库在扩展方面很艰难; </li>
+<li>读写慢：这种情况主要发生在数据量达到一定规模时由于关系型数据库的系统逻辑非常复杂，使得其非常容易发生死锁等的并发问题，所以导致其读写速度下滑非常严重; </li>
+<li>成本高：企业级数据库的License价格很惊人，并且随着系统的规模，而不断上升; </li>
+<li>有限的支撑容量：现有关系型解决方案还无法支撑Google这样海量的数据存储; </li>
+</ul>
+<blockquote>
+<p>业界为了解决上面提到的几个需求，推出了多款新类型的数据库，并且由于它们在设计上和传统的NoSQL数据库相比有很大的不同，<br>所以被统称为“NoSQL”系列数据库。</p>
+</blockquote>
+<p>总的来说，在设计上，它们非常关注对数据高并发地读写和对海量数据的存储等，与关系型数据库相比，它们在架构和数据模型方量面做了“减法”，</p>
+<p>而在扩展和并发等方面做了“加法”。</p>
+<blockquote>
+<p>现在主流的NoSQL数据库有<strong>MongoDB</strong>和<strong>Redis</strong>以及BigTable、Hbase、Cassandra、SimpleDB、CouchDB、等。</p>
+</blockquote>
+<p>接下来，将关注NoSQL数据库到底存在哪些优缺点。</p>
+<h1 id="NoSQL的优缺点"><a href="#NoSQL的优缺点" class="headerlink" title="NoSQL的优缺点"></a>NoSQL的优缺点</h1><p>在优势方面，主要体现在下面这三点： </p>
+<ul>
+<li>简单的扩展：典型例子是Cassandra，由于其架构是类似于经典的P2P，所以能通过轻松地添加新的节点来扩展这个集群; </li>
+<li>快速的读写：主要例子有redis，由于其逻辑简单，而且纯内存操作，使得其性能非常出色，单节点每秒可以处理超过10万次读写操作; </li>
+<li>低廉的成本：这是大多数分布式数据库共有的特点，因为主要都是开源软件，没有昂贵的License成本; </li>
+</ul>
+<p>但瑕不掩瑜，NoSQL数据库还存在着很多的不足，常见主要有下面这几个： </p>
+<ul>
+<li>不提供对SQL的支持：如果不支持SQL这样的工业标准，将会对用户产生一定的学习和应用迁移成本; </li>
+<li>支持的特性不够丰富：现有产品所提供的功能都比较有限，大多数NoSQL数据库都不支持事务，也不像MS SQL Server和Oracle那样能提供各种附加功能，比如BI和报表等; </li>
+<li>现有产品的不够成熟：大多数产品都还处于初创期，和关系型数据库几十年的完善不可同日而语; </li>
+</ul>
+<p>上面NoSQL产品的优缺点都是些比较共通的，在实际情况下，每个产品都会根据自己所遵从的数据模型和CAP理念而有所不同.</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/05/07/编译过程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/05/07/编译过程/" itemprop="url">编译过程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-05-07T17:24:19+00:00">
+                2015-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>通常我们使用gcc来生成可执行程序，命令为：gcc hello.c，默认生成可执行文件a.out</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>其实编译（包括链接）的命令：gcc hello.c 可分解为如下4个大的步骤：</p><br><ul><br><ul><br><li><strong>预处理</strong>(Preprocessing)</li><li><strong>编译</strong>(Compilation)</li><li><strong>汇编</strong>(Assembly)</li><li><strong>链接</strong>(Linking)</li></ul><br></ul><br><br><br><img src="http://smilejay.com/wp-content/uploads/2012/01/gcc_compilation_stages.jpg" alt="gcc_compilation"><br><br><br><h1 id="预处理">预处理</h1><br><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br><strong>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 预处理(Preproceessing)</strong></p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br><strong>预处理的过程主要处理包括以下过程：</strong></p><br><ul><br><li>将所有的#define删除，并且<strong>展开所有的宏定义</strong></li><li><strong>处理</strong>所有的<strong>条件预编译指令</strong>，比如#if #ifdef #elif #else #endif等</li><li><strong>处理#include</strong><span>&nbsp;</span>预编译指令，将被包含的文件插入到该预编译指令的位置。</li><li><strong>删除所有注释<span>&nbsp;</span></strong>“//”和”/<em> </em>/”.</li><li><strong>添加行号和文件标识</strong>，以便编译时产生调试用的行号及编译错误警告行号。</li><li>保留所有的<strong>#pragma编译器指令</strong>，因为编译器需要使用它们</li></ul><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>&nbsp;</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>通常使用以下命令来进行预处理：</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>gcc -E hello.c -o hello.i</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>参数<strong>-E</strong>表示只进行预处理 或者也可以使用以下指令完成预处理过程</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>cpp hello.c &gt; hello.i &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/<em> &nbsp;cpp – The C Preprocessor&nbsp; </em>/</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>直接cat hello.i 你就可以看到预处理后的代码</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>&nbsp;</p>
+
+
+<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br><strong>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 编译(Compilation)</strong></p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>编译过程就是把预处理完的文件进行一系列的词法分析，语法分析，语义分析及优化后生成相应的汇编代码。</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>$gcc –S hello.i –o hello.s</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>或者</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>$ /usr/lib/gcc/i486-linux-gnu/4.4/cc1 hello.c</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>注：现在版本的GCC把预处理和编译两个步骤合成一个步骤，用cc1工具来完成。gcc其实是后台程序的一些包装，根据不同参数去调用其他的实际处理程序，比如：预编译编译程序cc1、汇编器as、连接器ld</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>可以看到编译后的汇编代码(hello.s)如下：</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> .file   &quot;hello.c&quot;</span><br><span class="line">    .section    .rodata</span><br><span class="line">.LC0:</span><br><span class="line">    .string &quot;Hello, world.&quot;</span><br><span class="line">    .text</span><br><span class="line">.globl main</span><br><span class="line">    .type   main, @function</span><br><span class="line">main:</span><br><span class="line">    pushl   %ebp</span><br><span class="line">    movl    %esp, %ebp</span><br><span class="line">    andl    $-16, %esp</span><br><span class="line">    subl    $16, %esp</span><br><span class="line">    movl    $.LC0, (%esp)</span><br><span class="line">    call    puts</span><br><span class="line">    movl    $0, %eax</span><br><span class="line">    leave</span><br><span class="line">    ret</span><br><span class="line">    .size   main, .-main</span><br><span class="line">    .ident  &quot;GCC: (Ubuntu 4.4.3-4ubuntu5) 4.4.3&quot;</span><br><span class="line">    .section    .note.GNU-stack,&quot;&quot;,@progbits</span><br></pre></td></tr></table></figure>
+<p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>&nbsp;</p>
+
+<h1 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h1><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br><strong>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 汇编(Assembly)</strong></p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>汇编器是将汇编代码转变成机器可以执行的命令，每一个汇编语句几乎都对应一条机器指令。汇编相对于编译过程比较简单，根据汇编指令和机器指令的对照表一一翻译即可。</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>$ gcc –c hello.c –o hello.o</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>或者</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>$ as hello.s –o hello.co</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>由于hello.o的内容为机器码，不能以普通文本形式的查看（vi 打开看到的是乱码）。</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>&nbsp;</p>
+
+<h1 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h1><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><strong>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 链接(Linking)</strong></p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>通过调用链接器ld来链接程序运行需要的一大堆目标文件，以及所依赖的其它库文件，最后生成可执行文件。</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>ld -static crt1.o crti.o crtbeginT.o hello.o -start-group -lgcc -lgcc_eh -lc-end-group crtend.o crtn.o (省略了文件的路径名)。</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>&nbsp;</p>
+
+<h1 id="编译器和链接器具体做了什么"><a href="#编译器和链接器具体做了什么" class="headerlink" title="编译器和链接器具体做了什么"></a>编译器和链接器具体做了什么</h1><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>helloworld的大体编译和链接过程就是这样了，那么编译器和链接器到底做了什么呢？</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>&nbsp;</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br><strong>编译过程可分为6步：</strong></p>
+
+<ul>
+<li>词法分析：扫描器（Scanner）将源代的字符序列分割成一系列的记号（Token）。lex工具可实现词法扫描。</li>
+<li>语法分析：语法分析器将记号（Token）产生语法树（Syntax Tree）。yacc工具可实现语法分析(yacc: Yet Another Compiler Compiler)。</li>
+<li>语义分析：静态语义（在编译器可以确定的语义）、动态语义（只能在运行期才能确定的语义）。</li>
+<li>源代码优化：源代码优化器(Source Code Optimizer)，将整个语法书转化为中间代码（Intermediate Code）（中间代码是与目标机器和运行环境无关的）。中间代码使得编译器被分为前端和后端。编译器前端负责产生机器无关的中间代码；编译器后端将中间代码转化为目标机器代码。</li>
+<li>目标代码生成：代码生成器(Code Generator).</li>
+<li>目标代码优化：目标代码优化器(Target Code Optimizer)。</li>
+</ul>
+<p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>&nbsp;</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>链接的主要内容是把各个模块之间相互引用的部分处理好，使得各个模块之间能够正确地衔接。</p><br><p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>链接的主要过程包括：地址和空间分配（Address and Storage Allocation），符号决议（Symbol Resolution），重定位（Relocation）等。</p>
+
+<h1 id="链接分为静态链接和动态链接"><a href="#链接分为静态链接和动态链接" class="headerlink" title="链接分为静态链接和动态链接"></a>链接分为静态链接和动态链接</h1><ol>
+<li><p>静态链接是指在编译阶段直接把静态库加入到可执行文件中去，这样可执行文件会比较大。</p>
+</li>
+<li><p>动态链接则是指链接阶段仅仅只加入一些描述信息，而程序执行时再从系统中把相应动态库加载到内存中去。</p>
+</li>
+</ol>
+<p style="padding-bottom:0px; margin:0px; padding-left:0px; padding-right:0px; padding-top:0px"><br>静态链接的大致过程如下图所示：</p>
+
+<p><img src="http://smilejay.com/wp-content/uploads/2012/01/linking.jpg" alt="static_linking"></p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/05/02/valgrind_tutorial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/05/02/valgrind_tutorial/" itemprop="url">关于Valgrind所报的4种内存丢失</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-05-02T17:56:12+00:00">
+                2015-05-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Misc/" itemprop="url" rel="index">
+                    <span itemprop="name">Misc</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="官方解释及分析"><a href="#官方解释及分析" class="headerlink" title="官方解释及分析"></a>官方解释及分析</h1><p>摘自<a href="http://valgrind.org/docs/manual/faq.html#faq.deflost" target="_blank" rel="noopener">http://valgrind.org/docs/manual/faq.html#faq.deflost</a></p>
+<p><strong>5.2.With Memcheck’s memory leak detector, what’s the difference between “definitely lost”, “indirectly lost”, “possibly lost”, “still reachable”, and “suppressed”?
+</strong></p>
+<p>The details are in the Memcheck section of the user manual.<br>In short:</p>
+<ul>
+<li><p>“definitely lost” means your program is leaking memory – fix those leaks!</p>
+</li>
+<li><p>“indirectly lost” means your program is leaking memory in a pointer-based structure. (E.g. if the root node of a binary tree is “definitely lost”, all the children will be “indirectly lost”.) If you fix the “definitely lost” leaks, the “indirectly lost” leaks should go away.</p>
+</li>
+<li><p>“possibly lost” means your program is leaking memory, unless you’re doing unusual things with pointers that could cause them to point into the middle of an allocated block; see the user manual for some possible causes. Use –show-possibly-lost=no if you don’t want to see these reports.</p>
+</li>
+<li><p>“still reachable” means your program is probably ok – it didn’t free some memory it could have. This is quite common and often reasonable. Don’t use –show-reachable=yes if you don’t want to see these reports.</p>
+</li>
+<li><p>“suppressed” means that a leak error has been suppressed. There are some suppressions in the default suppression files. You can ignore suppressed errors.</p>
+</li>
+</ul>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><ul>
+<li><p>“definitely lost”：确认丢失。程序中存在内存泄露，应尽快修复。当程序结束时如果一块动态分配的内存没有被释放且通过程序内的指针变量均无法访问这块内存则会报这个错误。</p>
+</li>
+<li><p>“indirectly lost”：间接丢失。当使用了含有指针成员的类或结构时可能会报这个错误。这类错误无需直接修复，他们总是与”definitely lost”一起出现，只要修复”definitely lost”即可。例子可参考我的例程。</p>
+</li>
+<li><p>“possibly lost”：可能丢失。大多数情况下应视为与”definitely lost”一样需要尽快修复，除非你的程序让一个指针指向一块动态分配的内存（但不是这块内存起始地址），然后通过运算得到这块内存起始地址，再释放它。例子可参考我的例程。当程序结束时如果一块动态分配的内存没有被释放且通过程序内的指针变量均无法访问这块内存的起始地址，但可以访问其中的某一部分数据，则会报这个错误。</p>
+</li>
+<li><p>“still reachable”：可以访问，未丢失但也未释放。如果程序是正常结束的，那么它可能不会造成程序崩溃，但长时间运行有可能耗尽系统资源，因此笔者建议修复它。如果程序是崩溃（如访问非法的地址而崩溃）而非正常结束的，则应当暂时忽略它，先修复导致程序崩溃的错误，然后重新检测。</p>
+</li>
+<li><p>“suppressed”：已被解决。出现了内存泄露但系统自动处理了。可以无视这类错误。这类错误我没能用例程触发，看官方的解释也不太清楚是操作系统处理的还是valgrind，也没有遇到过。所以无视他吧~</p>
+</li>
+</ul>
+<h1 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> *g_p1;</span><br><span class="line"><span class="keyword">int</span> *g_p2;</span><br><span class="line"><span class="function"><span class="keyword">int</span> ** <span class="title">fun1</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//付给了局部变量, 函数结束而不释放,为肯定丢失.</span></span><br><span class="line">    <span class="comment">//把函数尾部语句return p; 改为return 0;更能说明这个问题.</span></span><br><span class="line">    <span class="keyword">int</span> **p=(<span class="keyword">int</span> **)<span class="built_in">malloc</span>(<span class="number">16</span>); </span><br><span class="line">    g_p1=<span class="built_in">malloc</span>(<span class="number">20</span>);  <span class="comment">//付给了全局变量, 内存可以访问</span></span><br><span class="line">    g_p2=(<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="number">30</span>);</span><br><span class="line">    g_p2++;            <span class="comment">//付给了全局变量, 内存可以访问,但是指针被移动过,为可能丢失</span></span><br><span class="line">    p[<span class="number">1</span>]=(<span class="keyword">int</span> *)<span class="built_in">malloc</span>(<span class="number">40</span>); <span class="comment">//如果p丢失了,则p[1]为间接丢失.</span></span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> **p=fun1();</span><br><span class="line"><span class="comment">//  free(g_p1);  //如果不free, 将会有 still reachable 内存泄露</span></span><br><span class="line"><span class="comment">//  free(--g_p2);//如果不free, 将会有 possibly lost 内存泄露</span></span><br><span class="line"><span class="comment">//  free(p[1]);  //如果不free, 将会有 indirectly lost 内存泄露</span></span><br><span class="line"><span class="comment">//  free(p);     //如果不free, 将会有 definitely lost内存泄露</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行编译命令<code>g++ val_test.cpp -o v</code>, 然后</p>
+<p>当执行<code>valgrind ./v</code> 命令之后的<strong>简易</strong>内存错误报告 :</p>
+<pre><code>==4765== Memcheck, a memory error detector
+==4765== Copyright (C) 2002-2013, and GNU GPL&apos;d, by Julian Seward et al.
+==4765== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==4765== Command: ./v
+==4765== 
+==4765== 
+==4765== HEAP SUMMARY:
+==4765==     in use at exit: 106 bytes in 4 blocks
+==4765==   total heap usage: 4 allocs, 0 frees, 106 bytes allocated
+==4765== 
+==4765== LEAK SUMMARY:
+==4765==    definitely lost: 16 bytes in 1 blocks
+==4765==    indirectly lost: 40 bytes in 1 blocks
+==4765==      possibly lost: 30 bytes in 1 blocks
+==4765==    still reachable: 20 bytes in 1 blocks
+==4765==         suppressed: 0 bytes in 0 blocks
+==4765== Rerun with --leak-check=full to see details of leaked memory
+==4765== 
+==4765== For counts of detected and suppressed errors, rerun with: -v
+==4765== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+b@b-VirtualBox:~/tc/valgrind_test$ valgrind --leak-check=full
+valgrind: no program specified
+valgrind: Use --help for more information.
+</code></pre><p>当执行<code>valgrind --leak-check=full ./v</code> 命令之后的<strong>详细</strong>内存错误报告 :</p>
+<pre><code>==4767== Memcheck, a memory error detector
+==4767== Copyright (C) 2002-2013, and GNU GPL&apos;d, by Julian Seward et al.
+==4767== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==4767== Command: ./v
+==4767== 
+==4767== 
+==4767== HEAP SUMMARY:
+==4767==     in use at exit: 106 bytes in 4 blocks
+==4767==   total heap usage: 4 allocs, 0 frees, 106 bytes allocated
+==4767== 
+==4767== 30 bytes in 1 blocks are possibly lost in loss record 2 of 4
+==4767==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4767==    by 0x40055E: fun1() (val_test.cpp:12)
+==4767==    by 0x4005AB: main (val_test.cpp:20)
+==4767== 
+==4767== 56 (16 direct, 40 indirect) bytes in 1 blocks are definitely lost in loss record 4 of 4
+==4767==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4767==    by 0x40053F: fun1() (val_test.cpp:10)
+==4767==    by 0x4005AB: main (val_test.cpp:20)
+==4767== 
+==4767== LEAK SUMMARY:
+==4767==    definitely lost: 16 bytes in 1 blocks
+==4767==    indirectly lost: 40 bytes in 1 blocks
+==4767==      possibly lost: 30 bytes in 1 blocks
+==4767==    still reachable: 20 bytes in 1 blocks
+==4767==         suppressed: 0 bytes in 0 blocks
+==4767== Reachable blocks (those to which a pointer was found) are not shown.
+==4767== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==4767== 
+==4767== For counts of detected and suppressed errors, rerun with: -v
+==4767== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>由局部变量指向的内存,如果不释放为肯定丢失, </li>
+<li>由此指针而引起的后续内存泄露,为间接丢失.</li>
+<li>由全局变量指向的内存如果不被释放,为still reachable, </li>
+<li>如果该变量改动过, 为可能丢失.</li>
+</ul>
+<p>是啊,局部变量是栈变量,如果你不能把这个栈变量处理好,出了这个函数,指针地址就丢失了,这时那是肯定丢失了.</p>
+<p>如果你付给的地址是全局变量,倒是可以访问,叫still reachable</p>
+<p>但是如果你这个全局变量的值改动过, 那只有你知道怎样正确访问这块内存,别人可能就访问不到了,这叫可能丢失.</p>
+<p>由肯定丢失而引起的进一步的内存丢失为间接丢失.</p>
+<h1 id="解决内存泄漏的顺序"><a href="#解决内存泄漏的顺序" class="headerlink" title="解决内存泄漏的顺序"></a>解决内存泄漏的顺序</h1><p><strong>所以碰到问题你首先要解决什么问题?</strong></p>
+<p>肯定丢失,<br>然后是可能丢失,<br>然后间接丢失,<br>然后still reachable!!!</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/04/27/multi_thread_dev_base_concept/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/04/27/multi_thread_dev_base_concept/" itemprop="url">多线程开发的一些基本概念</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-04-27T18:31:26+00:00">
+                2015-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="竞态（race-condition）"><a href="#竞态（race-condition）" class="headerlink" title="竞态（race condition）"></a>竞态（race condition）</h1><p>软件层面上，竞态是指多个线程或进程读写一个共享资源 (或共享设备) 时的输出结果依赖于线程或进程的先后执行顺序或者时间；<br>（ 更权威的介绍可以看 <a href="https://en.wikipedia.org/wiki/Race_condition" target="_blank" rel="noopener">wiki</a> )</p>
+<p>至于为什么会发生竞态呢？很简单，因为并发，并发使多线程，多进程环境变成可能。</p>
+<p>竞态具体场景：假如我们有 2 个进程会对一个全局变量进行 ++ 操作，理想时，程序会这样执行：</p>
+<table><tbody><tr><td style="background:rgb(242,242,242);"><br><p><span style="font-size:24px;">Thread 1</span></p><br></td><td style="background:rgb(242,242,242);"><br><p><span style="font-size:24px;">Thread 2</span></p><br></td><td style="background:rgb(242,242,242);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(242,242,242);"><br><p><span style="font-size:24px;">Integer value</span></p><br></td></tr><tr><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">0</span></p><br></td></tr><tr><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">read value</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">←</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">0</span></p><br></td></tr><tr><td style="background:rgb(245,222,179);"><br><p><span style="font-size:24px;">increase value</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">0</span></p><br></td></tr><tr><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">write back</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">→</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">1</span></p><br></td></tr><tr><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">read value</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">←</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">1</span></p><br></td></tr><tr><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(245,222,179);"><br><p><span style="font-size:24px;">increase value</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">1</span></p><br></td></tr><tr><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">write back</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">→</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">2</span></p><br></td></tr></tbody></table>
+
+<p>   然而，由于并发的普遍存在，使得情况有时” 不受控制”（不如工程师预期那样工作），可能会变成这样：</p>
+<table><tbody><tr><td style="background:rgb(242,242,242);"><br><p><span style="font-size:24px;">Thread 1</span></p><br></td><td style="background:rgb(242,242,242);"><br><p><span style="font-size:24px;">Thread 2</span></p><br></td><td style="background:rgb(242,242,242);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(242,242,242);"><br><p><span style="font-size:24px;">Integer value</span></p><br></td></tr><tr><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">0</span></p><br></td></tr><tr><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">read value</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">←</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">0</span></p><br></td></tr><tr><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">read value</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">←</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">0</span></p><br></td></tr><tr><td style="background:rgb(245,222,179);"><br><p><span style="font-size:24px;">increase value</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">0</span></p><br></td></tr><tr><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(245,222,179);"><br><p><span style="font-size:24px;">increase value</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">0</span></p><br></td></tr><tr><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">write back</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">→</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">1</span></p><br></td></tr><tr><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;"> </span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">write back</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">→</span></p><br></td><td style="background:rgb(249,249,249);"><br><p><span style="font-size:24px;">1</span></p><br></td></tr></tbody></table>
+
+
+<h1 id="并发（concurrency）"><a href="#并发（concurrency）" class="headerlink" title="并发（concurrency）"></a>并发（concurrency）</h1><p>并发 (concurrency) 指的是多个执行单元同时、并行被执行。而并发的执行单元对共享资源 (硬件资源和软件上的全局、静态变量) 的访问则容易导致竞态 (race conditions), 可能导致并发 (即竞态?) 的情况有：</p>
+<ul>
+<li><p>SMP（Symmetric Multi-Processing），对称多处理结构。SMP 是一种紧耦合、共享存储的系统模型，它的特点是多个 CPU 使用共同的系统总线，因此可访问共同的外设和存储器。</p>
+</li>
+<li><p>中断. 中断可以打断正在执行的进程 (哪怕是在中断上下文)，若中断处理程序对共享资源进程访问，则竞态也会发生.</p>
+</li>
+<li><p>内核抢占.2.6 以后内核提供了内核可抢占特性，虽然是作为一个配置选项，但我们写程序时还是要考虑周全，故内核抢占也是作为伪并发的表现，也可能发生竞态；</p>
+</li>
+</ul>
+<h1 id="临界区（critical-section）"><a href="#临界区（critical-section）" class="headerlink" title="临界区（critical section）"></a>临界区（critical section）</h1><p>多个线程进程对共享资源进行访问在软件表现为一个程序片段，如何避免竞态的发生呢？</p>
+<p>一个执行路径在对共享资源进行访问时禁止其他执行路径进行访问，当有一个执行路径（A）对共享资源进行访问时，如有其他执行路径想访问共享资源，须睡眠等待 A 执行路径退出。</p>
+<p>那么这时这个程序片段就是临界区。那么具体如何来实现临界区呢？linux 内核提供了多种同步互斥机制.（如信号量，互斥量，自旋锁，RCU，原子操作等）.</p>
+<h1 id="什么是RAII技术"><a href="#什么是RAII技术" class="headerlink" title="什么是RAII技术"></a>什么是RAII技术</h1><p>我们在C++中经常使用new申请了内存空间，但是却也经常忘记delete回收申请的空间，容易造成内存溢出，于是RAII技术就诞生了，来解决这样的问题。</p>
+<p>RAII（Resource Acquisition Is Initialization）机制是Bjarne Stroustrup首先提出的，是一种利用对象生命周期来控制程序资源（如内存、文件句柄、网络连接、互斥量等等）的简单技术。 我们知道在函数内部的一些成员是放置在栈空间上的，当函数返回时，这些栈上的局部变量就会立即释放空间，于是Bjarne Stroustrup就想到确保能运行资源释放代码的地方就是在这个程序段（栈）中放置的对象的析构函数了，因为stack winding会保证它们的析构函数都会被执行。RAII就利用了栈里面的变量的这一特点。</p>
+<p>RAII 的一般做法是这样的：在对象构造时获取资源，接着控制对资源的访问使之在对象的生命周期内始终保持有效，最后在对象析构的时候释放资源。</p>
+<p>借此，我们实际上把管理一份资源的责任托管给了一个存放在栈空间上的局部对象。<br>这种做法有两大好处： </p>
+<ul>
+<li>(1)不需要显式地释放资源。 </li>
+<li>(2)采用这种方式，对象所需的资源在其生命期内始终保持有效。</li>
+</ul>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/04/17/MySQL入门三之GroupBy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/04/17/MySQL入门三之GroupBy/" itemprop="url">MySQL入门三之GroupBy</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-04-17T12:11:21+00:00">
+                2015-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DB/" itemprop="url" rel="index">
+                    <span itemprop="name">DB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="SQL-GROUP-BY-实例"><a href="#SQL-GROUP-BY-实例" class="headerlink" title="SQL GROUP BY 实例"></a>SQL GROUP BY 实例</h1><p>我们拥有下面这个 “Orders” 表：</p>
+<table>
+<thead>
+<tr>
+<th>O_Id</th>
+<th>OrderDate</th>
+<th>OrderPrice</th>
+<th>Customer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2008/12/29</td>
+<td>1000</td>
+<td>Bush</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2008/11/23</td>
+<td>1600</td>
+<td>Carter</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2008/10/05</td>
+<td>700</td>
+<td>Bush</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2008/09/28</td>
+<td>300</td>
+<td>Bush</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2008/08/06</td>
+<td>2000</td>
+<td>Adams</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2008/07/21</td>
+<td>100</td>
+<td>Carter</td>
+</tr>
+</tbody>
+</table>
+<p>现在，我们希望查找每个客户的总金额（总订单）。<br>我们想要使用 GROUP BY 语句对客户进行组合。<br>我们使用下列 SQL 语句：</p>
+<p><code>SELECT Customer,SUM(OrderPrice) FROM Orders GROUP BY Customer</code></p>
+<p>结果集类似这样：</p>
+<table>
+<thead>
+<tr>
+<th>Customer</th>
+<th>SUM(OrderPrice)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bush</td>
+<td>2000</td>
+</tr>
+<tr>
+<td>Carter</td>
+<td>1700</td>
+</tr>
+<tr>
+<td>Adams</td>
+<td>2000</td>
+</tr>
+</tbody>
+</table>
+<p>很棒吧，对不对？<br>让我们看一下如果省略 GROUP BY 会出现什么情况：</p>
+<p><code>SELECT Customer,SUM(OrderPrice) FROM Orders</code></p>
+<p>结果集类似这样：</p>
+<table>
+<thead>
+<tr>
+<th>Customer</th>
+<th>SUM(OrderPrice)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bush</td>
+<td>5700</td>
+</tr>
+<tr>
+<td>Carter</td>
+<td>5700</td>
+</tr>
+<tr>
+<td>Bush</td>
+<td>5700</td>
+</tr>
+<tr>
+<td>Bush</td>
+<td>5700</td>
+</tr>
+<tr>
+<td>Adams</td>
+<td>5700</td>
+</tr>
+<tr>
+<td>Carter</td>
+<td>5700</td>
+</tr>
+</tbody>
+</table>
+<p>上面的结果集不是我们需要的。<br>那么为什么不能使用上面这条 SELECT 语句呢？</p>
+<p>解释如下：<br>上面的 SELECT 语句指定了两列（Customer 和 SUM(OrderPrice)）。<br>“SUM(OrderPrice)” 返回一个单独的值（”OrderPrice” 列的总计），而 “Customer” 返回 6 个值（每个值对应 “Orders” 表中的每一行）。<br>因此，我们得不到正确的结果。不过，您已经看到了，GROUP BY 语句解决了这个问题。</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/36/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/38/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

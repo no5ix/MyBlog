@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="烫">
+<meta property="og:url" content="https://hulinhong.com/page/40/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="烫">
+<meta name="twitter:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>烫 - 烫烫烫烫烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/02/27/MySQL入门一之增删查改与关联/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/02/27/MySQL入门一之增删查改与关联/" itemprop="url">MySQL入门一之增删查改与关联</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-27T22:51:11+00:00">
+                2015-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DB/" itemprop="url" rel="index">
+                    <span itemprop="name">DB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h1><ul>
+<li><p>INSERT INTO table_name (列1, 列2,…) VALUES (值1, 值2,….)</p>
+</li>
+<li><p>DELETE FROM 表名称 WHERE 列名称 = 值</p>
+</li>
+<li><p>UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值</p>
+</li>
+<li><p>SELECT 列名称 FROM 表名称</p>
+</li>
+</ul>
+<h1 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h1><p>SQL join 用于根据两个或多个表中的列之间的关系，从这些表中查询数据。</p>
+<h2 id="Join和Key概绍"><a href="#Join和Key概绍" class="headerlink" title="Join和Key概绍"></a>Join和Key概绍</h2><p>有时为了得到完整的结果，我们需要从两个或更多的表中获取结果。我们就需要执行 join。<br>数据库中的表可通过键将彼此联系起来。主键（Primary Key）是一个列，在这个列中的每一行的值都是唯一的。在表中，每个主键的值都是唯一的。这样做的目的是在不重复每个表中的所有数据的情况下，把表间的数据交叉捆绑在一起。<br>请看 “Persons” 表：</p>
+<table>
+<thead>
+<tr>
+<th>Id_P</th>
+<th>LastName</th>
+<th>FirstName</th>
+<th>Address</th>
+<th>City</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Adams</td>
+<td>John</td>
+<td>Oxford Street</td>
+<td>London</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Bush</td>
+<td>George</td>
+<td>Fifth Avenue</td>
+<td>New York</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Carter</td>
+<td>Thomas</td>
+<td>Changan Street</td>
+<td>Beijing</td>
+</tr>
+</tbody>
+</table>
+<p>请注意，”Id_P” 列是 Persons 表中的的主键。这意味着没有两行能够拥有相同的 Id_P。即使两个人的姓名完全相同，Id_P 也可以区分他们。<br>接下来请看 “Orders” 表：</p>
+<table>
+<thead>
+<tr>
+<th>Id_O</th>
+<th>OrderNo</th>
+<th>Id_P</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>77895</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>44678</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>22456</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>24562</td>
+<td>1</td>
+</tr>
+<tr>
+<td>5</td>
+<td>34764</td>
+<td>65</td>
+</tr>
+</tbody>
+</table>
+<p>请注意，”Id_O” 列是 Orders 表中的的主键，同时，”Orders” 表中的 “Id_P” 列用于引用 “Persons” 表中的人，而无需使用他们的确切姓名。<br>请留意，”Id_P” 列把上面的两个表联系了起来。</p>
+<p>下面列出了您可以使用的 JOIN 类型，以及它们之间的差异。</p>
+<ul>
+<li>JOIN(INNER JOIN): 如果左右表中都有至少一个匹配，则返回行</li>
+<li>LEFT JOIN: 即使右表中没有匹配，也从左表返回所有的行</li>
+<li>RIGHT JOIN: 即使左表中没有匹配，也从右表返回所有的行</li>
+<li>FULL JOIN: 只要其中一个表中存在匹配，就返回行</li>
+</ul>
+<p><strong>注</strong> : JOIN使用on的, 而不是where.</p>
+<h2 id="使用Join-INNER-JOIN"><a href="#使用Join-INNER-JOIN" class="headerlink" title="使用Join(INNER JOIN)"></a>使用Join(INNER JOIN)</h2><p>除了上面的方法，我们也可以使用关键词 JOIN 来从两个表中获取数据。<br>如果我们希望列出所有人的定购，可以使用下面的 SELECT 语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT Persons.LastName, Persons.FirstName, Orders.OrderNo</span><br><span class="line">FROM Persons</span><br><span class="line">INNER JOIN Orders</span><br><span class="line">ON Persons.Id_P = Orders.Id_P</span><br><span class="line">ORDER BY Persons.LastName</span><br></pre></td></tr></table></figure></p>
+<p>结果集：</p>
+<table>
+<thead>
+<tr>
+<th>LastName</th>
+<th>FirstName</th>
+<th>OrderNo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Adams</td>
+<td>John</td>
+<td>22456</td>
+</tr>
+<tr>
+<td>Adams</td>
+<td>John</td>
+<td>24562</td>
+</tr>
+<tr>
+<td>Carter</td>
+<td>Thomas</td>
+<td>77895</td>
+</tr>
+<tr>
+<td>Carter</td>
+<td>Thomas</td>
+<td>44678</td>
+</tr>
+</tbody>
+</table>
+<h2 id="使用Left-Join"><a href="#使用Left-Join" class="headerlink" title="使用Left Join"></a>使用Left Join</h2><p>现在，我们希望列出所有的人，以及他们的定购 - 如果有的话。<br>您可以使用下面的 SELECT 语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT Persons.LastName, Persons.FirstName, Orders.OrderNo</span><br><span class="line">FROM Persons</span><br><span class="line">LEFT JOIN Orders</span><br><span class="line">ON Persons.Id_P=Orders.Id_P</span><br><span class="line">ORDER BY Persons.LastName</span><br></pre></td></tr></table></figure></p>
+<p>结果集：</p>
+<table>
+<thead>
+<tr>
+<th>LastName</th>
+<th>FirstName</th>
+<th>OrderNo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Adams</td>
+<td>John</td>
+<td>22456</td>
+</tr>
+<tr>
+<td>Adams</td>
+<td>John</td>
+<td>24562</td>
+</tr>
+<tr>
+<td>Carter</td>
+<td>Thomas</td>
+<td>77895</td>
+</tr>
+<tr>
+<td>Carter</td>
+<td>Thomas</td>
+<td>44678</td>
+</tr>
+<tr>
+<td>Bush</td>
+<td>George</td>
+<td>- - - -</td>
+</tr>
+</tbody>
+</table>
+<p>LEFT JOIN 关键字会从左表 (Persons) 那里返回所有的行，即使在右表 (Orders) 中没有匹配的行。</p>
+<h2 id="使用Right-Join"><a href="#使用Right-Join" class="headerlink" title="使用Right Join"></a>使用Right Join</h2><p>现在，我们希望列出所有的定单，以及定购它们的人 - 如果有的话。<br>您可以使用下面的 SELECT 语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT Persons.LastName, Persons.FirstName, Orders.OrderNo</span><br><span class="line">FROM Persons</span><br><span class="line">RIGHT JOIN Orders</span><br><span class="line">ON Persons.Id_P=Orders.Id_P</span><br><span class="line">ORDER BY Persons.LastName</span><br></pre></td></tr></table></figure></p>
+<p>结果集：</p>
+<table>
+<thead>
+<tr>
+<th>LastName</th>
+<th>FirstName</th>
+<th>OrderNo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Adams</td>
+<td>John</td>
+<td>22456</td>
+</tr>
+<tr>
+<td>Adams</td>
+<td>John</td>
+<td>24562</td>
+</tr>
+<tr>
+<td>Carter</td>
+<td>Thomas</td>
+<td>77895</td>
+</tr>
+<tr>
+<td>Carter</td>
+<td>Thomas</td>
+<td>44678</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>34764</td>
+</tr>
+</tbody>
+</table>
+<p>RIGHT JOIN 关键字会从右表 (Orders) 那里返回所有的行，即使在左表 (Persons) 中没有匹配的行。</p>
+<h2 id="使用Full-Join"><a href="#使用Full-Join" class="headerlink" title="使用Full Join"></a>使用Full Join</h2><p>现在，我们希望列出所有的人，以及他们的定单，以及所有的定单，以及定购它们的人。<br>您可以使用下面的 SELECT 语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT Persons.LastName, Persons.FirstName, Orders.OrderNo</span><br><span class="line">FROM Persons</span><br><span class="line">FULL JOIN Orders</span><br><span class="line">ON Persons.Id_P=Orders.Id_P</span><br><span class="line">ORDER BY Persons.LastName</span><br></pre></td></tr></table></figure></p>
+<p>结果集：</p>
+<table>
+<thead>
+<tr>
+<th>LastName</th>
+<th>FirstName</th>
+<th>OrderNo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Adams</td>
+<td>John</td>
+<td>22456</td>
+</tr>
+<tr>
+<td>Adams</td>
+<td>John</td>
+<td>24562</td>
+</tr>
+<tr>
+<td>Carter</td>
+<td>Thomas</td>
+<td>77895</td>
+</tr>
+<tr>
+<td>Carter</td>
+<td>Thomas</td>
+<td>44678</td>
+</tr>
+<tr>
+<td>Bush</td>
+<td>George</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>34764</td>
+</tr>
+</tbody>
+</table>
+<p>FULL JOIN 关键字会从左表 (Persons) 和右表 (Orders) 那里返回所有的行。如果 “Persons” 中的行在表 “Orders” 中没有匹配，或者如果 “Orders” 中的行在表 “Persons” 中没有匹配，这些行同样会列出。</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/02/23/protobuf_tutorial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/02/23/protobuf_tutorial/" itemprop="url">ProtoBuf的安装与使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-23T12:06:56+00:00">
+                2015-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Misc/" itemprop="url" rel="index">
+                    <span itemprop="name">Misc</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>与 JSON 相比， Protobuf 的序列化和反序列化的速度更快，而且传输的数据会先压缩，<br>使得传输的效率更高些 。<br>Protobuf ， 全称 Protocol Buffer ， 是 Google 公司内部的混合语言数据标准，是一种轻便<br>高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。 它很适合做数据<br>存储或 RPC 数据交换格式 。 Protobuf是可用于通信协议、数据存储等领域的语言无关、平台<br>无关、可扩展的序列化结构数据格式 。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>谷歌的东西要想在大陆安装起来总是有点那啥, 你懂的.</p>
+<h2 id="需要的依赖"><a href="#需要的依赖" class="headerlink" title="需要的依赖"></a>需要的依赖</h2><pre><code>sudo apt-get install curl
+
+sudo apt-get install autoconf autogen
+
+sudo apt-get install libtool
+</code></pre><h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><p>下载自github的代码需要首先执行 $ ./autogen.sh 生成configure文件 </p>
+<p>注意autogen.sh 需要gtest包，默认是从 googletest.googlecode.com下载，国内需要翻墙才能访问，很多人问autogen.sh运行失败，这里我补充一下 </p>
+<p>修改一下autogen.sh , 将这段:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;Google Test not present.  Fetching gtest-1.5.0 from the web...&quot;</span><br><span class="line">curl http://googletest.googlecode.com/files/gtest-1.5.0.tar.bz2 | tar jx</span><br><span class="line">mv gtest-1.5.0 gtest</span><br></pre></td></tr></table></figure></p>
+<p>修改为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/google/googletest/archive/release-1.5.0.tar.gz</span><br><span class="line">tar xzvf release-1.5.0.tar.gz</span><br><span class="line">mv googletest-release-1.5.0 gtest</span><br></pre></td></tr></table></figure></p>
+<p>再执行 autogen.sh，这样就不会报错了</p>
+<pre><code>$ ./configure
+$ make
+$ make check
+$ make install
+</code></pre><p>默认是装在</p>
+<pre><code>usr/local/bin
+usr/local/lib,
+usr/local/include 
+</code></pre><h2 id="检查是否安装成功"><a href="#检查是否安装成功" class="headerlink" title="检查是否安装成功"></a>检查是否安装成功</h2><pre><code>protoc --version
+</code></pre><p>如果安装成功,会出现版本号 如</p>
+<pre><code>libprotoc 2.6.1
+</code></pre><p>如果有问题，会输出错误内容, 最后我安装完成,用上述命令检查版本号时出现如下问题</p>
+<pre><code>protoc: error while loading shared libraries: libprotocbuf.so.9: cannot open shared
+</code></pre><p>错误原因</p>
+<p>protobuf的默认安装路径是/usr/local/lib,而/usr/local/lib不在ubuntu体系默认的LD_LIBRARY_PATH里,所以就找不到lib</p>
+<p>解决办法 : </p>
+<p>1 - 在 /etc/ld.so.conf.d/目录下创建文件 bprotobuf.conf文件,文件内容如下</p>
+<p><code>/usr/local/lib</code></p>
+<p>2 - 输入命令</p>
+<pre><code>sudo ldconfig
+</code></pre><p>这时,再输入<code>protoc --version</code>就可以正常看到版本号了</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><figure class="highlight c++"><figcaption><span>Writer.cpp</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Mymessage.pb.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Im::Content msg1;</span><br><span class="line">	msg1.set_id(<span class="number">101</span>);</span><br><span class="line">	msg1.set_str(<span class="string">"ggsmd"</span>);</span><br><span class="line">	<span class="function">fstream <span class="title">output</span><span class="params">(<span class="string">"./log"</span>, ios::out | ios::trunc | ios::binary)</span></span>; </span><br><span class="line">	<span class="keyword">if</span> (!msg1.SerializeToOstream(&amp;output)) &#123;</span><br><span class="line">		<span class="built_in">cerr</span> &lt;&lt; <span class="string">"Failed to write msg."</span> &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><figcaption><span>Reader.cpp</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Mymessage.pb.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ListMsg</span><span class="params">(<span class="keyword">const</span> Im::Content &amp; msg)</span></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; msg.id() &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; msg.str() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>&#123;</span><br><span class="line">	Im::Content msg1;</span><br><span class="line">	<span class="function">fstream <span class="title">input</span><span class="params">(<span class="string">"./log"</span>, ios::in | ios::binary)</span></span>;</span><br><span class="line">	<span class="keyword">if</span> (!msg1.ParseFromIstream(&amp;input)) &#123;</span><br><span class="line">		<span class="built_in">cerr</span> &lt;&lt; <span class="string">"Failed to parse address book."</span> &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125; </span><br><span class="line">	ListMsg(msg1);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><figcaption><span>makefile</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">INC=/usr/local/include</span><br><span class="line">LIB=/usr/local/lib</span><br><span class="line">lib=protobuf</span><br><span class="line"></span><br><span class="line">all:Writer Reader</span><br><span class="line"></span><br><span class="line">Writer.o:Writer.cpp</span><br><span class="line">	g++ -g -c Writer.cpp -I$(INC) -L$(LIB) -l$(lib)</span><br><span class="line">Reader.o:Reader.cpp</span><br><span class="line">	g++ -g -c Reader.cpp -I$(INC) -L$(LIB) -l$(lib)	</span><br><span class="line"></span><br><span class="line">Writer:Writer.o Mymessage.pb.o </span><br><span class="line">	g++ -g -o Writer Writer.o Mymessage.pb.o -I$(INC) -L$(LIB) -l$(lib)</span><br><span class="line">Reader:Reader.o Mymessage.pb.o </span><br><span class="line">	g++ -g -o Reader Reader.o Mymessage.pb.o -I$(INC) -L$(LIB) -l$(lib)</span><br><span class="line">Mymessage.pb.o:Mymessage.pb.cc</span><br><span class="line">	g++ -g -c Mymessage.pb.cc -I$(INC) -L$(LIB) -l$(lib)	</span><br><span class="line"></span><br><span class="line">clean:Writer Reader Writer.o Reader.o Mymessage.pb.o</span><br><span class="line">	rm Writer Reader Writer.o Reader.o Mymessage.pb.o</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><figcaption><span>Mymessage.proto</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">package Im; </span><br><span class="line">message Content </span><br><span class="line">&#123; </span><br><span class="line">    required int32   id = <span class="number">1</span>;  <span class="comment">// ID </span></span><br><span class="line">    required <span class="built_in">string</span>  str = <span class="number">2</span>;  <span class="comment">// str </span></span><br><span class="line">    optional int32   opt = <span class="number">3</span>;  <span class="comment">//optional field </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="打印结果"><a href="#打印结果" class="headerlink" title="打印结果"></a>打印结果</h2><p>执行<br><code>protoc -I=./ --cpp_out=./ Mymessage.proto</code><br> 命令后，会生成 Mymessage.pb.h 和 Mymessage.pb.cc 文件。 再执行 <code>make</code> 命令，生成<br>Writer 和 Reader 文件 。 执行 <code>./Writer</code> 命令后，再执行<code>./Reader</code> 命令，终端上输出：</p>
+<pre><code>b@b-VirtualBox:~/tc$ protoc -I=./ --cpp_out=./ Mymessage.proto
+b@b-VirtualBox:~/tc$ ll
+total 44
+drwxrwxr-x 2 b b  4096  5月 19 22:43 ./
+drwxr-xr-x 4 b b  4096  5月 19 22:35 ../
+-rw-rw-r-- 1 b b   647  5月 19 22:36 makefile
+-rw-rw-r-- 1 b b 12214  5月 19 22:43 Mymessage.pb.cc
+-rw-rw-r-- 1 b b  7762  5月 19 22:43 Mymessage.pb.h
+-rw-rw-r-- 1 b b   161  5月 19 22:36 Mymessage.proto
+-rw-rw-r-- 1 b b   421  5月 19 22:36 Reader.cpp
+-rw-rw-r-- 1 b b   340  5月 19 22:35 Writer.cpp
+
+b@b-VirtualBox:~/tc$ make
+g++ -g -c Writer.cpp -I/home/sharexu/charpter13/1302/include -L/home/sharexu/charpter13/1302/lib -lprotobuf
+g++ -g -c Mymessage.pb.cc -I/home/sharexu/charpter13/1302/include -L/home/sharexu/charpter13/1302/lib -lprotobuf    
+g++ -g -o Writer Writer.o Mymessage.pb.o -I/home/sharexu/charpter13/1302/include -L/home/sharexu/charpter13/1302/lib -lprotobuf
+g++ -g -c Reader.cpp -I/home/sharexu/charpter13/1302/include -L/home/sharexu/charpter13/1302/lib -lprotobuf    
+g++ -g -o Reader Reader.o Mymessage.pb.o -I/home/sharexu/charpter13/1302/include -L/home/sharexu/charpter13/1302/lib -lprotobuf
+
+b@b-VirtualBox:~/tc$ ll
+total 772
+drwxrwxr-x 2 b b   4096  5月 19 22:43 ./
+drwxr-xr-x 4 b b   4096  5月 19 22:35 ../
+-rw-rw-r-- 1 b b    647  5月 19 22:36 makefile
+-rw-rw-r-- 1 b b  12214  5月 19 22:43 Mymessage.pb.cc
+-rw-rw-r-- 1 b b   7762  5月 19 22:43 Mymessage.pb.h
+-rw-rw-r-- 1 b b 244112  5月 19 22:43 Mymessage.pb.o
+-rw-rw-r-- 1 b b    161  5月 19 22:36 Mymessage.proto
+-rwxrwxr-x 1 b b 188430  5月 19 22:43 Reader*
+-rw-rw-r-- 1 b b    421  5月 19 22:36 Reader.cpp
+-rw-rw-r-- 1 b b  57656  5月 19 22:43 Reader.o
+-rwxrwxr-x 1 b b 184244  5月 19 22:43 Writer*
+-rw-rw-r-- 1 b b    340  5月 19 22:35 Writer.cpp
+-rw-rw-r-- 1 b b  59232  5月 19 22:43 Writer.o
+
+b@b-VirtualBox:~/tc$ ./Writer    
+
+b@b-VirtualBox:~/tc$ ./Reader 
+101
+ggsmd
+</code></pre>
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/02/21/cpp_object_model_conclusion/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/02/21/cpp_object_model_conclusion/" itemprop="url">C++对象模型之虚函数实例讲解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-21T17:49:01+00:00">
+                2015-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>因为c++只规定了 虚继承/ 虚函数/ 多继承/ 的行为, 但将实现方法留给编译器作者. 所以各个平台的实现并不相同, 得出的结果也不尽相同.</p>
+<p><a href="#测试常用平台的不同">经测试</a>, vs和gcc目前比较统一的情况只有2种 :</p>
+<ul>
+<li>无继承+无虚函数</li>
+<li>无继承+虚函数</li>
+</ul>
+<p><strong>故本文只讨论这2种, 以及了解虚函数和虚继承的含义.</strong></p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/02/10/python中的__name__和__main()__/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/02/10/python中的__name__和__main()__/" itemprop="url">python中的__name__和__main()__</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-10T22:19:29+00:00">
+                2015-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Script/" itemprop="url" rel="index">
+                    <span itemprop="name">Script</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#hello.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sayHello</span><span class="params">()</span>:</span></span><br><span class="line">    str=<span class="string">"hello"</span></span><br><span class="line">    print(str);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">'This is main of module "hello.py"'</span>)</span><br><span class="line">    sayHello()</span><br></pre></td></tr></table></figure>
+<p>python作为一种脚本语言，我们用python写的各个module都可以包含以上那么一个累死c中的main函数，只不过python中的这种<code>__main__</code>与c中有一些区别，类似于php的魔术那一套, 主要体现在：</p>
+<p>1、当单独执行该module时，比如单独执行以上hello.py： python hello.py，则输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">This is main of module &quot;hello.py&quot;</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
+<p>可以理解为<code>&quot;if __name__==&quot;__main__&quot;:&quot;</code>这一句与c中的main()函数所表述的是一致的，即作为入口；</p>
+<p>2、当该module被其它module 引入使用时，其中的<code>&quot;if __name__==&quot;__main__&quot;:&quot;</code></p>
+<p>所表示的Block不会被执行,</p>
+<p>这是因为此时module被其它module引用时，</p>
+<p>其<code>__name__</code>的值将发生变化，<code>__name__</code>的值将会是module的名字。</p>
+<p>比如在python shell中import hello后，查看<code>hello.__name__</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hello</span><br><span class="line">hello.__name__</span><br><span class="line"><span class="string">'hello'</span></span><br></pre></td></tr></table></figure>
+<p>3、因此，在python中，当一个module作为整体被执行时,moduel.<strong>name</strong>的值将是<code>&quot;__main__&quot;；</code></p>
+<p>而当一个module被其它module引用时，<code>module.__name__</code>将是module自己的名字，</p>
+<p>当然一个module被其它module引用时，其本身并不需要一个可执行的入口main了。</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/02/09/条件编译指令之if和ifdef和ifdefined之间的区别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/02/09/条件编译指令之if和ifdef和ifdefined之间的区别/" itemprop="url">条件编译指令之#if和#ifdef和#if defined之间的区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-09T17:24:19+00:00">
+                2015-02-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="if的使用说明"><a href="#if的使用说明" class="headerlink" title="#if的使用说明"></a>#if的使用说明</h1><p>#if的后面接的是表达式 : </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> (MAX==10)||(MAX==20)</span></span><br><span class="line"> code...</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>它的作用是：如果(MAX==10)||(MAX==20)成立，那么编译器就会把其中的#if 与 #endif之间的代码编译进去（注意：是编译进去，不是执行！！）</p>
+<h1 id="if-defined的使用"><a href="#if-defined的使用" class="headerlink" title="#if defined的使用"></a>#if defined的使用</h1><p>#if后面接的是一个宏, 而#if define(x)的使用如下 : </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined (x)</span></span><br><span class="line">    ...code...</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>这个#if defined它不管里面的“x”的逻辑是“真”还是“假”它只管这个程序的前面的宏定义里面有没有定义“x”这个宏，如果定义了x这个宏，那么，编译器会编译中间的…code…否则不直接忽视中间的…code…代码。<br>另外 #if defined(x)也可以取反，也就用 #if !defined(x)</p>
+<h1 id="ifdef的使用"><a href="#ifdef的使用" class="headerlink" title="#ifdef的使用"></a>#ifdef的使用</h1><ul>
+<li>#ifdef的使用和#if defined()的用法一致</li>
+<li>#ifndef又和#if !defined()的用法一致。</li>
+</ul>
+<p>最后强调两点：</p>
+<ul>
+<li>这几个宏定义只是决定代码块是否被编译！</li>
+<li>别忘了#endif</li>
+</ul>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/39/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><span class="page-number current">40</span><a class="page-number" href="/page/41/">41</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/41/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

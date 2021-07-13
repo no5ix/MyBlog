@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="NP,DesignPattern,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="关于Reactor模式讲解请转 此文 服务器模型总结 其中“互通”指的是如果开发chat服务，多个客户连接之间是否能方便地交换数据（chat也是三大TCP网络编程案例之一）。 对于echo/httpd/Sudoku这类“连接相互独立”的服务程序，这个功能无足轻重，但是对于chat类服务却至关重要。 “顺序性”指的是在httpd/Sudoku这类请求响应服务中，如果客户连接顺序发送多个请求，那么计算">
+<meta name="keywords" content="NP,DesignPattern">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器模型总结">
+<meta property="og:url" content="https://hulinhong.com/2016/08/08/server_model_summary/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="关于Reactor模式讲解请转 此文 服务器模型总结 其中“互通”指的是如果开发chat服务，多个客户连接之间是否能方便地交换数据（chat也是三大TCP网络编程案例之一）。 对于echo/httpd/Sudoku这类“连接相互独立”的服务程序，这个功能无足轻重，但是对于chat类服务却至关重要。 “顺序性”指的是在httpd/Sudoku这类请求响应服务中，如果客户连接顺序发送多个请求，那么计算">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hulinhong.com/img/server_model_summary/concurrent_model_summary.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/server_model_summary/5.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/server_model_summary/8.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/server_model_summary/9.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/server_model_summary/11.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/server_model_summary/useful_model.jpg">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.074Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="服务器模型总结">
+<meta name="twitter:description" content="关于Reactor模式讲解请转 此文 服务器模型总结 其中“互通”指的是如果开发chat服务，多个客户连接之间是否能方便地交换数据（chat也是三大TCP网络编程案例之一）。 对于echo/httpd/Sudoku这类“连接相互独立”的服务程序，这个功能无足轻重，但是对于chat类服务却至关重要。 “顺序性”指的是在httpd/Sudoku这类请求响应服务中，如果客户连接顺序发送多个请求，那么计算">
+<meta name="twitter:image" content="https://hulinhong.com/img/server_model_summary/concurrent_model_summary.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>服务器模型总结 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/08/08/server_model_summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">服务器模型总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-08T13:12:08+00:00">
+                2016-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NP/" itemprop="url" rel="index">
+                    <span itemprop="name">NP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/NP/" rel="tag"><i class="fa fa-tag"></i> NP</a>
+              
+                <a href="/tags/DesignPattern/" rel="tag"><i class="fa fa-tag"></i> DesignPattern</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/07/reactor_intro/" rel="next" title="Reactor模式讲解">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  Reactor模式讲解
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/11/关于UNP与APUE与TLPI三本大部头的阅读建议(着重讲UNP)/" rel="prev" title="关于UNP与APUE与TLPI三本大部头的阅读建议(着重讲UNP)">
+              <p class="post-nav-pre-next-title">
+                  关于UNP与APUE与TLPI三本大部头的阅读建议(着重讲UNP)
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <p>关于Reactor模式讲解请转 <a href="/2016/08/07/reactor_intro/" title="此文">此文</a></p>
+<h1 id="服务器模型总结"><a href="#服务器模型总结" class="headerlink" title="服务器模型总结"></a>服务器模型总结</h1><p><img src="/img/server_model_summary/concurrent_model_summary.jpg" alt></p>
+<p>其中“互通”指的是如果开发chat服务，多个客户连接之间是否能方便地交换数据（chat也是三大TCP网络编程案例之一）。</p>
+<p>对于echo/httpd/Sudoku这类“连接相互独立”的服务程序，这个功能无足轻重，但是对于chat类服务却至关重要。</p>
+<p>“顺序性”指的是在httpd/Sudoku这类请求响应服务中，如果客户连接顺序发送多个请求，那么计算得到的多个响应是否按相同的顺序发还给客户（这里指的是在自然条件下，不含刻意同步）。</p>
+<h1 id="方案0"><a href="#方案0" class="headerlink" title="方案0"></a>方案0</h1><p>方案0 这其实不是并发服务器，而是iterative 服务器，因为它一次只能服务一个客户。代码见[UNP]中的Figure 1.9，[UNP]以此为对比其他方案的基准点。这个方案不适合长连接，倒是很适合daytime这种write-only短连接服务。</p>
+<p><strong>. . . </strong><a id="more"></a></p>
+<h1 id="方案1"><a href="#方案1" class="headerlink" title="方案1"></a>方案1</h1><p>方案1 这是传统的Unix并发网络编程方案，[UNP]称之为child-per-client或fork()-per-client，另外也俗称process-per-connection。这种方案适合并发连接数不大的情况。至今仍有一些网络服务程序用这种方式实现，比如PostgreSQL和Perforce的服务端。这种方案适合“计算响应的工作量远大于fork()的开销”这种情况，比如数据库服务器。这种方案适合长连接，但不太适合短连接，因为fork()开销大于求解Sudoku的用时。</p>
+<h1 id="方案2"><a href="#方案2" class="headerlink" title="方案2"></a>方案2</h1><p>方案2 这是传统的Java网络编程方案thread-per-connection，在Java 1.4引入NIO之前，Java网络服务多采用这种方案。它的初始化开销比方案1要小很多，但与求解Sudoku的用时差不多，仍然不适合短连接服务。这种方案的伸缩性受到线程数的限制，一两百个还行，几千个的话对操作系统的scheduler恐怕是个不小的负担。</p>
+<h1 id="方案3"><a href="#方案3" class="headerlink" title="方案3"></a>方案3</h1><p>方案3 这是针对方案1的优化，[UNP]详细分析了几种变化，包括对accept(2)“惊群”问题（thundering herd）的考虑。</p>
+<h1 id="方案4"><a href="#方案4" class="headerlink" title="方案4"></a>方案4</h1><p>方案4 这是对方案2的优化，[UNP]详细分析了它的几种变化。方案3和方案4这两个方案都是Apache httpd长期使用的方案。</p>
+<h1 id="方案5-单线程Reactor"><a href="#方案5-单线程Reactor" class="headerlink" title="方案5 - 单线程Reactor"></a>方案5 - 单线程Reactor</h1><p>以上几种方案都是阻塞式网络编程，程序流程（thread of control）通常阻塞在read()上，等待数据到达。但是TCP是个全双工协议，同时支持read()和write()操作，当一个线程/进程阻塞在read()上，但程序又想给这个TCP连接发数据，那该怎么办？比如说echo client，既要从stdin读，又要从网络读，当程序正在阻塞地读网络的时候，如何处理键盘输入？</p>
+<p>又比如proxy，既要把连接a收到的数据发给连接b，又要把从b收到的数据发给a，那么到底读哪个？（proxy是附录A讲的三大TCP网络编程案例之一。）</p>
+<h2 id="Reactor出现的原因"><a href="#Reactor出现的原因" class="headerlink" title="Reactor出现的原因"></a>Reactor出现的原因</h2><p>一种方法是用两个线程/进程，一个负责读，一个负责写。[UNP]也在实现echoclient时介绍了这种方案。</p>
+<p>另一种方法是使用IO multiplexing，也就是select/poll/epoll/kqueue这一系列的“多路选择器”，让一个thread of control 能处理多个连接。</p>
+<p>“IO复用”其实复用的不是IO连接，而是复用线程。使用select/poll几乎肯定要配合non-blockingIO，而使用non-blocking IO肯定要使用应用层buffer。这就不是一件轻松的事儿了，如果每个程序都去搞一套自己的IO multiplexing机制（本质是event-driven事件驱动），这是一种很大的浪费。</p>
+<p>感谢<strong>Doug Schmidt</strong>为我们总结出了<strong>Reactor模式</strong>，让event-driven网络编程有章可循。继而出现了一些通用的Reactor框架/库，比如libevent、muduo、Netty、twisted、POE等等。有了这些库，我想基本不用去编写阻塞式的网络程序了（特殊情况除外，比如proxy流量限制）。</p>
+<h2 id="Reactor的意义"><a href="#Reactor的意义" class="headerlink" title="Reactor的意义"></a>Reactor的意义</h2><p><strong>Doug Schmid</strong>t指出，其实网络编程中有很多是事务性（routine）的工作，可以提取为公用的框架或库，而用户只需要填上关键的业务逻辑代码，并将回调注册到框架中，就可以实现完整的网络服务，这正是Reactor模式的主要思想。</p>
+<p><strong>而Reactor的意义在于将消息（IO事件）分发到用户提供的处理函数，并保持网络部分的通用代码不变，独立于用户的业务逻辑。</strong></p>
+<h2 id="Reactor的具体模型"><a href="#Reactor的具体模型" class="headerlink" title="Reactor的具体模型"></a>Reactor的具体模型</h2><p>单线程Reactor的程序执行顺序下图中的<strong>左图</strong>所示。在没有事件的时候，线程等待在select/poll/epoll_wait等函数上。事件到达后由网络库处理IO，再把消息通知（回调）客户端代码。Reactor事件循环所在的线程通常叫IO线程。通常由网络库负责读写socket，用户代码负载解码、计算、编码。</p>
+<p>注意由于只有一个线程，因此事件是顺序处理的，一个线程同时只能做一件事情。在这种协作式多任务中，事件的优先级得不到保证，因为从“poll返回之后”到“下一次调用poll进入等待之前”这段时间内，线程不会被其他连接上的数据或事件抢占（也就是说, 不会发生下图中的<strong>右图</strong>这种情况）。如果我们想要延迟计算（把compute()推迟100ms），那么也不能用sleep()之类的阻塞调用，而应该注册超时回调，以避免阻塞当前IO线程。</p>
+<p><img src="/img/server_model_summary/5.jpg" alt></p>
+<p>这种方案的优点是由网络库搞定数据收发，程序只关心业务逻辑；缺点在前面已经谈了：适合IO密集的应用，不太适合CPU密集的应用，因为较难发挥多核的威力。</p>
+<p>另外，与方案2相比，方案5处理网络消息的延迟可能要略大一些，因为方案2直接一次read(2)系统调用就能拿到请求数据，而方案5要先poll(2)再read(2)，多了一次系统调用。</p>
+<h1 id="方案6"><a href="#方案6" class="headerlink" title="方案6"></a>方案6</h1><p>方案6 这是一个过渡方案，收到Sudoku请求之后，不在Reactor线程计算，而是创建一个新线程去计算，以充分利用多核CPU。这是非常初级的多线程应用，因为它为每个请求（而不是每个连接）创建了一个新线程。这个开销可以用线程池来避免，即方案8。这个方案还有一个特点是out-of-order，即同时创建多个线程去计算同一个连接上收到的多个请求，那么算出结果的次序是不确定的，可能第2个Sudoku比较简单，比第1个先算出结果。这也是我们在一开始设计协议的时候使用了id 的原因，以便客户端区分response对应的是哪个request。</p>
+<h1 id="方案7"><a href="#方案7" class="headerlink" title="方案7"></a>方案7</h1><p>方案7 为了让返回结果的顺序确定，我们可以为每个连接创建一个计算线程，每个连接上的请求固定发给同一个线程去算，先到先得。这也是一个过渡方案，因为并发连接数受限于线程数目，这个方案或许还不如直接使用阻塞IO 的thread-per-connection 方案2。</p>
+<p>方案7与方案6的另外一个区别是单个client的最大CPU占用率。在方案6中，一个TCP连接上发来的一长串突发请求（burst requests）可以占满全部8个core；而在方案7中，由于每个连接上的请求固定由同一个线程处理，那么它最多占用12.5%的CPU资源。这两种方案各有优劣，取决于应用场景的需要（到底是公平性重要还是突发性能重要）。这个区别在方案8和方案9中同样存在，需要根据应用来取舍。</p>
+<h1 id="方案8-Reactor-ThreadPool"><a href="#方案8-Reactor-ThreadPool" class="headerlink" title="方案8 - Reactor+ThreadPool"></a>方案8 - Reactor+ThreadPool</h1><p><img src="/img/server_model_summary/8.jpg" alt></p>
+<p>方案8 :</p>
+<p>为了弥补方案6中为每个请求创建线程的缺陷，我们使用固定大小线程池。全部的IO工作都在一个Reactor线程完成，而计算任务交给thread pool。如果计算任务彼此独立，而且IO的压力不大，那么这种方案是非常适用的。</p>
+<p>线程池的另外一个作用是执行阻塞操作。比如有的数据库的客户端只提供同步访问，那么可以把数据库查询放到线程池中，可以避免阻塞IO线程，不会影响其他客户连接。另外也可以用线程池来调用一些阻塞的IO函数，例如fsync(2)/fdatasync(2)，这两个函数没有非阻塞的版本。</p>
+<p>如果IO的压力比较大，一个Reactor处理不过来，可以试试方案9，它采用多个Reactor来分担负载。</p>
+<h1 id="方案9-Reactors-In-Threads"><a href="#方案9-Reactors-In-Threads" class="headerlink" title="方案9 - Reactors In Threads"></a>方案9 - Reactors In Threads</h1><p><img src="/img/server_model_summary/9.jpg" alt></p>
+<p>方案9 : </p>
+<p>这是muduo内置的多线程方案，也是Netty内置的多线程方案。这种方案的特点是one loop per thread，有一个main Reactor负责accept(2)连接，然后把连接挂在某个sub Reactor中（muduo采用round-robin的方式来选择sub Reactor），这样该连接的所有操作都在那个sub Reactor所处的线程中完成。</p>
+<p>多个连接可能被分派到多个线程中，以充分利用CPU。</p>
+<p>muduo采用的是固定大小的Reactor pool，池子的大小通常根据CPU数目确定，也就是说线程数是固定的，这样程序的总体处理能力不会随连接数增加而下降。</p>
+<p>另外，由于一个连接完全由一个线程管理，那么请求的顺序性有保证，突发请求也不会占满全部8个核（如果需要优化突发请求，可以考虑方案11）。<br>这种方案把IO分派给多个线程，防止出现一个Reactor的处理能力饱和。</p>
+<p>与方案8的线程池相比，方案9减少了进出thread pool的两次上下文切换，在把多个连接分散到多个Reactor线程之后，小规模计算可以在当前IO线程完成并发回结果，从而降低响应的延迟。</p>
+<p>这是一个适应性很强的多线程IO模型，因此陈硕把它作为muduo的默认线程模型</p>
+<h1 id="方案10"><a href="#方案10" class="headerlink" title="方案10"></a>方案10</h1><p>方案10 这是Nginx的内置方案。如果连接之间无交互，这种方案也是很好的选择。工作进程之间相互独立，可以热升级。</p>
+<h1 id="方案11-Reactors-Thread-Pool"><a href="#方案11-Reactors-Thread-Pool" class="headerlink" title="方案11 - Reactors+Thread Pool"></a>方案11 - Reactors+Thread Pool</h1><p><img src="/img/server_model_summary/11.jpg" alt></p>
+<p>方案11 把方案8和方案9混合，既使用多个Reactor来处理IO，又使用线程池来处理计算。这种方案适合既有突发IO（利用多线程处理多个连接上的IO），又有突发计算的应用（利用线程池把一个连接上的计算任务分配给多个线程去做）</p>
+<h1 id="哪些是实用的模型"><a href="#哪些是实用的模型" class="headerlink" title="哪些是实用的模型"></a>哪些是实用的模型</h1><p><img src="/img/server_model_summary/useful_model.jpg" alt></p>
+<p>上表中的N表示并发连接数目，C1和C2是与连接数无关、与CPU数目有关的常数。</p>
+<p>我再用银行柜台办理业务为比喻，简述各种模型的特点。银行有旋转门，办理业务的客户人员从旋转门进出（IO）；银行也有柜台，客户在柜台办理业务（计算）。要想办理业务，客户要先通过旋转门进入银行；办理完之后，客户要再次通过旋转门离开银行。一个客户可以办理多次业务，每次都必须从旋转门进出（TCP长连接）。另外，旋转门一次只允许一个客户通过（无论进出），因为read()/write()只能同时调用其中一个。</p>
+<h2 id="方案5"><a href="#方案5" class="headerlink" title="方案5"></a>方案5</h2><p>这间小银行有一个旋转门、一个柜台，每次只允许一名客户办理业务。而且当有人在办理业务时，旋转门是锁住的（计算和IO在同一线程）。为了维持工作效率，银行要求客户应该尽快办理业务，最好不要在取款的时候打电话去问家里人密码，也不要在通过旋转门的时候停下来系鞋带，这都会阻塞其他堵在门外的客户。如果客户很少，这是很经济且高效的方案；但是如果场地较大（多核），则这种布局就浪费了不少资源，只能并发（concurrent）不能并行（parallel）。如果确实一次办不完，应该离开柜台，到门外等着，等银行通知再来继续办理（分阶段回调）。</p>
+<h2 id="方案8"><a href="#方案8" class="headerlink" title="方案8"></a>方案8</h2><p>这间银行有一个旋转门，一个或多个柜台。银行进门之后有一个队列，客户在这里排队到柜台（线程池）办理业务。即在单线程Reactor后面接了一个线程池用于计算，可以利用多核。旋转门基本是不锁的，随时都可以进出。但是排队会消耗一点时间，相比之下，方案5中客户一进门就能立刻办理业务。另外一种做法是线程池里的每个线程有自己的任务队列，而不是整个线程池共用一个任务队列。这样的好处是避免全局队列的锁争用，坏处是计算资源有可能分配不平均，降低并行度。</p>
+<h2 id="方案9"><a href="#方案9" class="headerlink" title="方案9"></a>方案9</h2><p>这间大银行相当于包含方案5中的多家小银行，每个客户进大门的时候就被固定分配到某一间小银行中，他的业务只能由这间小银行办理，他每次都要进出小银行的旋转门。但总体来看，大银行可以同时服务多个客户。这时同样要求办理业务时不能空等（阻塞），否则会影响分到同一间小银行的其他客户。而且必要的时候可以为VIP客户单独开一间或几间小银行，优先办理VIP业务。这跟方案5不同，当普通客户在办理业务的时候，VIP客户也只能在门外等着（见图6-11的右图）。这是一种适应性很强的方案，也是muduo原生的多线程IO模型。</p>
+<h2 id="方案11"><a href="#方案11" class="headerlink" title="方案11"></a>方案11</h2><p>这间大银行有多个旋转门，多个柜台。旋转门和柜台之间没有一一对应关系，客户进大门的时候就被固定分配到某一旋转门中（奇怪的安排，易于实现线程安全的IO，见§4.6），进入旋转门之后，有一个队列，客户在此排队到柜台办理业务。这种方案的资源利用率可能比方案9更高，一个客户不会被同一小银行的其他客户阻塞，但延迟也比方案9略大。</p>
+<h1 id="应该使用几个event-loop"><a href="#应该使用几个event-loop" class="headerlink" title="应该使用几个event loop"></a>应该使用几个event loop</h1><p>一个程序到底是使用一个event loop还是使用多个event loops呢？</p>
+<p>ZeroMQ的手册给出的建议是，按照每千兆比特每秒的吞吐量配一个event loop的比例来设置event loop的数目，即muduo::TcpServer::setThreadNum()的参数。</p>
+<p>依据这条经验规则，在编写运行于千兆以太网上的网络程序时，用一个event loop就足以应付网络IO。如果程序本身没有多少计算量，而主要瓶颈在网络带宽，那么可以按这条规则来办，只用一个event loop。另一方面，如果程序的IO带宽较小，计算量较大，而且对延迟不敏感，那么可以把计算放到thread pool中，也可以只用一个event loop。</p>
+<p>值得指出的是，以上假定了TCP连接是同质的，没有优先级之分，我们看重的是服务程序的总吞吐量。但是如果TCP连接有优先级之分，那么单个event loop可能不适合，正确的做法是把高优先级的连接用单独的event loop来处理。</p>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/NP/" rel="tag"><i class="fa fa-tag"></i> NP</a>
+            
+              <a href="/tags/DesignPattern/" rel="tag"><i class="fa fa-tag"></i> DesignPattern</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2016/08/07/reactor_intro/" rel="next" title="Reactor模式讲解">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    Reactor模式讲解
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2016/08/11/关于UNP与APUE与TLPI三本大部头的阅读建议(着重讲UNP)/" rel="prev" title="关于UNP与APUE与TLPI三本大部头的阅读建议(着重讲UNP)">
+                <p class="post-nav-pre-next-title">
+                    关于UNP与APUE与TLPI三本大部头的阅读建议(着重讲UNP)
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#服务器模型总结"><span class="nav-number">1.</span> <span class="nav-text">服务器模型总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方案0"><span class="nav-number">2.</span> <span class="nav-text">方案0</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方案1"><span class="nav-number">3.</span> <span class="nav-text">方案1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方案2"><span class="nav-number">4.</span> <span class="nav-text">方案2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方案3"><span class="nav-number">5.</span> <span class="nav-text">方案3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方案4"><span class="nav-number">6.</span> <span class="nav-text">方案4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方案5-单线程Reactor"><span class="nav-number">7.</span> <span class="nav-text">方案5 - 单线程Reactor</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor出现的原因"><span class="nav-number">7.1.</span> <span class="nav-text">Reactor出现的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor的意义"><span class="nav-number">7.2.</span> <span class="nav-text">Reactor的意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor的具体模型"><span class="nav-number">7.3.</span> <span class="nav-text">Reactor的具体模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方案6"><span class="nav-number">8.</span> <span class="nav-text">方案6</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方案7"><span class="nav-number">9.</span> <span class="nav-text">方案7</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方案8-Reactor-ThreadPool"><span class="nav-number">10.</span> <span class="nav-text">方案8 - Reactor+ThreadPool</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方案9-Reactors-In-Threads"><span class="nav-number">11.</span> <span class="nav-text">方案9 - Reactors In Threads</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方案10"><span class="nav-number">12.</span> <span class="nav-text">方案10</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方案11-Reactors-Thread-Pool"><span class="nav-number">13.</span> <span class="nav-text">方案11 - Reactors+Thread Pool</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#哪些是实用的模型"><span class="nav-number">14.</span> <span class="nav-text">哪些是实用的模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方案5"><span class="nav-number">14.1.</span> <span class="nav-text">方案5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方案8"><span class="nav-number">14.2.</span> <span class="nav-text">方案8</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方案9"><span class="nav-number">14.3.</span> <span class="nav-text">方案9</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方案11"><span class="nav-number">14.4.</span> <span class="nav-text">方案11</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应该使用几个event-loop"><span class="nav-number">15.</span> <span class="nav-text">应该使用几个event loop</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

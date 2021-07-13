@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Self-cultivation,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="python mro问题 怎么实现一个协程库? mock是啥: https://zhuanlan.zhihu.com/p/30380243  import流程 当Python的解释器遇到import语句或者其他上述导入语句时,它会先去查看sys.modules中是否已经有同名模块被导入了, 如果有就直接取来用;没有就去查阅sys.path里面所有已经储存的目录. sys.path这个列表初始化的时">
+<meta name="keywords" content="Self-cultivation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器开发自我修养专栏-Python精要">
+<meta property="og:url" content="https://hulinhong.com/2021/03/27/self_cultivation_python/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="python mro问题 怎么实现一个协程库? mock是啥: https://zhuanlan.zhihu.com/p/30380243  import流程 当Python的解释器遇到import语句或者其他上述导入语句时,它会先去查看sys.modules中是否已经有同名模块被导入了, 如果有就直接取来用;没有就去查阅sys.path里面所有已经储存的目录. sys.path这个列表初始化的时">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/python/v2-0d5071093adaa02bc03fa3dfd91aa5bc_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-d7314ead6b303f08a91687577c045585_b.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-d3c3f52615fb704c26bd53dbb178767c_b.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-510f4d2d37aabdbc8978d9e47630237d_b.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/python/v2-6fd40c055a6633c654acaf05f472c1b2_720w.jpg">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.070Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="服务器开发自我修养专栏-Python精要">
+<meta name="twitter:description" content="python mro问题 怎么实现一个协程库? mock是啥: https://zhuanlan.zhihu.com/p/30380243  import流程 当Python的解释器遇到import语句或者其他上述导入语句时,它会先去查看sys.modules中是否已经有同名模块被导入了, 如果有就直接取来用;没有就去查阅sys.path里面所有已经储存的目录. sys.path这个列表初始化的时">
+<meta name="twitter:image" content="https://hulinhong.com/img/noodle_plan/python/v2-0d5071093adaa02bc03fa3dfd91aa5bc_720w.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>服务器开发自我修养专栏-Python精要 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/03/27/self_cultivation_python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">服务器开发自我修养专栏-Python精要</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-27T19:08:06+00:00">
+                2021-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self-cultivation/" itemprop="url" rel="index">
+                    <span itemprop="name">Self-cultivation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Self-cultivation/" rel="tag"><i class="fa fa-tag"></i> Self-cultivation</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/03/17/coroutine_illustrated/" rel="next" title="基于ucontext实现协程">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  基于ucontext实现协程
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/04/18/cpp_func_traits_intro/" rel="prev" title="rpclib源码阅读笔记之浅谈cpp func traits">
+              <p class="post-nav-pre-next-title">
+                  rpclib源码阅读笔记之浅谈cpp func traits
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="python"><a href="#python" class="headerlink" title="python"></a>python</h1><ul>
+<li>mro问题</li>
+<li>怎么实现一个协程库?</li>
+<li>mock是啥: <a href="https://zhuanlan.zhihu.com/p/30380243" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/30380243</a></li>
+</ul>
+<h2 id="import流程"><a href="#import流程" class="headerlink" title="import流程"></a>import流程</h2><ul>
+<li>当Python的解释器遇到import语句或者其他上述导入语句时,它会先去查看sys.modules中是否已经有同名模块被导入了,</li>
+<li>如果有就直接取来用;没有就去查阅sys.path里面所有已经储存的目录.<ul>
+<li>sys.path这个列表初始化的时候,通常包含一些来自外部的库(external libraries)或者是来自操作系统的一些库,当然也会有一些类似于dist-package的标准库在里面.这些目录通常是被按照顺序或者是直接去搜索想要的–如果说他们当中的一个包含有期望的package或者是module,这个package或者是module将会在整个过程结束的时候被直接提取出来保存在sys.modules中(sys.modules是一个模块名:模块对象的字典结构).</li>
+<li>当然，这个 sys.path 是可以修改的（正如上文提到的一种解决办法）。值得注意的是，如果当前目录包含有和标准库同名的模块，会直接使用当前目录的模块而不是标准模块。</li>
+<li>当在这些个地址中实在是找不着时,它就会抛出一个ModuleNotFoundError错误.</li>
+</ul>
+</li>
+<li>当我们要导入一个模块（比如 foo ）时，解释器首先会根据命名查找内置模块，如果没有找到，它就会去查找 sys.path 列表中的目录，看目录中是否有 foo.py 。sys.path 的初始值来自于：  <ul>
+<li>运行脚本所在的目录（如果打开的是交互式解释器则是当前目录）</li>
+<li>PYTHONPATH 环境变量（类似于 PATH 变量，也是一组目录名组成）</li>
+<li>Python 安装时的默认设置</li>
+</ul>
+</li>
+</ul>
+<h2 id="为啥字符串join比加号连接快"><a href="#为啥字符串join比加号连接快" class="headerlink" title="为啥字符串join比加号连接快"></a>为啥字符串join比加号连接快</h2><p>字符串是不可变对象，当用操作符<code>+</code>连接字符串的时候，每执行一次<code>+</code>都会申请一块新的内存，然后复制上一个<code>+</code>操作的结果和本次操作的右操作符到这块内存空间，因此用<code>+</code>连接字符串的时候会涉及好几次内存申请和复制。而<code>join</code>在连接字符串的时候，会先计算需要多大的内存存放结果，然后一次性申请所需内存并将字符串复制过去，这是为什么<code>join</code>的性能优于<code>+</code>的原因。所以在连接字符串数组的时候，我们应考虑优先使用<code>join</code>。</p>
+<h2 id="is和-的区别"><a href="#is和-的区别" class="headerlink" title="is和==的区别"></a>is和==的区别</h2><p>官方文档中说 is 表示的是对象标示符（object identity），而 == 表示的是相等（equality）。is 的作用是用来检查对象的标示符是否一致，也就是比较两个对象在内存中的地址是否一样，而 == 是用来检查两个对象是否相等。</p>
+<p>我们在检查 a is b 的时候，其实相当于检查 id(a) == id(b)。而检查 a == b 的时候，实际是调用了对象 a 的 <strong>eq()</strong> 方法，a == b 相当于 a.<strong>eq</strong>(b)。</p>
+<p>一般情况下，如果 a is b 返回True的话，即 a 和 b 指向同一块内存地址的话，a == b 也返回True，即 a 和 b 的值也相等。</p>
+<h2 id="元类"><a href="#元类" class="headerlink" title="元类"></a>元类</h2><p>参考: <a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017592449371072" target="_blank" rel="noopener">https://www.liaoxuefeng.com/wiki/1016959663602400/1017592449371072</a></p>
+<p>python元类的使用场景, 比如orm框架, ORM全称“Object Relational Mapping”，即对象-关系映射，就是把关系数据库的一行映射为一个对象，也就是一个类对应一个表，这样，写代码更简单，不用直接操作SQL语句。</p>
+<p><code>type()</code>函数既可以返回一个对象的类型，又可以创建出新的类型，比如，我们可以通过<code>type()</code>函数创建出<code>Hello</code>类，而无需通过<code>class Hello(object)...</code>的定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">\&gt;&gt;&gt; def fn(self, name=&apos;world&apos;): # 先定义函数</span><br><span class="line">...     print(&apos;Hello, %s.&apos; % name)</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; Hello = type(&apos;Hello&apos;, (object,), dict(hello=fn)) # 创建Hello class</span><br><span class="line">&gt;&gt;&gt; h = Hello()</span><br><span class="line">&gt;&gt;&gt; h.hello()</span><br><span class="line">Hello, world.</span><br><span class="line">&gt;&gt;&gt; print(type(Hello))</span><br><span class="line">&lt;class &apos;type&apos;&gt;</span><br><span class="line">&gt;&gt;&gt; print(type(h))</span><br><span class="line">&lt;class &apos;__main__.Hello&apos;&gt;</span><br></pre></td></tr></table></figure>
+<p>要创建一个 class 对象，<code>type()</code>函数依次传入 3 个参数：</p>
+<ol>
+<li>class 的名称；</li>
+<li>继承的父类集合，注意 Python 支持多重继承，如果只有一个父类，别忘了 tuple 的单元素写法；</li>
+<li>class 的方法名称与函数绑定，这里我们把函数<code>fn</code>绑定到方法名<code>hello</code>上。</li>
+</ol>
+<p><strong>通过<code>type()</code>函数创建的类和直接写 class 是完全一样的，因为 Python 解释器遇到 class 定义时，仅仅是扫描一下 class 定义的语法，然后调用<code>type()</code>函数创建出 class</strong>。</p>
+<p>正常情况下，我们都用<code>class Xxx...</code>来定义类，但是，<code>type()</code>函数也允许我们动态创建出类来，也就是说，动态语言本身支持运行期动态创建类，这和静态语言有非常大的不同，要在静态语言运行期创建类，必须构造源代码字符串再调用编译器，或者借助一些工具生成字节码实现，本质上都是动态编译，会非常复杂。</p>
+<h3 id="metaclass"><a href="#metaclass" class="headerlink" title="metaclass"></a>metaclass</h3><p>除了使用<code>type()</code>动态创建类以外，要控制类的创建行为，还可以使用 metaclass。<br>metaclass，直译为元类，简单的解释就是：<br>当我们定义了类以后，就可以根据这个类创建出实例，所以：先定义类，然后创建实例。<br>但是如果我们想创建出类呢？那就必须根据 metaclass 创建出类，所以：先定义 metaclass，然后创建类。<br>连接起来就是：<strong>先定义 metaclass，就可以创建类，最后创建实例。</strong><br>所以，metaclass 允许你创建类或者修改类。换句话说，你可以把类看成是 metaclass 创建出来的 “实例”。<br>我们先看一个简单的例子，这个 metaclass 可以给我们自定义的 MyList 增加一个<code>add</code>方法：<br>定义<code>ListMetaclass</code>，按照默认习惯，metaclass 的类名总是以 Metaclass 结尾，以便清楚地表示这是一个 metaclass：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListMetaclass</span><span class="params">(type)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, name, bases, attrs)</span>:</span></span><br><span class="line">        attrs\[<span class="string">'add'</span>\] = <span class="keyword">lambda</span> self, value: self.append(value)</span><br><span class="line">        <span class="keyword">return</span> type.__new__(cls, name, bases, attrs)</span><br></pre></td></tr></table></figure></p>
+<p>有了 ListMetaclass，我们在定义类的时候还要指示使用 ListMetaclass 来定制类，传入关键字参数<code>metaclass</code>：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyList</span><span class="params">(list, metaclass=ListMetaclass)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></p>
+<p>当我们传入关键字参数<code>metaclass</code>时，魔术就生效了，它指示 Python 解释器在创建<code>MyList</code>时，要通过<code>ListMetaclass.__new__()</code>来创建，在此，我们可以修改类的定义，比如，加上新的方法，然后，返回修改后的定义。</p>
+<p><code>__new__()</code>方法接收到的参数依次是：</p>
+<ol>
+<li>当前准备创建的类的对象；</li>
+<li>类的名字；</li>
+<li>类继承的父类集合；</li>
+<li>类的方法集合。</li>
+</ol>
+<p>测试一下<code>MyList</code>是否可以调用<code>add()</code>方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">\&gt;&gt;&gt; L = MyList()</span><br><span class="line">&gt;&gt;&gt; L.add(1)</span><br><span class="line">&gt;&gt; L</span><br><span class="line">\[1\]</span><br></pre></td></tr></table></figure></p>
+<p>而普通的<code>list</code>没有<code>add()</code>方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">\&gt;&gt;&gt; L2 = list()</span><br><span class="line">&gt;&gt;&gt; L2.add(1)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">AttributeError: &apos;list&apos; object has no attribute &apos;add&apos;</span><br></pre></td></tr></table></figure></p>
+<h2 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kw)</span>:</span></span><br><span class="line">        print(<span class="string">'call %s():'</span> % func.__name__)</span><br><span class="line">        <span class="keyword">return</span> func(*args, **kw)</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br></pre></td></tr></table></figure>
+<p>观察上面的log，因为它是一个decorator，所以接受一个函数作为参数，并返回一个函数。我们要借助Python的@语法，把decorator置于函数的定义处：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@log</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">now</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'2015-3-25'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>调用now()函数，不仅会运行now()函数本身，还会在运行now()函数前打印一行日志：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; now()</span><br><span class="line">call now():</span><br><span class="line">2015-3-25</span><br></pre></td></tr></table></figure>
+<p>把@log放到now()函数的定义处，相当于执行了语句：<br><code>now = log(now)</code><br>由于log()是一个decorator，返回一个函数，所以，原来的now()函数仍然存在，只是现在同名的now变量指向了新的函数，于是调用now()将执行新函数，即在log()函数中返回的wrapper()函数。</p>
+<p>wrapper()函数的参数定义是(<em>args, *</em>kw)，因此，wrapper()函数可以接受任意参数的调用。在wrapper()函数内，首先打印日志，再紧接着调用原始函数。</p>
+<p>如果decorator本身需要传入参数，那就需要编写一个返回decorator的高阶函数，写出来会更复杂。比如，要自定义log的文本：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log</span><span class="params">(text)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decorator</span><span class="params">(func)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kw)</span>:</span></span><br><span class="line">            print(<span class="string">'%s %s():'</span> % (text, func.__name__))</span><br><span class="line">            <span class="keyword">return</span> func(*args, **kw)</span><br><span class="line">        <span class="keyword">return</span> wrapper</span><br><span class="line">    <span class="keyword">return</span> decorator</span><br></pre></td></tr></table></figure></p>
+<p>这个3层嵌套的decorator用法如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@log('execute')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">now</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'2015-3-25'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>执行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; now()</span><br><span class="line">execute now():</span><br><span class="line">2015-3-25</span><br></pre></td></tr></table></figure></p>
+<p>和两层嵌套的decorator相比，3层嵌套的效果是这样的：<br><code>now = log(&#39;execute&#39;)(now)</code><br>我们来剖析上面的语句，首先执行log(‘execute’)，返回的是decorator函数，再调用返回的函数，参数是now函数，返回值最终是wrapper函数。</p>
+<h2 id="python命令行参数"><a href="#python命令行参数" class="headerlink" title="python命令行参数"></a>python命令行参数</h2><ul>
+<li>-u参数的使用：python命令加上-u（unbuffered）参数后会强制其标准输出也同标准错误一样不通过缓存直接打印到屏幕。</li>
+<li>-c参数，支持执行单行命令/脚本。如: <code>python -c &quot;import os;print(&#39;hello&#39;),print(&#39;world&#39;)&quot;</code></li>
+</ul>
+<h3 id="python-m-test-folder-test-py与python-test-folder-test有什么不同"><a href="#python-m-test-folder-test-py与python-test-folder-test有什么不同" class="headerlink" title="python -m test_folder/test.py与python test_folder/test有什么不同"></a><code>python -m test_folder/test.py</code>与<code>python test_folder/test</code>有什么不同</h3><p>桌面的test_folder文件夹下有个test.py<br><figure class="highlight python"><figcaption><span>test.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">print(sys.path)</span><br></pre></td></tr></table></figure></p>
+<p>运行看看:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hulinhong@GIH-D-14531 MINGW64 ~/Desktop</span><br><span class="line">$ python test_folder/test.py</span><br><span class="line">[&apos;C:\\Users\\hulinhong\\Desktop\\test_folder&apos;, &apos;C:\\Program Files\\Python37\\python37.zip&apos;, &apos;C:\\Program Files\\Python37\\DLLs&apos;, &apos;C:\\Program Files\\Python37\\lib&apos;, &apos;C:\\Program Files\\Python37&apos;, &apos;C:\\Program Files\\Python37\\lib\\site-packages&apos;, &apos;C:\\Program Files\\Python37\\lib\\site-packages\\redis_py_cluster-2.1.0-py3.7.egg&apos;]</span><br><span class="line"></span><br><span class="line">hulinhong@GIH-D-14531 MINGW64 ~/Desktop</span><br><span class="line">$ python -m test_folder.test</span><br><span class="line">[&apos;C:\\Users\\hulinhong\\Desktop&apos;, &apos;C:\\Program Files\\Python37\\python37.zip&apos;, &apos;C:\\Program Files\\Python37\\DLLs&apos;, &apos;C:\\Program Files\\Python37\\lib&apos;, &apos;C:\\Program Files\\Python37&apos;, &apos;C:\\Program Files\\Python37\\lib\\site-packages&apos;, &apos;C:\\Program Files\\Python37\\lib\\site-packages\\redis_py_cluster-2.1.0-py3.7.egg&apos;]</span><br></pre></td></tr></table></figure></p>
+<p>细心的同学会发现，<strong>区别</strong>就是在第一个路径:  </p>
+<ul>
+<li>python直接启动是把test.py文件所在的目录放到了sys.path属性中。</li>
+<li>模块启动是把你输入命令的目录（也就是当前路径），放到了sys.path属性中</li>
+</ul>
+<p>所以就会有下面的情况:</p>
+<p>目录结构如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">package/</span><br><span class="line">    __init__.py</span><br><span class="line">    mod1.py</span><br><span class="line">package2/</span><br><span class="line">    __init__.py</span><br><span class="line">    run.py</span><br></pre></td></tr></table></figure></p>
+<p>run.py 内容如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> package <span class="keyword">import</span> mod1</span><br><span class="line">print(sys.path)</span><br></pre></td></tr></table></figure></p>
+<p>如何才能启动run.py文件？</p>
+<ul>
+<li><p>直接启动（失败）</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  test_import_project git:(master) ✗ python package2/run.py</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;package2/run.py&quot;, line 2, in &lt;module&gt;</span><br><span class="line">    from package import mod1</span><br><span class="line">ImportError: No module named package</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以模块方式启动（成功）</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  test_import_project git:(master) ✗ python -m package2.run</span><br><span class="line">[&apos;C:\\Users\\hulinhong\\Desktop&apos;,</span><br><span class="line">&apos;/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/lib/python27.zip&apos;,</span><br><span class="line">...]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>当需要启动的py文件引用了一个模块。你需要注意：在启动的时候需要考虑sys.path中有没有你import的模块的路径！<br>这个时候，到底是使用直接启动，还是以模块的启动？目的就是把import的那个模块的路径放到sys.path中。你是不是明白了呢？</p>
+<blockquote>
+<p>官方文档参考： <a href="http://www.pythondoc.com/pythontutorial3/modules.html" target="_blank" rel="noopener">http://www.pythondoc.com/pythontutorial3/modules.html</a></p>
+</blockquote>
+<p>导入一个叫 mod1 的模块时，解释器先在当前目录中搜索名为 mod1.py 的文件。如果没有找到的话，接着会到 sys.path 变量中给出的目录列表中查找。 sys.path 变量的初始值来自如下：</p>
+<p>输入脚本的目录（当前目录）。</p>
+<ul>
+<li>环境变量 PYTHONPATH 表示的目录列表中搜索(这和 shell 变量 PATH 具有一样的语法，即一系列目录名的列表)。</li>
+<li>Python 默认安装路径中搜索。</li>
+<li>实际上，解释器由 sys.path 变量指定的路径目录搜索模块，该变量初始化时默认包含了输入脚本（或者当前目录）， PYTHONPATH 和安装目录。这样就允许 Python程序了解如何修改或替换模块搜索目录。</li>
+</ul>
+<h2 id="在python程序中调用cpp的库创建的线程是否受制于GIL"><a href="#在python程序中调用cpp的库创建的线程是否受制于GIL" class="headerlink" title="在python程序中调用cpp的库创建的线程是否受制于GIL?"></a>在python程序中调用cpp的库创建的线程是否受制于GIL?</h2><p>首先要理解什么是GIL.<br>Python 的多线程是真的多线程，只不过在任意时刻，它们中只有一个线程能够取得 GIL 从而被允许执行 Python 代码。其它线程要么等着，要么干别的和 Python 无关的事情（比如等待系统 I/O，或者算点什么东西）。</p>
+<p>那如果是通过CPP扩展创建出来的线程，可以摆脱这个限制么？<br>很简单，不访问 Python 的数据和方法，就和 GIL 没任何关系。如果需要访问 Python，还是需要先取得 GIL.</p>
+<p>GIL 是为了保护 Python 数据不被并发访问破坏，所以当你不访问 Python 的数据的时候自然就可以释放（或者不取得）GIL。反过来，如果需要访问 Python 的数据，就一定要取得 GIL 再访问。PyObject 等不是线程安全的。多线程访问任何非线程安全的数据都需要先取得对应的锁。Python 所有的 PyObject 什么的都共享一个锁，它就叫 GIL。</p>
+<h2 id="new-与-del-与-init"><a href="#new-与-del-与-init" class="headerlink" title="__new__ 与 __del__ 与 __init__"></a><code>__new__</code> 与 <code>__del__</code> 与 <code>__init__</code></h2><p>先来看一个单例模式的实现<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span>:</span></span><br><span class="line">    __isinstance = <span class="keyword">False</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> cls.__isinstance:  <span class="comment"># 如果被实例化了</span></span><br><span class="line">            cls.__isinstance = object.__new__(cls)  <span class="comment"># 否则实例化</span></span><br><span class="line">        <span class="keyword">return</span> cls.__isinstance  <span class="comment"># 返回实例化的对象</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        print(<span class="string">'my name is %s'</span>%(name))</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__del__</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'886, %s'</span>%(self.name))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">d1 = Demo(<span class="string">'Alice'</span>)</span><br><span class="line">d2 = Demo(<span class="string">'Anew'</span>)</span><br><span class="line">print(d1)</span><br><span class="line">print(d2)</span><br></pre></td></tr></table></figure></p>
+<p>打印:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">my name is Alice</span><br><span class="line">my name is Anew</span><br><span class="line">&lt;__main__.Demo object at 0x000001446604D3C8&gt;</span><br><span class="line">&lt;__main__.Demo object at 0x000001446604D3C8&gt;</span><br><span class="line">886, Anew</span><br></pre></td></tr></table></figure></p>
+<p><code>__new__</code> 是负责对当前类进行实例化，并将实例返回，并传给<code>__init__</code>方法，<code>__init__</code>方法中的self就是指代<code>__new__</code>传过来的对象，所以再次强调，<code>__init__</code>是实例化后调用的第一个方法。</p>
+<p><code>__del__</code>在对象销毁时被调用，往往用于清除数据或还原环境等操作，比如在类中的其他普通方法中实现了插入数据库的语句，当对象被销毁时我们需要将数据还原，那么这时可以在<code>__del__</code>方法中实现还原数据库数据的功能。<code>__del__</code>被成为析构方法，同样和C++中的析构方法类似。</p>
+<h2 id="python垃圾回收"><a href="#python垃圾回收" class="headerlink" title="python垃圾回收"></a>python垃圾回收</h2><p>总体来说，在Python中，主要通过引用计数进行垃圾回收；通过 “标记-清除” 解决容器对象可能产生的循环引用问题；通过 “分代回收” 以空间换时间的方法提高垃圾回收效率。</p>
+<ul>
+<li>引用计数</li>
+<li>标记清除(Mark and Sweep)</li>
+<li>分代回收</li>
+</ul>
+<h3 id="标记清除咋弄的"><a href="#标记清除咋弄的" class="headerlink" title="标记清除咋弄的"></a>标记清除咋弄的</h3><p>参考: <a href="https://zhuanlan.zhihu.com/p/83251959" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/83251959</a></p>
+<p>Python 采用了 <strong>“标记-清除”(Mark and Sweep)</strong> 算法，解决容器对象可能产生的循环引用问题。(注意，只有容器对象才会产生循环引用的情况，比如列表、字典、用户自定义类的对象、元组等。而像数字，字符串这类简单类型不会出现循环引用。作为一种优化策略，对于只包含简单类型的元组也不在标记清除算法的考虑之列)</p>
+<p>跟其名称一样，该算法在进行垃圾回收时分成了两步，分别是：</p>
+<ul>
+<li>A）标记阶段，遍历所有的对象，如果是可达的（reachable），也就是还有对象引用它，那么就标记该对象为可达；</li>
+<li>B）清除阶段，再次遍历对象，如果发现某个对象没有标记为可达，则就将其回收。</li>
+</ul>
+<p>如下图所示，在标记清除算法中，为了追踪容器对象，需要每个容器对象维护两个额外的指针，用来将容器对象组成一个双端链表，指针分别指向前后两个容器对象，方便插入和删除操作。python 解释器 (Cpython) 维护了两个这样的双端链表，一个链表存放着需要被扫描的容器对象，另一个链表存放着临时不可达对象。在图中，这两个链表分别被命名为”Object to Scan”和”Unreachable”。图中例子是这么一个情况：link1,link2,link3 组成了一个引用环，同时 link1 还被一个变量 A(其实这里称为名称 A 更好)引用。link4 自引用，也构成了一个引用环。从图中我们还可以看到，每一个节点除了有一个记录当前引用计数的变量 ref_count 还有一个 gc_ref 变量，这个 gc_ref 是 ref_count 的一个副本，所以初始值为 ref_count 的大小。</p>
+<p><img src="/img/noodle_plan/python/v2-0d5071093adaa02bc03fa3dfd91aa5bc_720w.jpg" alt></p>
+<p>gc 启动的时候，会逐个遍历”Object to Scan” 链表中的容器对象，并且将当前对象所引用的所有对象的 gc_ref 减一。(扫描到 link1 的时候，由于 link1 引用了 link2, 所以会将 link2 的 gc_ref 减一，接着扫描 link2, 由于 link2 引用了 link3, 所以会将 link3 的 gc_ref 减一…..) 像这样将”Objects to Scan” 链表中的所有对象考察一遍之后，两个链表中的对象的 ref_count 和 gc_ref 的情况如下图所示。这一步操作就相当于解除了循环引用对引用计数的影响。</p>
+<p><img src="https://pic3.zhimg.com/v2-d7314ead6b303f08a91687577c045585_b.jpg" alt></p>
+<p>接着，gc 会再次扫描所有的容器对象，如果对象的 gc_ref 值为 0，那么这个对象就被标记为 GC_TENTATIVELY_UNREACHABLE，并且被移至”Unreachable” 链表中。下图中的 link3 和 link4 就是这样一种情况。</p>
+<p><img src="https://pic1.zhimg.com/v2-d3c3f52615fb704c26bd53dbb178767c_b.jpg" alt></p>
+<p>如果对象的 gc_ref 不为 0，那么这个对象就会被标记为 GC_REACHABLE。同时当 gc 发现有一个节点是可达的，那么他会递归式的将从该节点出发可以到达的所有节点标记为 GC_REACHABLE, 这就是下图中 link2 和 link3 所碰到的情形。</p>
+<p><img src="https://pic1.zhimg.com/v2-510f4d2d37aabdbc8978d9e47630237d_b.jpg" alt></p>
+<p>除了将所有可达节点标记为 GC_REACHABLE 之外，如果该节点当前在”Unreachable” 链表中的话，还需要将其移回到”Object to Scan” 链表中，下图就是 link3 移回之后的情形。</p>
+<p><img src="/img/noodle_plan/python/v2-6fd40c055a6633c654acaf05f472c1b2_720w.jpg" alt></p>
+<p>第二次遍历的所有对象都遍历完成之后，存在于”Unreachable” 链表中的对象就是真正需要被释放的对象。如上图所示，此时 link4 存在于 Unreachable 链表中，gc 随即释放之。</p>
+<p><strong>上面描述的垃圾回收的阶段，会暂停整个应用程序，等待标记清除结束后才会恢复应用程序的运行。</strong></p>
+<h4 id="为啥标记清除回收无法回收重写了-del-方法的类对象"><a href="#为啥标记清除回收无法回收重写了-del-方法的类对象" class="headerlink" title="为啥标记清除回收无法回收重写了__del__方法的类对象"></a>为啥标记清除回收无法回收重写了<code>__del__</code>方法的类对象</h4><blockquote>
+<p>Circular references which are garbage are detected when the option cycle detector is enabled (it’s on by default), but can only be cleaned up if there are no Python-level <code>__del__</code>() methods involved.</p>
+</blockquote>
+<p>官方文档中表明启用周期检测器时会检测到垃圾的循环引用（默认情况下它是打开的)，但只有在没有涉及 Python <code>__del__()</code> 方法的情况下才能清除。Python 不知道破坏彼此保持循环引用的对象的安全顺序，因此它则不会为这些方法调用析构函数。简而言之，如果定义了 <code>__del__</code> 函数，那么在循环引用中Python解释器无法判断析构对象的顺序，因此就不做处理。</p>
+<h3 id="分代回收"><a href="#分代回收" class="headerlink" title="分代回收"></a>分代回收</h3><p>在循环引用对象的回收中，整个应用程序会被暂停，为了减少应用程序暂停的时间，Python 通过“分代回收”(Generational Collection)以空间换时间的方法提高垃圾回收效率。</p>
+<p>分代回收是基于这样的一个统计事实，对于程序，存在一定比例的内存块的生存周期比较短；而剩下的内存块，生存周期会比较长，甚至会从程序开始一直持续到程序结束。生存期较短对象的比例通常在 80%～90% 之间，这种思想简单点说就是：对象存在时间越长，越可能不是垃圾，应该越少去收集。这样在执行标记-清除算法时可以有效减小遍历的对象数，从而提高垃圾回收的速度。</p>
+<p>python gc给对象定义了三种世代(0,1,2),每一个新生对象在generation zero中，如果它在一轮gc扫描中活了下来，那么它将被移至generation one,在那里他将较少的被扫描，如果它又活过了一轮gc,它又将被移至generation two，在那里它被扫描的次数将会更少。</p>
+<p>gc的扫描在什么时候会被触发呢?答案是当某一世代中被分配的对象与被释放的对象之差达到某一阈值的时候，就会触发gc对某一世代的扫描。值得注意的是当某一世代的扫描被触发的时候，比该世代年轻的世代也会被扫描。也就是说如果世代2的gc扫描被触发了，那么世代0,世代1也将被扫描，如果世代1的gc扫描被触发，世代0也会被扫描。</p>
+<p>该阈值可以通过下面两个函数查看和调整:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gc.get_threshold() <span class="comment"># (threshold0, threshold1, threshold2).</span></span><br><span class="line">gc.set_threshold(threshold0[, threshold1[, threshold2]])</span><br></pre></td></tr></table></figure>
+<p>下面对set_threshold()中的三个参数threshold0, threshold1, threshold2进行介绍。gc会记录自从上次收集以来新分配的对象数量与释放的对象数量，当两者之差超过threshold0的值时，gc的扫描就会启动，初始的时候只有世代0被检查。如果自从世代1最近一次被检查以来，世代0被检查超过threshold1次，那么对世代1的检查将被触发。相同的，如果自从世代2最近一次被检查以来，世代1被检查超过threshold2次，那么对世代2的检查将被触发。get_threshold()是获取三者的值，默认值为(700,10,10).</p>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Self-cultivation/" rel="tag"><i class="fa fa-tag"></i> Self-cultivation</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2021/03/17/coroutine_illustrated/" rel="next" title="基于ucontext实现协程">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    基于ucontext实现协程
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2021/04/18/cpp_func_traits_intro/" rel="prev" title="rpclib源码阅读笔记之浅谈cpp func traits">
+                <p class="post-nav-pre-next-title">
+                    rpclib源码阅读笔记之浅谈cpp func traits
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#python"><span class="nav-number">1.</span> <span class="nav-text">python</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#import流程"><span class="nav-number">1.1.</span> <span class="nav-text">import流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为啥字符串join比加号连接快"><span class="nav-number">1.2.</span> <span class="nav-text">为啥字符串join比加号连接快</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is和-的区别"><span class="nav-number">1.3.</span> <span class="nav-text">is和==的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元类"><span class="nav-number">1.4.</span> <span class="nav-text">元类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#metaclass"><span class="nav-number">1.4.1.</span> <span class="nav-text">metaclass</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#装饰器"><span class="nav-number">1.5.</span> <span class="nav-text">装饰器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python命令行参数"><span class="nav-number">1.6.</span> <span class="nav-text">python命令行参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#python-m-test-folder-test-py与python-test-folder-test有什么不同"><span class="nav-number">1.6.1.</span> <span class="nav-text">python -m test_folder/test.py与python test_folder/test有什么不同</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在python程序中调用cpp的库创建的线程是否受制于GIL"><span class="nav-number">1.7.</span> <span class="nav-text">在python程序中调用cpp的库创建的线程是否受制于GIL?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#new-与-del-与-init"><span class="nav-number">1.8.</span> <span class="nav-text">__new__ 与 __del__ 与 __init__</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python垃圾回收"><span class="nav-number">1.9.</span> <span class="nav-text">python垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标记清除咋弄的"><span class="nav-number">1.9.1.</span> <span class="nav-text">标记清除咋弄的</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为啥标记清除回收无法回收重写了-del-方法的类对象"><span class="nav-number">1.9.1.1.</span> <span class="nav-text">为啥标记清除回收无法回收重写了__del__方法的类对象</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分代回收"><span class="nav-number">1.9.2.</span> <span class="nav-text">分代回收</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

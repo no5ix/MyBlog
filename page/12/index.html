@@ -1,0 +1,2077 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="烫">
+<meta property="og:url" content="https://hulinhong.com/page/12/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="烫">
+<meta name="twitter:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>烫 - 烫烫烫烫烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2018/11/01/algo_practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/01/algo_practice/" itemprop="url">算法企业真题实战练习</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-01T18:48:08+00:00">
+                2018-11-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algo/" itemprop="url" rel="index">
+                    <span itemprop="name">Algo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="算法白话总结"><a href="#算法白话总结" class="headerlink" title="算法白话总结"></a>算法白话总结</h1><p>推荐参考<strong>本博客总结</strong>的 <a href="/2018/10/23/algo_newbie/" title="algo_newbie">algo_newbie</a></p>
+<h1 id="本文完整参考代码"><a href="#本文完整参考代码" class="headerlink" title="本文完整参考代码"></a>本文完整参考代码</h1><p><a href="https://github.com/no5ix/no5ix.github.io/blob/source/source/code/test_algo_practice.py" target="_blank" rel="noopener">https://github.com/no5ix/no5ix.github.io/blob/source/source/code/test_algo_practice.py</a></p>
+<h1 id="实战练习-pending-fini"><a href="#实战练习-pending-fini" class="headerlink" title="实战练习 pending_fini"></a>实战练习 pending_fini</h1><ul>
+<li><a href="#比狗-线程全排列">比狗线程排列题</a></li>
+<li>刷完剑指offer</li>
+<li>回溯法递归强化</li>
+<li><p>二叉树递归强化</p>
+</li>
+<li><p><a href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays/" target="_blank" rel="noopener">lc4题-两个排序数组找中位数, 困难</a></p>
+</li>
+<li><p>一个桶里面有白球. 黑球各 100 个，现在按下述的规则取球：<br>  i . 每次从桶里面拿出来两个球；<br>  ii. 如果取出的是两个同色的球，就再放入一个黑球；<br>  iii. 如果取出的是两个异色的球，就再放入一个白球。<br>  问：最后桶里面只剩下一个黑球的概率是多少？</p>
+</li>
+<li>公司有内部 bbs，员工都会在上面发帖交流。据统计，有三个员工 ID 发帖很多，他们各自的发帖量都超过帖子总数 N 的 1/4。如果给到你所有帖子的发帖人 ID 列表，请写代码找出这三个 ID，要求时间复杂度 O（n），空间复杂度 O（1）。</li>
+</ul>
+<h1 id="finished"><a href="#finished" class="headerlink" title="finished"></a>finished</h1><ul>
+<li><a href="https://leetcode-cn.com/problems/minimum-path-sum/" target="_blank" rel="noopener">leetcode64题最短路径和</a></li>
+<li>判断是否有一个数num在有序数组中出现次数多于数组长度的一半<ul>
+<li>判断num是否等于中间的数即可</li>
+</ul>
+</li>
+<li>数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。<ul>
+<li>根据数组特点得到时间复杂度为O(n)的算法。根据数组特点，数组中有一个数字出现的次数超过数组长度的一半，也就是说它出现的次数比其他所有数字出现的次数之和还要多。因此，我们可以在遍历数组的时候设置两个值：一个是数组中的数result，另一个是出现次数times。当遍历到下一个数字的时候，如果与result相同，则次数加1,不同则次数减一，当次数变为0的时候说明该数字不可能为多数元素，将result设置为下一个数字，次数设为1。这样，当遍历结束后，最后一次设置的result的值可能就是符合要求的值（如果有数字出现次数超过一半，则必为该元素，否则不存在），因此，判断该元素出现次数是否超过一半即可验证应该返回该元素还是返回0。这种思路是对数组进行了两次遍历，复杂度为O(n)。</li>
+</ul>
+</li>
+<li>给定一个含有n个元素的整型数组a，其中只有一个元素出现奇数次，找出这个元素。<ul>
+<li>解决问题的关键是要想明白，按位异或运算满足结合律，偶数个异或结果是0，奇数个异或结果是本身，如<code>1 ^ 2 ^ 3 ^ 1 ^ 2 ^ 3 ^ 3 = (3 ^ 3 ^ 3) ^ (1 ^ 1) ^ (2 ^ 2) = 3^ 0 ^ 0 = 3</code>。</li>
+</ul>
+</li>
+<li>一个无序数组找其子序列构成的和最大，要求子序列中的元素在原数组中两两都不相邻, 和是多少?具体是哪个子序列?<ul>
+<li><a href="/2018/10/23/algo_newbie/#状态转移方程讲解-打家劫舍">状态转移方程讲解-打家劫舍</a></li>
+</ul>
+</li>
+<li><a href="https://leetcode-cn.com/problems/add-two-numbers-ii/" target="_blank" rel="noopener">lc445</a>, 两个单向链表，返回求和后的链表结构, 例如2-&gt;3-&gt;1-&gt;5，和3-&gt;6，结果返回2-&gt;3-&gt;5-&gt;1<ul>
+<li>用栈</li>
+<li>反转链表再相加</li>
+</ul>
+</li>
+<li><p>现有一个随机数生成器可以生成0到4的数，现在要让你用这个随机数生成器生成0到6的随机数，要保证生成的数概率均匀。</p>
+<ul>
+<li>别被这个题目唬住了, 其实很简单</li>
+<li>大多数利用一个等概率随机数构造另外一个等概率随机数的题目，只需两次使用概率函数即可</li>
+<li>代码如下:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rand4</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="comment"># 这是题目给的</span></span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rand6</span><span class="params">()</span>:</span></span><br><span class="line">	res = rand4()</span><br><span class="line">	<span class="comment"># 只要0和1和2, 注意这个0不可少, 不然`res + rand4()`生成的数至少为1</span></span><br><span class="line">	<span class="keyword">while</span> res &gt; <span class="number">2</span>:</span><br><span class="line">		res = rand4()</span><br><span class="line">	<span class="comment"># 这样就能保证是等概率0到4 , 等概率的加(0, 1, 2), 得到等概率的0-6</span></span><br><span class="line">	<span class="keyword">return</span> res + rand4()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>连续整数求和(<a href="https://leetcode-cn.com/problems/consecutive-numbers-sum/" target="_blank" rel="noopener">leetcode第829题, hard实际有思路就easy</a>)，要求时间复杂度小于O(N)</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">consecutiveNumbersSum</span><span class="params">(self, N: int)</span> -&gt; int:</span></span><br><span class="line">       <span class="comment"># 1个数时，必然有一个数可构成N</span></span><br><span class="line">       <span class="comment"># 2个数若要构成N，第2个数与第1个数差为1，N减掉这个1能整除2则能由商与商+1构成N</span></span><br><span class="line">       <span class="comment"># 3个数若要构成N，第2个数与第1个数差为1，第3个数与第1个数的差为2，N减掉1再减掉2能整除3则能由商、商+1与商+2构成N</span></span><br><span class="line">       <span class="comment"># 依次内推，当商即第1个数小于等于0时结束</span></span><br><span class="line">       res, i = <span class="number">0</span>, <span class="number">1</span></span><br><span class="line">       <span class="keyword">while</span> N &gt; <span class="number">0</span>:</span><br><span class="line">           res += N % i == <span class="number">0</span></span><br><span class="line">           N -= i</span><br><span class="line">           i += <span class="number">1</span></span><br><span class="line">       <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="智力题"><a href="#智力题" class="headerlink" title="智力题"></a>智力题</h2><ul>
+<li>有 64 匹马，赛场只有 8 条赛道，请问最少需要比赛多少场才能确定跑得最快的那 4 匹马，不可以借助计时器给每一匹马一一计时；<ul>
+<li><a href="https://www.jianshu.com/p/148439ddcb07" target="_blank" rel="noopener">https://www.jianshu.com/p/148439ddcb07</a></li>
+</ul>
+</li>
+<li>有 N 枚棋子，每个人一次可以拿1到 M 个，谁拿完后棋子的数量为0谁就获胜。现在有1000颗棋子，每次最多拿8个，A 先拿，那么 A 有必胜的拿法吗？<ul>
+<li>这个是个智力题不是算法题, 是倍数的思想</li>
+<li>这类题得先求得 <code>N % (M+1)</code> 的余数, 此处为 <code>1000 % (8+1) = 1</code>, 求得此余数Y后, 先拿的人第一次就拿Y个, 然后假如B同学第二次拿X个比如是4个, 不管B拿多少个, A之后都拿 <code>(M+1)-X</code>个即 <code>(8+1)-4=5</code>个和B同学拿的4个凑成<code>(8+1)=9</code>个, 这样就保证了A是最后一个拿完棋子的人</li>
+</ul>
+</li>
+</ul>
+<h2 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h2><h3 id="寻找第K大"><a href="#寻找第K大" class="headerlink" title="寻找第K大"></a>寻找第K大</h3><p>有一个整数数组，请你根据快速排序的思路，找出数组中第K大的数。<br>给定一个整数数组a,同时给定它的大小n和要找的K(K在1到n之间)，请返回第K大的数，保证答案存在。</p>
+<p>测试样例：<br>[1,3,5,2,2],5,3<br>返回：2</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution_find_top_k_num</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">find_top_k_num</span><span class="params">(self, nums_arr, nums_arr_len, top_k)</span>:</span></span><br><span class="line">        <span class="keyword">assert</span> nums_arr, <span class="string">"nums is empty."</span></span><br><span class="line">        <span class="keyword">assert</span> nums_arr_len &gt; <span class="number">0</span>, <span class="string">"nums is empty."</span></span><br><span class="line">        <span class="keyword">if</span> top_k &gt; nums_arr_len <span class="keyword">or</span> top_k &lt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">        left_index = <span class="number">0</span></span><br><span class="line">        right_index = nums_arr_len - <span class="number">1</span></span><br><span class="line">        _p_index = self._partition(nums_arr, left_index, right_index)</span><br><span class="line">        <span class="keyword">while</span> _p_index != top_k<span class="number">-1</span>:</span><br><span class="line">            _p_index = self._partition(nums_arr, left_index, right_index)</span><br><span class="line">            <span class="keyword">if</span> _p_index &lt; top_k<span class="number">-1</span>:</span><br><span class="line">                left_index = _p_index + <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> _p_index &gt; top_k<span class="number">-1</span>:</span><br><span class="line">                right_index = _p_index - <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> nums_arr[_p_index]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_partition</span><span class="params">(self, nums_arr, left_index, right_index)</span>:</span></span><br><span class="line">        pivot_index = left_index</span><br><span class="line">        _partition_index = pivot_index</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(pivot_index+<span class="number">1</span>, right_index+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> nums_arr[i] &lt;= nums_arr[pivot_index]:</span><br><span class="line">                nums_arr[_partition_index+<span class="number">1</span>], nums_arr[i] = \</span><br><span class="line">                    nums_arr[i], nums_arr[_partition_index+<span class="number">1</span>]</span><br><span class="line">                _partition_index += <span class="number">1</span></span><br><span class="line">        nums_arr[_partition_index], nums_arr[pivot_index] = \</span><br><span class="line">            nums_arr[pivot_index], nums_arr[_partition_index]</span><br><span class="line">        <span class="keyword">return</span> _partition_index</span><br></pre></td></tr></table></figure>
+<h2 id="leetcode"><a href="#leetcode" class="headerlink" title="leetcode"></a>leetcode</h2><h3 id="lc41-缺失的第一个正数"><a href="#lc41-缺失的第一个正数" class="headerlink" title="lc41-缺失的第一个正数"></a>lc41-缺失的第一个正数</h3><p><a href="https://leetcode-cn.com/problems/first-missing-positive/" target="_blank" rel="noopener">lc41, hard</a> 缺失的第一个正数（leetcode第41题）<br>给你一个未排序的整数数组，请你找出其中没有出现的最小的正整数。<br>示例 1:<br>输入: [1,2,0]<br>输出: 3</p>
+<p>示例 2:<br>输入: [3,4,-1,1]<br>输出: 2</p>
+<p>示例 3:<br>输入: [7,8,9,11,12]<br>输出: 1 </p>
+<p>提示：你的算法的时间复杂度应为O(n)，并且只能使用常数级别的额外空间。</p>
+<p><a href="https://leetcode-cn.com/problems/first-missing-positive/solution/tong-pai-xu-python-dai-ma-by-liweiwei1419/" target="_blank" rel="noopener">参考</a><br>我们可以采取这样的思路：就把 11 这个数放到下标为 00 的位置， 22 这个数放到下标为 11 的位置，按照这种思路整理一遍数组。然后我们再遍历一次数组，第 11 个遇到的它的值不等于下标的那个数，就是我们要找的缺失的第一个正数。<br>这个思想就相当于我们自己编写哈希函数，这个哈希函数的规则特别简单，那就是数值为 i 的数映射到下标为 i - 1 的位置。</p>
+<p><img src="/img/algo_practice/lc41_1.png" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution_lc41</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">firstMissingPositive</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        思路: 使用座位交换法</span></span><br><span class="line"><span class="string">        根据题意可知，缺失的第一个整数是在 [1, len + 1] 之间，</span></span><br><span class="line"><span class="string">        那么我们可以遍历数组，然后将对应的数据填充到对应的位置上去，比如 1 就填充到 nums[0] 的位置， 2 就填充到 nums[1]</span></span><br><span class="line"><span class="string">        如果填充过程中， nums[i] &lt; 1 &amp;&amp; nums[i] &gt; len，那么直接舍弃</span></span><br><span class="line"><span class="string">        填充完成，我们再遍历一次数组，如果对应的 nums[i] != i + 1，那么这个 i + 1 就是缺失的第一个正数</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        比如 nums = [7, 8, 9, 10, 11], len = 5</span></span><br><span class="line"><span class="string">        我们发现数组中的元素都无法进行填充，直接舍弃跳过，</span></span><br><span class="line"><span class="string">        那么最终遍历数组的时候，我们发现 nums[0] != 0 + 1，即第一个缺失的是 1 </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        比如 nums = [3, 1, 2], len = 3</span></span><br><span class="line"><span class="string">        填充过后，我们发现最终数组变成了 [1, 2, 3]，每个元素都对应了自己的位置，那么第一个缺失的就是 len + 1 == 4</span></span><br><span class="line"><span class="string">        """</span> </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> nums:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">        n = len(nums)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">            _pending_swap_index = nums[i] - <span class="number">1</span></span><br><span class="line">            <span class="comment"># 只有在 nums[i] 是 [1, len] 之间的数，并且不在自己应该呆的位置， nums[i] != i + 1 ，</span></span><br><span class="line">            <span class="comment"># 并且 它应该呆的位置没有被相同的值占有（即存在重复值占有）	nums[nums[i] - 1] != nums[i] 的时候才进行交换</span></span><br><span class="line">            <span class="comment"># 为什么使用 while ？ 因为交换后，原本 i 位置的 nums[i] 已经交换到了别的地方，</span></span><br><span class="line">            <span class="comment"># 交换后到这里的新值不一定是适合这个位置的，因此需要重新进行判断交换</span></span><br><span class="line">            <span class="comment"># 如果使用 if，那么进行一次交换后，i 就会 +1 进入下一个循环，那么交换过来的新值就没有去找到它该有的位置</span></span><br><span class="line">            <span class="comment"># 比如 nums = [3, 4, -1, 1] 当 3 进行交换后， nums 变成 [-1，4，3，1]，</span></span><br><span class="line">            <span class="comment"># 此时 i == 0，如果使用 if ，那么会进入下一个循环， 这个 -1 就没有进行处理</span></span><br><span class="line">            <span class="keyword">while</span>(n &gt;= nums[i] &gt;= <span class="number">1</span> <span class="keyword">and</span> nums[i] != i+<span class="number">1</span> <span class="keyword">and</span> \</span><br><span class="line">                    nums[i] != nums[_pending_swap_index]):</span><br><span class="line">                <span class="comment"># `nums[i] != nums[_pending_swap_index]` 是为了防止</span></span><br><span class="line">                <span class="comment"># nums[i] 和 nums[_pending_swap_index] 这两个数是相等的导致</span></span><br><span class="line">                <span class="comment"># while死循环</span></span><br><span class="line">                self._swap(nums, i, _pending_swap_index)</span><br><span class="line">                _pending_swap_index = nums[i] - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">            <span class="keyword">if</span> nums[i] != i + <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> i + <span class="number">1</span>                </span><br><span class="line">        <span class="keyword">return</span> n + <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_swap</span><span class="params">(self, arr, index1, index2)</span>:</span></span><br><span class="line">        arr[index1], arr[index2] = arr[index2], arr[index1]</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2018/10/23/algo_newbie/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/23/algo_newbie/" itemprop="url">algo_newbie</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-23T08:08:06+00:00">
+                2018-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algo/" itemprop="url" rel="index">
+                    <span itemprop="name">Algo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="实战练习"><a href="#实战练习" class="headerlink" title="实战练习"></a>实战练习</h1><p>推荐参考<strong>本博客总结</strong>的 <a href="/2018/11/01/algo_practice/" title="算法企业真题实战练习">算法企业真题实战练习</a></p>
+<h1 id="本文完整参考代码"><a href="#本文完整参考代码" class="headerlink" title="本文完整参考代码"></a>本文完整参考代码</h1><p><a href="https://github.com/no5ix/no5ix.github.io/blob/source/source/code/test_algo_newbie.py" target="_blank" rel="noopener">https://github.com/no5ix/no5ix.github.io/blob/source/source/code/test_algo_newbie.py</a></p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2018/09/25/cache_db_consistency/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/25/cache_db_consistency/" itemprop="url">Cache和DB一致性</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-25T00:49:06+00:00">
+                2018-09-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DB/" itemprop="url" rel="index">
+                    <span itemprop="name">DB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="Cache-Aside-Pattern"><a href="#Cache-Aside-Pattern" class="headerlink" title="Cache Aside Pattern"></a>Cache Aside Pattern</h1><p><strong>什么是 “Cache Aside Pattern”？</strong><br>答：旁路缓存方案的经验实践，这个实践又分读实践，写实践。</p>
+<h2 id="对于读请求"><a href="#对于读请求" class="headerlink" title="对于读请求"></a><em>对于读请求</em></h2><p>先读 cache，再读 db<br>如果，cache hit，则直接返回数据<br>如果，cache miss，则访问 db，并将数据 set 回缓存</p>
+<p><img src="/img/cache_db_consistency/cache_db_consistency_9.png" alt></p>
+<p>（1）先从 cache 中尝试 get 数据，结果 miss 了<br>（2）再从 db 中读取数据，从库，读写分离<br>（3）最后把数据 set 回 cache，方便下次读命中</p>
+<h2 id="对于写请求"><a href="#对于写请求" class="headerlink" title="对于写请求"></a><em>对于写请求</em></h2><p>先操作数据库，再淘汰缓存（淘汰缓存，而不是更新缓存）<br><img src="/img/cache_db_consistency/cache_db_consistency_1.png" alt></p>
+<p>如上图：<br>（1）第一步要操作数据库，第二步操作缓存<br>（2）缓存，采用 delete 淘汰，而不是 set 更新</p>
+<h2 id="Cache-Aside-Pattern-为什么建议淘汰缓存，而不是更新缓存"><a href="#Cache-Aside-Pattern-为什么建议淘汰缓存，而不是更新缓存" class="headerlink" title="Cache Aside Pattern 为什么建议淘汰缓存，而不是更新缓存"></a>Cache Aside Pattern 为什么建议淘汰缓存，而不是更新缓存</h2><p>答：如果更新缓存，在并发写时，可能出现数据不一致。<br><img src="/img/cache_db_consistency/cache_db_consistency_2.png" alt></p>
+<p>如上图所示，如果采用 set 缓存。</p>
+<p>在 1 和 2 两个并发写发生时，由于无法保证时序，此时不管先操作缓存还是先操作数据库，都可能出现：<br>（1）请求 1 先操作数据库，请求 2 后操作数据库<br>（2）请求 2 先 set 了缓存，请求 1 后 set 了缓存<br>导致，数据库与缓存之间的数据不一致。<br>所以，Cache Aside Pattern 建议，delete 缓存，而不是 set 缓存。</p>
+<h2 id="Cache-Aside-Pattern-为什么建议先操作数据库，再操作缓存？"><a href="#Cache-Aside-Pattern-为什么建议先操作数据库，再操作缓存？" class="headerlink" title="Cache Aside Pattern 为什么建议先操作数据库，再操作缓存？"></a>Cache Aside Pattern 为什么建议先操作数据库，再操作缓存？</h2><p>答：如果先操作缓存，在读写并发时，可能出现数据不一致。<br><img src="/img/cache_db_consistency/cache_db_consistency_3.png" alt></p>
+<p>如上图所示，如果先操作缓存。</p>
+<p>在 1 和 2 并发读写发生时，由于无法保证时序，可能出现：<br>（1）写请求淘汰了缓存<br>（2）写请求操作了数据库（主从同步没有完成）<br>（3）读请求读了缓存（cache miss）<br>（4）读请求读了从库（读了一个旧数据）<br>（5）读请求 set 回缓存（set 了一个旧数据）<br>（6）数据库主从同步完成<br>导致，数据库与缓存的数据不一致。</p>
+<p>所以，Cache Aside Pattern 建议，先操作数据库，再操作缓存。</p>
+<h2 id="Cache-Aside-Pattern-方案存在什么问题？"><a href="#Cache-Aside-Pattern-方案存在什么问题？" class="headerlink" title="Cache Aside Pattern 方案存在什么问题？"></a>Cache Aside Pattern 方案存在什么问题？</h2><p>答：如果先操作数据库，再淘汰缓存，在原子性被破坏时：<br>（1）修改数据库成功了<br>（2）淘汰缓存失败了<br>导致，数据库与缓存的数据不一致。</p>
+<p>个人见解：<strong>这里个人觉得可以使用重试的方法，在淘汰缓存的时候，如果失败，则重试一定的次数。如果失败一定次数还不行，那就是其他原因了。比如说 redis 故障、内网出了问题。</strong></p>
+<p>关于这个问题，沈老师的解决方案是，<em>使用先操作缓存（delete），再操作数据库</em>。假如删除缓存成功，更新数据库失败了。缓存里没有数据，数据库里是之前的数据，数据没有不一致，对业务无影响。只是下一次读取，会多一次 cache miss。这里我觉得沈老师可能忽略了并发的问题，比如说以下情况：<br>一个写请求过来，删除了缓存，准备更新数据库（还没更新完成）。<br>然后一个读请求过来，缓存未命中，从数据库读取旧数据，再次放到缓存中，这时候，数据库更新完成了。此时的情况是，缓存中是旧数据，数据库里面是新数据，同样存在数据不一致的问题。<br>如图：<br><img src="/img/cache_db_consistency/cache_db_consistency_4.png" alt></p>
+<h2 id="主从同步延迟导致的缓存和数据不一致问题"><a href="#主从同步延迟导致的缓存和数据不一致问题" class="headerlink" title="主从同步延迟导致的缓存和数据不一致问题"></a>主从同步延迟导致的缓存和数据不一致问题</h2><p>答：发生写请求后（不管是先操作 DB，还是先淘汰 Cache），在主从数据库同步完成之前，如果有读请求，都可能发生读 Cache Miss，读从库把旧数据存入缓存的情况。此时怎么办呢？</p>
+<p><strong>数据库主从不一致</strong><br>先回顾下，无缓存时，数据库主从不一致问题。<br><img src="/img/cache_db_consistency/cache_db_consistency_5.png" alt></p>
+<p>如上图，发生的场景是，写后立刻读：<br>（1）主库一个写请求（主从没同步完成）<br>（2）从库接着一个读请求，读到了旧数据<br>（3）最后，主从同步完成<br>导致的结果是：主动同步完成之前，会读取到旧数据。</p>
+<p>可以看到，主从不一致的影响时间很短，在主从同步完成后，就会读到新数据。</p>
+<p><strong>缓存与数据库不一致</strong><br>再看，引入缓存后，缓存和数据库不一致问题。<br><img src="/img/cache_db_consistency/cache_db_consistency_6.png" alt></p>
+<p>如上图，发生的场景也是，写后立刻读：<br>（1+2）先一个写请求，淘汰缓存，写数据库</p>
+<p>（3+4+5）接着立刻一个读请求，读缓存，cache miss，读从库，写缓存放入数据，以便后续的读能够 cache hit（主从同步没有完成，缓存中放入了旧数据）</p>
+<p>（6）最后，主从同步完成</p>
+<p>导致的结果是：旧数据放入缓存，即使主从同步完成，后续仍然会从缓存一直读取到旧数据。</p>
+<p>可以看到，加入缓存后，导致的不一致影响时间会很长，并且最终也不会达到一致。</p>
+<h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><p>可以看到，这里提到的缓存与数据库数据不一致，根本上是由数据库主从不一致引起的。当主库上发生写操作之后，从库 binlog 同步的时间间隔内，读请求，可能导致有旧数据入缓存。</p>
+<p>思路：那能不能写操作记录下来，在主从时延的时间段内，读取修改过的数据的话，强制读主，并且更新缓存，这样子缓存内的数据就是最新。在主从时延过后，这部分数据继续读从库，从而继续利用从库提高读取能力。</p>
+<h3 id="不一致解决方案"><a href="#不一致解决方案" class="headerlink" title="不一致解决方案"></a>不一致解决方案</h3><p><em>选择性读主</em>  </p>
+<p>可以利用一个缓存记录必须读主的数据。<br><img src="/img/cache_db_consistency/cache_db_consistency_7.png" alt></p>
+<p>如上图，当写请求发生时：<br>（1）写主库<br>（2）将哪个库，哪个表，哪个主键三个信息拼装一个 key 设置到 cache 里，这条记录的超时时间，设置为 “主从同步时延”<br>PS：key 的格式为 “db:table:PK”，假设主从延时为 1s，这个 key 的 cache 超时时间也为 1s。</p>
+<p><img src="/img/cache_db_consistency/cache_db_consistency_8.png" alt></p>
+<p>如上图，当读请求发生时：<br>这是要读哪个库，哪个表，哪个主键的数据呢，也将这三个信息拼装一个 key，到 cache 里去查询，如果，<br>（1）cache 里有这个 key，说明 1s 内刚发生过写请求，数据库主从同步可能还没有完成，此时就应该去主库查询。并且把主库的数据 set 到缓存中，防止下一次 cahce miss。<br>（2）cache 里没有这个 key，说明最近没有发生过写请求，此时就可以去从库查询</p>
+<p>以此，保证读到的一定不是不一致的脏数据。</p>
+<p>PS：如果系统可以接收短时间的不一致，建议建议定时更新缓存就可以了。避免系统过于复杂。</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2018/08/06/fd_inode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/06/fd_inode/" itemprop="url">文件描述符FD与Inode</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-06T08:08:06+00:00">
+                2018-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="FD-文件描述符"><a href="#FD-文件描述符" class="headerlink" title="FD 文件描述符"></a>FD 文件描述符</h1><p>　　Linux 系统中，把一切都看做是文件，当进程打开现有文件或创建新文件时，内核向进程返回一个文件描述符，文件描述符就是内核为了高效管理已被打开的文件所创建的索引，用来指向被打开的文件，所有执行 I/O 操作的系统调用都会通过文件描述符。</p>
+<h2 id="文件描述符、文件、进程间的关系"><a href="#文件描述符、文件、进程间的关系" class="headerlink" title="文件描述符、文件、进程间的关系"></a>文件描述符、文件、进程间的关系</h2><p>我们可以通过 linux 的几个基本的 I/O 操作函数来理解什么是文件描述符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fd = open(pathname, flags, mode)</span><br><span class="line">// 返回了该文件的fd</span><br><span class="line">rlen = read(fd, buf, count)</span><br><span class="line">// IO操作均需要传入该文件的fd值</span><br><span class="line">wlen = write(fd, buf, count)</span><br><span class="line">status = close(fd)</span><br></pre></td></tr></table></figure>
+<p>每当进程用<code>open（）</code>函数打开一个文件，内核便会返回该文件的文件描述符（一个非负的整形值），此后所有对该文件的操作，都会以返回的 fd 文件描述符为参数。</p>
+<p><img src="/img/fd_inode/fd_inode1.jpg" alt></p>
+<p><strong>文件描述符</strong>可以理解为进程文件描述表这个表的<strong>索引</strong>，或者把文件描述表看做一个数组的话，文件描述符可以看做是数组的下标。当需要进行 I/O 操作的时候，会传入 fd 作为参数，先从进程文件描述符表查找该 fd 对应的那个条目，取出对应的那个已经打开的文件的<strong>句柄</strong>，根据文件句柄指向，去系统 fd 表中查找到该文件指向的 <strong>inode</strong>，从而定位到该文件的真正位置，从而进行 I/O 操作。</p>
+<p>我们仔细看这张图, 在进程A中，文件描述符1和30都指向了同一个打开的文件句柄（标号23）。这可能是通过调用dup()、dup2()、fcntl()或者对同一个文件多次调用了open()函数而形成的。</p>
+<p>进程A的文件描述符2和进程B的文件描述符2都指向了同一个打开的文件句柄（标号73）。这种情形可能是在调用fork()后出现的（即，进程A、B是父子进程关系），或者当某进程通过UNIX域套接字将一个打开的文件描述符传递给另一个进程时，也会发生。再者是不同的进程独自去调用open函数打开了同一个文件，此时进程内部的描述符正好分配到与其他进程打开该文件的描述符一样。<br>此外，进程A的描述符0和进程B的描述符3分别指向不同的打开文件句柄，但这些句柄均指向i-node表的相同条目（1976），换言之，指向同一个文件。发生这种情况是因为每个进程各自对同一个文件发起了open()调用。同一个进程两次打开同一个文件，也会发生类似情况。</p>
+<p><strong>小结:</strong>  </p>
+<ul>
+<li>由于进程级文件描述符表的存在，不同的进程中会出现相同的文件描述符，它们可能指向同一个文件，也可能指向不同的文件</li>
+<li>两个不同的文件描述符，若指向同一个打开文件句柄，将共享同一文件偏移量。因此，如果通过其中一个文件描述符来修改文件偏移量（由调用read()、write()或lseek()所致），那么从另一个描述符中也会观察到变化，无论这两个文件描述符是否属于不同进程，还是同一个进程，情况都是如此。</li>
+<li>要获取和修改打开的文件标志（例如：O_APPEND、O_NONBLOCK和O_ASYNC），可执行fcntl()的F_GETFL和F_SETFL操作，其对作用域的约束与上一条颇为类似。</li>
+<li>文件描述符标志（即，close-on-exec）为进程和文件描述符所私有。对这一标志的修改将不会影响同一进程或不同进程中的其他文件描述符</li>
+<li>每个文件描述符会与一个打开的文件相对应</li>
+<li>不同的文件描述符也可能指向同一个文件</li>
+<li>相同的文件可以被不同的进程打开，也可以在同一个进程被多次打开</li>
+</ul>
+<h2 id="系统为维护文件描述符建立了三个表"><a href="#系统为维护文件描述符建立了三个表" class="headerlink" title="系统为维护文件描述符建立了三个表"></a>系统为维护文件描述符建立了三个表</h2><ul>
+<li>进程级的文件描述符表</li>
+<li>系统级的文件描述符表</li>
+<li>文件系统的 i-node 表 (inode 见下文)</li>
+</ul>
+<h3 id="进程级别的文件描述表"><a href="#进程级别的文件描述表" class="headerlink" title="进程级别的文件描述表"></a>进程级别的文件描述表</h3><p>linux 内核会为每一个进程创建一个<code>task_truct</code>结构体来维护进程信息，称之为 进程描述符，<code>task_truct</code>结构体中的指针指向一个名称为<code>file_struct</code>的结构体，该结构体即 进程级别的文件描述表。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">files_struct</span> *<span class="title">files</span></span></span><br></pre></td></tr></table></figure>
+<p>它的每一个条目记录的是单个文件描述符的相关信息</p>
+<ol>
+<li>fd 控制标志，前内核仅定义了一个，即 close-on-exec</li>
+<li>文件描述符所打开的文件句柄的引用【注 2】</li>
+</ol>
+<blockquote>
+<p>[注释 2]：文件句柄这里可以理解为文件名，或者文件的全路径名，因为 linux 文件系统文件名和文件是独立的，以此与 inode 区分</p>
+</blockquote>
+<h3 id="系统级别的文件描述符表"><a href="#系统级别的文件描述符表" class="headerlink" title="系统级别的文件描述符表"></a>系统级别的文件描述符表</h3><p>内核对系统中所有打开的文件维护了一个描述符表，也被称之为 【<strong>打开文件表</strong>】，表格中的每一项被称之为 【<strong>打开文件句柄</strong>】，一个【<strong>打开文件句柄</strong>】 描述了一个打开文件的全部信息。<br>主要包括：</p>
+<ol>
+<li>当前文件偏移量（调用 read() 和 write() 时更新，或使用 lseek() 直接修改）</li>
+<li>打开文件时所使用的状态标识（即，open() 的 flags 参数）</li>
+<li>文件访问模式（如调用 open() 时所设置的只读模式、只写模式或读写模式）</li>
+<li>与信号驱动相关的设置</li>
+<li>对该文件 i-node 对象的引用</li>
+<li>文件类型（例如：常规文件、套接字或 FIFO）和访问权限</li>
+<li>一个指针，指向该文件所持有的锁列表</li>
+<li>文件的各种属性，包括文件大小以及与不同类型操作相关的时间戳</li>
+</ol>
+<h3 id="Inode表"><a href="#Inode表" class="headerlink" title="Inode表"></a>Inode表</h3><p>每个文件系统会为存储于其上的所有文件 (包括目录) 维护一个 i-node 表，单个 i-node 包含以下信息：</p>
+<ol>
+<li>文件类型 (file type)，可以是常规文件、目录、套接字或 FIFO</li>
+<li>访问权限</li>
+<li>文件锁列表 (file locks)</li>
+<li>文件大小  </li>
+<li>…</li>
+</ol>
+<p>i-node 存储在磁盘设备上，内核在内存中维护了一个副本，这里的 i-node 表为后者。副本除了原有信息，还包括：引用计数 (从打开文件描述体)、所在设备号以及一些临时属性，例如文件锁。</p>
+<blockquote>
+<p>注：进程 A 的 fd 表中，左边 fd0，fd1，fd2… 就是各个文件描述符，它是 fd 表的索引，fd 不是表里那个 fd flags！这里不要搞混淆了，fd flags 目前只有一个取值。</p>
+</blockquote>
+<p>在进程 A 中，文件描述符 1 和 30 都指向了同一个打开的文件句柄（标号 23）。这可能是通过调用 dup()、dup2()、fcntl() 或者对同一个文件多次调用了 open() 函数而形成的。  </p>
+<p><strong>dup（）</strong>，也称之为<strong>文件描述符复制函数</strong>，在某些场景下非常有用，比如：标准输入 / 输出重定向。在 shell 下，完成这个操作非常简单，大部分人都会，但是极少人思考过背后的原理。大概描述一下需要的几个步骤，以标准输出 (文件描述符为 1) 重定向为例：</p>
+<ol>
+<li>打开目标文件，返回文件描述符 n；</li>
+<li>关闭文件描述符 1；</li>
+<li>调用 dup 将文件描述符 n 复制到 1；</li>
+<li>关闭文件描述符 n；</li>
+</ol>
+<p>进程 A 的文件描述符 2 和进程 B 的文件描述符 2 都指向了同一个打开的文件句柄（标号 73）。这种情形可能是在调用 fork() 后出现的（即，进程 A、B 是父子进程关系）【注 3】，或者当某进程通过 UNIX 域套接字将一个打开的文件描述符传递给另一个进程时，也会发生。再者是不同的进程独自去调用 open 函数打开了同一个文件，此时进程内部的描述符正好分配到与其他进程打开该文件的描述符一样。</p>
+<blockquote>
+<p>注 3： 子进程会继承父进程的文件描述符表，也就是子进程继承父进程打开的文件 这句话的由来。</p>
+</blockquote>
+<p>此外，进程 A 的描述符 0 和进程 B 的描述符 3 分别指向不同的打开文件句柄，但这些句柄均指向 i-node 表的相同条目（1976），换言之，指向同一个文件。发生这种情况是因为每个进程各自对同一个文件发起了 open() 调用。同一个进程两次打开同一个文件，也会发生类似情况。</p>
+<h2 id="文件描述符数目限制"><a href="#文件描述符数目限制" class="headerlink" title="文件描述符数目限制"></a>文件描述符数目限制</h2><p>　　有资源的地方就有战争，“文件描述符”也是一种资源，系统中的每个进程都需要有 “文件描述符” 才能进行改变世界的宏图霸业。世界需要秩序，于是就有了 “文件描述符限制” 的规定。</p>
+<p>如下表：<br><img src="/img/fd_inode/fd_inode2.jpg" alt></p>
+<p>永久修改用户级限制时有三种设置类型：</p>
+<ul>
+<li>soft 指的是当前系统生效的设置值</li>
+<li>hard 指的是系统中所能设定的最大值</li>
+<li>“-” 指的是同时设置了 soft 和 hard 的值</li>
+</ul>
+<h1 id="inode"><a href="#inode" class="headerlink" title="inode"></a>inode</h1><p>理解 inode，要从文件储存说起。文件储存在硬盘上，硬盘的最小存储单位叫做” 扇区”（Sector）。每个扇区储存 512 字节（相当于 0.5KB）。</p>
+<p>操作系统读取硬盘的时候，不会一个个扇区地读取，这样效率太低，而是一次性连续读取多个扇区，即一次性读取一个” 块”（block）。这种由多个扇区组成的” 块”，是文件存取的最小单位。” 块” 的大小，最常见的是 4KB，即连续八个 sector 组成一个 block。</p>
+<p>文件数据都储存在” 块” 中，那么很显然，我们还必须找到一个地方储存文件的元信息，比如文件的创建者、文件的创建日期、文件的大小等等。这种储存文件元信息的区域就叫做 inode，中文译名为” 索引节点”。</p>
+<p>每一个文件都有对应的 inode，里面包含了与该文件有关的一些信息。</p>
+<h2 id="inode-的内容"><a href="#inode-的内容" class="headerlink" title="inode 的内容"></a>inode 的内容</h2><p>inode 包含文件的元信息，具体来说有以下内容：</p>
+<ul>
+<li>文件的字节数</li>
+<li>文件拥有者的 User ID</li>
+<li>文件的 Group ID</li>
+<li>文件的读、写、执行权限</li>
+<li>文件的时间戳，共有三个：ctime 指 inode 上一次变动的时间，mtime 指文件内容上一次变动的时间，atime 指文件上一次打开的时间。</li>
+<li>链接数，即有多少文件名指向这个 inode</li>
+<li>文件数据 block 的位置</li>
+</ul>
+<p>可以用<code>stat</code>命令，查看某个文件的 inode 信息：<br><code>stat 233.txt</code>  </p>
+<p><img src="/img/fd_inode/fd_inode3.jpg" alt></p>
+<p>总之，除了文件名以外的所有文件信息，都存在 inode 之中。至于为什么没有文件名，下文会有详细解释。</p>
+<h2 id="inode-的大小"><a href="#inode-的大小" class="headerlink" title="inode 的大小"></a>inode 的大小</h2><p>inode 也会消耗硬盘空间，所以硬盘格式化的时候，操作系统自动将硬盘分成两个区域。一个是数据区，存放文件数据；另一个是 inode 区（inode table），存放 inode 所包含的信息。</p>
+<p>每个 inode 节点的大小，一般是 128 字节或 256 字节。inode 节点的总数，在格式化时就给定，一般是每 1KB 或每 2KB 就设置一个 inode。假定在一块 1GB 的硬盘中，每个 inode 节点的大小为 128 字节，每 1KB 就设置一个 inode，那么 inode table 的大小就会达到 128MB，占整块硬盘的 12.8%。</p>
+<p>查看每个硬盘分区的 inode 总数和已经使用的数量，可以使用 df 命令。<br><code>df -i</code><br><img src="/img/fd_inode/fd_inode4.jpg" alt><br>查看每个 inode 节点的大小，可以用如下命令：<br><code>sudo dumpe2fs -h /dev/hda | grep &quot;Inode size&quot;</code><br>由于每个文件都必须有一个 inode，因此有可能发生 inode 已经用光，但是硬盘还未存满的情况。这时，就无法在硬盘上创建新文件。</p>
+<h2 id="inode-号码"><a href="#inode-号码" class="headerlink" title="inode 号码"></a>inode 号码</h2><p>每个 inode 都有一个号码，操作系统用 inode 号码来识别不同的文件。</p>
+<p>这里值得重复一遍，<strong>Unix/Linux 系统内部不使用文件名，而使用 inode 号码来识别文件</strong>。对于系统来说，文件名只是 inode 号码便于识别的别称或者绰号。</p>
+<p>表面上，用户通过文件名，打开文件。实际上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的 inode 号码；其次，通过 inode 号码，获取 inode 信息；最后，根据 inode 信息，找到文件数据所在的 block，读出数据。</p>
+<p>使用 ls -i 命令，可以看到文件名对应的 inode 号码：<br><code>ls -i 233.txt</code><br><img src="/img/fd_inode/fd_inode5.jpg" alt></p>
+<h2 id="目录文件"><a href="#目录文件" class="headerlink" title="目录文件"></a>目录文件</h2><p>Unix/Linux 系统中，目录（directory）也是一种文件。打开目录，实际上就是打开目录文件。目录文件的结构非常简单，就是一系列目录项（dirent）的列表。每个目录项，由两部分组成:</p>
+<ul>
+<li>所包含文件的文件名，</li>
+<li>该文件名对应的 inode 号码。</li>
+</ul>
+<p>ls 命令只列出目录文件中的所有文件名：<br><code>ls /etc</code><br>ls -i 命令列出整个目录文件，即文件名和 inode 号码：<br><code>ls -i /etc</code><br>如果要查看文件的详细信息，就必须根据 inode 号码，访问 inode 节点，读取信息。ls -l 命令列出文件的详细信息。<br><code>ls -l /etc</code><br><strong>理解了上面这些知识，就能理解目录的权限。目录文件的读权限（r）和写权限（w），都是针对目录文件本身。</strong>由于目录文件内只有文件名和 inode 号码，所以如果只有读权限，只能获取文件名，无法获取其他信息，因为其他信息都储存在 inode 节点中，而读取 inode 节点内的信息需要目录文件的执行权限（x）。</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><img src="/img/noodle_plan/linux/hard_link_soft_link.jpg" alt></p>
+<h3 id="硬链接"><a href="#硬链接" class="headerlink" title="硬链接"></a>硬链接</h3><p>一般情况下，文件名和 inode 号码是” 一一对应” 关系，每个 inode 号码对应一个文件名。但是，<strong>Unix/Linux 系统允许，多个文件名指向同一个 inode 号码。</strong></p>
+<p>这意味着，可以用不同的文件名访问同样的内容；对文件内容进行修改，会影响到所有文件名；但是，删除一个文件名，不影响另一个文件名的访问。这种情况就被称为” 硬链接”（hard link）。<br>ln 命令可以创建硬链接:<br><code>ln 源文件 目标文件</code><br>运行上面这条命令以后，源文件与目标文件的 inode 号码相同，都指向同一个 inode。</p>
+<p><strong>inode 信息中有一项叫做<code>i_nlink</code>”链接数”，记录指向该 inode 的文件名总数，这时就会增加 1。</strong></p>
+<p><strong>反过来，删除一个文件名，就会使得 inode 节点中的<code>i_nlink</code>”链接数” 减 1。当这个值减到 0，表明没有文件名指向这个 inode，系统就会回收这个 inode 号码，以及其所对应 block 区域。</strong></p>
+<p>这里顺便说一下目录文件的<code>i_nlink</code>”链接数”。创建目录时，默认会生成两个目录项：”.” 和”..”。前者的 inode 号码就是当前目录的 inode 号码，等同于当前目录的” 硬链接”；后者的 inode 号码就是当前目录的父目录的 inode 号码，等同于父目录的” 硬链接”。所以，任何一个目录的” 硬链接” 总数，总是等于 2 加上它的子目录总数（含隐藏目录）。</p>
+<p>简单说，<strong>硬链接就是一个 inode 号对应多个文件名。就是同一个文件使用了多个别名</strong>（上图中 hard link 就是 file 的一个别名，他们有共同的 inode）。</p>
+<p>由于硬链接是有着相同 inode 号仅文件名不同的文件，因此硬链接存在以下几点特性：</p>
+<ul>
+<li>文件有相同的 inode 及 data block；</li>
+<li>只能对已存在的文件进行创建；</li>
+<li>不能交叉文件系统进行硬链接的创建；</li>
+<li>不能对目录进行创建，只可对文件创建；</li>
+<li>删除一个硬链接文件并不影响其他有相同 inode 号的文件, 只是相应的链接计数器（link count)减1</li>
+</ul>
+<h3 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h3><p>(又称符号链接，即 soft link 或 symbolic link） 软链接与硬链接不同，若文件用户数据块中存放的内容是另一文件的路径名的指向，则该文件就是软连接。软链接就是一个普通文件，只是数据块内容有点特殊。软链接有着自己的 inode 号以及用户数据块。（见图2）软连接可以指向目录，而且软连接所指向的目录可以位于不同的文件系统中。</p>
+<p><strong>ln -s 命令可以创建软链接</strong>。</p>
+<p><code>ln -s 源文文件或目录 目标文件或目录</code></p>
+<p>软链接特性：</p>
+<ul>
+<li>软链接有自己的文件属性及权限等；</li>
+<li>可对不存在的文件或目录创建软链接；</li>
+<li>软链接可交叉文件系统；</li>
+<li>软链接可对文件或目录创建；</li>
+<li>创建软链接时，链接计数 i_nlink 不会增加；</li>
+<li>删除软链接并不影响被指向的文件，但若被指向的原文件被删除，则相关软连接被称为死链接或悬挂的软链接（即 dangling link，若被指向路径文件被重新创建，死链接可恢复为正常的软链接）。</li>
+</ul>
+<p>文件 A 和文件 B 的 inode 号码虽然不一样，但是文件 A 的内容是文件 B 的路径。读取文件 A 时，系统会自动将访问者导向文件 B。因此，无论打开哪一个文件，最终读取的都是文件 B。这时，文件 A 就称为文件 B 的” 软链接”（soft link）或者” 符号链接（symbolic link）。</p>
+<p>这意味着，文件 A 依赖于文件 B 而存在，如果删除了文件 B，打开文件 A 就会报错：”No such file or directory”。这是软链接与硬链接最大的不同：文件 A 指向文件 B 的文件名，而不是文件 B 的 inode 号码，文件 B 的 inode” 链接数” 不会因此发生变化。</p>
+<h2 id="inode-的特殊作用"><a href="#inode-的特殊作用" class="headerlink" title="inode 的特殊作用"></a>inode 的特殊作用</h2><p>由于 inode 号码与文件名分离，这种机制导致了一些 Unix/Linux 系统特有的现象。</p>
+<ol>
+<li>有时，文件名包含特殊字符，无法正常删除。这时，直接删除 inode 节点，就能起到删除文件的作用。</li>
+<li>移动文件或重命名文件，只是改变文件名，不影响 inode 号码。</li>
+<li>打开一个文件以后，系统就以 inode 号码来识别这个文件，不再考虑文件名。因此，通常来说，系统无法从 inode 号码得知文件名。</li>
+</ol>
+<p>第 3 点使得软件更新变得简单，可以在不关闭软件的情况下进行更新，不需要重启。因为系统通过 inode 号码，识别运行中的文件，不通过文件名。更新的时候，新版文件以同样的文件名，生成一个新的 inode，不会影响到运行中的文件。等到下一次运行这个软件的时候，文件名就自动指向新版文件，旧版文件的 inode 则被回收。</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2018/08/06/noodle_plan/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/06/noodle_plan/" itemprop="url">noodle_plan</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-06T08:08:06+00:00">
+                2018-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Misc/" itemprop="url" rel="index">
+                    <span itemprop="name">Misc</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="pending-fini"><a href="#pending-fini" class="headerlink" title="pending_fini"></a>pending_fini</h1><ul>
+<li>看看其他内存库的优化实现,,如tcmalloc啥的</li>
+<li>算法类<ul>
+<li>线段树 字典树 </li>
+<li>lc高频 热门</li>
+<li>kmp</li>
+<li>lc 174 地下城游戏问题</li>
+<li>矩阵相关的算法题</li>
+<li>lfu, 代码太长, 而且用到了不常用的数据结构, 目测不太会考</li>
+</ul>
+</li>
+</ul>
+<!-- * http轮询 -->
+<!-- * websocket -->
+<ul>
+<li><a href="https://jishuin.proginn.com/p/763bfbd27fa0" target="_blank" rel="noopener">微信社招面经的面/笔试题</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzIwNTA4NzI1Mw==&amp;mid=2247486096&amp;idx=1&amp;sn=ea19bfbecd6b0a27341cbd3fb7b2344d&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">字节跳动百度拼多多面笔试题</a></li>
+</ul>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

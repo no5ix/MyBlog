@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="GafferOnGames,TCP,UDP,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="原文原文出处 Introduction Hi, I&amp;rsquo;m Glenn Fiedler and welcome to Networking for Game Programmers.In the previous article we discussed options for sending data between computers and decided to use UDP in">
+<meta name="keywords" content="GafferOnGames,TCP,UDP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="游戏网络开发二之数据的发送与接收">
+<meta property="og:url" content="https://hulinhong.com/2016/11/15/游戏网络开发二之数据的发送与接收/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="原文原文出处 Introduction Hi, I&amp;rsquo;m Glenn Fiedler and welcome to Networking for Game Programmers.In the previous article we discussed options for sending data between computers and decided to use UDP in">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="游戏网络开发二之数据的发送与接收">
+<meta name="twitter:description" content="原文原文出处 Introduction Hi, I&amp;rsquo;m Glenn Fiedler and welcome to Networking for Game Programmers.In the previous article we discussed options for sending data between computers and decided to use UDP in">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>游戏网络开发二之数据的发送与接收 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/11/15/游戏网络开发二之数据的发送与接收/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">游戏网络开发二之数据的发送与接收</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-15T22:20:34+00:00">
+                2016-11-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GS/" itemprop="url" rel="index">
+                    <span itemprop="name">GS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/GafferOnGames/" rel="tag"><i class="fa fa-tag"></i> GafferOnGames</a>
+              
+                <a href="/tags/TCP/" rel="tag"><i class="fa fa-tag"></i> TCP</a>
+              
+                <a href="/tags/UDP/" rel="tag"><i class="fa fa-tag"></i> UDP</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/14/游戏网络开发一之TCPvsUDP/" rel="next" title="游戏网络开发一之TCPvsUDP">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  游戏网络开发一之TCPvsUDP
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/16/virtual_connection_over_udp/" rel="prev" title="游戏网络开发三之基于UDP的虚拟连接">
+              <p class="post-nav-pre-next-title">
+                  游戏网络开发三之基于UDP的虚拟连接
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="https://gafferongames.com/post/sending_and_receiving_packets/" target="_blank" rel="noopener">原文出处</a></p>
+<p></p><h2 id="introduction">Introduction</h2><p></p>
+<p>Hi, I&rsquo;m <a href="https://gafferongames.com/about" target="_blank" rel="noopener">Glenn Fiedler</a> and welcome to <a href="https://gafferongames.com/categories/game-networking/" target="_blank" rel="noopener"><strong>Networking for Game Programmers</strong></a>.</p><br><p>In the <a href="https://gafferongames.com/post/udp_vs_tcp/" target="_blank" rel="noopener">previous article</a> we discussed options for sending data between computers and decided to use UDP instead of TCP for time critical data.</p><br><p>In this article I am going to show you how to send and receive UDP packets.</p><br><h2 id="bsd-sockets">BSD sockets</h2><br><p>For most modern platforms you have some sort of basic socket layer available based on BSD sockets.</p><br><p>BSD sockets are manipulated using simple functions like &ldquo;socket&rdquo;, &ldquo;bind&rdquo;, &ldquo;sendto&rdquo; and &ldquo;recvfrom&rdquo;. You can of course work directly with these functions if you wish, but it becomes difficult to keep your code platform independent because each platform is slightly different.</p><br><p>So although I will first show you BSD socket example code to demonstrate basic socket usage, we won&rsquo;t be using BSD sockets directly for long. Once we&rsquo;ve covered all basic socket functionality we&rsquo;ll abstract everything away into a set of classes, making it easy to you to write platform independent socket code.</p><br><h2 id="platform-specifics">Platform specifics</h2><br><p>First let&rsquo;s setup a define so we can detect what our current platform is and handle the slight differences in sockets from one platform to another:</p><br><pre><code>    // platform detection<br><br>    #define PLATFORM_WINDOWS  1<br>    #define PLATFORM_MAC      2<br>    #define PLATFORM_UNIX     3<br><br>    #if defined(_WIN32)<br>    #define PLATFORM PLATFORM_WINDOWS<br>    #elif defined(<strong>APPLE</strong>)<br>    #define PLATFORM PLATFORM_MAC<br>    #else<br>    #define PLATFORM PLATFORM_UNIX<br>    #endif<br></code></pre><br><p>Now let&rsquo;s include the appropriate headers for sockets. Since the header files are platform specific, we&rsquo;ll use the platform #define to include different sets of files depending on the platform:</p><br><pre><code>    #if PLATFORM == PLATFORM_WINDOWS<br><br>        #include &lt;winsock2.h&gt;<br><br>    #elif PLATFORM == PLATFORM_MAC ||<br>          PLATFORM == PLATFORM_UNIX<br><br>        #include &lt;sys/socket.h&gt;<br>        #include &lt;netinet/in.h&gt;<br>        #include &lt;fcntl.h&gt;<br><br>    #endif<br></code></pre><br><p>Sockets are built in to the standard system libraries on unix-based platforms so we don&rsquo;t have to link to any additonal libraries. However, on Windows we need to link to the winsock library to get socket functionality.</p><br><p>Here is a simple trick to do this without having to change your project or makefile:</p><br><pre><code>    #if PLATFORM == PLATFORM_WINDOWS<br>    #pragma comment( lib, &quot;wsock32.lib&quot; )<br>    #endif<br></code></pre><br><p>I like this trick because I&rsquo;m super lazy. You can always link from your project or makefile if you wish.</p><br><h2 id="initializing-the-socket-layer">Initializing the socket layer</h2><br><p>Most unix-like platforms (including macosx) don&rsquo;t require any specific steps to initialize the sockets layer, however Windows requires that you jump through some hoops to get your socket code working.</p><br><p>You must call &ldquo;WSAStartup&rdquo; to initialize the sockets layer before you call any socket functions, and &ldquo;WSACleanup&rdquo; to shutdown when you are done.</p><br><p>Let&rsquo;s add two new functions:</p><br><pre><code>    bool InitializeSockets()<br>    {<br>        #if PLATFORM == PLATFORM_WINDOWS<br>        WSADATA WsaData;<br>        return WSAStartup( MAKEWORD(2,2),<br>                           &amp;WsaData )<br>            == NO_ERROR;<br>        #else<br>        return true;<br>        #endif<br>    }<br><br>    void ShutdownSockets()<br>    {<br>        #if PLATFORM == PLATFORM_WINDOWS<br>        WSACleanup();<br>        #endif<br>    }<br></code></pre><br><p>Now we have a platform independent way to initialize the socket layer.</p><br><h2 id="creating-a-socket">Creating a socket</h2><br><p>It&rsquo;s time to create a UDP socket, here&rsquo;s how to do it:</p><br><pre><code>    int handle = socket( AF_INET,<br>                         SOCK_DGRAM,<br>                         IPPROTO_UDP );<br><br>    if ( handle &lt;= 0 )<br>    {<br>        printf( &quot;failed to create socket\n&quot; );<br>        return false;<br>    }<br></code></pre><br><p>Next we bind the UDP socket to a port number (eg. 30000). Each socket must be bound to a unique port, because when a packet arrives the port number determines which socket to deliver to. Don&rsquo;t use ports lower than 1024 because they are reserved for the system. Also try to avoid using ports above 50000 because they used when dynamically assigning ports.</p><br><p>Special case: if you don&rsquo;t care what port your socket gets bound to just pass in &ldquo;0&rdquo; as your port, and the system will select a free port for you.</p><br><pre><code>    sockaddr_in address;<br>    address.sin_family = AF_INET;<br>    address.sin_addr.s_addr = INADDR_ANY;<br>    address.sin_port =<br>        htons( (unsigned short) port );<br><br>    if ( bind( handle,<br>               (const sockaddr<em>) &amp;address,<br>               sizeof(sockaddr_in) ) &lt; 0 )<br>    {<br>        printf( &quot;failed to bind socket\n&quot; );<br>        return false;<br>    }<br></em></code></pre><br><p>Now the socket is ready to send and receive packets.</p><br><p>But what is this mysterious call to &ldquo;htons&rdquo; in the code above? This is just a helper function that converts a 16 bit integer value from host byte order (little or big-endian) to network byte order (big-endian). This is required whenever you directly set integer members in socket structures.</p><br><p>You&rsquo;ll see &ldquo;htons&rdquo; (host to network short) and its 32 bit integer sized cousin &ldquo;htonl&rdquo; (host to network long) used several times throughout this article, so keep an eye out, and you&rsquo;ll know what is going on.</p><br><h2 id="setting-the-socket-as-non-blocking">Setting the socket as non-blocking</h2><br><p>By default sockets are set in what is called &ldquo;blocking mode&rdquo;.</p><br><p>This means that if you try to read a packet using &ldquo;recvfrom&rdquo;, the function will not return until a packet is available to read. This is not at all suitable for our purposes. Video games are realtime programs that simulate at 30 or 60 frames per second, they can&rsquo;t just sit there waiting for a packet to arrive!</p><br><p>The solution is to flip your sockets into &ldquo;non-blocking mode&rdquo; after you create them. Once this is done, the &ldquo;recvfrom&rdquo; function returns immediately when no packets are available to read, with a return value indicating that you should try to read packets again later.</p><br><p>Here&rsquo;s how put a socket in non-blocking mode:</p><br><pre><code>    #if PLATFORM == PLATFORM_MAC ||<br>        PLATFORM == PLATFORM_UNIX<br><br>        int nonBlocking = 1;<br>        if ( fcntl( handle,<br>                    F_SETFL,<br>                    O_NONBLOCK,<br>                    nonBlocking ) == -1 )<br>        {<br>            printf( &quot;failed to set non-blocking\n&quot; );<br>            return false;<br>        }<br><br>    #elif PLATFORM == PLATFORM_WINDOWS<br><br>        DWORD nonBlocking = 1;<br>        if ( ioctlsocket( handle,<br>                          FIONBIO,<br>                          &amp;nonBlocking ) != 0 )<br>        {<br>            printf( &quot;failed to set non-blocking\n&quot; );<br>            return false;<br>        }<br><br>    #endif<br></code></pre><br><p>Windows does not provide the &ldquo;fcntl&rdquo; function, so we use the &ldquo;ioctlsocket&rdquo; function instead.</p><br><h2 id="sending-packets">Sending packets</h2><br><p>UDP is a connectionless protocol, so each time you send a packet you must specify the destination address. This means you can use one UDP socket to send packets to any number of different IP addresses, there&rsquo;s no single computer at the other end of your UDP socket that you are connected to.</p><br><p>Here&rsquo;s how to send a packet to a specific address:</p><br><pre><code>    int sent_bytes =<br>        sendto( handle,<br>                (const char)packet_data,<br>                packet_size,<br>                0,<br>                (sockaddr<em>)&amp;address,<br>                sizeof(sockaddr_in) );<br><br>    if ( sent_bytes != packet_size )<br>    {<br>        printf( &quot;failed to send packet\n&quot; );<br>        return false;<br>    }<br></em></code></pre><br><p>Important! The return value from &ldquo;sendto&rdquo; only indicates if the packet was successfully sent from the local computer. It does <em>not</em> tell you whether or not the packet was received by the destination computer. UDP has no way of knowing whether or not the the packet arrived at its destination!</p><br><p>In the code above we pass a &ldquo;sockaddr_in&rdquo; structure as the destination address. How do we setup one of these structures?</p><br><p>Let&rsquo;s say we want to send to the address 207.45.186.98:30000</p><br><p>Starting with our address in this form:</p><br><pre><code>    unsigned int a = 207;<br>    unsigned int b = 45;<br>    unsigned int c = 186;<br>    unsigned int d = 98;<br>    unsigned short port = 30000;<br></code></pre><br><p>We have a bit of work to do to get it in the form required by &ldquo;sendto&rdquo;:</p><br><pre><code>    unsigned int address = ( a &lt;&lt; 24 ) |<br>                           ( b &lt;&lt; 16 ) |<br>                           ( c &lt;&lt; 8  ) |<br>                             d;<br><br>    sockaddr_in addr;<br>    addr.sin_family = AF_INET;<br>    addr.sin_addr.s_addr = htonl( address );<br>    addr.sin_port = htons( port );<br></code></pre><br><p>As you can see, we first combine the a,b,c,d values in range [0,255] into a single unsigned integer, with each byte of the integer now corresponding to the input values. We then initialize a &ldquo;sockaddr_in&rdquo; structure with the integer address and port, making sure to convert our integer address and port values from host byte order to network byte order using &ldquo;htonl&rdquo; and &ldquo;htons&rdquo;.</p><br><p>Special case: if you want to send a packet to yourself, there&rsquo;s no need to query the IP address of your own machine, just pass in the loopback address 127.0.0.1 and the packet will be sent to your local machine.</p><br><h2 id="receiving-packets">Receiving packets</h2><br><p>Once you have a UDP socket bound to a port, any UDP packets sent to your sockets IP address and port are placed in a queue. To receive packets just loop and call &ldquo;recvfrom&rdquo; until it fails with EWOULDBLOCK indicating there are no more packets to receive.</p><br><p>Since UDP is connectionless, packets may arrive from any number of different computers. Each time you receive a packet &ldquo;recvfrom&rdquo; gives you the IP address and port of the sender, so you know where the packet came from.</p><br><p>Here&rsquo;s how to loop and receive all incoming packets:</p><br><pre><code>    while ( true )<br>    {<br>        unsigned char packet_data[256];<br><br>        unsigned int max_packet_size =<br>            sizeof( packet_data );<br><br>        #if PLATFORM == PLATFORM_WINDOWS<br>        typedef int socklen_t;<br>        #endif<br><br>        sockaddr_in from;<br>        socklen_t fromLength = sizeof( from );<br><br>        int bytes = recvfrom( socket,<br>                              (char)packet_data,<br>                              max_packet_size,<br>                              0,<br>                              (sockaddr<em>)&amp;from,<br>                              &amp;fromLength );<br><br>        if ( bytes &lt;= 0 )<br>            break;<br><br>        unsigned int from_address =<br>            ntohl( from.sin_addr.s_addr );<br><br>        unsigned int from_port =<br>            ntohs( from.sin_port );<br><br>        // process received packet<br>    }<br></em></code></pre><br><p>Any packets in the queue larger than your receive buffer will be silently discarded. So if you have a 256 byte buffer to receive packets like the code above, and somebody sends you a 300 byte packet, the 300 byte packet will be dropped. You <em>will not</em> receive just the first 256 bytes of the 300 byte packet.</p><br><p>Since you are writing your own game network protocol, this is no problem at all in practice, just make sure your receive buffer is big enough to receive the largest packet your code could possibly send.</p><br><h2 id="destroying-a-socket">Destroying a socket</h2><br><p>On most unix-like platforms, sockets are file handles so you use the standard file &ldquo;close&rdquo; function to clean up sockets once you are finished with them. However, Windows likes to be a little bit different, so we have to use &ldquo;closesocket&rdquo; instead:</p><br><pre>#if PLATFORM == PLATFORM_MAC ||<br>    PLATFORM == PLATFORM_UNIX<br>close( socket );<br>#elif PLATFORM == PLATFORM_WINDOWS<br>closesocket( socket );<br>#endif</pre><br><p>Hooray windows.</p><br><h2 id="socket-class">Socket class</h2><br><p>So we&rsquo;ve covered all the basic operations: creating a socket, binding it to a port, setting it to non-blocking, sending and receiving packets, and destroying the socket.</p><br><p>But you&rsquo;ll notice most of these operations are slightly platform dependent, and it&rsquo;s pretty annoying to have to remember to #ifdef and do platform specifics each time you want to perform socket operations.</p><br><p>We&rsquo;re going to solve this by wrapping all our socket functionality up into a &ldquo;Socket&rdquo; class. While we&rsquo;re at it, we&rsquo;ll add an &ldquo;Address&rdquo; class to make it easier to specify internet addresses. This avoids having to manually encode or decode a &ldquo;sockaddr_in&rdquo; structure each time we send or receive packets.</p><br><p>So let&rsquo;s add a socket class:</p><br><pre><code>    class Socket<br>    {<br>    public:<br><br>        Socket();<br><br>        ~Socket();<br><br>        bool Open( unsigned short port );<br><br>        void Close();<br><br>        bool IsOpen() const;<br><br>        bool Send( const Address &amp; destination,<br>                   const void  data,<br>                   int size );<br><br>        int Receive( Address &amp; sender,<br>                     void * data,<br>                     int size );<br><br>    private:<br><br>        int handle;<br>    };<br></code></pre><br><p>and an address class:</p><br><pre><code>    class Address<br>    {<br>    public:<br><br>        Address();<br><br>        Address( unsigned char a,<br>                 unsigned char b,<br>                 unsigned char c,<br>                 unsigned char d,<br>                 unsigned short port );<br><br>        Address( unsigned int address,<br>                 unsigned short port );<br><br>        unsigned int GetAddress() const;<br><br>        unsigned char GetA() const;<br>        unsigned char GetB() const;<br>        unsigned char GetC() const;<br>        unsigned char GetD() const;<br><br>        unsigned short GetPort() const;<br><br>    private:<br><br>        unsigned int address;<br>        unsigned short port;<br>    };<br></code></pre><br><p>Here&rsquo;s how to to send and receive packets with these classes:</p><br><pre><code>    // create socket<br><br>    const int port = 30000;<br><br>    Socket socket;<br><br>    if ( !socket.Open( port ) )<br>    {<br>        printf( &quot;failed to create socket!\n&quot; );<br>        return false;<br>    }<br><br>    // send a packet<br><br>    const char data[] = &quot;hello world!&quot;;<br><br>    socket.Send( Address(127,0,0,1,port), data, sizeof( data ) );<br><br>    // receive packets<br><br>    while ( true )<br>    {<br>        Address sender;<br>        unsigned char buffer[256];<br>        int bytes_read =<br>            socket.Receive( sender,<br>                            buffer,<br>                            sizeof( buffer ) );<br>        if ( !bytes_read )<br>            break;<br><br>        // process packet<br>    }<br></code></pre><br><p>As you can see it&rsquo;s much simpler than using BSD sockets directly.</p><br><p>As an added bonus the code is the same on all platforms because everything platform specific is handled inside the socket and address classes.</p><br><h2 id="conclusion">Conclusion</h2><br><p>You now have a platform independent way to send and receive packets. <em>Enjoy</em> :)</p>
+
+<h1 id="译文"><a href="#译文" class="headerlink" title="译文"></a>译文</h1><p><a href="http://gad.qq.com/program/translateview/7165089" target="_blank" rel="noopener">译文出处</a></p>
+<div style="display:none"><br><br><!--     把下文中的 $hhd$ 改为 <h 就可以恢复原状, 当时把 <h 改为 $hhd$ 是为了防止生成toc      --><br><br>因译文很多地方均有疏漏, 本文已经对部分疏漏做了修正.<br><br><div class="WordSection1"><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">翻译：杨嘉鑫（矫情到死的仓鼠君，</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">）审校：赵菁菁（轩语轩缘）</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></span></p>$hhd$1&gt;<span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">序言</span><span style="font-size:9.0pt;line-height:240%"> </span><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">大家好，我是</span><span>Glenn Fiedler</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">，欢迎阅读《</span><span><a rel="noopener" href="http://gafferongames.com/networking-for-game-programmers/" title="针对游戏程序员的网络知识" target="_blank"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#383838;text-decoration:none"><span>针对游戏程序员的网络知识</span></span></a></span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">》系列教程的第二篇文章。</span><span style="color: rgb(51, 51, 51);"> </span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">在前面的文章中我们讨论了在不同计算机之间发送数据的方法，并决定使用</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">用户数据报协议（</span><span>UDP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">）</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">而非</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">传输控制协议（</span><span style="font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#333333">TCP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">）</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">。我们之所以使用</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">用户数据报协议（</span><span>UDP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">）</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">，是因为它能够使数据在不等待重发包而造成数据聚集的情况下按时被送达。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">现在我将要告诉各位如何使用</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">用户数据报协议（</span><span>UDP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">）</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">发送和接收数据包。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></p>$hhd$1&gt;<span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">伯克利套接字</span><span style="font-size:9.0pt;line-height:240%"> </span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">（</span><span>BSD socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">）</span><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">对于大多数现代的平台来说你都可以找到建立在伯克利套接字上的</span><span>sockets</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">。伯克利套接字主要通过</span><span style="font-family:&quot;Lucida Sans Unicode&quot;,&quot;sans-serif&quot;;color:#222222">“socket”,“bind”, “sendto” and “recvfr</span><span>om”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">几个简单函数进行控制。如果你愿意的话你当然可以直接对这几个函数进行调用，但是由于每个平台之间有细微差别，保持代码平台的独立性将会变得有些困难。因此，尽管我将先给各位介绍伯克利套接字的示例代码用以说明它的基本使用功能，我们也不会大量的直接使用伯克利套接字。所以当我们掌握了所有基础</span><span>socket </span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">功能后，我们将会把所有内容汇总到一个系列的课中，以便你可以轻松地编写代码。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></span></p>$hhd$1&gt;<span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">平台的特殊性</span><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">首先</span> <span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">我们先建立<span style="border:none windowtext 1.0pt;padding:0cm">一个“</span></span><span style="border:none windowtext 1.0pt;padding:0cm">define</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">”程序用</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">来测试我们现有的平台是什么，这样我们就可以发现不同平台间间各个</span><span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">里的细微差别。</span></span></p><div><div id="highlighter_477809" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp comments">// platform detection</code></div><div class="line number2 index1 alt1"> </div><div class="line number3 index2 alt2"><code class="cpp preprocessor">#define PLATFORM_WINDOWS  1</code></div><div class="line number4 index3 alt1"> </div><div class="line number5 index4 alt2"><code class="cpp preprocessor">#define PLATFORM_MAC      2</code></div><div class="line number6 index5 alt1"> </div><div class="line number7 index6 alt2"><code class="cpp preprocessor">#define PLATFORM_UNIX     3</code></div><div class="line number8 index7 alt1"> </div><div class="line number9 index8 alt2"><code class="cpp preprocessor">#if defined(_WIN32)</code></div><div class="line number10 index9 alt1"> </div><div class="line number11 index10 alt2"><code class="cpp preprocessor">#define PLATFORM PLATFORM_WINDOWS</code></div><div class="line number12 index11 alt1"> </div><div class="line number13 index12 alt2"><code class="cpp preprocessor">#elif defined(<strong>APPLE</strong>)</code></div><div class="line number14 index13 alt1"> </div><div class="line number15 index14 alt2"><code class="cpp preprocessor">#define PLATFORM PLATFORM_MAC</code></div><div class="line number16 index15 alt1"> </div><div class="line number17 index16 alt2"><code class="cpp preprocessor">#else</code></div><div class="line number18 index17 alt1"> </div><div class="line number19 index18 alt2"><code class="cpp preprocessor">#define PLATFORM PLATFORM_UNIX</code></div><div class="line number20 index19 alt1"> </div><div class="line number21 index20 alt2"><code class="cpp preprocessor">#endif</code></div></div></td></tr></table></div></div><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">接下来我们为</span><span>sockets</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">写入适当的标头，由于头文件具有平台的特殊性所以我们将使用“</span><span>#define</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">”来根据不同的平台引用不同的文件。</span></span></p><div><div id="highlighter_806491" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp preprocessor">#if PLATFORM == PLATFORM_WINDOWS</code></div><div class="line number2 index1 alt1"> </div><div class="line number3 index2 alt2"><code class="cpp spaces">    </code><code class="cpp preprocessor">#include &lt;winsock2.h&gt;</code></div><div class="line number4 index3 alt1"> </div><div class="line number5 index4 alt2"><code class="cpp preprocessor">#elif PLATFORM == PLATFORM_MAC ||</code></div><div class="line number6 index5 alt1"> </div><div class="line number7 index6 alt2"><code class="cpp spaces">      </code><code class="cpp plain">PLATFORM == PLATFORM_UNIX</code></div><div class="line number8 index7 alt1"> </div><div class="line number9 index8 alt2"><code class="cpp spaces">    </code><code class="cpp preprocessor">#include &lt;sys socket.h=””&gt;</code></div><div class="line number10 index9 alt1"> </div><div class="line number11 index10 alt2"><code class="cpp spaces">    </code><code class="cpp preprocessor">#include &lt;netinet in.h=””&gt;</code></div><div class="line number12 index11 alt1"> </div><div class="line number13 index12 alt2"><code class="cpp spaces">    </code><code class="cpp preprocessor">#include &lt;fcntl.h&gt;</code></div><div class="line number14 index13 alt1"> </div><div class="line number15 index14 alt2"><code class="cpp preprocessor">#endif&lt;/fcntl.h&gt;&lt;/netinet&gt;&lt;/sys&gt;&lt;/winsock2.h&gt;</code></div></div></td></tr></table></div></div><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果</span><span>sockets</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">是建立在</span><span>unix</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">平台上，我们就不需要任何其他多余的连接，若它是建立在</span><span>windows</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">系统里，为了确保</span><span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">正常使用我们就需要连接到“</span><span>winsock</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">”库内。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><span style="font-size:medium;">以下是一个简单的技巧，它可以在不改变已有项目或生成文件的前提下完成上述工作。</span></span></p><div><div id="highlighter_251577" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp preprocessor">#if PLATFORM == PLATFORM_WINDOWS</code></div><div class="line number2 index1 alt1"> </div><div class="line number3 index2 alt2"><code class="cpp preprocessor">#pragma comment( lib, “wsock32.lib” )</code></div><div class="line number4 index3 alt1"> </div><div class="line number5 index4 alt2"><code class="cpp preprocessor">#endif</code></div></div></td></tr></table></div></div><p class="MsoNormal" align="left" style="margin: 18pt 18.05pt; text-indent: 24pt;"><br></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">我之所以非常喜欢这个小技巧是因为我太懒了</span><span>~</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">当然啦，如果你愿意每次都进行项目链接或生成文件也未尝不可。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></p>$hhd$1&gt;<span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">层的初始化</span><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">大多数“</span><span>unix-like</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">”的平台</span><span> (</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">包括</span><span>macosx) </span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">是不需要任何特殊的步骤去初始化</span><span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">层的。但是</span><span>Windows</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">需要进行一些特殊设置来确保你的</span><span>sockets</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">代码正常工作。在你使用其他任何</span><span>sockets</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">功能前你必须先调用</span><span> “WSAStartup” </span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">来初始化它们，在你的程序段结束时你也必须使用</span><span> “WSACleanup”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">来结束。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><span style="font-size:medium;">下面让我们来添加以上两个新功能：</span></span></p><div><div id="highlighter_446190" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp color1 bold">bool</code> <code class="cpp plain">InitializeSockets()</code></div><div class="line number2 index1 alt1"><code class="cpp plain">{</code></div><div class="line number3 index2 alt2"><code class="cpp spaces">    </code><code class="cpp preprocessor">#if PLATFORM == PLATFORM_WINDOWS</code></div><div class="line number4 index3 alt1"> </div><div class="line number5 index4 alt2"><code class="cpp spaces">    </code><code class="cpp plain">WSADATA WsaData;</code></div><div class="line number6 index5 alt1"><code class="cpp spaces">    </code><code class="cpp keyword bold">return</code> <code class="cpp plain">WSAStartup( MAKEWORD(2,2), &amp;WsaData ) == NO_ERROR;</code></div><div class="line number7 index6 alt2"> </div><div class="line number8 index7 alt1"><code class="cpp spaces">    </code><code class="cpp preprocessor">#else</code></div><div class="line number9 index8 alt2"> </div><div class="line number10 index9 alt1"><code class="cpp spaces">    </code><code class="cpp keyword bold">return</code> <code class="cpp keyword bold">true</code><code class="cpp plain">;</code></div><div class="line number11 index10 alt2"> </div><div class="line number12 index11 alt1"><code class="cpp spaces">    </code><code class="cpp preprocessor">#endif</code></div><div class="line number13 index12 alt2"><code class="cpp plain">}</code></div><div class="line number14 index13 alt1"> </div><div class="line number15 index14 alt2"> </div><div class="line number16 index15 alt1"> </div><div class="line number17 index16 alt2"><code class="cpp keyword bold">void</code> <code class="cpp plain">ShutdownSockets()</code></div><div class="line number18 index17 alt1"><code class="cpp plain">{</code></div><div class="line number19 index18 alt2"><code class="cpp spaces">    </code><code class="cpp preprocessor">#if PLATFORM == PLATFORM_WINDOWS</code></div><div class="line number20 index19 alt1"> </div><div class="line number21 index20 alt2"><code class="cpp spaces">    </code><code class="cpp plain">WSACleanup();</code></div><div class="line number22 index21 alt1"> </div><div class="line number23 index22 alt2"><code class="cpp spaces">    </code><code class="cpp preprocessor">#endif</code></div><div class="line number24 index23 alt1"><code class="cpp plain">}</code></div></div></td></tr></table></div></div><p class="MsoNormal" align="left" style="margin: 18pt 18.05pt; text-indent: 24pt;"><br></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这样我们就得到了一个初始化</span><span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">层的方法。对于那些不需要</span><span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">初始化的平台来说这些功能可以忽略不计。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></span></p>$hhd$1&gt;<span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">建立一个</span><span>socket</span><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">现在是时候来建立一个基于</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">用户数据报协议（</span><span>UDP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">）的</span><span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">了，下面是实施的方法：</span></span></p><div><div id="highlighter_572686" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp color1 bold">int</code> <code class="cpp plain">handle = socket( AF_INET, SOCK_DGRAM,IPPROTO_UDP );</code></div><div class="line number2 index1 alt1"> </div><div class="line number3 index2 alt2"><code class="cpp keyword bold">if</code> <code class="cpp plain">( handle &lt;= 0 )</code></div><div class="line number4 index3 alt1"><code class="cpp plain">{</code></div><div class="line number5 index4 alt2"><code class="cpp spaces">    </code><code class="cpp functions bold">printf</code><code class="cpp plain">( </code><code class="cpp string">“failed to create socket\n”</code> <code class="cpp plain">);</code></div><div class="line number6 index5 alt1"> </div><div class="line number7 index6 alt2"><code class="cpp spaces">    </code><code class="cpp keyword bold">return</code> <code class="cpp keyword bold">false</code><code class="cpp plain">;</code></div><div class="line number8 index7 alt1"><code class="cpp plain">}</code></div></div></td></tr></table></div></div><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">接下来我们把用户数据报协议（</span><span>UDP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">）的</span><span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">对应到一个端口上（比如</span><span>30000</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这个端口）。每一个</span><span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">都必须对应到一个独一无二的端口上。这么做的原因是端口号决定了每个数据包发送到的位置。不要使用</span><span>1024</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">以下的端口，因为这是为系统调用所预留的。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">有一种特殊情况，如</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333;display:none">果你不在乎</span><span style="font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#333333;display:none">socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333;display:none">指定到哪个端口上，你就</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">可以输入“</span><span>0</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">”，这样系统将会自动为你选择一个闲置的端口。</span></span></p><div><div id="highlighter_845519" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp plain">sockaddr_in address;</code></div><div class="line number2 index1 alt1"><code class="cpp plain">address.sin_family = AF_INET;</code></div><div class="line number3 index2 alt2"><code class="cpp plain">address.sin_addr.s_addr = INADDR_ANY;</code></div><div class="line number4 index3 alt1"><code class="cpp plain">address.sin_port = htons( (unsigned </code><code class="cpp color1 bold">short</code><code class="cpp plain">) port );</code></div><div class="line number5 index4 alt2"> </div><div class="line number6 index5 alt1"> </div><div class="line number7 index6 alt2"><code class="cpp keyword bold">if</code> <code class="cpp plain">( bind( handle, (</code><code class="cpp keyword bold">const</code> <code class="cpp plain">sockaddr<em>) &amp;address, </em></code><code class="cpp keyword bold">sizeof</code><code class="cpp plain">(sockaddr_in) ) &lt; 0 )</code></div><div class="line number8 index7 alt1"><code class="cpp plain">{</code></div><div class="line number9 index8 alt2"><code class="cpp spaces">    </code><code class="cpp functions bold">printf</code><code class="cpp plain">( </code><code class="cpp string">“failed to bind socket\n”</code> <code class="cpp plain">);</code></div><div class="line number10 index9 alt1"> </div><div class="line number11 index10 alt2"><code class="cpp spaces">    </code><code class="cpp keyword bold">return</code> <code class="cpp keyword bold">false</code><code class="cpp plain">;</code></div><div class="line number12 index11 alt1"><code class="cpp plain">}</code></div></div></td></tr></table></div></div><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这样我们的</span><span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">已经准备就绪并可以发送和接收包了。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">那么上面提到的</span><span>“htons”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">是起什么作用</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333;display:none">呢？这是一个辅助功能，它将一个</span><span style="font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#333333;display:none">16</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333;display:none">位整数的值由主机字节序列（小端或大端）转换成网络字节序列（大端）。</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这就要求你在任何时候都直接在</span><span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">结构里设置整数数字。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">你会看到</span><span style="font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#333333">“htons”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">（主机到网络短字节）及其</span><span style="font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#333333">32</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">位整数大小的表兄妹”htonl”</span><span style="font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#333333"></span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">（主机到网络长字节）这在这篇文章中被多次使用，你留意了以后你在下文中再次遇到就会明白。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333"><br></span></p>$hhd$1&gt;<span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">将</span><span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">设置为非阻塞形式</span><span>            </span><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span> </span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">默认情况下，</span><span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">是被设置在</span><span> “</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">阻塞模式</span><span>”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">的状态下。这意味着，如果你想使用</span><span>“recvfrom”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">功能读一个包，在一个数据包被读取前该函数值将不能被返回。这与我们的目标完全不符。视频游戏是拟态在</span><span>30</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">或</span><span>60</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">帧每秒实时的程序，他们不能只是坐在那里等待数据包的到达！</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">解决方案是你将</span><span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">转换成以</span><span>“</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">非阻塞模式</span><span>”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">后再创建他们。一旦做到这一点，当没有包可供阅读时，</span><span>“recvfrom”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">函数就可以立<span style="border:none windowtext 1.0pt;padding:0cm">即返回，返回值显示你应该稍后再尝试读取包。</span></span><span style="border:none windowtext 1.0pt;padding:0cm"> </span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">下面是如何将</span><span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">设置为非阻塞模式的方法：</span></span></p><div><div id="highlighter_979158" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp preprocessor">#if PLATFORM == PLATFORM_MAC || PLATFORM == PLATFORM_UNIX</code></div><div class="line number2 index1 alt1"> </div><div class="line number3 index2 alt2"><code class="cpp color1 bold">int</code> <code class="cpp plain">nonBlocking = 1;</code></div><div class="line number4 index3 alt1"><code class="cpp keyword bold">if</code> <code class="cpp plain">( fcntl( handle, F_SETFL, O_NONBLOCK, nonBlocking ) == -1 )</code></div><div class="line number5 index4 alt2"><code class="cpp plain">{</code></div><div class="line number6 index5 alt1"><code class="cpp spaces">    </code><code class="cpp functions bold">printf</code><code class="cpp plain">( </code><code class="cpp string">“failed to set non-blocking\n”</code> <code class="cpp plain">);</code></div><div class="line number7 index6 alt2"> </div><div class="line number8 index7 alt1"><code class="cpp spaces">    </code><code class="cpp keyword bold">return</code> <code class="cpp keyword bold">false</code><code class="cpp plain">;</code></div><div class="line number9 index8 alt2"><code class="cpp plain">}</code></div><div class="line number10 index9 alt1"> </div><div class="line number11 index10 alt2"><code class="cpp preprocessor">#elif PLATFORM == PLATFORM_WINDOWS</code></div><div class="line number12 index11 alt1"><code class="cpp color1 bold">DWORD</code> <code class="cpp plain">nonBlocking = 1;</code></div><div class="line number13 index12 alt2"><code class="cpp keyword bold">if</code> <code class="cpp plain">( ioctlsocket( handle, FIONBIO, &amp;nonBlocking ) != 0 )</code></div><div class="line number14 index13 alt1"><code class="cpp plain">{</code></div><div class="line number15 index14 alt2"><code class="cpp spaces">    </code><code class="cpp functions bold">printf</code><code class="cpp plain">( </code><code class="cpp string">“failed to set non-blocking\n”</code> <code class="cpp plain">);</code></div><div class="line number16 index15 alt1"> </div><div class="line number17 index16 alt2"><code class="cpp spaces">    </code><code class="cpp keyword bold">return</code> <code class="cpp keyword bold">false</code><code class="cpp plain">;</code></div><div class="line number18 index17 alt1"><code class="cpp plain">}</code></div><div class="line number19 index18 alt2"> </div><div class="line number20 index19 alt1"><code class="cpp preprocessor">#endif</code></div></div></td></tr></table></div></div><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">从上面的程序我们可以发现，</span><span>Windows</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">本身并不提供</span><span>“</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">框架</span><span>”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">的功能，所以我们使用</span><span>“ioctlsocket”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">功能来实现。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></span></p>$hhd$1&gt;<span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">发送数据包</span><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">用户数据报协议（</span><span>UDP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">）</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">是一种无连接协议，所以每次你发送一个数据包前都要指定一个目的地址。你可以使用一个</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">用户数据报协议（</span><span>UDP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">）</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">发送数据包到任意数量的不同的</span><span>IP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">地址，而在你</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">用户数据报协议（</span><span>UDP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">）</span> <span>socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">的另一端并没有连接某一台计算机。</span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">下面是如何发送一个数据包到一个特定的地址方法：</span></p><div><div id="highlighter_169965" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp color1 bold">int</code> <code class="cpp plain">sent_bytes = </code><code class="cpp plain">sendto( handle,</code></div><div class="line number3 index2 alt2"><code class="cpp spaces">            </code><code class="cpp plain">(</code><code class="cpp keyword bold">const</code> <code class="cpp color1 bold">char</code><code class="cpp plain">)packet_data,</code></div><div class="line number4 index3 alt1"><code class="cpp spaces">            </code><code class="cpp plain">packet_size,</code></div><div class="line number5 index4 alt2"><code class="cpp spaces">            </code><code class="cpp plain">0,</code></div><div class="line number6 index5 alt1"><code class="cpp spaces">            </code><code class="cpp plain">(sockaddr<em>)&amp;address,</em></code></div><div class="line number7 index6 alt2"><code class="cpp spaces">            </code><code class="cpp keyword bold">sizeof</code><code class="cpp plain">(sockaddr_in) );</code></div><div class="line number8 index7 alt1"> </div><div class="line number9 index8 alt2"><code class="cpp keyword bold">if</code> <code class="cpp plain">( sent_bytes != packet_size )</code></div><div class="line number10 index9 alt1"><code class="cpp plain">{</code></div><div class="line number11 index10 alt2"><code class="cpp spaces">    </code><code class="cpp functions bold">printf</code><code class="cpp plain">( </code><code class="cpp string">“failed to send packet\n”</code> <code class="cpp plain">);</code></div><div class="line number12 index11 alt1"> </div><div class="line number13 index12 alt2"><code class="cpp spaces">    </code><code class="cpp keyword bold">return</code> <code class="cpp keyword bold">false</code><code class="cpp plain">;</code></div><div class="line number14 index13 alt1"><code class="cpp plain">}</code></div></div></td></tr></table></div></div><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">很重要的一点！“</span><span style="border:none windowtext 1.0pt;padding:0cm">sendto”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">的返回值只是表明数据包是否被成功地从本地计算机发送，它并不能表明目标计算机是否成功接收到你的数据包！用户数据报协议（</span><span style="border:none windowtext 1.0pt;padding:0cm">UDP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">）没有办法知道数据包是否能到达目的地。</span><span style="border:none windowtext 1.0pt;padding:0cm">             </span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">上面的代码中，我们通<span style="border:none windowtext 1.0pt;padding:0cm">过</span></span><span style="border:none windowtext 1.0pt;padding:0cm">“sockaddr_in”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">结构为目的地址。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm"><span style="font-size:medium;">那么我们如何设置这些结构呢？</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">现在让我们以发送到</span><span style="border:none windowtext 1.0pt;padding:0cm">207.45.186.98:30000 </span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">这个地址为例</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm"><span style="font-size:medium;">我们从以下这个程序开始：</span></span></p><div><div id="highlighter_656029" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp plain">unsigned </code><code class="cpp color1 bold">int</code> <code class="cpp plain">a = 207;</code></div><div class="line number2 index1 alt1"><code class="cpp plain">unsigned </code><code class="cpp color1 bold">int</code> <code class="cpp plain">b = 45;</code></div><div class="line number3 index2 alt2"><code class="cpp plain">unsigned </code><code class="cpp color1 bold">int</code> <code class="cpp plain">c = 186;</code></div><div class="line number4 index3 alt1"><code class="cpp plain">unsigned </code><code class="cpp color1 bold">int</code> <code class="cpp plain">d = 98;</code></div><div class="line number5 index4 alt2"><code class="cpp plain">unsigned </code><code class="cpp color1 bold">short</code> <code class="cpp plain">port = 30000;</code></div><div class="line number6 index5 alt1"> </div><div class="line number7 index6 alt2"><code class="cpp plain">我们还要在形式上进行设置从而符合“sendto”的要求：</code></div><div class="line number8 index7 alt1"><code class="cpp plain">unsigned </code><code class="cpp color1 bold">int</code> <code class="cpp plain">address = ( a &lt;&lt; 24 ) |</code></div><div class="line number9 index8 alt2"><code class="cpp spaces">                       </code><code class="cpp plain">( b &lt;&lt; 16 ) |</code></div><div class="line number10 index9 alt1"><code class="cpp spaces">                       </code><code class="cpp plain">( c &lt;&lt; 8  ) | d;</code></div><div class="line number11 index10 alt2"> </div><div class="line number12 index11 alt1"> </div><div class="line number13 index12 alt2"><code class="cpp plain">sockaddr_in addr;</code></div><div class="line number14 index13 alt1"><code class="cpp plain">addr.sin_family = AF_INET;</code></div><div class="line number15 index14 alt2"><code class="cpp plain">addr.sin_addr.s_addr = htonl( address );</code></div><div class="line number16 index15 alt1"><code class="cpp plain">addr.sin_port = htons( port );</code></div></div></td></tr></table></div></div><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">正如您所看到的，我们首先将</span><span style="border:none windowtext 1.0pt;padding:0cm">A</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">、</span><span style="border:none windowtext 1.0pt;padding:0cm">B</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">、</span><span style="border:none windowtext 1.0pt;padding:0cm">C</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">、</span><span style="border:none windowtext 1.0pt;padding:0cm">D</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">值在范围[ 0, 255 ]内的值</span><span style="border:none windowtext 1.0pt;padding:0cm"></span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">转化为一个单一的无符号整数，从而使这个整数的每个字节对应输入值。然后以整数地址和端口来初始化一个</span><span style="border:none windowtext 1.0pt;padding:0cm">“sockaddr_in”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">结构，这样就确保使用“</span><span style="border:none windowtext 1.0pt;padding:0cm">htonl” </span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">和</span><span style="border:none windowtext 1.0pt;padding:0cm">“htons</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">”来将整型地址和端口值从主机字节序列转换为为网络字节序列。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">一种特殊情况：如果你想给自己发送一个数据包，不需要查询自己机器的</span><span style="border:none windowtext 1.0pt;padding:0cm">IP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">地址，在回送地址</span><span style="border:none windowtext 1.0pt;padding:0cm">127.0.0.1</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">中数据包就将被发送到你的本地机器。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm"><br></span></span></p>$hhd$1&gt;<span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">接收数据包</span> <p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">一旦你将一个</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">用户数据报协议（</span><span>UDP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">）</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">套接字绑定到一个端口，任何发送到您</span><span style="border:none windowtext 1.0pt;padding:0cm">scoket IP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">地址和端口的</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">用户数据报协议（</span><span>UDP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">）</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">数据包都将放在一个队列里。接收数据包的话, 只需要循环调用</span><span style="border:none windowtext 1.0pt;padding:0cm"> <span>“recvfrom”</span></span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">函数直到他失败并返回”EWOULDBLOCK”，这就意味着队列里有没有留下其他的数据包了。由于</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">用户数据报协议（</span><span>UDP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">）</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">是无连接性的，数据包可以到达许多不同的计算机。每当你收到一个数据包，</span><span style="border:none windowtext 1.0pt;padding:0cm">“recvfrom”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">都会给你发送者的</span><span style="border:none windowtext 1.0pt;padding:0cm">IP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">地址和端口以便你知道这是来自哪里的数据包。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm"><span style="font-size:medium;">下面是如何进行循环接收传入的数据包的方法：</span></span></p><div><div id="highlighter_421199" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp keyword bold">while</code> <code class="cpp plain">( </code><code class="cpp keyword bold">true</code> <code class="cpp plain">)</code></div><div class="line number2 index1 alt1"><code class="cpp plain">{</code></div><div class="line number3 index2 alt2"><code class="cpp spaces">    </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">char</code> <code class="cpp plain">packet_data[256];</code></div><div class="line number4 index3 alt1"><code class="cpp spaces">    </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">int</code> <code class="cpp plain">max_packet_size = </code><code class="cpp keyword bold">sizeof</code><code class="cpp plain">( packet_data );</code></div><div class="line number5 index4 alt2"><code class="cpp spaces">    </code><code class="cpp preprocessor">#if PLATFORM == PLATFORM_WINDOWS</code></div><div class="line number6 index5 alt1"> </div><div class="line number7 index6 alt2"><code class="cpp spaces">    </code><code class="cpp keyword bold">typedef</code> <code class="cpp color1 bold">int</code> <code class="cpp plain">socklen_t;</code></div><div class="line number8 index7 alt1"> </div><div class="line number9 index8 alt2"><code class="cpp spaces">    </code><code class="cpp preprocessor">#endif</code></div><div class="line number10 index9 alt1"> </div><div class="line number11 index10 alt2"><code class="cpp spaces">    </code><code class="cpp plain">sockaddr_in from;</code></div><div class="line number12 index11 alt1"><code class="cpp spaces">    </code><code class="cpp plain">socklen_t fromLength = </code><code class="cpp keyword bold">sizeof</code><code class="cpp plain">( from );</code></div><div class="line number13 index12 alt2"><code class="cpp spaces">    </code><code class="cpp color1 bold">int</code> <code class="cpp plain">bytes = recvfrom( socket,</code></div><div class="line number14 index13 alt1"><code class="cpp spaces">        </code><code class="cpp plain">(</code><code class="cpp color1 bold">char</code><code class="cpp plain">)packet_data,</code></div><div class="line number15 index14 alt2"><code class="cpp spaces">        </code><code class="cpp plain">max_packet_size,</code></div><div class="line number16 index15 alt1"><code class="cpp spaces">         </code><code class="cpp plain">0,</code></div><div class="line number17 index16 alt2"><code class="cpp spaces">        </code><code class="cpp plain">(sockaddr<em>)&amp;from,</em></code></div><div class="line number18 index17 alt1"><code class="cpp spaces">        </code><code class="cpp plain">&amp;fromLength );</code></div><div class="line number19 index18 alt2"> </div><div class="line number20 index19 alt1"><code class="cpp spaces">    </code><code class="cpp keyword bold">if</code> <code class="cpp plain">( bytes &lt;= 0 )</code></div><div class="line number21 index20 alt2"><code class="cpp spaces">        </code><code class="cpp keyword bold">break</code><code class="cpp plain">; </code></div><div class="line number22 index21 alt1"> </div><div class="line number23 index22 alt2"><code class="cpp spaces">    </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">int</code> <code class="cpp plain">from_address = ntohl( from.sin_addr.s_addr );</code></div><div class="line number24 index23 alt1"><code class="cpp spaces">    </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">int</code> <code class="cpp plain">from_port = ntohs( from.sin_port );</code></div><div class="line number25 index24 alt2"> </div><div class="line number26 index25 alt1"><code class="cpp spaces">    </code><code class="cpp comments">// process received packet</code></div><div class="line number27 index26 alt2"><code class="cpp spaces">    </code> </div><div class="line number28 index27 alt1"><code class="cpp plain">}</code></div></div></td></tr></table></div></div><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">在队列中，数据包一旦大于你接收缓冲区的范围，他们都会被系统悄悄舍弃。因此，如果你有一个</span><span style="border:none windowtext 1.0pt;padding:0cm">256</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">字节的缓冲区用来接收数据包，有人给你一个发送</span><span style="border:none windowtext 1.0pt;padding:0cm">300</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">字节的数据包，</span><span style="border:none windowtext 1.0pt;padding:0cm">300</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">字节的数据包都将被删除。您将不会接收到</span><span style="border:none windowtext 1.0pt;padding:0cm">300</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">字节数据包的前</span><span style="border:none windowtext 1.0pt;padding:0cm">256</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">个字节。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm"><span style="font-size:medium;">因为您正在编写自己的游戏网络协议，以上这些操作这是没有什么影响的。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm"><span style="font-size:medium;">在实践中您就要确保您的接收缓冲区足够大，以接收最大的数据包。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm"><span style="font-size:medium;"><br></span></span></p>$hhd$1&gt;<span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">关闭一个</span><span>socket</span><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">在大多数</span><span style="border:none windowtext 1.0pt;padding:0cm">Unix</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">平台，一旦你完成了自己所需的程序后，在</span><span style="border:none windowtext 1.0pt;padding:0cm">socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">文件中只要使用标准的文件</span><span style="border:none windowtext 1.0pt;padding:0cm">“close”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">函数来清理即可。然而，在</span><span style="border:none windowtext 1.0pt;padding:0cm">Windows</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">系统中以上情形会有点不同，我们要用</span><span style="border:none windowtext 1.0pt;padding:0cm">“closesocket”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">函数来操作：</span></span></p><div><div id="highlighter_757088" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp preprocessor">#if PLATFORM == PLATFORM_MAC ||  PLATFORM == PLATFORM_UNIX</code></div><div class="line number2 index1 alt1"> </div><div class="line number3 index2 alt2"><code class="cpp plain">close( socket );</code></div><div class="line number4 index3 alt1"> </div><div class="line number5 index4 alt2"><code class="cpp preprocessor">#elif PLATFORM == PLATFORM_WINDOWS</code></div><div class="line number6 index5 alt1"> </div><div class="line number7 index6 alt2"><code class="cpp plain">closesocket( socket );</code></div><div class="line number8 index7 alt1"> </div><div class="line number9 index8 alt2"><code class="cpp preprocessor">#endif</code></div></div></td></tr></table></div></div><p class="MsoNormal" style="text-indent:24.0pt"><span style="border:none windowtext 1.0pt;padding:0cm"> </span></p>$hhd$1&gt;<span>Socket class</span><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">现在，我们已经完成了所有的基本操作：创建一个</span><span style="border:none windowtext 1.0pt;padding:0cm">socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">，将他绑定到一个端口并设置为非阻塞，发送和接收数据包，清除</span><span style="border:none windowtext 1.0pt;padding:0cm">socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">但是你会发现以上这些操作中多多少少都是依赖于平台的，在每一次你想执行</span><span style="border:none windowtext 1.0pt;padding:0cm">socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">操作时，你不得不记住“</span><span style="border:none windowtext 1.0pt;padding:0cm"># ifdef</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">”指令和针对不同平台的各种细节，这些繁琐的操作是很令人抓狂的。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">为了解决这个问题，我们可以将所有的</span><span style="border:none windowtext 1.0pt;padding:0cm">socket</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">功能封装成一个“</span><span style="border:none windowtext 1.0pt;padding:0cm">socket class</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">‘’。当我们在使用它的时候，我们将添加一个</span><span style="border:none windowtext 1.0pt;padding:0cm">“Address class</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">‘’，这样使它更容易指定互联网地址。这避免了我们每次发送或接收数据包时进行手动编码或解码</span><span style="border:none windowtext 1.0pt;padding:0cm">“sockaddr_in”</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">结构。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">下面是“</span><span style="border:none windowtext 1.0pt;padding:0cm">socket class</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">‘’的程序：</span></span></p><div><div id="highlighter_13343" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp keyword bold">class</code> <code class="cpp plain">Socket</code></div><div class="line number2 index1 alt1"><code class="cpp plain">{</code></div><div class="line number3 index2 alt2"><code class="cpp keyword bold">public</code><code class="cpp plain">:</code></div><div class="line number4 index3 alt1"><code class="cpp spaces">    </code><code class="cpp plain">Socket();</code></div><div class="line number5 index4 alt2"><code class="cpp spaces">    </code><code class="cpp plain">~Socket();</code></div><div class="line number6 index5 alt1"> </div><div class="line number7 index6 alt2"><code class="cpp spaces">    </code><code class="cpp color1 bold">bool</code> <code class="cpp plain">Open( unsigned </code><code class="cpp color1 bold">short</code> <code class="cpp plain">port );</code></div><div class="line number8 index7 alt1"><code class="cpp spaces">    </code><code class="cpp keyword bold">void</code> <code class="cpp plain">Close();</code></div><div class="line number9 index8 alt2"><code class="cpp spaces">    </code><code class="cpp color1 bold">bool</code> <code class="cpp plain">IsOpen() </code><code class="cpp keyword bold">const</code><code class="cpp plain">;</code></div><div class="line number10 index9 alt1"><code class="cpp spaces">    </code><code class="cpp color1 bold">bool</code> <code class="cpp plain">Send( </code><code class="cpp keyword bold">const</code> <code class="cpp plain">Address &amp; destination,</code></div><div class="line number11 index10 alt2"><code class="cpp spaces">               </code><code class="cpp keyword bold">const</code> <code class="cpp keyword bold">void</code> <code class="cpp plain"> data,</code></div><div class="line number12 index11 alt1"><code class="cpp spaces">               </code><code class="cpp color1 bold">int</code> <code class="cpp plain">size );</code></div><div class="line number13 index12 alt2"> </div><div class="line number14 index13 alt1"><code class="cpp spaces">    </code><code class="cpp color1 bold">int</code> <code class="cpp plain">Receive( Address &amp; sender,</code></div><div class="line number15 index14 alt2"><code class="cpp spaces">                 </code><code class="cpp keyword bold">void</code> <code class="cpp plain">* data,</code></div><div class="line number16 index15 alt1"><code class="cpp spaces">                 </code><code class="cpp color1 bold">int</code> <code class="cpp plain">size );</code></div><div class="line number17 index16 alt2"> </div><div class="line number18 index17 alt1"><code class="cpp keyword bold">private</code><code class="cpp plain">:</code></div><div class="line number19 index18 alt2"><code class="cpp spaces">    </code><code class="cpp color1 bold">int</code> <code class="cpp plain">handle;</code></div><div class="line number20 index19 alt1"> </div><div class="line number21 index20 alt2"><code class="cpp plain">};</code></div></div></td></tr></table></div></div><p class="MsoNormal" align="left" style="margin: 18pt 18.05pt; text-indent: 24pt;"><br></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">下面是“</span><span style="font-family:&quot;Lucida Sans Unicode&quot;,&quot;sans-serif&quot;;color:#222222">address class</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">”的程序：</span></span></p><div><div id="highlighter_501052" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp keyword bold">class</code> <code class="cpp plain">Address</code></div><div class="line number2 index1 alt1"><code class="cpp plain">{</code></div><div class="line number3 index2 alt2"><code class="cpp keyword bold">public</code><code class="cpp plain">:</code></div><div class="line number4 index3 alt1"><code class="cpp spaces">    </code><code class="cpp plain">Address();</code></div><div class="line number5 index4 alt2"><code class="cpp spaces">    </code><code class="cpp plain">Address( unsigned </code><code class="cpp color1 bold">char</code> <code class="cpp plain">a,</code></div><div class="line number6 index5 alt1"><code class="cpp spaces">             </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">char</code> <code class="cpp plain">b,</code></div><div class="line number7 index6 alt2"><code class="cpp spaces">             </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">char</code> <code class="cpp plain">c,</code></div><div class="line number8 index7 alt1"><code class="cpp spaces">             </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">char</code> <code class="cpp plain">d,</code></div><div class="line number9 index8 alt2"><code class="cpp spaces">             </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">short</code> <code class="cpp plain">port );</code></div><div class="line number10 index9 alt1"> </div><div class="line number11 index10 alt2"><code class="cpp spaces">    </code><code class="cpp plain">Address( unsigned </code><code class="cpp color1 bold">int</code> <code class="cpp plain">address,</code></div><div class="line number12 index11 alt1"><code class="cpp spaces">             </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">short</code> <code class="cpp plain">port );</code></div><div class="line number13 index12 alt2"> </div><div class="line number14 index13 alt1"><code class="cpp spaces">    </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">int</code> <code class="cpp plain">GetAddress() </code><code class="cpp keyword bold">const</code><code class="cpp plain">;</code></div><div class="line number15 index14 alt2"><code class="cpp spaces">    </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">char</code> <code class="cpp plain">GetA() </code><code class="cpp keyword bold">const</code><code class="cpp plain">;</code></div><div class="line number16 index15 alt1"><code class="cpp spaces">    </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">char</code> <code class="cpp plain">GetB() </code><code class="cpp keyword bold">const</code><code class="cpp plain">;</code></div><div class="line number17 index16 alt2"><code class="cpp spaces">    </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">char</code> <code class="cpp plain">GetC() </code><code class="cpp keyword bold">const</code><code class="cpp plain">;</code></div><div class="line number18 index17 alt1"><code class="cpp spaces">    </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">char</code> <code class="cpp plain">GetD() </code><code class="cpp keyword bold">const</code><code class="cpp plain">;</code></div><div class="line number19 index18 alt2"><code class="cpp spaces">    </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">short</code> <code class="cpp plain">GetPort() </code><code class="cpp keyword bold">const</code><code class="cpp plain">;</code></div><div class="line number20 index19 alt1"> </div><div class="line number21 index20 alt2"><code class="cpp keyword bold">private</code><code class="cpp plain">:</code></div><div class="line number22 index21 alt1"><code class="cpp spaces">    </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">int</code> <code class="cpp plain">address;</code></div><div class="line number23 index22 alt2"><code class="cpp spaces">    </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">short</code> <code class="cpp plain">port;</code></div><div class="line number24 index23 alt1"> </div><div class="line number25 index24 alt2"><code class="cpp plain">};</code></div></div></td></tr></table></div></div><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">下面是这些</span><span style="border:none windowtext 1.0pt;padding:0cm">class</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;border:none windowtext 1.0pt;padding:0cm">如何接收和发送数据包的程序：</span></p><div><div id="highlighter_565095" class="syntaxhighlighter  cpp"><div class="toolbar"><a class="toolbar_item command_help help">?</a></div><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp comments">// create socket</code></div><div class="line number2 index1 alt1"><code class="cpp keyword bold">const</code> <code class="cpp color1 bold">int</code> <code class="cpp plain">port = 30000;</code></div><div class="line number3 index2 alt2"><code class="cpp plain">Socket socket;</code></div><div class="line number4 index3 alt1"><code class="cpp keyword bold">if</code> <code class="cpp plain">( !socket.Open( port ) )</code></div><div class="line number5 index4 alt2"><code class="cpp plain">{</code></div><div class="line number6 index5 alt1"><code class="cpp spaces">    </code><code class="cpp functions bold">printf</code><code class="cpp plain">( </code><code class="cpp string">“failed to create socket!\n”</code> <code class="cpp plain">);</code></div><div class="line number7 index6 alt2"> </div><div class="line number8 index7 alt1"><code class="cpp spaces">    </code><code class="cpp keyword bold">return</code> <code class="cpp keyword bold">false</code><code class="cpp plain">;</code></div><div class="line number9 index8 alt2"><code class="cpp plain">}</code></div><div class="line number10 index9 alt1"> </div><div class="line number11 index10 alt2"><code class="cpp comments">// send a packet</code></div><div class="line number12 index11 alt1"><code class="cpp keyword bold">const</code> <code class="cpp color1 bold">char</code> <code class="cpp plain">data[] = </code><code class="cpp string">“hello world!”</code><code class="cpp plain">;</code></div><div class="line number13 index12 alt2"><code class="cpp plain">socket.Send( Address(127,0,0,1,port), data, </code><code class="cpp keyword bold">sizeof</code><code class="cpp plain">( data ) );</code></div><div class="line number14 index13 alt1"> </div><div class="line number15 index14 alt2"> </div><div class="line number16 index15 alt1"><code class="cpp comments">// receive packets</code></div><div class="line number17 index16 alt2"><code class="cpp keyword bold">while</code> <code class="cpp plain">( </code><code class="cpp keyword bold">true</code> <code class="cpp plain">)</code></div><div class="line number18 index17 alt1"><code class="cpp plain">{</code></div><div class="line number19 index18 alt2"><code class="cpp spaces">    </code><code class="cpp plain">Address sender;</code></div><div class="line number20 index19 alt1"><code class="cpp spaces">    </code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">char</code> <code class="cpp plain">buffer[256];</code></div><div class="line number21 index20 alt2"><code class="cpp spaces">    </code><code class="cpp color1 bold">int</code> <code class="cpp plain">bytes_read =</code></div><div class="line number22 index21 alt1"><code class="cpp spaces">        </code><code class="cpp plain">socket.Receive( sender,</code></div><div class="line number23 index22 alt2"><code class="cpp spaces">                        </code><code class="cpp plain">buffer,</code></div><div class="line number24 index23 alt1"><code class="cpp spaces">                        </code><code class="cpp keyword bold">sizeof</code><code class="cpp plain">( buffer ) );</code></div><div class="line number25 index24 alt2"><code class="cpp spaces">    </code><code class="cpp keyword bold">if</code> <code class="cpp plain">( !bytes_read )</code></div><div class="line number26 index25 alt1"><code class="cpp spaces">        </code><code class="cpp keyword bold">break</code><code class="cpp plain">;</code></div><div class="line number27 index26 alt2"> </div><div class="line number28 index27 alt1"> </div><div class="line number29 index28 alt2"><code class="cpp spaces">    </code><code class="cpp comments">// process packet</code></div><div class="line number30 index29 alt1"> </div><div class="line number31 index30 alt2"><code class="cpp plain">}</code></div></div></td></tr></table></div></div><p class="MsoNormal" align="left" style="margin: 18pt 18.05pt; text-indent: 24pt;"><br></p>$hhd$1&gt;<span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">结论</span><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">我们现在有了一种不限平台的方法来发送和接收</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">用户数据报协议（</span><span>UDP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">）的</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">数据包。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">用户数据报协议（</span><span>UDP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333">）</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">是无连接性的，因此我编写了一个简单的示例程序，它可以从文本文件中读取</span><span>IP</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">地址，并能够每秒向这些地址发送一个数据包。每当这个程序接收到一个数据包时，它就会告诉你它们来自哪个机器，以及接收到的数据包的大小。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><span style="font-size:medium;">您可以很容易地设置它，然后你就拥有了一系列在本地机器上互相发送数据包的节点。这样你就可以利用以下程序通过不同的端口，进入不同的应用程序：</span></span></p><p class="MsoNormal" align="left" style="margin: 18pt 18.05pt; text-indent: 24pt;"><em><span style="border:none"><span style="border:none"><span style="font-size:medium;">   &gt; Node30000</span></span></span></em></p><p class="MsoNormal" align="left" style="margin: 18pt 18.05pt; text-indent: 24pt;"><em><span style="border:none"><span style="border:none"><span style="font-size:medium;">   &gt; Node 30001</span></span></span></em></p><p class="MsoNormal" align="left" style="margin: 18pt 18.05pt; text-indent: 24pt;"><em><span style="border:none"><span style="border:none"><span style="font-size:medium;">   &gt; Node 30002</span></span></span></em></p><p class="MsoNormal" align="left" style="margin: 18pt 18.05pt; text-indent: 24pt;"><em><span style="border:none"><span style="border:none"><span style="font-size:medium;">   etc…</span></span></span></em></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">然后每个节点都将尝试发送数据包到每个其他节点，它的工作原理就像一个小型的“</span><span>peer-to-peer</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">”设置。</span></span></p><p class="MsoNormal" style="text-indent:24.0pt"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">我是在</span><span>MacOSX</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">系统中开发的这个程序，但我想你应该能够轻松地在任何</span><span>Unix</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">系统或</span><span>Windows</span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">上对他进行编译。如果你有任何应用在其他不同机器上的兼容性补丁，也非常欢迎您与我取得联系。</span></span></p><p class="MsoNormal" align="left" style="text-indent: 24pt;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><span style="font-size:medium;"><br></span></span></p><p class="MsoNormal" align="left" style="text-indent: 0cm; line-height: 18pt;"><span style="font-size:medium;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">【版权声明】</span><span style="font-family: 微软雅黑, sans-serif; color: rgb(51, 51, 51);"> </span></span></p><p class="MsoNormal" align="left" style="text-indent: 0cm;"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><span style="font-size:medium;">原文作者未做权利声明，视为共享知识产权进入公共领域，自动获得授权。</span></span><span style="font-size:9.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#333333"> </span></p><p class="MsoNormal" align="left" style="text-indent: 24pt;"><span style="font-family:&quot;Lucida Sans Unicode&quot;,&quot;sans-serif&quot;;color:#222222"> </span></p></div>                    </div><br>                
+
+<h1 id="源码下载"><a href="#源码下载" class="headerlink" title="源码下载"></a>源码下载</h1><p>因 Gaffer On Games 的源码原下载地址失效, 所以特地补上.</p>
+<p><a href="https://github.com/no5ix/ReliableUDP" target="_blank" rel="noopener">请点击</a></p>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/GafferOnGames/" rel="tag"><i class="fa fa-tag"></i> GafferOnGames</a>
+            
+              <a href="/tags/TCP/" rel="tag"><i class="fa fa-tag"></i> TCP</a>
+            
+              <a href="/tags/UDP/" rel="tag"><i class="fa fa-tag"></i> UDP</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2016/11/14/游戏网络开发一之TCPvsUDP/" rel="next" title="游戏网络开发一之TCPvsUDP">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    游戏网络开发一之TCPvsUDP
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2016/11/16/virtual_connection_over_udp/" rel="prev" title="游戏网络开发三之基于UDP的虚拟连接">
+                <p class="post-nav-pre-next-title">
+                    游戏网络开发三之基于UDP的虚拟连接
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原文"><span class="nav-number">1.</span> <span class="nav-text">原文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bsd-sockets"><span class="nav-number">1.2.</span> <span class="nav-text">BSD sockets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#platform-specifics"><span class="nav-number">1.3.</span> <span class="nav-text">Platform specifics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#initializing-the-socket-layer"><span class="nav-number">1.4.</span> <span class="nav-text">Initializing the socket layer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#creating-a-socket"><span class="nav-number">1.5.</span> <span class="nav-text">Creating a socket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setting-the-socket-as-non-blocking"><span class="nav-number">1.6.</span> <span class="nav-text">Setting the socket as non-blocking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sending-packets"><span class="nav-number">1.7.</span> <span class="nav-text">Sending packets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#receiving-packets"><span class="nav-number">1.8.</span> <span class="nav-text">Receiving packets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#destroying-a-socket"><span class="nav-number">1.9.</span> <span class="nav-text">Destroying a socket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#socket-class"><span class="nav-number">1.10.</span> <span class="nav-text">Socket class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conclusion"><span class="nav-number">1.11.</span> <span class="nav-text">Conclusion</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#译文"><span class="nav-number">2.</span> <span class="nav-text">译文</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码下载"><span class="nav-number">3.</span> <span class="nav-text">源码下载</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

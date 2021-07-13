@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="CPP,STL,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="增长方式为了支持快速随机访问 ， vector 将元素连续存储一一每个元素紧挨着前一个元素存储 。 问题假定容器中元素是连续存储 的， 且容器的大小是可变的 ， 考虑 向 vector 或 string中添加元素会发生什么 :如果没有空间容纳新元素，容器不可能简单地将它添加到内存中其他位置一一因为元素必须连续存储。 容器必须分配新的内存空间来保存己有元素和新元素 ， 将已有元素从 旧位置移动到新空">
+<meta name="keywords" content="CPP,STL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vector和string的内存分配与使用注意点">
+<meta property="og:url" content="https://hulinhong.com/2016/05/17/stl_vector_string/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="增长方式为了支持快速随机访问 ， vector 将元素连续存储一一每个元素紧挨着前一个元素存储 。 问题假定容器中元素是连续存储 的， 且容器的大小是可变的 ， 考虑 向 vector 或 string中添加元素会发生什么 :如果没有空间容纳新元素，容器不可能简单地将它添加到内存中其他位置一一因为元素必须连续存储。 容器必须分配新的内存空间来保存己有元素和新元素 ， 将已有元素从 旧位置移动到新空">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.074Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vector和string的内存分配与使用注意点">
+<meta name="twitter:description" content="增长方式为了支持快速随机访问 ， vector 将元素连续存储一一每个元素紧挨着前一个元素存储 。 问题假定容器中元素是连续存储 的， 且容器的大小是可变的 ， 考虑 向 vector 或 string中添加元素会发生什么 :如果没有空间容纳新元素，容器不可能简单地将它添加到内存中其他位置一一因为元素必须连续存储。 容器必须分配新的内存空间来保存己有元素和新元素 ， 将已有元素从 旧位置移动到新空">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>vector和string的内存分配与使用注意点 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/05/17/stl_vector_string/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vector和string的内存分配与使用注意点</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T00:52:53+00:00">
+                2016-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/CPP/" rel="tag"><i class="fa fa-tag"></i> CPP</a>
+              
+                <a href="/tags/STL/" rel="tag"><i class="fa fa-tag"></i> STL</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/26/stll_set_map_tutorial/" rel="next" title="stl关联容器的特性">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  stl关联容器的特性
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/22/how_to_make_blog_like_this/" rel="prev" title="也想做一个这样的博客吗?">
+              <p class="post-nav-pre-next-title">
+                  也想做一个这样的博客吗?
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="增长方式"><a href="#增长方式" class="headerlink" title="增长方式"></a>增长方式</h1><p>为了支持快速随机访问 ， vector 将元素连续存储一一每个元素紧挨着前一个元素存<br>储 。</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>假定容器中元素是连续存储 的， 且容器的大小是可变的 ， 考虑 向 vector 或 string中添加元素会发生什么 :<br>如果没有空间容纳新元素，容器不可能简单地将它添加到内存中其他位置一一因为元素必须连续存储。</p>
+<p>容器必须分配新的内存空间来保存己有元素和新元素 ， 将已有元素从 旧位置移动到新空 间中， 然后添加新元素，释放旧存储空间 。</p>
+<p>如果我们每添加一个新元素， vector 就执行一次这样的内存分配和释放操作 ，性能会慢到不可接受 。</p>
+<p><strong>. . .</strong><a id="more"></a></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>为了避免这种代价，标准库实现者采用了可以减少容器空间重新分配次数的策略。当不得不在取新的内 存空间 时， vector 和 string 的实现通常会分配比新的空间需求更大的内存空间 。</p>
+<p>容器预留这些空间作为备用 ， 可用来保存更多的新元素 。这样，就不需要每次添加新元素都重新分配容器的内存空间了 。这种分配策略比每次添加新元素时都重新分配容器内存空间的策略要高效得多 。</p>
+<p>其实际性能也表现得足够好一一虽然 vector 在每次重新分配内存空间时都要移动所有元素，但使用 此策略后，其扩张操作通常比 list 和 deque 还要快 。</p>
+<h2 id="增长方式的具体实现"><a href="#增长方式的具体实现" class="headerlink" title="增长方式的具体实现"></a>增长方式的具体实现</h2><p>STL提供了很多泛型容器，如vector，list和map。程序员在使用这些容器时只需关心何时往容器内塞对象，而不用关心如何管理内存，需要用多少内存，这些STL容器极大地方便了C++程序的编写。</p>
+<p>例如可以通过以下语句创建一个vector，它实际上是一个按需增长的动态数组，其每个元素的类型为int整型：</p>
+<p><code>stl::vector&lt;int&gt; testVector;</code></p>
+<p>拥有这样一个动态数组后，用户只需要调用push_back方法往里面添加对象，而不需要考虑需要多少内存：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">testVector.push_back(<span class="number">10</span>); </span><br><span class="line">testVector.push_back(<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<p>vector会根据需要自动增长内存，在testVector退出其作用域时也会自动销毁占有的内存，这些对于用户来说是透明的，stl容器巧妙的避开了繁琐且易出错的内存管理工作。</p>
+<p>隐藏在这些容器后的内存管理工作是通过STL提供的一个默认的allocator实现的。当然，用户也可以定制自己的allocator，只要实现allocator模板所定义的接口方法即可，然后通过将自定义的allocator作为模板参数传递给STL容器，创建一个使用自定义allocator的STL容器对象，如：</p>
+<p><code>stl::vector&lt;int, UserDefinedAllocator&gt; testVector;</code></p>
+<p>大多数情况下，STL默认的allocator就已经足够了。这个allocator是一个由两级分配器构成的内存管理器，</p>
+<ul>
+<li>当申请的内存大小大于128byte时，就启动第一级分配器通过malloc直接向系统的堆空间分配，</li>
+<li>如果申请的内存大小小于128byte时，就启动第二级分配器，从一个预先分配好的内存池中取一块内存交付给用户，这个内存池由16个不同大小（8的倍数，8~128byte）的空闲列表组成，allocator会根据申请内存的大小（将这个大小round up成8的倍数）从对应的空闲块列表取表头块给用户。</li>
+</ul>
+<p><strong>这种做法有两个优点：</strong></p>
+<ul>
+<li><p>小对象的快速分配。小对象是从内存池分配的，这个内存池是系统调用一次malloc分配一块足够大的区域给程序备用，当内存池耗尽时再向系统申请一块新的区域，整个过程类似于批发和零售，起先是由allocator向总经商批发一定量的货物，然后零售给用户，与每次都总经商要一个货物再零售给用户的过程相比，显然是快捷了。当然，这里的一个问题时，内存池会带来一些内存的浪费，比如当只需分配一个小对象时，为了这个小对象可能要申请一大块的内存池，但这个浪费还是值得的，况且这种情况在实际应用中也并不多见。</p>
+</li>
+<li><p>避免了内存碎片的生成。程序中的小对象的分配极易造成内存碎片，给操作系统的内存管理带来了很大压力，系统中碎片的增多不但会影响内存分配的速度，而且会极大地降低内存的利用率。以内存池组织小对象的内存，从系统的角度看，只是一大块内存池，看不到小对象内存的分配和释放。</p>
+</li>
+</ul>
+<h2 id="vector的内存释放"><a href="#vector的内存释放" class="headerlink" title="vector的内存释放"></a>vector的内存释放</h2><p>由于vector的内存占用空间只增不减，比如你首先分配了10,000个字节，</p>
+<p>然后erase掉后面9,999个，留下一个有效元素，但是内存占用仍为10,000个。</p>
+<p>所有内存空间是在vector析构时候才能被系统回收。empty()用来检测容器是否为空的，</p>
+<p>clear()可以清空所有元素。但是即使clear()，</p>
+<p>vector所占用的内存空间依然如故，无法保证内存的回收。</p>
+<p>如果需要空间动态缩小，可以考虑使用 deque 。如果vector，可以用swap()来帮助你释放内存。具体方法如下：</p>
+<p><code>vector&lt;int&gt;().swap(tempVector); //或者 tempVector.swap(vector&lt;int&gt;())</code></p>
+<h3 id="vector的内存释放代码实例1"><a href="#vector的内存释放代码实例1" class="headerlink" title="vector的内存释放代码实例1"></a>vector的内存释放代码实例1</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; foo;</span><br><span class="line">    foo.push_back(<span class="number">1</span>);</span><br><span class="line">    foo.push_back(<span class="number">2</span>);</span><br><span class="line">    foo.push_back(<span class="number">3</span>);</span><br><span class="line">    foo.push_back(<span class="number">4</span>);</span><br><span class="line">    foo.push_back(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; bar;  </span><br><span class="line">    bar.push_back(<span class="number">1</span>);</span><br><span class="line">    bar.push_back(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"foo size:"</span> &lt;&lt; foo.size() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"foo capacity:"</span> &lt;&lt; foo.capacity() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"bar size:"</span> &lt;&lt; bar.size() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"bar capacity:"</span> &lt;&lt; bar.capacity() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    foo.swap(bar);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"after swap foo size:"</span> &lt;&lt; foo.size() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"after swap foo capacity:"</span> &lt;&lt; foo.capacity() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"after swap bar size:"</span> &lt;&lt; bar.size() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"after swap bar capacity:"</span> &lt;&lt; bar.capacity() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>输出：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">foo size:5</span><br><span class="line">foo capacity:6</span><br><span class="line">bar size:2</span><br><span class="line">bar capacity:2</span><br><span class="line">after swap foo size:2</span><br><span class="line">after swap foo capacity:2</span><br><span class="line">after swap bar size:5</span><br><span class="line">after swap bar capacity:6</span><br></pre></td></tr></table></figure></p>
+<p>看到了吗，swap之后，不仅仅是size变化了，capacity也是变化了。那么于是就把swap替代clear了：</p>
+<h3 id="vector的内存释放代码实例2"><a href="#vector的内存释放代码实例2" class="headerlink" title="vector的内存释放代码实例2"></a>vector的内存释放代码实例2</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">    v.push_back(<span class="number">1</span>);</span><br><span class="line">    v.push_back(<span class="number">2</span>);</span><br><span class="line">    v.push_back(<span class="number">3</span>);</span><br><span class="line">    v.push_back(<span class="number">4</span>);</span><br><span class="line">    v.push_back(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"size:"</span> &lt;&lt; v.size() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"capacity:"</span> &lt;&lt; v.capacity() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;().swap(v);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"after swap size:"</span> &lt;&lt; v.size() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"after swap capacity:"</span> &lt;&lt; v.capacity() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>输出：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">size:5</span><br><span class="line">capacity:6</span><br><span class="line">after swap size:0</span><br><span class="line">after swap capacity:0</span><br></pre></td></tr></table></figure></p>
+<h1 id="迭代器失效的问题"><a href="#迭代器失效的问题" class="headerlink" title="迭代器失效的问题"></a>迭代器失效的问题</h1><p>看了上方的实现方式, 相信很容易能理解迭代器失效问题了啊</p>
+<p>向容器中添加元素和从容器中删除元素 的操作<strong>可能</strong>(下面将会讨论为什么是可能)会使指向容器元素的指针、引用或法代器失效。 </p>
+<p>一个失效的指针、引用或法代器将不再表示任何元素 。 使用失效的指针、引用或迭代器是一种严重的程序设计错误，很可能引起与使用未初始化指针一样的问题</p>
+<p><strong>所以, 向容器中添加元素和从容器中删除元素的操作都需要用以下方法重置一下迭代器 : </strong></p>
+<ul>
+<li><p><code>i = q.insert(i,22);</code></p>
+</li>
+<li><p><code>i = q.erase(i);</code></p>
+</li>
+</ul>
+<p>(以下三种情况都是在ubuntu g++环境测试的, 不同平台不同编译器会有不同表现, 比如同样的代码有可能会在vs下崩溃)</p>
+<h2 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//erase操作</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;q&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator i = q.begin(); i != q.end(); ++i)&#123;</span><br><span class="line">        ++cnt;</span><br><span class="line">        <span class="keyword">if</span>(cnt &gt; <span class="number">15</span>)&#123;</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"gg"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(*i == <span class="number">3</span>)              <span class="comment">//删除第三个</span></span><br><span class="line">           i = q.erase(i);</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; *i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; &amp;(*i) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>output:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">0xc72158</span><br><span class="line">2</span><br><span class="line">0xc7215c</span><br><span class="line">4</span><br><span class="line">0xc72160</span><br><span class="line">5</span><br><span class="line">0xc72164</span><br><span class="line">6</span><br><span class="line">0xc72168</span><br><span class="line">7</span><br><span class="line">0xc7216c</span><br><span class="line">8</span><br><span class="line">0xc72170</span><br><span class="line">9</span><br><span class="line">0xc72174</span><br><span class="line">10</span><br><span class="line">0xc72178</span><br></pre></td></tr></table></figure></p>
+<p>输出结果分析:</p>
+<p>当删除第3个元素以后我们发现第四个元素是紧邻第二个元素的（刚好差一个int的内存）,</p>
+<p>也就是说vector执行erase（i）后会将迭代器i之后的元素逐个向前移动一个type单位,所以其实这种c++实现迭代器没失效,</p>
+<p>但是其他的c++实现, 有可能所有元素全部移到另外一块内存, 比如这段代码放到vs是会崩溃的</p>
+<h2 id="添加元素时若预分配的内存足够迭代器就不会失效"><a href="#添加元素时若预分配的内存足够迭代器就不会失效" class="headerlink" title="添加元素时若预分配的内存足够迭代器就不会失效"></a>添加元素时若预分配的内存足够迭代器就不会失效</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//insert操作</span></span><br><span class="line"><span class="comment">//内存充足情况</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;q&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>&#125;;                             </span><br><span class="line">    q.push_back(<span class="number">11</span>);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"初始vector分配的容量:"</span>&lt;&lt;q.capacity()&lt;&lt;<span class="built_in">endl</span>;                  </span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> flag = <span class="number">0</span>;  <span class="comment">//flag保证只插入一次</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator i = q.begin(); i != q.end(); ++i)&#123;</span><br><span class="line">        ++cnt;</span><br><span class="line">        <span class="keyword">if</span>(cnt &gt; <span class="number">15</span>)&#123;</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt; <span class="string">"gg"</span> &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(*i == <span class="number">3</span>&amp;&amp;!flag)&#123;</span><br><span class="line">            flag = <span class="number">1</span>;</span><br><span class="line">            i = q.insert(i,<span class="number">22</span>);</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"插入元素后vector分配的容量:"</span> &lt;&lt;q.capacity() &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; *i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; &amp;(*i) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">初始vector分配的容量:20</span><br><span class="line">  1</span><br><span class="line">  0x1f2188</span><br><span class="line">  2</span><br><span class="line">  0x1f218c</span><br><span class="line">  插入元素后vector分配的容量:20</span><br><span class="line">  22</span><br><span class="line">  0x1f2190</span><br><span class="line">  3</span><br><span class="line">  0x1f2194</span><br><span class="line">  4</span><br><span class="line">  0x1f2198</span><br><span class="line">  5</span><br><span class="line">  0x1f219c</span><br><span class="line">  6</span><br><span class="line">  0x1f21a0</span><br><span class="line">  7</span><br><span class="line">  0x1f21a4</span><br><span class="line">  8</span><br><span class="line">  0x1f21a8</span><br><span class="line">  9</span><br><span class="line">  0x1f21ac</span><br><span class="line">  10</span><br><span class="line">  0x1f21b0</span><br><span class="line">  11</span><br><span class="line">  0x1f21b4</span><br></pre></td></tr></table></figure></p>
+<p>输出结果分析:</p>
+<p>很显然当内存充足的情况下, 执行insert操作只会将迭代器i及i之后的的所有元素向后移动一个type单位.所以这种情况下即使没有使用返回值也不会发生迭代器失效</p>
+<h2 id="添加元素时若预分配的内存不足迭代器就会失效"><a href="#添加元素时若预分配的内存不足迭代器就会失效" class="headerlink" title="添加元素时若预分配的内存不足迭代器就会失效"></a>添加元素时若预分配的内存不足迭代器就会失效</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//insert操作</span></span><br><span class="line"><span class="comment">//内存不够情况</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;q&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>&#125;;                                 <span class="comment">//  c++11列表初始化</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator j = q.begin();</span><br><span class="line">    j++;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"第二个元素:"</span>&lt;&lt;*j&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"第二个元素地址:"</span>&lt;&lt;&amp;(*j)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"初始vector分配的容量:"</span>&lt;&lt;q.capacity()&lt;&lt;<span class="built_in">endl</span>;                  <span class="comment">//  有多少元素即分配多少内存</span></span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> flag = <span class="number">0</span>;  <span class="comment">//flag保证只插入一次</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator i = q.begin(); i != q.end(); ++i)&#123;</span><br><span class="line">        ++cnt;</span><br><span class="line">        <span class="keyword">if</span>(cnt &gt; <span class="number">15</span>)&#123;</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt; <span class="string">"gg"</span> &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(*i == <span class="number">3</span>&amp;&amp;!flag)&#123;</span><br><span class="line">            flag = <span class="number">1</span>;</span><br><span class="line">            i = q.insert(i,<span class="number">22</span>);</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"\n插入后原第二个元素:"</span>&lt;&lt;*j&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"插入后原第二个元素地址:"</span>&lt;&lt;&amp;(*j)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"插入元素后vector分配的容量:"</span> &lt;&lt;q.capacity() &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; *i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; &amp;(*i) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>output:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">第二个元素:2</span><br><span class="line">  第二个元素地址:0xe5215c</span><br><span class="line">  初始vector分配的容量:10</span><br><span class="line">  1</span><br><span class="line">  0xe52158</span><br><span class="line">  2</span><br><span class="line">  0xe5215c</span><br><span class="line"></span><br><span class="line">  插入后第二个元素:15007936</span><br><span class="line">  插入后第二个元素地址:0xe5215c</span><br><span class="line">  插入元素后vector分配的容量:20</span><br><span class="line">  22</span><br><span class="line">  0xe52190</span><br><span class="line">  3</span><br><span class="line">  0xe52194</span><br><span class="line">  4</span><br><span class="line">  0xe52198</span><br><span class="line">  5</span><br><span class="line">  0xe5219c</span><br><span class="line">  6</span><br><span class="line">  0xe521a0</span><br><span class="line">  7</span><br><span class="line">  0xe521a4</span><br><span class="line">  8</span><br><span class="line">  0xe521a8</span><br><span class="line">  9</span><br><span class="line">  0xe521ac</span><br><span class="line">  10</span><br><span class="line">  0xe521b0</span><br></pre></td></tr></table></figure></p>
+<p>输出结果分析:</p>
+<p>vector内存分配策略为 二倍扩容 , 每次当内存不够的情况下vector会将容量扩展为当前的两倍.</p>
+<p>那这些新分配的会在原内存的后面吗？ 根据输出结果显然不是的。</p>
+<p>上例代码在插入元素22 后, 新的3号元素内存位置距离上一个元素不是4byte(1个int单位), 也就是说,</p>
+<p>当vector扩容时, 会在另一个内存分配一段新的内存(原内存的二倍). 并把原内存中的元素全部拷贝到新内存中…</p>
+<p>指向二号元素的迭代器在插入操作之后指向的值由2变成了15007936,也验证了上述结论.</p>
+<h1 id="capacity-amp-size"><a href="#capacity-amp-size" class="headerlink" title="capacity &amp; size"></a>capacity &amp; size</h1><blockquote>
+<p>理解 capacity 和 size 的区别非常重要。</p>
+</blockquote>
+<p>容器的 size 是指它已经保存的元素的数目 ; </p>
+<p>而 capacity 则是在不分配新的内存空间的前提下它最多可以保存多少元素。</p>
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>表述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>c.begin()</strong></td>
+<td>传回指向第一个元素的迭代器。</td>
+</tr>
+<tr>
+<td><strong>c.capacity()</strong></td>
+<td>返不分配新的内存空间的前提下它最多可以保存多少元素。</td>
+</tr>
+<tr>
+<td><strong>c.clear()</strong></td>
+<td>移除容器中所有数据。</td>
+</tr>
+<tr>
+<td><strong>c.empty()</strong></td>
+<td>判断容器是否为空。</td>
+</tr>
+<tr>
+<td><strong>c.end()</strong></td>
+<td>指向迭代器中的最后一个数据地址。</td>
+</tr>
+<tr>
+<td><strong>c.insert(iter,elem)</strong></td>
+<td>在pos位置插入一个elem拷贝，传回新数据位置。</td>
+</tr>
+<tr>
+<td><strong>c.pop_back()</strong></td>
+<td>删除最后一个数据。</td>
+</tr>
+<tr>
+<td><strong>c.push_back(elem)</strong></td>
+<td>在尾部加入一个数据。</td>
+</tr>
+<tr>
+<td><strong>c.size()</strong></td>
+<td>返回容器中实际数据的个数。</td>
+</tr>
+<tr>
+<td><strong>c1.swap(c2)</strong></td>
+<td>将c1和c2这两个容器中的元素互换。</td>
+</tr>
+<tr>
+<td><strong>swap(c1,c2)</strong></td>
+<td>同上操作。</td>
+</tr>
+<tr>
+<td><strong>c.empty()</strong></td>
+<td>判断容器是否为空。</td>
+</tr>
+<tr>
+<td><strong>c.erase(iter)</strong></td>
+<td>删除pos位置的数据，传回下一个数据的位置。</td>
+</tr>
+<tr>
+<td><strong>c.reserve()</strong></td>
+<td>保留(预先分配)适当的容量。</td>
+</tr>
+<tr>
+<td>c.assign(beg,end)</td>
+<td>将[beg; end)区间中的数据赋值给c。</td>
+</tr>
+<tr>
+<td>c.assign(n,elem)</td>
+<td>将n个elem的拷贝赋值给c。</td>
+</tr>
+<tr>
+<td>c.at(idx)</td>
+<td>传回索引idx所指的数据，如果idx越界，抛出out_of_range。</td>
+</tr>
+<tr>
+<td>c.back()</td>
+<td>传回指向最后一个元素的迭代器</td>
+</tr>
+<tr>
+<td>c.erase(beg,end)</td>
+<td>删除[beg,end)区间的数据，传回下一个数据的位置。 </td>
+</tr>
+<tr>
+<td>c.front()</td>
+<td>传回第一个数据。</td>
+</tr>
+<tr>
+<td>get_allocator</td>
+<td>使用构造函数返回一个拷贝。</td>
+</tr>
+<tr>
+<td>c.insert(pos,n,elem)</td>
+<td>在pos位置插入n个elem数据。无返回值。</td>
+</tr>
+<tr>
+<td>c.insert(pos,beg,end)</td>
+<td>在pos位置插入在[beg,end)区间的数据。无返回值。</td>
+</tr>
+<tr>
+<td>c.max_size()</td>
+<td>返回容器中最大数据的数量。</td>
+</tr>
+<tr>
+<td>c.rbegin()</td>
+<td>传回一个逆向队列的第一个数据。</td>
+</tr>
+<tr>
+<td>c.rend()</td>
+<td>传回一个逆向队列的最后一个数据的下一个位置。</td>
+</tr>
+<tr>
+<td>c.resize(num)</td>
+<td>重新指定队列的长度。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="构造-amp-销毁"><a href="#构造-amp-销毁" class="headerlink" title="构造 &amp; 销毁"></a>构造 &amp; 销毁</h1><table>
+<thead>
+<tr>
+<th>写法</th>
+<th>表述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vector<elem> c</elem></td>
+<td>创建一个空的vector。</td>
+</tr>
+<tr>
+<td>vector <elem> c1(c2)</elem></td>
+<td>复制一个vector。</td>
+</tr>
+<tr>
+<td>vector <elem> c(n)</elem></td>
+<td>创建一个vector，含有n个数据，数据均已缺省构造产生。</td>
+</tr>
+<tr>
+<td>vector <elem> c(n, elem)</elem></td>
+<td>创建一个含有n个elem拷贝的vector。</td>
+</tr>
+<tr>
+<td>vector <elem> c(beg,end)</elem></td>
+<td>创建一个以[beg;end)区间的vector。</td>
+</tr>
+<tr>
+<td>c.~ vector <elem>()</elem></td>
+<td>销毁所有数据，释放内存。</td>
+</tr>
+</tbody>
+</table>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/CPP/" rel="tag"><i class="fa fa-tag"></i> CPP</a>
+            
+              <a href="/tags/STL/" rel="tag"><i class="fa fa-tag"></i> STL</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2016/04/26/stll_set_map_tutorial/" rel="next" title="stl关联容器的特性">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    stl关联容器的特性
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2016/05/22/how_to_make_blog_like_this/" rel="prev" title="也想做一个这样的博客吗?">
+                <p class="post-nav-pre-next-title">
+                    也想做一个这样的博客吗?
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#增长方式"><span class="nav-number">1.</span> <span class="nav-text">增长方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">1.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">1.2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增长方式的具体实现"><span class="nav-number">1.3.</span> <span class="nav-text">增长方式的具体实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector的内存释放"><span class="nav-number">1.4.</span> <span class="nav-text">vector的内存释放</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vector的内存释放代码实例1"><span class="nav-number">1.4.1.</span> <span class="nav-text">vector的内存释放代码实例1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vector的内存释放代码实例2"><span class="nav-number">1.4.2.</span> <span class="nav-text">vector的内存释放代码实例2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迭代器失效的问题"><span class="nav-number">2.</span> <span class="nav-text">迭代器失效的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#删除元素"><span class="nav-number">2.1.</span> <span class="nav-text">删除元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加元素时若预分配的内存足够迭代器就不会失效"><span class="nav-number">2.2.</span> <span class="nav-text">添加元素时若预分配的内存足够迭代器就不会失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加元素时若预分配的内存不足迭代器就会失效"><span class="nav-number">2.3.</span> <span class="nav-text">添加元素时若预分配的内存不足迭代器就会失效</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#capacity-amp-size"><span class="nav-number">3.</span> <span class="nav-text">capacity &amp; size</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数"><span class="nav-number">4.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#构造-amp-销毁"><span class="nav-number">5.</span> <span class="nav-text">构造 &amp; 销毁</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

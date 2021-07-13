@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="CPP,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="有些错误是编译器查不到的, 这种错误是最可怕的, 当项目大了之后,即使用 Valgrind 也很难定位,因为裸指针在团队合作中使用很容易导致其他成员忘记释放或多次释放, 所以在团队合作中一般使用智能指针.  而智能指针用的不好, 结果可能适得其反. 所以我们聊一下智能指针的几点注意事项. 总结自 C++ Primer. 一个简单的包含删除器的例子演示123456789101112131415161">
+<meta name="keywords" content="CPP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="智能指针笔记">
+<meta property="og:url" content="https://hulinhong.com/2015/04/11/smart_pointer_note/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="有些错误是编译器查不到的, 这种错误是最可怕的, 当项目大了之后,即使用 Valgrind 也很难定位,因为裸指针在团队合作中使用很容易导致其他成员忘记释放或多次释放, 所以在团队合作中一般使用智能指针.  而智能指针用的不好, 结果可能适得其反. 所以我们聊一下智能指针的几点注意事项. 总结自 C++ Primer. 一个简单的包含删除器的例子演示123456789101112131415161">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.074Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="智能指针笔记">
+<meta name="twitter:description" content="有些错误是编译器查不到的, 这种错误是最可怕的, 当项目大了之后,即使用 Valgrind 也很难定位,因为裸指针在团队合作中使用很容易导致其他成员忘记释放或多次释放, 所以在团队合作中一般使用智能指针.  而智能指针用的不好, 结果可能适得其反. 所以我们聊一下智能指针的几点注意事项. 总结自 C++ Primer. 一个简单的包含删除器的例子演示123456789101112131415161">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>智能指针笔记 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/04/11/smart_pointer_note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">智能指针笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-04-11T12:26:26+00:00">
+                2015-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/CPP/" rel="tag"><i class="fa fa-tag"></i> CPP</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/04/11/linux_gcc_builtin_expect/" rel="next" title="GCC的分支预测优化__builtin_expect">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  GCC的分支预测优化__builtin_expect
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/04/11/linux_gcc_atomic/" rel="prev" title="GCC的原子操作函数">
+              <p class="post-nav-pre-next-title">
+                  GCC的原子操作函数
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <p>有些错误是编译器查不到的, 这种错误是最可怕的, 当项目大了之后,<br>即使用 Valgrind 也很难定位,<br>因为裸指针在团队合作中使用很容易导致其他成员忘记释放或多次释放, 所以在团队合作中一般使用智能指针. </p>
+<p>而智能指针用的不好, 结果可能适得其反.</p>
+<p>所以我们聊一下智能指针的几点注意事项.</p>
+<p>总结自 C++ Primer.</p>
+<h1 id="一个简单的包含删除器的例子演示"><a href="#一个简单的包含删除器的例子演示" class="headerlink" title="一个简单的包含删除器的例子演示"></a>一个简单的包含删除器的例子演示</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;memory&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::bind;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>::placeholders;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">testBind</span><span class="params">( <span class="keyword">int</span>* a, <span class="keyword">int</span> b, <span class="keyword">int</span> c )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; *a + b + c &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> *a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Foo</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	Foo() = <span class="keyword">default</span>;</span><br><span class="line">	Foo( <span class="keyword">const</span> Foo &amp; a )</span><br><span class="line">	&#123;</span><br><span class="line">		data = a.data;</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"复制构造"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">print_sum</span><span class="params">( <span class="keyword">int</span> n1, <span class="keyword">int</span> n2 )</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; n1 + n2 &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> data = <span class="number">10</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//绑定类成员函数用对象的指针</span></span><br><span class="line">	Foo foo;</span><br><span class="line">	<span class="keyword">auto</span> f3 = <span class="built_in">std</span>::bind( &amp;Foo::print_sum, &amp;foo, <span class="number">95</span>, _1 );</span><br><span class="line">	f3( <span class="number">5</span> );</span><br><span class="line"></span><br><span class="line">	<span class="keyword">auto</span> check_testBind = <span class="built_in">std</span>::bind( testBind, <span class="built_in">std</span>::placeholders::_1, <span class="number">3</span>, <span class="number">9</span> );</span><br><span class="line">	<span class="keyword">int</span> * p = <span class="keyword">new</span> <span class="keyword">int</span>( <span class="number">7</span> );</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; check_testBind( p ) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; pi( <span class="keyword">new</span> <span class="keyword">int</span>(),</span><br><span class="line">		check_testBind );</span><br><span class="line">	*pi = <span class="number">88</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; pii( <span class="keyword">new</span> <span class="keyword">int</span>( <span class="number">12</span> ),</span><br><span class="line">		<span class="built_in">std</span>::bind( testBind, <span class="built_in">std</span>::placeholders::_1, <span class="number">32</span>, <span class="number">19</span> ) );</span><br><span class="line"></span><br><span class="line">	<span class="built_in">std</span>::function&lt; <span class="keyword">int</span>( <span class="keyword">int</span>* ) &gt; test_function_bind =</span><br><span class="line">		<span class="built_in">std</span>::bind( testBind, <span class="built_in">std</span>::placeholders::_1, <span class="number">331</span>, <span class="number">9</span> );</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"test_function_bind( p, 331, 9 ) = "</span> &lt;&lt; test_function_bind( p ) &lt;&lt; <span class="built_in">endl</span>;;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; piii( <span class="keyword">new</span> <span class="keyword">int</span>( <span class="number">112</span> ),</span><br><span class="line">		test_function_bind );</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打印结果 :</p>
+<pre><code>100
+119
+7
+347
+test_function_bind( p, 331, 9 ) = 7
+452
+63
+100
+请按任意键继续. . .
+</code></pre><h1 id="智能指针陷阱"><a href="#智能指针陷阱" class="headerlink" title="智能指针陷阱"></a>智能指针陷阱</h1><p>智能指针可以提供对动态分配的内存安全而又方便的管理，但这建立在正确使用的<br>前提下 。 为了正确使用智能指针，我们必须坚持一些基本规范 :</p>
+<ul>
+<li>不使用相同的内置指针值初始化(或 reset) 多个智能指针 。</li>
+<li>不 delete get ( ) 返 回的指针 。</li>
+<li>不使用 get () 初始化或 reset 另 一 个智能指针 。</li>
+<li>如果你使用 get () 返 回的指针，记住当最后一个对应的智能指针销 毁 后， 你 的<br>指 针就 变为无 效 了 。</li>
+<li>如果你使用智能指针管理的资源不是 new 分配的内存 ， 记住传递给它一个删除<br>器( 参见 12. 1.4 节 ， 第 415 页和 12. 1.5 节 ， 第 419 页)。</li>
+</ul>
+<h1 id="尽量用make-shared而非new"><a href="#尽量用make-shared而非new" class="headerlink" title="尽量用make_shared而非new"></a>尽量用make_shared而非new</h1><p>shared_ptr 可以协调对象的析构 ， 但这仅限于其自身的拷贝 ( 也 是 shared_ptr)<br>之间。</p>
+<p><strong>这也是为什么我们推荐使用 make_shared 而不是 new 的原因 。</strong></p>
+<p><strong>这样 ， 我们就能在分配对象的同时就将 shared_ptr 与之绑定，</strong><br><strong>从而避免了无意中将同一块内存绑定到多个独立创建的 shared_ptr 上 。(这是最容易犯的错)</strong></p>
+<p><strong>总结 : 所以我们要尽量一开始就用make_shared来分配动态内存, 而不是先new一个出来, 再找机会将它转为智能指针.</strong></p>
+<p>考虑下面对 shared_ptr 进行操作的函数 :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在函数被调用时 ptr 被创建并初始化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">(<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; ptr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// 使用 ptr</span></span><br><span class="line">&#125; <span class="comment">// ptr 离 开作用域，被销毁</span></span><br></pre></td></tr></table></figure>
+<p>process 的参数是传值方式传递的，因此实参会被拷贝到 ptr 巾 。 拷贝 一 个 shared_ptr<br>会递增其引用讨数，因此， 在 process 运行过程中，引用七| 数值至少为 2 。 当 process<br>结束时， ptr 的引用计数会边喊，但不会变为 0 。 因此，当用音11变 11 ptr 被销毁时， ptr<br>指向的内存不会被释放 。</p>
+<p>使用此函数的正确方法是传递给它一个 shared_ptr :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">42</span>)) ; <span class="comment">// 引用计数为 1</span></span><br><span class="line">process(p); <span class="comment">// 拷贝 p 会递增它的引用计数 ;在 process 中引用计数位为 2</span></span><br><span class="line"><span class="keyword">int</span> i = *p; <span class="comment">// 正确:引用计数位为 1</span></span><br></pre></td></tr></table></figure>
+<p>虽然不能传递给 process 一 个内置指针，但可以传递 给它 一 个(临时的)<br>shared_ptr ， 这个 shared_ptr 是用 一个内 置指针显式构造的 。 但是，这样做很可能<br>会导致错误 :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int *x(new int(1024)); // 危险 x 是一个普通指针，不是一个智能指针</span><br><span class="line">process(x) ; <span class="comment">// 错误 : 不能将 int* 转换为 一个 shared_ptr&lt;int&gt;</span></span><br><span class="line">process(<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt;(x)); <span class="comment">// 合法的，但内存会被释放!</span></span><br><span class="line"><span class="keyword">int</span> j = *x ; <span class="comment">//未定义的 x 是一个空悬指针!</span></span><br></pre></td></tr></table></figure>
+<p>在上面的调用中 ， 我们将一个临时 shared_ptr 传递给 process 。 当这个调用所在的表<br>达式结束时，这个临时对象就被销毁了 。 销毁这个临时变量会递减引用计数，此时引用计<br>数就变为 0 了 。 因此，当临时对象被销毁时 ， 它所指向的内存会被释放 。<br>但 x 继续指 向 (已经释放的)内存，从而变成一个空悬指针。如果试图使用 x 的值，<br>其行为是未定义的 。</p>
+<p>当将一个 shared_ptr 绑定到一个普通指针时 ， 我们就将内存的管理责任交给了这<br>个 shared_ptr 一旦这样做 了 ， 我们就不应该再使用内置指针来访问 shared_ptr 所<br>指向的内存了 </p>
+<h1 id="不要使用-get-初始化另一个智能指针或为智能指针赋值"><a href="#不要使用-get-初始化另一个智能指针或为智能指针赋值" class="headerlink" title="不要使用 get 初始化另一个智能指针或为智能指针赋值"></a>不要使用 get 初始化另一个智能指针或为智能指针赋值</h1><p>智能指针类型定义了 一个名为 get 的函数(参见表 1 2. J )，它返回一个内置指针，<br>指向智能指针管理的对象 。 此函数是为了这样一种情况而设计的 : 我们需要向不能使用智<br>能指针的代码传递一个内置指针。使用 get 返回的指告| 的代码不能 delete 此指针 。<br>虽然编译器不会给出错误信息 ， 但将另一个智能指针也绑定到 get 返回的指针上是<br>错误的 :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">42</span>)) ; <span class="comment">// 引 用计数为 1</span></span><br><span class="line"><span class="keyword">int</span> *q = p . get() ; <span class="comment">// 正确 · 但使用 q 时妥注意，不要让它管理的指针被释放</span></span><br><span class="line">&#123; <span class="comment">// 新程序块</span></span><br><span class="line"><span class="comment">// 未定义:两个独立的 shared_ptr 指 向 相同的内存</span></span><br><span class="line">    shared ptr&lt;<span class="keyword">int</span>&gt; (q) ;</span><br><span class="line">&#125; <span class="comment">// 程序块结束， q 被销毁 ， 它指向的内存被待放</span></span><br><span class="line"><span class="keyword">int</span> foo = *p ; <span class="comment">// 未定义 p 指向的内存 已 经被释放了</span></span><br></pre></td></tr></table></figure>
+<p>在本例中， p 和 q 指 向相同的内存。由于它们是相互独立创建的，因此各自的引用计数都<br>是 1。 当 q 所在的程序块结束时 ， q 被销毁 ， 这会导致 q 指向的内存被释放 。 从而 p 变成<br>一个空悬指针，意味着当我们试图使用 p 时，将发生未定义的行为 。 而且 ， 当 p 被销毁时 ，<br>这块内存会被第二次 delete 。</p>
+<p>get 用来将指针的访问权限传递给代码，你只有在确定代码不会 get.<br>特别是，永远不要用 get 初始化另一个智能指针 del ete 指针或者为另一个智能指针赋值.</p>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/CPP/" rel="tag"><i class="fa fa-tag"></i> CPP</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2015/04/11/linux_gcc_builtin_expect/" rel="next" title="GCC的分支预测优化__builtin_expect">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    GCC的分支预测优化__builtin_expect
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2015/04/11/linux_gcc_atomic/" rel="prev" title="GCC的原子操作函数">
+                <p class="post-nav-pre-next-title">
+                    GCC的原子操作函数
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一个简单的包含删除器的例子演示"><span class="nav-number">1.</span> <span class="nav-text">一个简单的包含删除器的例子演示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#智能指针陷阱"><span class="nav-number">2.</span> <span class="nav-text">智能指针陷阱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尽量用make-shared而非new"><span class="nav-number">3.</span> <span class="nav-text">尽量用make_shared而非new</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不要使用-get-初始化另一个智能指针或为智能指针赋值"><span class="nav-number">4.</span> <span class="nav-text">不要使用 get 初始化另一个智能指针或为智能指针赋值</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

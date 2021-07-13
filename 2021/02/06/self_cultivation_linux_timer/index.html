@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Self-cultivation,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Linux定时器实现原理时间轮定时器-低分辨率实现Linux 2.6.16之前，内核只支持低精度时钟，内核定时器的工作方式：    系统启动后，会读取时钟源设备(RTC,HPET，PIT…)，初始化当前系统时间。 内核会根据HZ(系统定时器频率，节拍率)参数值，设置时钟事件设备，启动tick(节拍)中断。HZ表示1秒种产生多少个时钟硬件中断，tick就表示连续两个中断的间隔时间。 设置时钟事件设备">
+<meta name="keywords" content="Self-cultivation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器开发自我修养专栏-Linux高低精度定时器实现原理">
+<meta property="og:url" content="https://hulinhong.com/2021/02/06/self_cultivation_linux_timer/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="Linux定时器实现原理时间轮定时器-低分辨率实现Linux 2.6.16之前，内核只支持低精度时钟，内核定时器的工作方式：    系统启动后，会读取时钟源设备(RTC,HPET，PIT…)，初始化当前系统时间。 内核会根据HZ(系统定时器频率，节拍率)参数值，设置时钟事件设备，启动tick(节拍)中断。HZ表示1秒种产生多少个时钟硬件中断，tick就表示连续两个中断的间隔时间。 设置时钟事件设备">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.070Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="服务器开发自我修养专栏-Linux高低精度定时器实现原理">
+<meta name="twitter:description" content="Linux定时器实现原理时间轮定时器-低分辨率实现Linux 2.6.16之前，内核只支持低精度时钟，内核定时器的工作方式：    系统启动后，会读取时钟源设备(RTC,HPET，PIT…)，初始化当前系统时间。 内核会根据HZ(系统定时器频率，节拍率)参数值，设置时钟事件设备，启动tick(节拍)中断。HZ表示1秒种产生多少个时钟硬件中断，tick就表示连续两个中断的间隔时间。 设置时钟事件设备">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>服务器开发自我修养专栏-Linux高低精度定时器实现原理 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/02/06/self_cultivation_linux_timer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">服务器开发自我修养专栏-Linux高低精度定时器实现原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-06T13:08:06+00:00">
+                2021-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self-cultivation/" itemprop="url" rel="index">
+                    <span itemprop="name">Self-cultivation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Self-cultivation/" rel="tag"><i class="fa fa-tag"></i> Self-cultivation</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/01/24/self_cultivation_mysql/" rel="next" title="服务器开发自我修养专栏-MySQL原理">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  服务器开发自我修养专栏-MySQL原理
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/02/16/self_cultivation_tcp/" rel="prev" title="服务器开发自我修养专栏-TCP详解">
+              <p class="post-nav-pre-next-title">
+                  服务器开发自我修养专栏-TCP详解
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="Linux定时器实现原理"><a href="#Linux定时器实现原理" class="headerlink" title="Linux定时器实现原理"></a>Linux定时器实现原理</h1><h2 id="时间轮定时器-低分辨率实现"><a href="#时间轮定时器-低分辨率实现" class="headerlink" title="时间轮定时器-低分辨率实现"></a>时间轮定时器-低分辨率实现</h2><p>Linux 2.6.16之前，内核只支持低精度时钟，内核定时器的<strong>工作方式</strong>：  </p>
+<ol>
+<li>系统启动后，会读取时钟源设备(RTC,HPET，PIT…)，初始化当前系统时间。</li>
+<li>内核会根据HZ(系统定时器频率，节拍率)参数值，设置时钟事件设备，启动tick(节拍)中断。HZ表示1秒种产生多少个时钟硬件中断，tick就表示连续两个中断的间隔时间。</li>
+<li>设置时钟事件设备后，时钟事件设备会定时产生一个tick中断，触发时钟中断处理函数，更新系统时钟,并检测timer wheel，进行超时事件的处理。</li>
+</ol>
+<p>在上面工作方式下，Linux 2.6.16 之前，内核软件定时器采用timer wheel多级时间轮的实现机制，维护操作系统的所有定时事件。timer wheel的触发是基于系统tick周期性中断。所以说这之前，linux只能支持ms级别的时钟，随着时钟源硬件设备的精度提高和软件高精度计时的需求，有了高精度时钟的内核设计。</p>
+<p>所谓低分辨率定时器，是指这种定时器的计时单位基于jiffies值的计数，也就是说，它的精度只有1HZ，假如你的内核配置的HZ是1000，那意味着系统中的低分辨率定时器的精度就是1ms。早期的内核版本中，内核并不支持高精度定时器，理所当然只能使用这种低分辨率定时器, 后来随着时钟源硬件设备的精度提高和软件高精度计时的需求，才有了<a href="#红黑树定时器-高精度实现">高精度时钟的内核设计</a></p>
+<p><strong>. . .</strong><a id="more"></a></p>
+<h3 id="时间轮算法思想"><a href="#时间轮算法思想" class="headerlink" title="时间轮算法思想"></a>时间轮算法思想</h3><p>多级时间轮, 插入/删除/execute复杂度都O(1)</p>
+<p>算法思想: </p>
+<ul>
+<li>把定时器分为 5 个桶，每桶的粒度分别表示为：<code>1 jiffies，256 jiffies，256*64 jiffies，256*64*64 jiffies，256*64*64*64 jiffies</code>，每桶bucket中的slot的数量分别为：<code>256，64，64，64，64</code>，能表示的范围为 <code>2^32</code> </li>
+<li>这好几个bucket, 其中一个bucket叫near是差不多要触发的定时器范围是<code>[0, 0x100)</code>, 和几个定时时长比较久的bucket: <code>[0x100, 0x4000)以及[0x4000, 0x100000)以及[0x100000, 0x4000000)</code></li>
+<li><strong>tick</strong>:<ul>
+<li>每次tick都检查<code>jiffies</code>是否已经又经过一轮 <code>TVR_MASK(255)</code> 了, 经过了一轮index就又等于0, 然后就去后面的<code>bucket[0][INDEX(0)]</code>里去拿定时器迁移到near里(这个<code>INDEX(0)宏其实是拿到jiffies_的第9到14位的值</code>), 如果<code>INDEX(0)</code>也等于0, 则说明<code>bucket[0]</code>也轮转迁移了一圈了, 接着就需要去<code>bucket[1]</code>里拿定时器迁移到<code>bucket[0]</code>里, 后面<code>INDEX(1)</code>和<code>INDEX(2)</code>对应的bucket调整都以此类推, 这就跟水表一样, 小表转一圈需要调整中表, 中表转一圈则要调整大表差不多</li>
+<li>为啥可以直接把这个<code>bucket[0][INDEX(0)]</code>里的定时器直接迁移到near里呢? 因为在插入的时候就是这么哈希的, 举个比较简单的不准确但是可以说明原理的例子, 假如 near里是存最近60秒过期的定时器, <code>bucket[0][0]</code>存的是60到120过期的, <code>bucket[0][1]</code>的是120到180过期的, 则jiffies等于60的时候就要把<code>bucket[0][0]</code>迁移到near里, jiffies等于120的时候<code>bucket[0][1]</code>迁移到near里…</li>
+<li>类似于linux的时间轮实现: 假设curr_time=0x12345678，那么下一个检查的时刻为0x12345679。如果<code>tv1.bucket[0x79]</code>上链表非空，则下一个检查时刻<code>tv1.bucket[0x79]</code>上的定时器节点超时。如果curr_time到了0x12345700，低8位为空，说明有进位产生，这时移出9～14位对应的定时器链表(即正好对应着tv2轮)，把<code>tv2.bucket[此时9-14位的值]</code>所对应的timer链表迁移到tv1来，这就完成了一次进位迁移操作。同样地，当curr_time的第9-14位为0时，这表明tv2轮对tv3轮有进位发生，将curr_time第14-19位的值作为下标，移出tv3中对应的定时器链表，然后将它们迁移到tv2去。tv4,tv5依次类推。之所以能够根据curr_time来检查超时链，是因为tv1~tv5轮的度量范围正好依次覆盖了整型的32位：tv1(1-8位)，tv2(9-14位)，tv3(15-20位)，tv4(21-26位)，tv5(27-32位)；而curr_time计数的递增中，低位向高位的进位正是低级时间轮转圈带动高级时间轮走动的过程。</li>
+</ul>
+</li>
+<li><strong>插入</strong>:<br>  有好几个bucket, 然后用类似于取模哈希的思想先判断还有多久过期的区间, 然后根据过期时间expire取他相应的位放入相应的桶里的某个slot的定时器链表TimerList里即可, 参考下方代码</li>
+<li><strong>excute</strong>:<br>  <code>near_</code> 里面的定时器因为都已经在 <code>addTimerNode</code> 根据<code>expire</code>哈希安插好了, 所以这里 <code>jiffies_ &amp; TVR_MASK</code> 出来的index是几, 那就直接从<code>near_</code>里取出来执行就完事了,见下方代码<ul>
+<li>删除: 因为插入的时候还专门另外有个哈希表来保存定时器id和定时器的映射关系, 所有删除的时候就直接根据传入的定时器id来找到定时器本身然后把他标记为已删除, 然后在excute的时候会找到<code>near_[index]</code>这个定时器链表TimerList移除</li>
+</ul>
+</li>
+<li><strong>删除</strong>:<br>  惰性删除, 只是标记相关node为被canceled, 然后excute的时候再freeNode </li>
+<li><strong>tickless</strong>:<br>  不嫌麻烦还可以每次从 timer 集合里面选择最先要超时的事件，计算还有多长时间就会超时，作为 select wait 的值，每次都不一样，每次都基本精确，同时不会占用多余 cpu，这叫 tickless，Linux 的 3.x以上版本也支持 tickless 的模式来驱动各种系统级时钟，号称更省电更精确，不过需要你手动打开，FreeBSD 9 以后也引入了 tickless。</li>
+</ul>
+<h3 id="时间轮有什么缺点"><a href="#时间轮有什么缺点" class="headerlink" title="时间轮有什么缺点"></a>时间轮有什么缺点</h3><p>虽然大部分时间里，时间轮可以实现O(1)时间复杂度，但是当有进位发生时，不可预测的O(N)定时器级联迁移时间，这对于低分辨率定时器来说问题不大，可是它大大地影响了定时器的精度；</p>
+<h3 id="时间轮核心代码"><a href="#时间轮核心代码" class="headerlink" title="时间轮核心代码"></a>时间轮核心代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> WheelTimer::addTimerNode(TimerNode* node)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int64_t</span> expires = node-&gt;expire;</span><br><span class="line">    <span class="keyword">uint64_t</span> idx = (<span class="keyword">uint64_t</span>)(expires - jiffies_);</span><br><span class="line">    TimerList* <span class="built_in">list</span> = <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">if</span> (idx &lt; TVR_SIZE) <span class="comment">// [0, 0x100)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> i = expires &amp; TVR_MASK;  <span class="comment">// 因为只关心后8位(即TVR_BITS=8)</span></span><br><span class="line">        <span class="built_in">list</span> = &amp;near_[i];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(idx &lt; (<span class="number">1</span> &lt;&lt; (TVR_BITS + TVN_BITS))) <span class="comment">// [0x100, 0x4000)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 因为不关心后8位(即TVR_BITS=8)的数, 所以直接 expires &gt;&gt; TVR_BITS 了</span></span><br><span class="line">        <span class="comment">// 又因为 TimerList buckets_[WHEEL_BUCKETS][TVN_SIZE] 的第二维为 TVN_SIZE, 所以要 &amp; TVN_MASK</span></span><br><span class="line">        <span class="keyword">int</span> i = (expires &gt;&gt; TVR_BITS) &amp; TVN_MASK;</span><br><span class="line">        <span class="built_in">list</span> = &amp;buckets_[<span class="number">0</span>][i];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(idx &lt; (<span class="number">1</span> &lt;&lt; (TVR_BITS + <span class="number">2</span> * TVN_BITS))) <span class="comment">// [0x4000, 0x100000)</span></span><br><span class="line">    &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// #define INDEX(N) (   ( jiffies_ &gt;&gt; (8 +  (N) * 6)  )        &amp; 1111 11)</span></span><br><span class="line">#define INDEX(N) ((jiffies_ &gt;&gt; (TVR_BITS + (N) * TVN_BITS)) &amp; TVN_MASK)</span><br><span class="line"></span><br><span class="line"><span class="comment">// cascades all vectors and executes all expired timer</span></span><br><span class="line"><span class="keyword">int</span> WheelTimer::tick()&#123;</span><br><span class="line">    <span class="keyword">int</span> fired = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 每次tick都检查是否已经又经过一轮 TVR_MASK(255) 了,</span></span><br><span class="line">    <span class="comment">// 经过了一轮index就又等于0, 然后就去后面的bucket里找是否有需要调整到near的定时器</span></span><br><span class="line">    <span class="comment">// 就跟水表一样, 小表转一圈需要调整中表, 中表转一圈则要调整大表</span></span><br><span class="line">    <span class="keyword">int</span> index = jiffies_ &amp; TVR_MASK;</span><br><span class="line">    <span class="keyword">if</span>(index == <span class="number">0</span>) <span class="comment">// cascade timers</span></span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">if</span>(cascade(<span class="number">0</span>, INDEX(<span class="number">0</span>)) &amp;&amp;</span><br><span class="line">        cascade(<span class="number">1</span>, INDEX(<span class="number">1</span>)) &amp;&amp;</span><br><span class="line">        cascade(<span class="number">2</span>, INDEX(<span class="number">2</span>))</span><br><span class="line">        )</span><br><span class="line">        cascade(<span class="number">3</span>, INDEX(<span class="number">3</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    jiffies_++;</span><br><span class="line">    fired += execute(index);</span><br><span class="line">    <span class="keyword">return</span> fired;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> WheelTimer::execute()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> fired = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// near 里面的定时器因为都已经在 addTimerNode 根据expire里哈希安插好了,</span></span><br><span class="line">    <span class="comment">// 所以这里 jiffies_ &amp; TVR_MASK 出来的index是几, 那就直接从near_里取出来执行就完事了</span></span><br><span class="line">    <span class="keyword">int</span> index = jiffies_ &amp; TVR_MASK;</span><br><span class="line">    TimerList expired;</span><br><span class="line">    near_[index].swap(expired); <span class="comment">// swap list</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> node : expired)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!node-&gt;canceled &amp;&amp; node-&gt;cb)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//printf("wheel node %d triggered at %lld of jiffies %lld\n", node-&gt;id, current_, jiffies_);</span></span><br><span class="line">            node-&gt;cb();</span><br><span class="line">            size_--;</span><br><span class="line">            fired++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ref_.erase(node-&gt;id);</span><br><span class="line">        freeNode(node);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fired;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// cascade all the timers at bucket of index up one level</span></span><br><span class="line">    <span class="keyword">bool</span> WheelTimer::cascade(<span class="keyword">int</span> bucket, <span class="keyword">int</span> index)&#123;</span><br><span class="line">        <span class="comment">// swap list</span></span><br><span class="line">        TimerList <span class="built_in">list</span>;</span><br><span class="line">        buckets_[bucket][index].swap(<span class="built_in">list</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span>&amp; node : <span class="built_in">list</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(node-&gt;id &gt; <span class="number">0</span>)&#123;</span><br><span class="line">                addTimerNode(node);  <span class="comment">// 把各个定时器往前推, 比如条件达成就挪到this-&gt;near_里去</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如INDEX(N), 当N=0, 因为进入本函数之前, jiffies_ &amp; TVR_MASK 是为 0 的,</span></span><br><span class="line">        <span class="comment">// 说明 jiffies_ 8位以前的高位绝对有不为0的位,</span></span><br><span class="line">        <span class="comment">// jiffies右移8位然后跟TVN_MASK(即63, 即二进制111111, 六位)做且操作之后的结果 index == 0 ,</span></span><br><span class="line">        <span class="comment">// 则说明jiffies大于N=0的这个bucket区间了, 还需要调整下一个区间(即 N+1 这个bucket区间),</span></span><br><span class="line">        <span class="comment">// 就跟水表一样, 小表转一圈需要调整中表, 中表转一圈则要调整大表</span></span><br><span class="line">        <span class="keyword">return</span> index == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Do lazy cancellation, so we can effectively use vector as container of timer nodes</span></span><br><span class="line">    <span class="keyword">bool</span> WheelTimer::Cancel(<span class="keyword">int</span> id)</span><br><span class="line">    &#123;</span><br><span class="line">        TimerNode* node = ref_[id];</span><br><span class="line">        <span class="keyword">if</span> (node != <span class="literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            node-&gt;canceled = <span class="literal">true</span>;</span><br><span class="line">            size_--;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="红黑树定时器-高精度实现"><a href="#红黑树定时器-高精度实现" class="headerlink" title="红黑树定时器-高精度实现"></a>红黑树定时器-高精度实现</h2><p>而随着内核的不断演进，大牛们已经对这种低分辨率定时器的精度不再满足，而且，硬件也在不断地发展，系统中的定时器硬件的精度也越来越高，这也给高分辨率定时器的出现创造了条件。内核从2.6.16开始加入了高精度定时器架构。它可以为我们提供纳秒级的定时精度，以满足对精确时间有迫切需求的应用程序或内核驱动，例如多媒体应用，音频设备的驱动程序等等。</p>
+<p>当前内核同时存在新旧timer wheel 和hrtimer两套timer的实现，内核启动后会进行从低精度模式到高精度时钟模式的切换.</p>
+<h3 id="与时间轮的区别"><a href="#与时间轮的区别" class="headerlink" title="与时间轮的区别"></a>与时间轮的区别</h3><p>Linux 2.6.16 ，内核支持了高精度的时钟，内核采用新的定时器hrtimer，其实现逻辑和Linux 2.6.16 之前定时器逻辑区别：  </p>
+<ul>
+<li>hrtimer采用红黑树进行高精度定时器的管理，而不是时间轮；</li>
+<li>高精度时钟定时器<strong>不在依赖系统的tick中断，而是基于时钟硬件的事件触发</strong>。</li>
+<li>旧内核的定时器实现依赖于系统定时器硬件定期的tick，基于该tick，内核会扫描timer wheel处理超时事件，会更新jiffies，wall time(墙上时间，现实时间)，process的使用时间等等工作。</li>
+<li>新的内核不再会直接支持周期性的tick，新内核定时器框架采用了基于高精度时钟硬件的下次中断触发，而不是以前的周期性触发。新内核实现了hrtimer(high resolution timer)于事件触发。</li>
+</ul>
+<h3 id="hrtimer的工作原理"><a href="#hrtimer的工作原理" class="headerlink" title="hrtimer的工作原理"></a>hrtimer的工作原理</h3><p>我们知道，低分辨率定时器使用5个链表数组来组织timer_list结构，形成了著名的时间轮概念，对于高分辨率定时器，我们期望组织它们的数据结构至少具备以下条件：  </p>
+<ul>
+<li>稳定而且快速的查找能力；</li>
+<li>快速地插入和删除定时器的能力；</li>
+<li>排序功能；</li>
+<li>内核的开发者考察了多种数据结构，例如基数树、哈希表等等，最终他们选择了红黑树（rbtree）来组织hrtimer，红黑树已经以库的形式存在于内核中，并被成功地使用在内存管理子系统和文件系统中，随着系统的运行，hrtimer不停地被创建和销毁，新的hrtimer按顺序被插入到红黑树中，树的最左边的节点就是最快到期的定时器，内核用一个hrtimer结构来表示一个高精度定时器</li>
+</ul>
+<p>通过将高精度时钟硬件的下次中断触发时间设置为红黑树中最早到期的Timer 的时间，时钟到期后从红黑树中得到下一个 Timer 的到期时间，并设置硬件，如此循环反复。</p>
+<h3 id="如何在高精度模式下模拟tick"><a href="#如何在高精度模式下模拟tick" class="headerlink" title="如何在高精度模式下模拟tick"></a>如何在高精度模式下模拟tick</h3><p>当系统切换到高精度模式后，tick_device被高精度定时器系统接管，不再定期地产生tick事件，我们知道，到目前的版本为止（V3.4），内核还没有彻底废除jiffies机制，系统还是依赖定期到来的tick事件，供进程调度系统和时间更新等操作，大量存在的低精度定时器也仍然依赖于jiffies的计数，所以，尽管tick_device被接管，高精度定时器系统还是要想办法继续提供定期的tick事件。为了达到这一目的，内核使用了一个取巧的办法：既然高精度模式已经启用，可以定义一个hrtimer，把它的到期时间设定为一个jiffy的时间，当这个hrtimer到期时，在这个hrtimer的到期回调函数中，进行和原来的tick_device同样的操作，然后把该hrtimer的到期时间顺延一个jiffy周期，如此反复循环，完美地模拟了原有tick_device的功能。</p>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Self-cultivation/" rel="tag"><i class="fa fa-tag"></i> Self-cultivation</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2021/01/24/self_cultivation_mysql/" rel="next" title="服务器开发自我修养专栏-MySQL原理">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    服务器开发自我修养专栏-MySQL原理
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2021/02/16/self_cultivation_tcp/" rel="prev" title="服务器开发自我修养专栏-TCP详解">
+                <p class="post-nav-pre-next-title">
+                    服务器开发自我修养专栏-TCP详解
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux定时器实现原理"><span class="nav-number">1.</span> <span class="nav-text">Linux定时器实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#时间轮定时器-低分辨率实现"><span class="nav-number">1.1.</span> <span class="nav-text">时间轮定时器-低分辨率实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#时间轮算法思想"><span class="nav-number">1.1.1.</span> <span class="nav-text">时间轮算法思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间轮有什么缺点"><span class="nav-number">1.1.2.</span> <span class="nav-text">时间轮有什么缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间轮核心代码"><span class="nav-number">1.1.3.</span> <span class="nav-text">时间轮核心代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#红黑树定时器-高精度实现"><span class="nav-number">1.2.</span> <span class="nav-text">红黑树定时器-高精度实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#与时间轮的区别"><span class="nav-number">1.2.1.</span> <span class="nav-text">与时间轮的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hrtimer的工作原理"><span class="nav-number">1.2.2.</span> <span class="nav-text">hrtimer的工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何在高精度模式下模拟tick"><span class="nav-number">1.2.3.</span> <span class="nav-text">如何在高精度模式下模拟tick</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

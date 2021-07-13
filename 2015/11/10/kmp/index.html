@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="CPP,noodle,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="KMP查找子字符串前言　　　 KMP 算法是一种改进的字符串匹配算法，由 D.E.Knuth，J.H.Morris 和 V.R.Pratt 同时发现，因此人们称它为克努特——莫里斯——普拉特操作（简称 KMP 算法）。KMP 算法的关键是利用匹配失败后的信息（已经匹配的部分中的对称信息），尽量减少模式串（待搜索词）与文本串的匹配次数以达到快速匹配的目的。具体实现就是实现一个 next() 函数，该">
+<meta name="keywords" content="CPP,noodle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KMP查找子字符串">
+<meta property="og:url" content="https://hulinhong.com/2015/11/10/kmp/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="KMP查找子字符串前言　　　 KMP 算法是一种改进的字符串匹配算法，由 D.E.Knuth，J.H.Morris 和 V.R.Pratt 同时发现，因此人们称它为克努特——莫里斯——普拉特操作（简称 KMP 算法）。KMP 算法的关键是利用匹配失败后的信息（已经匹配的部分中的对称信息），尽量减少模式串（待搜索词）与文本串的匹配次数以达到快速匹配的目的。具体实现就是实现一个 next() 函数，该">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hulinhong.com/img/kmp/kmp3.jpg">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.058Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="KMP查找子字符串">
+<meta name="twitter:description" content="KMP查找子字符串前言　　　 KMP 算法是一种改进的字符串匹配算法，由 D.E.Knuth，J.H.Morris 和 V.R.Pratt 同时发现，因此人们称它为克努特——莫里斯——普拉特操作（简称 KMP 算法）。KMP 算法的关键是利用匹配失败后的信息（已经匹配的部分中的对称信息），尽量减少模式串（待搜索词）与文本串的匹配次数以达到快速匹配的目的。具体实现就是实现一个 next() 函数，该">
+<meta name="twitter:image" content="https://hulinhong.com/img/kmp/kmp3.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>KMP查找子字符串 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/11/10/kmp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">KMP查找子字符串</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-11-10T02:11:22+00:00">
+                2015-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/CPP/" rel="tag"><i class="fa fa-tag"></i> CPP</a>
+              
+                <a href="/tags/noodle/" rel="tag"><i class="fa fa-tag"></i> noodle</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/08/lua_install_tutorial/" rel="next" title="Lua的win和linux环境搭建">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  Lua的win和linux环境搭建
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/11/lua_cpp_toluapp_tutorial/" rel="prev" title="tolua++安装">
+              <p class="post-nav-pre-next-title">
+                  tolua++安装
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="KMP查找子字符串"><a href="#KMP查找子字符串" class="headerlink" title="KMP查找子字符串"></a>KMP查找子字符串</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言　　"></a><a></a>前言　　</h1><p>　 KMP 算法是一种改进的字符串匹配算法，由 D.E.Knuth，J.H.Morris 和 V.R.Pratt 同时发现，因此人们称它为克努特——莫里斯——普拉特操作（简称 KMP 算法）。KMP 算法的关键是利用匹配失败后的信息（已经匹配的部分中的对称信息），尽量减少模式串（待搜索词）与文本串的匹配次数以达到快速匹配的目的。具体实现就是实现一个 next() 函数，该函数本身包含了模式串的局部匹配信息。</p>
+<h1 id="一，kmp-算法的原理："><a href="#一，kmp-算法的原理：" class="headerlink" title="一，kmp 算法的原理："></a><a></a><strong>一，kmp 算法的原理：</strong></h1><p>字符串匹配是计算机的基本任务之一。它所执行的任务就是在一个文本（较长的字符串）中查找是否包含着当前指定的模式字符串（较短的字符串），并找到其位置，这就是字符串匹配问题。<br>注：在算法导论里面待搜索的词叫 “模式” 字符串，并用 P 来表示，本文有的地方叫他“待搜索词”。如无特殊说明数组下标以 0 为起始。<br>举例来说，有一个长字符串 “BBC ABCDAB ABCDABCDABDE”（即文本串），我想知道里面是否包含另一个模式字符串 “ABCDABD”，它的位置在哪呢？</p>
+<h2 id="1，朴素匹配算法过程："><a href="#1，朴素匹配算法过程：" class="headerlink" title="1，朴素匹配算法过程："></a><a></a><strong>1，朴素匹配算法过程：</strong></h2><p>1）.</p>
+<p>首先，长字符串 “BBC ABCDAB ABCDABCDABDE” 的第一个字符与搜索词 “ABCDABD” 的第一个字符，进行比较。因为 B 与 A 不匹配，所以搜索词后移一位。</p>
+<p>2）.</p>
+<p>因为 B 与 A 不匹配，搜索词再往后移。</p>
+<p>3）.</p>
+<p>就这样，直到长字符串有一个字符，与搜索词的第一个字符相同为止（准备开始位置不变搜索下一个字符）。</p>
+<p>4）.</p>
+<p>接着比较字符串和搜索词的下一个字符，还是相同。</p>
+<p>5）.</p>
+<p>但是后面的有可能是不完全匹配的，这时在长字符串中遇到一个字符与搜索词对应的字符不相同。</p>
+<p>6）.</p>
+<p>最自然的反应是，将搜索词整个后移一位，再从头逐个比较。这样做虽然可行，但是效率很差，因为你要把搜索位置 BCD 这一段又要重比一次，然而它的比较在直到了后面有 “AB” 与前面的 “AB” 对称的情况下是可以避免的，直到遇到 “AB” 才萌发新的可能使整个字符匹配的可能性。</p>
+<h2 id="2，KMP-匹配算法过程："><a href="#2，KMP-匹配算法过程：" class="headerlink" title="2，KMP 匹配算法过程："></a><a></a><strong>2，KMP 匹配算法过程：</strong></h2><p>1).</p>
+<p>接着前面的匹配过程，现在来看：一个基本事实是，当空格与 D 不匹配时，你其实知道前面六个符 “ABCDAB” 已经匹配的部分。KMP 算法的想法是，设法利用这个搜索词的子串（就是搜索词的某个前缀）的已知对称值，注意这里的对称非中心对称，而是基于搜索词的某一个前缀的对称信息，在不匹配的时候跳过一些不必要的位置来加速匹配速度，这样就提高了效率。</p>
+<p>2).</p>
+<p>怎么做到这一点呢（如何跳过不必要的位置在不匹配时）？可以针对搜索词，算出一张模式字符串的前缀函数表。这张表是如何产生的，后面再介绍，这里只要知道就可以了。</p>
+<p>3).</p>
+<p>已知空格与 D 不匹配时，前面六个字符 “ABCDAB” 是匹配的。查模式串的《前缀函数表》可知，其前缀（即 ABCDAB）中的最后一个匹配字符 B 的位置对应的 “部分匹配值” 为 2，因此按照下面的公式算出向后移动的位数（直接将前面的对称信息调到后面的对称位置，跳过一些不必要的位置）：</p>
+<blockquote>
+<p>移动位数 = 已匹配的字符数 - 当前已匹配字符串的部分匹配值</p>
+</blockquote>
+<p>因为 6 - 2 等于 4，所以将搜索词向后移动 4 位（之所以移动 4，是因为搜索词的已匹配的前缀串 “ABCDAB” 的部分匹配值为 2，即有 “AB” 对称，因为当前已匹配字符串的 “AB” 始终要找到下一个 “AB” 的开始位置，而这个开始位置恰好就在本字符串中的后缀中，所以直接移动 4，我们可以最大减少匹配次数）。</p>
+<p>4).</p>
+<p>因为空格与Ｃ不匹配，搜索词还要继续往后移。这时，已匹配的字符数为 2（”AB”），对应的 “部分匹配值” 为 0。所以，移动位数 = 2 - 0，结果为 2，于是将搜索词向后移 2 位。</p>
+<p>5).</p>
+<p>因为空格与 A 不匹配，继续后移一位。</p>
+<p>6).</p>
+<p>逐位比较，直到发现 C 与 D 不匹配。于是，移动位数 = 6 - 2，继续将搜索词向后移动 4 位。</p>
+<p>7).</p>
+<p>逐位比较，直到搜索词的最后一位，发现完全匹配，于是搜索完成。如果还要继续搜索（即找出全部匹配），移动位数 = 7 - 0，再将搜索词向后移动 7 位，这里就不再重复了。</p>
+<h2 id="3-关于前缀函数表"><a href="#3-关于前缀函数表" class="headerlink" title="3, 关于前缀函数表"></a><a></a><strong>3, 关于前缀函数表</strong></h2><p>1）前缀和后缀</p>
+<p>首先，要了解两个概念：”前缀” 和 “后缀”。 “前缀” 指除了最后一个字符以外，一个字符串的全部头部组合；”后缀” 指除了第一个字符以外，一个字符串的全部尾部组合。</p>
+<p>2）. 前缀函数表的产生</p>
+<p>“前缀函数” 的对称值（也叫部分匹配值）就是模式串的对应前缀中的 “前缀” 和 “后缀” 的最长的共有元素的长度（实质是最大对称程度）。以 “ABCDABD” 为例，</p>
+<ul>
+<li>“A” 的前缀和后缀都为空集，共有元素的长度为 0；</li>
+<li>“AB” 的前缀为 [A]，后缀为 [B]，共有元素的长度为 0；</li>
+<li>“ABC” 的前缀为 [A, AB]，后缀为 [BC, C]，共有元素的长度 0；</li>
+<li>“ABCD” 的前缀为 [A, AB, ABC]，后缀为 [BCD, CD, D]，共有元素的长度为 0；</li>
+<li>“ABCDA” 的前缀为 [A, AB, ABC, ABCD]，后缀为 [BCDA, CDA, DA, A]，共有元素为 “A”，长度为 1；</li>
+<li>“ABCDAB” 的前缀为 [A, AB, ABC, ABCD, ABCDA]，后缀为[BCDAB, CDAB, DAB, AB, B]，共有元素为 “AB”，长度为 2（“AB” 是其最大对称串，长度为 2）；</li>
+<li>“ABCDABD” 的前缀为 [A, AB, ABC, ABCD, ABCDA, ABCDAB]，后缀为 [BCDABD, CDABD, DABD, ABD, BD, D]，共有元素的长度为 0。</li>
+</ul>
+<p>3）. 前缀函数表的意义</p>
+<p>A, 首相要搞清楚的是它是模式字符串的所有前缀产生的一张表，保存的值表征了最大对称度，我们一般用 next 数组来保存其某个前缀的对称值，例如 next[6]=2，代表的就是模式串的某个有 6 个字符的前缀 “ABCDAB”，这个前缀的对称度就是 2，即“AB” 是对称的。</p>
+<p>B, 模式串的某前缀的对称值的实质是，有时候，搜索词已经部分匹配了（一定是某个前缀），其某个前缀（已经匹配部分）的头部和尾部会有重复。比如，”ABCDAB” 之中前缀有 “AB”，后缀也有 “AB”，那么它的 “前缀函数对称值” 就是 2（”AB” 的长度, 且 “AB” 是 “ABCDAB” 所有前缀和后缀中的最长公有元素）。搜索词移动的时候，第一个 “AB” 向后移动 4 位（字符串长度 - 部分匹配值），就可以来到第二个 “AB” 的位置，在这个新的位置我们跳过了不必要的比较位置，并且直接就有 “AB” 匹配。</p>
+<h1 id="二，前缀函数表实现原理"><a href="#二，前缀函数表实现原理" class="headerlink" title="二，前缀函数表实现原理"></a><a></a><strong>二，前缀函数表实现原理</strong></h1><p>　　通过上文完全可以对 kmp 算法的原理有个清晰的了解，那么下一步就是编程实现了，其中最重要的就是如何根据待匹配的模式字符串求出其所有前缀函数表中的最大对称值，在下文中我们将其存储在 next 数组中。</p>
+<h2 id="1，编程策略："><a href="#1，编程策略：" class="headerlink" title="1，编程策略："></a><a></a>1，编程策略：</h2><blockquote>
+<p>1）、当前字符的前面所有字符的对称程度为 0 的时候，只要将当前字符与前面这个子串的第一个字符进行比较。这个很好理解啊，前面所有字符串的对称值都是 0，说明都不对称了，如果多加了一个字符，要对称的话只能是当前字符和前面字符串的第一个字符对称。比如 “ABCDA” 这个里面 “ABCD” 的最大对称值是 0，那么后面的 A 的对称程度只需要看它是不是等于前面字符串的第一个字符 A 相等，如果相等就增加 1，如果不相等那就保持不变，显然还是为 0。</p>
+<p>2）、按照这个推理，我们就可以总结一个规律，不仅前面是 0 呀，如果前面字符串的的最大对称值是 1（k），那么我们就把当前字符与前面字符串的第二（k）个字符即 P[1]（P[k]）进行比较，因为前面的是 1（k），说明前面的字符已经和第一（k）个字符相等了，如果这个又与第二（k+1）个相等了，说明对称程度就是 2（k+1）了。有两（k+1）个字符对称了。比如上面 “ABCDA” 的最大对称值是 1，说明它只和第一个 A 对称了，接着我们就把下一个字符 “B” 与 P[1]（即第二个字符）比较，又相等，自然对称程度就累加了，就是 2 了。</p>
+<p>但是如果不相等呢？那么这个对称值显然要减少，并且我们只能到前面去寻找对称值，而在找的过程我们同时也利用前缀函数表快速搜索找到与当前字符匹配的位置。比如假设是 “(AGCTAGC)(AGCTAGC)T”（请无视字符串中的括号，只为方便看出对称），</p>
+</blockquote>
+<pre><code>模式字符串：AGCTAGCAGCTAGCT
+模式字符串的前缀函数表：
+000012312345674
+</code></pre><blockquote>
+<p>显然最后一个 T 的前一个位置的对称度是 7, 说明 T 的前一个位置的 7 个字符的后缀必与 7 个字符的前缀相等，然而 T!=P[7]，说明 T 位置的对称度只能是比 7 小的长度的前缀，所以递减 k 值，递减为多少呢？那么我们应该利用已经得到的 next[0]···next[k-1] 来求 P[0]···P[k-1] 这个前缀中最大相同前后缀, 当前字符前一个位置的对称度为 k=next[13]=7，显然必须以 7 为基准减少，即在前缀长度为 7 以内的范围重新寻找以 T 结尾的前缀，所以 k=next[6] (即下面参考代码中的<code>k = next[k-1];</code>)，再接着判断是否相等</p>
+<p>3）、按照上面的推理，我们总是在找当前字符 P[q]（q 为遍历到的位置下标，见下面程序）通过其前一个位置的对称值判断是否与 P[k] 相等，如果相等，那么加，如果不相等，那么就减少 k 值，重新寻找与与 P[q] 相等的元素位置</p>
+</blockquote>
+<h2 id="2，参考代码："><a href="#2，参考代码：" class="headerlink" title="2，参考代码："></a><a></a>2，参考代码：</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MakeNext</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> P[],<span class="keyword">int</span> next[])</span></span></span><br><span class="line"><span class="function"> </span>&#123;</span><br><span class="line">     <span class="keyword">int</span> k;<span class="comment">//k:最大对称长度</span></span><br><span class="line">     <span class="keyword">int</span> m = <span class="built_in">strlen</span>(P);<span class="comment">//模版字符串长度</span></span><br><span class="line">     next[<span class="number">0</span>] = <span class="number">0</span>;<span class="comment">//模版字符串的第一个字符的最大对称值必为0</span></span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> q = <span class="number">1</span>,k = <span class="number">0</span>; q &lt; m; ++q)<span class="comment">//for循环，从第二个字符开始，依次计算每一个字符对应的next值</span></span><br><span class="line">     &#123;<span class="comment">//在前一个位置的k不为0，但是却不相等，那么减少k，重新寻找与P[q]相等的位置，让下面的if来增加k</span></span><br><span class="line">         <span class="keyword">while</span>(k &gt; <span class="number">0</span> &amp;&amp; P[q] != P[k])<span class="comment">//</span></span><br><span class="line">             k = next[k<span class="number">-1</span>];          <span class="comment">//while循环是整段代码的精髓所在，</span></span><br><span class="line">         <span class="keyword">if</span> (P[q] == P[k])<span class="comment">//如果相等，那么最大相同前后缀长度加1</span></span><br><span class="line">             k++;<span class="comment">//增加k的唯一方式</span></span><br><span class="line">         next[q] = k;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>附完整代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"vector"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"string"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"algorithm"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//计算模式P的部分匹配值，保存在next数组中  </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MakeNext</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;P, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;next)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> q, k;<span class="comment">//k记录所有前缀的对称值  </span></span><br><span class="line">	<span class="keyword">int</span> m = P.size();<span class="comment">//模式字符串的长度  </span></span><br><span class="line">	next[<span class="number">0</span>] = <span class="number">0</span>;<span class="comment">//首字符的对称值肯定为0  </span></span><br><span class="line">	<span class="keyword">for</span> (q = <span class="number">1</span>, k = <span class="number">0</span>; q &lt; m; ++q)<span class="comment">//计算每一个位置的对称值  </span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//k总是用来记录上一个前缀的最大对称值  </span></span><br><span class="line">		<span class="keyword">while</span> (k &gt; <span class="number">0</span> &amp;&amp; P[q] != P[k])</span><br><span class="line">			<span class="comment">//k = next[k - 1];//k将循环递减，值得注意的是next[k]&lt;k总是成立  </span></span><br><span class="line">			--k;</span><br><span class="line">		<span class="keyword">if</span> (P[q] == P[k])</span><br><span class="line">			k++;<span class="comment">//增加k的唯一方法  </span></span><br><span class="line">		next[q] = k;<span class="comment">//获取最终值  </span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">KmpMatch</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;T, <span class="keyword">const</span> <span class="built_in">string</span> &amp;P, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;next)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n, m;</span><br><span class="line">	n = T.size();</span><br><span class="line">	m = P.size();</span><br><span class="line">	MakeNext(P, next);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, q = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (q &gt; <span class="number">0</span> &amp;&amp; P[q] != T[i])</span><br><span class="line">			q = next[q - <span class="number">1</span>];</span><br><span class="line">		<span class="keyword">if</span> (P[q] == T[i])</span><br><span class="line">			q++;</span><br><span class="line">		<span class="keyword">if</span> (q == m)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"模式文本的偏移为："</span> &lt;&lt; (i - m + <span class="number">1</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			q = next[q - <span class="number">1</span>];<span class="comment">//寻找下一个匹配</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	system(<span class="string">"color 0A"</span>);</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; next(<span class="number">20</span>, <span class="number">0</span>);<span class="comment">//保存待搜索字符串的部分匹配表（所有前缀函数的对称值）</span></span><br><span class="line">	<span class="built_in">string</span> T = <span class="string">"BBC ABCDAB ABCDABCDABDE"</span>;<span class="comment">//文本</span></span><br><span class="line">	<span class="built_in">string</span> P = <span class="string">"ABCDABD"</span>;<span class="comment">//待搜索字符串</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"文本字符串："</span> &lt;&lt; T &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"模式字符串："</span> &lt;&lt; P &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	KmpMatch(T, P, next);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"模式字符串的前缀函数表："</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; P.size(); i++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; next[i];</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> <img src="/img/kmp/kmp3.jpg" alt></p>
+<h1 id="参考资源："><a href="#参考资源：" class="headerlink" title="参考资源："></a><a></a><strong>参考资源：</strong></h1><p>【1】网友，c_cloud，《KMP，深入讲解 next 数组的求解》，博客地址，<a href="http://www.cnblogs.com/c-cloud/p/3224788.html" target="_blank" rel="noopener">http://www.cnblogs.com/c-cloud/p/3224788.html</a><br>【2】网友，yearn520，《KMP 算法的前缀 next 数组最通俗的解释》，博客地址，<a href="http://blog.csdn.net/yearn520/article/details/6729426" target="_blank" rel="noopener">http://blog.csdn.net/yearn520/article/details/6729426</a><br>【3】《算法导论》，第三十二章，字符串匹配<br>【4】网友，jBoxer，《The Knuth-Morris-Pratt Algorithm in my own words》，博客地址，<a href="http://jakeboxer.com/blog/2009/12/13/the-knuth-morris-pratt-algorithm-in-my-own-words/" target="_blank" rel="noopener">http://jakeboxer.com/blog/2009/12/13/the-knuth-morris-pratt-algorithm-in-my-own-words/</a><br>【5】九度 OJ，<a href="http://ac.jobdu.com/problemset.php?page=2" target="_blank" rel="noopener">http://ac.jobdu.com/problemset.php?page=2</a><br>【6】 <a href="https://blog.csdn.net/EbowTang/article/details/49129363" target="_blank" rel="noopener">https://blog.csdn.net/EbowTang/article/details/49129363</a></p>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/CPP/" rel="tag"><i class="fa fa-tag"></i> CPP</a>
+            
+              <a href="/tags/noodle/" rel="tag"><i class="fa fa-tag"></i> noodle</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2015/11/08/lua_install_tutorial/" rel="next" title="Lua的win和linux环境搭建">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    Lua的win和linux环境搭建
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2015/11/11/lua_cpp_toluapp_tutorial/" rel="prev" title="tolua++安装">
+                <p class="post-nav-pre-next-title">
+                    tolua++安装
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#KMP查找子字符串"><span class="nav-number">1.</span> <span class="nav-text">KMP查找子字符串</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">2.</span> <span class="nav-text">前言　　</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一，kmp-算法的原理："><span class="nav-number">3.</span> <span class="nav-text">一，kmp 算法的原理：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1，朴素匹配算法过程："><span class="nav-number">3.1.</span> <span class="nav-text">1，朴素匹配算法过程：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2，KMP-匹配算法过程："><span class="nav-number">3.2.</span> <span class="nav-text">2，KMP 匹配算法过程：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-关于前缀函数表"><span class="nav-number">3.3.</span> <span class="nav-text">3, 关于前缀函数表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二，前缀函数表实现原理"><span class="nav-number">4.</span> <span class="nav-text">二，前缀函数表实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1，编程策略："><span class="nav-number">4.1.</span> <span class="nav-text">1，编程策略：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2，参考代码："><span class="nav-number">4.2.</span> <span class="nav-text">2，参考代码：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资源："><span class="nav-number">5.</span> <span class="nav-text">参考资源：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

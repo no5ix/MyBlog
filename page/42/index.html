@@ -1,0 +1,1953 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="烫">
+<meta property="og:url" content="https://hulinhong.com/page/42/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="烫">
+<meta name="twitter:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>烫 - 烫烫烫烫烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/01/07/distributed_system_design_note_three/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/01/07/distributed_system_design_note_three/" itemprop="url">分布式系统设计概要笔记-三</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-07T13:28:22+00:00">
+                2015-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NP/" itemprop="url" rel="index">
+                    <span itemprop="name">NP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="分布式系统设计策略"><a href="#分布式系统设计策略" class="headerlink" title="分布式系统设计策略"></a>分布式系统设计策略</h1><h2 id="重试机制"><a href="#重试机制" class="headerlink" title="重试机制"></a>重试机制</h2><p>一般情况下，写一段网络交互的代码，发起rpc或者http，都会遇到请求超时而失败情况。</p>
+<p>可能是网络抖动(暂时的网络变更导致包不可达，比如拓扑变更)或者对端挂掉。</p>
+<p>这时一般处理逻辑是将请求包在一个重试循环块里，如下：<br>[cpp] view plain copy print?<br>int retry = 3;<br>while(!request() &amp;&amp; retry–)<br>sched_yield();   // or usleep(100)  </p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/01/07/observer_pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/01/07/observer_pattern/" itemprop="url">观察者模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-07T12:18:54+00:00">
+                2015-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Misc/" itemprop="url" rel="index">
+                    <span itemprop="name">Misc</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <!-- <p><span style="font-size:16px; color:#000099"><strong>本文因原文作者版权声明未经同意不得转载, 故此文于本博客中无法公开</strong></span></p> -->
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>一些面向对象的编程方式，提供了一种构建对象间复杂网络互连的能力。当对象们连接在一起时，它们就可以相互提供服务和信息。</p>
+<p>通常来说，当某个对象的状态发生改变时，你仍然需要对象之间能互相通信。但是出于各种原因，你也许并不愿意因为代码环境的改变而对代码做大的修改。也许，你只想根据你的具体应用环境而改进通信代码。或者，你只想简单的重新构造通信代码来避免类和类之间的相互依赖与相互从属。</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>当一个对象的状态发生改变时，你如何通知其他对象？是否需要一个动态方案――一个就像允许脚本的执行一样，允许自由连接的方案？</p>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p><strong>观察者模式</strong> ：定义对象间的一种一对多的依赖关系, 当一个对象的状态发生改变时, 所有依赖于它的对象都得到通知并被自动更新。</p>
+<p><strong>观察者模式</strong>允许一个对象关注其他对象的状态，并且，<strong>观察者模式</strong>还为被观测者提供了一种观测结构，或者说是一个主体和一个客体。主体，也就是被观测者，可以用来联系所有的观测它的观测者。客体，也就是观测者，用来接受主体状态的改变 观测就是一个可被观测的类（也就是主题）与一个或多个观测它的类（也就是客体）的协作。不论什么时候，当被观测对象的状态变化时，所有注册过的观测者都会得到通知。</p>
+<p><strong>观察者模式</strong>将被观测者（主体）从观测者（客体）种分离出来。这样，每个观测者都可以根据主体的变化分别采取各自的操作。（<strong>观察者模式</strong>和 Publish/Subscribe 模式一样，也是一种有效描述对象间相互作用的模式。）<strong>观察者模式</strong>灵活而且功能强大。对于被观测者来说，那些查询哪些类需要自己的状态信息和每次使用那些状态信息的额外资源开销已经不存在了。另外，一个观测者可以在任何合适的时候进行注册和取消注册。你也可以定义多个具体的观测类，以便在实际应用中执行不同的操作。</p>
+<p>将一个系统分割成一系列相互协作的类有一个常见的副作用：需要维护相关对象间的一致性。我们不希望为了维持一致性而使各类紧密耦合，因为这样降低了它们的可重用性。</p>
+<h1 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h1><p>在以下任一情况下可以使用<strong>观察者模式</strong>:</p>
+<ul>
+<li>当一个抽象模型有两个方面, 其中一个方面依赖于另一方面。将这二者封装在独立的对象中以使它们可以各自独立地改变和复用。</li>
+<li>当对一个对象的改变需要同时改变其它对象 , 而不知道具体有多少对象有待改变。</li>
+<li>当一个对象必须通知其它对象，而它又不能假定其它对象是谁。换言之 , 你不希望这些对象是紧密耦合的。</li>
+</ul>
+<h1 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h1><img src="/2015/01/07/observer_pattern/observer_pattern_1.jpg">
+<h1 id="模式的组成"><a href="#模式的组成" class="headerlink" title="模式的组成"></a>模式的组成</h1><p><strong>观察者模式</strong>包含如下角色：</p>
+<ul>
+<li>目标（Subject）: 目标知道它的观察者。可以有任意多个观察者观察同一个目标。 提供注册和删除观察者对象的接口。</li>
+<li>具体目标（ConcreteSubject）:  将有关状态存入各 ConcreteObserver 对象。</li>
+<li>观察者 (Observer):  为那些在目标发生改变时需获得通知的对象定义一个更新接口。当它的状态发生改变时, 向它的各个观察者发出通知。</li>
+<li>具体观察者 (ConcreteObserver):   维护一个指向 ConcreteSubject 对象的引用。存储有关状态，这些状态应与目标的状态保持一致。实现 O b s e r v e r 的更新接口以使自身状态与目标的状态保持一致。</li>
+</ul>
+<h1 id="观察者模式的优缺点"><a href="#观察者模式的优缺点" class="headerlink" title="观察者模式的优缺点"></a>观察者模式的优缺点</h1><p>Observer 模式允许你独立的改变目标和观察者。你可以单独复用目标对象而无需同时复用其观察者, 反之亦然。它也使你可以在不改动目标和其他的观察者的前提下增加观察者。</p>
+<p>下面是观察者模式其它一些<strong>优点</strong> :</p>
+<ul>
+<li>观察者模式可以实现表示层和数据逻辑层的分离, 并定义了稳定的消息更新传递机制，抽象了更新接口，使得可以有各种各样不同的表示层作为具体观察者角色。</li>
+<li>在观察目标和观察者之间建立一个抽象的耦合 ：<br>一个目标所知道的仅仅是它有一系列观察者 , 每个都符合抽象的 Observer 类的简单接口。目标不知道任何一个观察者属于哪一个具体的类。这样目标和观察者之间的耦合是抽象的和最小的。因为目标和观察者不是紧密耦合的, 它们可以属于一个系统中的不同抽象层次。一个处于较低层次的目标对象可与一个处于较高层次的观察者通信并通知它 , 这样就保持了系统层次的完整。如果目标和观察者混在一块 , 那么得到的对象要么横贯两个层次 (违反了层次性), 要么必须放在这两层的某一层中 (这可能会损害层次抽象)。</li>
+<li>支持广播通信 : 不像通常的请求, 目标发送的通知不需指定它的接收者。通知被自动广播给所有已向该目标对象登记的有关对象。目标对象并不关心到底有多少对象对自己感兴趣 ; 它唯一的责任就是通知它的各观察者。这给了你在任何时刻增加和删除观察者的自由。处理还是忽略一个通知取决于观察者。</li>
+<li>观察者模式符合 “开闭原则” 的要求。</li>
+</ul>
+<p>观察者模式的<strong>缺点</strong> :</p>
+<ul>
+<li>如果一个观察目标对象有很多直接和间接的观察者的话，将所有的观察者都通知到会花费很多时间。</li>
+<li>如果在观察者和观察目标之间有循环依赖的话，观察目标会触发它们之间进行循环调用，可能导致系统崩溃。</li>
+<li>观察者模式没有相应的机制让观察者知道所观察的目标对象是怎么发生变化的，而仅仅只是知道观察目标发生了变化。</li>
+<li>意外的更新 因为一个观察者并不知道其它观察者的存在 , 它可能对改变目标的最终代价一无所知。在目标上一个看似无害的的操作可能会引起一系列对观察者以及依赖于这些观察者的那些对象的更新。此外 , 如果依赖准则的定义或维护不当，常常会引起错误的更新 , 这种错误通常很难捕捉。</li>
+</ul>
+<p>简单的更新协议不提供具体细节说明目标中什么被改变了 , 这就使得上述问题更加严重。如果没有其他协议帮助观察者发现什么发生了改变，它们可能会被迫尽力减少改变。</p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>在 php 的 SPL 支持观察者模式，SPL 提供了 SplSubject 和 SplObserver 接口。</p>
+<p>SplSubject 接口提供了 attach()、detach()、notify() 三个方法。而 SplObserver 接口则提供了 update() 方法。</p>
+<p>SplSubject 派生类维护了一个状态，当状态发生变化时 - 比如属性变化等，就会调用 notify() 方法，这时，之前在 attach() 方法中注册的所有 SplObserver 实例的 update() 方法就会被调用。接口定义如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>  </span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">* 这一模式的概念是 SplSubject 类维护了一个特定状态，当这个状态发生变化时，它就会调用 notify() 方法。 </span></span><br><span class="line"><span class="comment">* 调用 notify() 方法时，所有之前使用 attach() 方法注册的 SplObserver 实例的 update 方法都会被调用。 </span></span><br><span class="line"><span class="comment">* </span></span><br><span class="line"><span class="comment">*/</span>  </span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">SplSubject</span></span>&#123;  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">attach</span><span class="params">(SplObserver $observer)</span></span>;<span class="comment">// 注册观察者  </span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">detach</span><span class="params">(SplObserver $observer)</span></span>;<span class="comment">// 释放观察者  </span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">notify</span><span class="params">()</span></span>;<span class="comment">// 通知所有注册的观察者  </span></span><br><span class="line">&#125;  </span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">SplObserver</span></span>&#123;  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">update</span><span class="params">(SplSubject $subject)</span></span>;<span class="comment">// 观察者进行更新状态  </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实现代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>  </span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">* 具体目标 </span></span><br><span class="line"><span class="comment">* </span></span><br><span class="line"><span class="comment">*/</span>  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteSubject</span> <span class="keyword">implements</span> <span class="title">SplSubject</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">private</span> $observers, $value;  </span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">$this</span>-&gt;observers = <span class="keyword">array</span>();  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">attach</span><span class="params">(SplObserver $observer)</span> </span>&#123; <span class="comment">// 注册观察者  </span></span><br><span class="line">        <span class="keyword">$this</span>-&gt;observers[] = $observer;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">detach</span><span class="params">(SplObserver $observer)</span> </span>&#123; <span class="comment">// 释放观察者  </span></span><br><span class="line">        <span class="keyword">if</span>($idx = array_search($observer,<span class="keyword">$this</span>-&gt;observers,<span class="keyword">true</span>)) &#123;  </span><br><span class="line">        <span class="keyword">unset</span>(<span class="keyword">$this</span>-&gt;observers[$idx]);  </span><br><span class="line">    &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">notify</span><span class="params">()</span> </span>&#123; <span class="comment">// 通知所有观察者  </span></span><br><span class="line">        <span class="keyword">foreach</span>(<span class="keyword">$this</span>-&gt;observers as $observer) &#123;  </span><br><span class="line">        $observer-&gt;update(<span class="keyword">$this</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setValue</span><span class="params">($value)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">$this</span>-&gt;value = $value;  </span><br><span class="line">        <span class="keyword">$this</span>-&gt;notify();  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getValue</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;value;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">&#125;  </span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">* 具体观察者 </span></span><br><span class="line"><span class="comment">* </span></span><br><span class="line"><span class="comment">*/</span>  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteObserver1</span> <span class="keyword">implements</span> <span class="title">SplObserver</span> </span>&#123;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">update</span><span class="params">(SplSubject $subject)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'ConcreteObserver1  value is'</span>,$subject-&gt;getValue(), <span class="string">'&lt;br&gt;'</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">&#125;  </span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">* 具体观察者 </span></span><br><span class="line"><span class="comment">* </span></span><br><span class="line"><span class="comment">*/</span>  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteObserver2</span> <span class="keyword">implements</span> <span class="title">SplObserver</span> </span>&#123;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">update</span><span class="params">(SplSubject $subject)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'ConcreteObserver2 value is'</span>, $subject-&gt;getValue(), <span class="string">'&lt;br&gt;'</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">$subject = <span class="keyword">new</span> ConcreteSubject();  </span><br><span class="line">$observer1 = <span class="keyword">new</span> ConcreteObserver1();  </span><br><span class="line">$observer2 = <span class="keyword">new</span> ConcreteObserver2();  </span><br><span class="line">$subject-&gt;attach($observer1);  </span><br><span class="line">$subject-&gt;attach($observer2);  </span><br><span class="line">$subject-&gt;setValue(<span class="number">5</span>);  </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我们扩展上面的例子，根据目标状态而更新不同的观察者：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>    </span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">* 具体目标  </span></span><br><span class="line"><span class="comment">*  </span></span><br><span class="line"><span class="comment">*/</span>    </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteSubject</span> <span class="keyword">implements</span> <span class="title">SplSubject</span> </span>&#123;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> $observers, $_state;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">$this</span>-&gt;observers = <span class="keyword">array</span>();  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="comment">/** </span></span><br><span class="line"><span class="comment">    *  注册观察者   </span></span><br><span class="line"><span class="comment">    * </span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> SplObserver $observer </span></span><br><span class="line"><span class="comment">    */</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">attach</span><span class="params">(SplObserver $observer)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">$this</span>-&gt;observers[] = $observer;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="comment">/** </span></span><br><span class="line"><span class="comment">    *  // 释放观察者   </span></span><br><span class="line"><span class="comment">    * </span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> SplObserver $observer </span></span><br><span class="line"><span class="comment">    */</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">detach</span><span class="params">(SplObserver $observer)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">if</span>($idx = array_search($observer,<span class="keyword">$this</span>-&gt;observers,<span class="keyword">true</span>)) &#123;  </span><br><span class="line">            <span class="keyword">unset</span>(<span class="keyword">$this</span>-&gt;observers[$idx]);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="comment">/** </span></span><br><span class="line"><span class="comment">    * 通知所有观察者   </span></span><br><span class="line"><span class="comment">    *  </span></span><br><span class="line"><span class="comment">    */</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">notify</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="comment">/** </span></span><br><span class="line"><span class="comment">        * 只要状态改变，就通知观察者 </span></span><br><span class="line"><span class="comment">        */</span>  </span><br><span class="line">        <span class="keyword">foreach</span>(<span class="keyword">$this</span>-&gt;observers as $observer) &#123;  </span><br><span class="line">            <span class="keyword">if</span> ($observer-&gt;getState() == <span class="keyword">$this</span>-&gt;_state) &#123;  </span><br><span class="line">                $observer-&gt;update(<span class="keyword">$this</span>);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="comment">/** </span></span><br><span class="line"><span class="comment">    * 设置状态 </span></span><br><span class="line"><span class="comment">    * </span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> unknown_type $state </span></span><br><span class="line"><span class="comment">    */</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setState</span><span class="params">($state)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">$this</span>-&gt;_state = $state;  </span><br><span class="line">        <span class="keyword">$this</span>-&gt;notify();  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getState</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;_state;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">* 抽象观摩者 </span></span><br><span class="line"><span class="comment">* </span></span><br><span class="line"><span class="comment">*/</span>  </span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">observer</span></span>&#123;  </span><br><span class="line">    <span class="keyword">private</span> $_state;  </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($state)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">$this</span>-&gt;_state = $state;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setState</span><span class="params">($state)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">$this</span>-&gt;_state = $state;  </span><br><span class="line">        <span class="keyword">$this</span>-&gt;notify();  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getState</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;_state;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">&#125;  </span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">* 具体观察者 1 </span></span><br><span class="line"><span class="comment">*  </span></span><br><span class="line"><span class="comment">*/</span>    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteObserver1</span> <span class="keyword">extends</span> <span class="title">observer</span>  <span class="keyword">implements</span> <span class="title">SplObserver</span> </span>&#123;  </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($state)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">parent</span>::__construct($state);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">update</span><span class="params">(SplSubject $subject)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'ConcreteObserver1  state is'</span>,$subject-&gt;getState(), <span class="string">'&lt;br&gt;'</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">* 具体观察者 2 </span></span><br><span class="line"><span class="comment">*  </span></span><br><span class="line"><span class="comment">*/</span>    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteObserver2</span> <span class="keyword">extends</span> <span class="title">observer</span>   <span class="keyword">implements</span> <span class="title">SplObserver</span> </span>&#123;  </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($state)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">parent</span>::__construct($state);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">update</span><span class="params">(SplSubject $subject)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'ConcreteObserver2 state is'</span>, $subject-&gt;getState(), <span class="string">'&lt;br&gt;'</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">&#125;  </span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">* 具体观察者 3 </span></span><br><span class="line"><span class="comment">*  </span></span><br><span class="line"><span class="comment">*/</span>    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteObserver3</span> <span class="keyword">extends</span> <span class="title">observer</span>   <span class="keyword">implements</span> <span class="title">SplObserver</span> </span>&#123;  </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($state)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">parent</span>::__construct($state);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">update</span><span class="params">(SplSubject $subject)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'ConcreteObserver3 state is'</span>, $subject-&gt;getState(), <span class="string">'&lt;br&gt;'</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">$subject = <span class="keyword">new</span> ConcreteSubject();  </span><br><span class="line">$observer1 = <span class="keyword">new</span> ConcreteObserver1(<span class="number">1</span>);  </span><br><span class="line">$observer2 = <span class="keyword">new</span> ConcreteObserver2(<span class="number">1</span>);  </span><br><span class="line">$observer3 = <span class="keyword">new</span> ConcreteObserver3(<span class="number">2</span>);  </span><br><span class="line">$subject-&gt;attach($observer1);  </span><br><span class="line">$subject-&gt;attach($observer2);  </span><br><span class="line">$subject-&gt;attach($observer3);  </span><br><span class="line"><span class="keyword">echo</span> <span class="string">'Subject state is 1'</span>, <span class="string">'&lt;br&gt;'</span>;  </span><br><span class="line">$subject-&gt;setState(<span class="number">1</span>);  </span><br><span class="line"><span class="keyword">echo</span> <span class="string">'Subject state is 2'</span>, <span class="string">'&lt;br&gt;'</span>;  </span><br><span class="line">$subject-&gt;setState(<span class="number">2</span>);  </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="与其他相关模式"><a href="#与其他相关模式" class="headerlink" title="与其他相关模式"></a>与其他相关模式</h1><ul>
+<li>终结者模式 Mediator: 通过封装复杂的更新语义 , ChangeManager 充当目标和观察者之间的中介者。</li>
+<li>单例模式 Singleton: ChangeManager 可使用 Singleton 模式来保证它是唯一的并且是可全局访问<br>的。</li>
+</ul>
+<h1 id="总结与分析"><a href="#总结与分析" class="headerlink" title="总结与分析"></a>总结与分析</h1><p>通过 Observer 模式，把一对多对象之间的通知依赖关系的变得更为松散，大大地提高了程序的可维护性和可扩展性，也很好的符合了开放 - 封闭原则。</p>
+<!-- 
+# 参考
+
+[原文地址](http://blog.csdn.net/hguisu/article/details/7556625)
+ -->
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/01/07/factory_pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/01/07/factory_pattern/" itemprop="url">工厂模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-07T12:18:54+00:00">
+                2015-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Misc/" itemprop="url" rel="index">
+                    <span itemprop="name">Misc</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><p>工厂模式主要是为创建对象提供过渡接口，以便将创建对象的具体过程屏蔽隔离起来，达到提高灵活性的目的。 </p>
+<p>工厂模式可以分为三类： </p>
+<ul>
+<li><p><a href="#简单工厂模式"><strong>简单工厂模式</strong></a> （Simple Factory, 简单工厂模式可看为工厂方法模式的一种特例，两者归为一类。  ） </p>
+</li>
+<li><p><a href="#工厂方法模式"><strong>工厂方法模式</strong></a> （Factory Method） </p>
+</li>
+<li><p><a href="#抽象工厂模式"><strong>抽象工厂模式</strong></a> （Abstract Factory） </p>
+</li>
+</ul>
+<p>这三种模式从上到下逐步抽象，并且更具一般性。 </p>
+<p>GOF在《设计模式》一书中将工厂模式分为两类：工厂方法模式（Factory Method）与抽象工厂模式（Abstract Factory）。</p>
+<h1 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h1><ul>
+<li><p><a href="#简单工厂模式"><strong>简单工厂模式</strong></a> ：</p>
+<p>  一个工厂类, 这个工厂类能创建多个具体产品类的实例。<br>  一个抽象产品类，可以派生出多个具体产品类。   </p>
+</li>
+</ul>
+<ul>
+<li><p><a href="#工厂方法模式"><strong>工厂方法模式</strong></a> ：</p>
+<p>  一个抽象工厂类，可以派生出多个具体工厂类。<br>  一个抽象产品类，可以派生出多个具体产品类。   </p>
+<p>  每个具体工厂类只能创建一个具体产品类的实例。</p>
+</li>
+<li><p><a href="#抽象工厂模式"><strong>抽象工厂模式</strong></a> ：</p>
+<p>  一个抽象工厂类，可以派生出多个具体工厂类。<br>  多个抽象产品类，每个抽象产品类可以派生出多个具体产品类。   </p>
+<p>  每个具体工厂类可以创建多个具体产品类的实例。   </p>
+</li>
+</ul>
+<p>区别：</p>
+<p>工厂方法模式只有一个抽象产品类，而抽象工厂模式有多个。   </p>
+<p>工厂方法模式的具体工厂类只能创建一个具体产品类的实例，而抽象工厂模式可以创建多个。</p>
+<h1 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h1><figure class="highlight php"><figcaption><span>产品类</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  车子系列</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">Class</span> <span class="title">BWM</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">construct</span><span class="params">($pa)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">Class</span> <span class="title">BWM320</span> <span class="keyword">extends</span> <span class="title">BWM</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">construct</span><span class="params">($pa)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">Class</span> <span class="title">BMW523</span> <span class="keyword">extends</span> <span class="title">BWM</span></span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">construc</span><span class="params">($pb)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><figcaption><span>工厂类</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  工厂创建车</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">function</span>  <span class="title">createBMW</span><span class="params">($type)</span></span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> ($type) &#123;</span><br><span class="line">          <span class="keyword">case</span> <span class="number">320</span>:</span><br><span class="line">             <span class="keyword">return</span> <span class="keyword">new</span> BWM320();</span><br><span class="line">          <span class="keyword">case</span> <span class="number">523</span>:</span><br><span class="line">             <span class="keyword">return</span> <span class="keyword">new</span> BMW523();</span><br><span class="line">        <span class="comment">//….</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><figcaption><span>客户类</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  客户通过工厂获取车</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> $BMW;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getBMW</span><span class="params">($type)</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>¬-&gt; BMW =  Factory::createBMW($type);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h1><figure class="highlight php"><figcaption><span>产品类</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  车子系列</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> /</span></span><br><span class="line"><span class="comment">abstract Class BWM&#123;</span></span><br><span class="line"><span class="comment">function construct($pa) &#123;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">Class BWM320 extends BWM&#123;</span></span><br><span class="line"><span class="comment">function construct($pa) &#123;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">Class BMW523 extends BWM&#123;</span></span><br><span class="line"><span class="comment">   function construc($pb)&#123;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><figcaption><span>创建工厂类</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  创建工厂的接口</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">FactoryBMW</span> </span>&#123;</span><br><span class="line">       <span class="function"><span class="keyword">function</span> <span class="title">createBMW</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  </span></span><br><span class="line"><span class="comment">  创建BWM320车</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FactoryBWM320</span> <span class="keyword">implements</span> <span class="title">FactoryBMW</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">function</span>  <span class="title">createBMW</span><span class="params">($type)</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> BWM320();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">  创建BWM523车</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FactoryBWM523</span> <span class="keyword">implements</span> <span class="title">FactoryBMW</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">function</span>  <span class="title">createBMW</span><span class="params">($type)</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> BMW523();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><figcaption><span>客户类</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  </span></span><br><span class="line"><span class="comment">  客户得到车</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> $BMW;</span><br><span class="line">   <span class="function"><span class="keyword">function</span>  <span class="title">getBMW</span><span class="params">($type)</span></span>&#123;</span><br><span class="line">      <span class="keyword">switch</span> ($type) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">320</span>:</span><br><span class="line">           $BWM320 = <span class="keyword">new</span> FactoryBWM320();</span><br><span class="line">           <span class="keyword">return</span> $BWM320-&gt;createBMW();</span><br><span class="line">        <span class="keyword">case</span> <span class="number">523</span>:</span><br><span class="line">           $BWM523 = <span class="keyword">new</span> FactoryBWM523();</span><br><span class="line">           <span class="keyword">return</span> $BWM320-&gt;createBMW();</span><br><span class="line">            <span class="comment">//….</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h1><figure class="highlight php"><figcaption><span>产品类</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  车子系列以及型号</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span>  <span class="title">BWM</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BWM523</span> <span class="keyword">extends</span>  <span class="title">BWM</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BWM320</span> <span class="keyword">extends</span>  <span class="title">BWM</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  空调</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">aircondition</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">airconditionBWM320</span>  <span class="keyword">extends</span> <span class="title">aircondition</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">airconditionBWM52</span> <span class="keyword">extends</span> <span class="title">aircondition</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><figcaption><span>创建工厂类</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  创建工厂的接口</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">FactoryBMW</span> </span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">function</span> <span class="title">createBMW</span><span class="params">()</span></span>;</span><br><span class="line">     <span class="function"><span class="keyword">function</span> <span class="title">createAirC</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">  创建BWM320车</span></span><br><span class="line"><span class="comment"> /</span></span><br><span class="line"><span class="comment">class FactoryBWM320 implements FactoryBMW &#123;</span></span><br><span class="line"><span class="comment">    function  createBMW()&#123;</span></span><br><span class="line"><span class="comment">    return new BWM320();</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">function  createAirC()&#123; //空调</span></span><br><span class="line"><span class="comment">    return new airconditionBWM320();</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  </span></span><br><span class="line"><span class="comment">  创建BWM523车</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FactoryBWM523</span> <span class="keyword">implements</span> <span class="title">FactoryBMW</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span>  <span class="title">createBMW</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> BWM523();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span>  <span class="title">createAirC</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> airconditionBWM523();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><figcaption><span>客户</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  </span></span><br><span class="line"><span class="comment">  客户得到车</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> $BMW;</span><br><span class="line">   <span class="keyword">private</span> $airC;</span><br><span class="line">   <span class="function"><span class="keyword">function</span>  <span class="title">getBMW</span><span class="params">($type)</span></span>&#123;</span><br><span class="line">       $class = <span class="keyword">new</span> ReflectionClass(‘FactoryBWM’ .$type );<span class="comment">//建立 Person这个类的反射类</span></span><br><span class="line">        $instance  = $class-&gt;newInstanceArgs();<span class="comment">//相当于实例化Person 类</span></span><br><span class="line">        <span class="keyword">$this</span>-&gt;BMW =  $instance-&gt;createBMW();</span><br><span class="line">       <span class="keyword">$this</span>-&gt;airC =  $instance-&gt;createAirC();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/01/05/distributed_system_design_note_two/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/01/05/distributed_system_design_note_two/" itemprop="url">分布式系统设计概要笔记-二</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-05T23:28:22+00:00">
+                2015-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NP/" itemprop="url" rel="index">
+                    <span itemprop="name">NP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="分布式系统特性"><a href="#分布式系统特性" class="headerlink" title="分布式系统特性"></a>分布式系统特性</h1><p>CAP是分布式系统里最著名的理论，wiki百科如下</p>
+<ul>
+<li>Consistency(all nodes see the same data at the same time)</li>
+<li>Availability (a guarantee that every request receives a response about whether it was successful or failed)</li>
+<li>Partition tolerance (the system continues to operate despite arbitrary message loss or failure of part of the system)<pre><code>(摘自 ：http://en.wikipedia.org/wiki/CAP_theorem)
+</code></pre></li>
+</ul>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/01/04/distributed_system_design_note_one/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/01/04/distributed_system_design_note_one/" itemprop="url">分布式系统设计概要笔记-一</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-04T01:28:42+00:00">
+                2015-01-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NP/" itemprop="url" rel="index">
+                    <span itemprop="name">NP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="分布式系统中的概念"><a href="#分布式系统中的概念" class="headerlink" title="分布式系统中的概念"></a>分布式系统中的概念</h1><h2 id="最简单的分布式系统"><a href="#最简单的分布式系统" class="headerlink" title="最简单的分布式系统"></a>最简单的分布式系统</h2><p>分布式可繁也可以简，最简单的分布式就是大家最常用的，</p>
+<p>在负载均衡服务器后加一堆web服务器，然后在上面搞一个缓存服务器来保存临时状态，</p>
+<p>后面共享一个数据库，其实很多号称分布式专家的人也就停留于此，</p>
+<p>大致结构如下图所示：</p>
+<img src="/2015/01/04/distributed_system_design_note_one/distribution13.png">
+<p>这种环境下真正进行分布式的只是web server而已，</p>
+<p>并且web server之间没有任何联系，所以结构和实现都非常简单。</p>
+<h2 id="最完备的分布式体系的模块组成"><a href="#最完备的分布式体系的模块组成" class="headerlink" title="最完备的分布式体系的模块组成"></a>最完备的分布式体系的模块组成</h2><p>有些情况下，对分布式的需求就没这么简单，</p>
+<p>在每个环节上都有分布式的需求，</p>
+<p>比如Load Balance、DB、Cache和文件等等，</p>
+<p>并且当分布式节点之间有关联时，</p>
+<p>还得考虑之间的通讯，</p>
+<p>另外，</p>
+<p>节点非常多的时候，</p>
+<p>得有监控和管理来支撑。这样看起来，</p>
+<p>分布式是一个非常庞大的体系，</p>
+<p>只不过你可以根据具体需求进行适当地裁剪。按照最完备的分布式体系来看，</p>
+<p>可以由以下模块组成：</p>
+<ul>
+<li><p>分布式任务处理服务：负责具体的业务逻辑处理</p>
+</li>
+<li><p>分布式节点注册和查询：负责管理所有分布式节点的命名和物理信息的注册与<br>询，是节点之间联系的桥梁</p>
+</li>
+<li><p>分布式DB：分布式结构化数据存取</p>
+</li>
+<li><p>分布式Cache：分布式缓存数据（非持久化）存取</p>
+</li>
+<li><p>分布式文件：分布式文件存取</p>
+</li>
+<li><p>网络通信：节点之间的网络数据通信</p>
+</li>
+<li><p>监控管理：搜集、监控和诊断所有节点运行状态</p>
+</li>
+<li><p>分布式编程语言：用于分布式环境下的专有编程语言，比如Elang、Scala</p>
+</li>
+<li><p>分布式算法：为解决分布式环境下一些特有问题的算法，比如解决一致性问题的Paxos算法</p>
+</li>
+</ul>
+<h2 id="三元组"><a href="#三元组" class="headerlink" title="三元组"></a>三元组</h2><p>其实，分布式系统说白了，就是很多机器组成的集群，靠彼此之间的网络通信，担当的角色可能不同，共同完成同一个事情的系统。</p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/41/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><span class="page-number current">42</span><a class="page-number" href="/page/43/">43</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/43/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

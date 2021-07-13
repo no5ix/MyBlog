@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="CPP,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="2.1.1 : C++标准规定的各种算术类型的尺寸的最小值, 同时允许编译器赋予这些类型更大的尺寸. 比如char的最小尺寸为8位  执行浮点数运算选用double ，这是因为float 通常精度不够而且双精度浮点数和单精度浮点数的计算代价相差无儿。事实上， 对于某些机器来说，双精度运算甚至比单精度还快   2.1.2 : 当我们赋给无符号类型一个超出它表示范围的值时，结果是初始值对无符号类型表示">
+<meta name="keywords" content="CPP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++很基础的易混淆点一">
+<meta property="og:url" content="https://hulinhong.com/2014/09/09/cplusplus_confused_points_one/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="2.1.1 : C++标准规定的各种算术类型的尺寸的最小值, 同时允许编译器赋予这些类型更大的尺寸. 比如char的最小尺寸为8位  执行浮点数运算选用double ，这是因为float 通常精度不够而且双精度浮点数和单精度浮点数的计算代价相差无儿。事实上， 对于某些机器来说，双精度运算甚至比单精度还快   2.1.2 : 当我们赋给无符号类型一个超出它表示范围的值时，结果是初始值对无符号类型表示">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.038Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++很基础的易混淆点一">
+<meta name="twitter:description" content="2.1.1 : C++标准规定的各种算术类型的尺寸的最小值, 同时允许编译器赋予这些类型更大的尺寸. 比如char的最小尺寸为8位  执行浮点数运算选用double ，这是因为float 通常精度不够而且双精度浮点数和单精度浮点数的计算代价相差无儿。事实上， 对于某些机器来说，双精度运算甚至比单精度还快   2.1.2 : 当我们赋给无符号类型一个超出它表示范围的值时，结果是初始值对无符号类型表示">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>C++很基础的易混淆点一 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2014/09/09/cplusplus_confused_points_one/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++很基础的易混淆点一</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-09-09T13:35:25+00:00">
+                2014-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/CPP/" rel="tag"><i class="fa fa-tag"></i> CPP</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/08/24/heap_sort/" rel="next" title="排序算法四之谈一谈堆排序">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  排序算法四之谈一谈堆排序
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/09/12/面向对象的四大特征以及五大原则/" rel="prev" title="面向对象的四大特征以及五大原则">
+              <p class="post-nav-pre-next-title">
+                  面向对象的四大特征以及五大原则
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="2-1-1"><a href="#2-1-1" class="headerlink" title="2.1.1 :"></a>2.1.1 :</h1><ul>
+<li><p>C++标准规定的各种算术类型的尺寸的最小值, 同时允许编译器赋予这些类型更大的尺寸. 比如char的最小尺寸为8位</p>
+</li>
+<li><p>执行浮点数运算选用double ，这是因为float 通常精度不够而且双精度浮点数和单精度浮点数的计算代价相差无儿。事实上， 对于某些机器来说，双精度运算甚至比单精度还快</p>
+</li>
+</ul>
+<h1 id="2-1-2"><a href="#2-1-2" class="headerlink" title="2.1.2 :"></a>2.1.2 :</h1><ul>
+<li><p>当我们赋给无符号类型一个超出它表示范围的值时，结果是初始值对无符号类型表示数值总数取模后的余数。例如， 8 比特大小的 unsigned char 可以表示0 至<br>255 区间内的值，如果我们赋了一个区间以外的值，则实际的结果是该值对256<br>取模后所得的余数。因此，把 -1 赋给8 比特大小的 unsigned char 所得的结果<br>是255 </p>
+</li>
+<li><p>当我们赋给带符号类型一个超出它表示范围的值时，结果是未定义的( undefined )。<br>此时， 程序，可能继续工作、可能崩溃，也可能生成垃圾数据。</p>
+</li>
+<li><p>如果表达式里既有带符号类型又有无符号类型， 当带符号类型取值为负时会出现异<br>常结果， 这是因为带符号数会自动地转换成无符号数。例如，在一个形如 <code>a*b</code> 的式子<br>中，如果a = -1 , b = 1 ，而且a 和b 都是int ，则表达式的值显然为- 1. 然而，如<br>果a 是int ， 而b 是unsigned ， 则结果须视在当前机器上int 所占位数而定。在32环境里，因为2的32次方是4294967296, 所以<code>a*b</code>结果是4294967295</p>
+</li>
+</ul>
+<p><strong>. . .</strong><a id="more"></a></p>
+<h1 id="2-2-1"><a href="#2-2-1" class="headerlink" title="2.2.1 :"></a>2.2.1 :</h1><ul>
+<li><p>如果是内置类型的变量未被显式初始化，它的值由定义的位置决定。定义于任何函数<br>体之外的变量被初始化为0 。然而如6. 1. 1 节(第1 85 页)所示， 一种例外情况是，定义<br>在函数体内部的内置类型变量将不被初始化。一个未被初始化的内置类型<br>变量的值是未定义的(参见2. 1. 2 节， 第33 页) ，如果试图拷贝或以其他形式访问此类值<br>将引发错误</p>
+</li>
+<li><p>定义于函数体内的内置类型的对象如果没有初始化，值未定义。类的对象<br>如果没有显式地初始化，则由类确定。    </p>
+</li>
+</ul>
+<h1 id="2-2-2"><a href="#2-2-2" class="headerlink" title="2.2.2 :"></a>2.2.2 :</h1><p>为了支持分离式编译， C++语言将声明和定义区分开来。声明( declaration ) 使得名字<br>为程序所知， 一个文件如果想使用别处定义的名字则必须包含对那个名字的声明。而定义<br>( definition ) 负责创建与名字关联的实体。<br>变量声明规定了变量的类型和名字， 在这一点上定义与之相同。但是除此之外，定义<br>还申请存储空间，也可能会为变量赋一个初始值。<br>如果想声明一个变量;而非定义它，就在变量名前添加关键字extern ，而且不要显式<br>地初始化变量:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">extern int i ; // 声明i 而非定义i</span><br><span class="line">int j ; / / 声明并定义j</span><br></pre></td></tr></table></figure></p>
+<p>任何何包含了显式初始化的声明即成为定义。我们能给由extern 关键字标记的变量赋<br>一个初始值，但是这么做也就抵消了extern 的作用。extern 语句如果包含初始值就不<br>再是声明，而变成定义了:<br><code>extern doub1e pi = 3 . 1416 ; // 定义</code></p>
+<p><strong>变量能且只能定义一次, 但可以多次声明.</strong></p>
+<p>在函数体内部，如果试图初始化一个由extern 关键字标记的变量， 将引发错误.</p>
+<h1 id="2-2-3"><a href="#2-2-3" class="headerlink" title="2.2.3 :"></a>2.2.3 :</h1><ul>
+<li>C++也为标准库保留了一些名字。用户在自定义的标识符中不能连续出现两个下划线，也不能以下划线紧连大写字句开头。此外，定义在函数体外的标识稍不能以下划线<br>开头。 比如: <code>int _ = 3;</code>是合法的</li>
+</ul>
+<h1 id="2-3-1"><a href="#2-3-1" class="headerlink" title="2.3.1 :"></a>2.3.1 :</h1><ul>
+<li>其他所有引用的类型都要和与之绑定的对象严格匹配。而且，引用只能绑定在对象上，而不能与<br>字面值或某个表达式的计算结果绑定在一起， 相关原因将在2 .4 . 1 节详述:</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> &amp;refVa14 = <span class="number">10</span> ; <span class="comment">//错误· 引用类型的初始值必须是一个对象</span></span><br><span class="line"><span class="keyword">double</span> dval = <span class="number">3.14</span> ;</span><br><span class="line"><span class="keyword">int</span> &amp;refVa15 = dva1 ; <span class="comment">// 错误: 此处引用类型的初始位必须是int 型对象</span></span><br></pre></td></tr></table></figure>
+<h1 id="2-3-2"><a href="#2-3-2" class="headerlink" title="2.3.2 :"></a>2.3.2 :</h1><ul>
+<li>因为引用不是对象， 没有实际地址，所以不能定义指向引用的指针。</li>
+</ul>
+<h1 id="2-4"><a href="#2-4" class="headerlink" title="2.4 :"></a>2.4 :</h1><p><strong>默认状态下， const 对象仅在文件内有效</strong></p>
+<p>当以编译时初始化的方式定义一个const 对象时，就如对bufSize 的定义一样:</p>
+<p><code>const int bufSize = 512; //输入缓冲区大小</code></p>
+<p>编译器将在编译过程中把用到该变量的地方都替换成对应的值。也就是说，编译器会找到<br>代码中所有用到 bufSize 的地方，然后用512 替换。<br>为了执行上述替换， 编译器必须知道变量的初始值。如果程序包含多个文件，则每个<br>用了const 对象的文件都必须得能访问到它的初始值才行。要做到这一点，就必须在每<br>一个用到变量的文件中都有对它的定义(参见2.2.2 节， 第4 1 页)。为了支持这一用法，<br>同时避免对同一变量的重复定义，默认情况下， const 对象被设定为仅在文件内有效。<br>多个文件中出现了同名的const 变量时，其实等同于在不同文件中分别定义了独立的变量。<br>某些时候有这样一种const 变量，它的初始值不是一个常量表达式，但又确实有必<br>要在文件间共享。这种情况， 我们不希望编译器为每个文件分别生成独立的变量。相反，<br>我们想让这类const 对象像其他(非常量)对象一样工作，也就是说，只在一个文件中<br>定义const ，而在其他多个文件中声明并使用它。<br>解决的办法是，对于 const 变量不管是声明还是定义都添加extern 关键字， 这样<br>只需定义一次就可以了:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file 1 . cc 定义并初始化了一个常量，该常量能被其他文件访问</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keyword">int</span> bufSize = fcn();</span><br><span class="line"><span class="comment">// file 1 . h 头文件</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keyword">int</span> bufSize ; /<span class="number">1</span> 与f ile <span class="number">1.</span> cc 中定义的bufSize 是同一个</span><br></pre></td></tr></table></figure>
+<p>如上述程序所示， </p>
+<ul>
+<li>file 1. cc 定义并初始化了bufSize 。因为这条语句包含了初始值，<br>所以它(显然〉是一次定义。然而，因为bufSize 是个常量，必须用extern 加以限<br>定使其被其他文件使用。</li>
+<li>file 1. h 头文件中的声明也由extern 做了限定，其作用是指明bufSize 并非<br>file 1独有，它的定义将在别处出现。</li>
+</ul>
+<h1 id="2-4-1"><a href="#2-4-1" class="headerlink" title="2.4.1"></a>2.4.1</h1><p><strong>初始化和对const 的引用</strong></p>
+<p>2.3.1节(第46 页)提到， 号| 用的类型必须与其所引用对象的类型→致，但是有两个<br>例外。第一种例外情况就是在初始化常量引用时允许用任意表达式作为初始值，只要该表<br>达式的结果能转换成(参见2.1 .2 节，第3 2 页)引用的类型叩可。尤其，允许为一个常量<br>引用绑定非常量的对象、字面值， 甚至是个-般表达式:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i= <span class="number">42</span> ; .</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r1 = i ; <span class="comment">// ft许将const int &amp;r1 定到一个普通int 对象上</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r2 = <span class="number">42</span>; <span class="comment">// 正确r1 是一个常量引用</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r3 = r1 * <span class="number">2</span> ; <span class="comment">// 正确r3 是一个常量引用</span></span><br><span class="line"><span class="keyword">int</span> &amp;r4 = r1 * <span class="number">2</span> ; <span class="comment">// 错误r4 是一个普通的非常量引用</span></span><br></pre></td></tr></table></figure>
+<p>要想、理解这种例外情况的原因，陆简单的办法是弄清楚当一个常量引用被绑定到另外一种<br>类型上时到底发生了什么:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">doub1e dval = <span class="number">3</span> . <span class="number">14</span> ;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;ri = dva1 ;</span><br></pre></td></tr></table></figure>
+<p>此处ri 引用了一个int 型的数。对口的操作应该是整数运算，但dval 却是一个双精<br>度浮点数而非整数。因此为了确保让rl 绑定一个整数，编译器把上述代码变成了如下<br>形式:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> temp = dval; <span class="number">1</span>/ 由双精度浮点数生成一个临时的整型常量</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;ri = temp ; <span class="number">11</span> 让rl 绑定这个临时受</span><br></pre></td></tr></table></figure>
+<p>在这种情况下， ri 绑定了一个临时量对象。所谓临时量对象就是当编译器<br>而要一个空间来暂存表达式的求值结果时临时创建的一个未命名的对象。c++程序员们常<br>常把临时量对象简称为临时量。<br>接下来探讨当ri 不是常量时，如果执行了类似于上面的初始化过程将带来什么样的<br>后果。如果且不是常量，就允许对ri 赋值，这样就会改变ri 所引用对象的值。注意，<br>此时绑定的对象是一个临时量;而dvalo 程序员既然让rl 引用dval ， 就肯定想通过<br>ri 改变dval 的值，否则干什么要给ri 赋值l呢?如此看来， 既然大家基本上不会想着把<br>引用绑定到临时量上， c++语言也就把这种行为归为非法。</p>
+<h1 id="2-5-2"><a href="#2-5-2" class="headerlink" title="2.5.2"></a>2.5.2</h1><ul>
+<li><p>和原来另一些只对应一种特定类型的说明符(比如double) 不|司. auto 让编译器通<br>过初始值来推算变量的类型。显然. auto 定义的变量必须有初始值:</p>
+</li>
+<li><p>使用auto 也能在一条语句中声明多个变量。因为一条声明语句只能有一个基本数据<br>类型，所以该语句中所有变量的初始基本数据类型都必须一样:</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>; </span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = i;</span><br><span class="line"><span class="keyword">auto</span> &amp;n = i, *p = &amp;ci	<span class="comment">// 错误 : i 的类型是int 而&amp; ci 的类型是const int</span></span><br></pre></td></tr></table></figure>
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/CPP/" rel="tag"><i class="fa fa-tag"></i> CPP</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2014/08/24/heap_sort/" rel="next" title="排序算法四之谈一谈堆排序">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    排序算法四之谈一谈堆排序
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2014/09/12/面向对象的四大特征以及五大原则/" rel="prev" title="面向对象的四大特征以及五大原则">
+                <p class="post-nav-pre-next-title">
+                    面向对象的四大特征以及五大原则
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2-1-1"><span class="nav-number">1.</span> <span class="nav-text">2.1.1 :</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-1-2"><span class="nav-number">2.</span> <span class="nav-text">2.1.2 :</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-2-1"><span class="nav-number">3.</span> <span class="nav-text">2.2.1 :</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-2-2"><span class="nav-number">4.</span> <span class="nav-text">2.2.2 :</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-2-3"><span class="nav-number">5.</span> <span class="nav-text">2.2.3 :</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-3-1"><span class="nav-number">6.</span> <span class="nav-text">2.3.1 :</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-3-2"><span class="nav-number">7.</span> <span class="nav-text">2.3.2 :</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-4"><span class="nav-number">8.</span> <span class="nav-text">2.4 :</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-4-1"><span class="nav-number">9.</span> <span class="nav-text">2.4.1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-5-2"><span class="nav-number">10.</span> <span class="nav-text">2.5.2</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

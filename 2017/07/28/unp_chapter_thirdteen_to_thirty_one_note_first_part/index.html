@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="noodle,UNP,TLPI,APUE,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="因为UNP第三部分（第三版13-31章）的内容结合APUE（UNIX环境高级编程）和TLPI（The Linux Programming Interface）来看才能比较清晰，所以笔记整理会穿插很多这两本书的内容 引申知识，作业控制以及相关命令  . . .">
+<meta name="keywords" content="noodle,UNP,TLPI,APUE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重读UNP（UNIX网络编程）13章到31章笔记整理（结合TLPI和APUE两书的笔记整理）(一)">
+<meta property="og:url" content="https://hulinhong.com/2017/07/28/unp_chapter_thirdteen_to_thirty_one_note_first_part/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="因为UNP第三部分（第三版13-31章）的内容结合APUE（UNIX环境高级编程）和TLPI（The Linux Programming Interface）来看才能比较清晰，所以笔记整理会穿插很多这两本书的内容 引申知识，作业控制以及相关命令  . . .">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hulinhong.com/img/unp_chapter_thirdteen_to_thirty_one_note_first_part/daemon_command.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/about_sighup_sigpipe/1.png">
+<meta property="og:image" content="https://hulinhong.com/img/unp_chapter_thirdteen_to_thirty_one_note_first_part/setid.jpg">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.074Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="重读UNP（UNIX网络编程）13章到31章笔记整理（结合TLPI和APUE两书的笔记整理）(一)">
+<meta name="twitter:description" content="因为UNP第三部分（第三版13-31章）的内容结合APUE（UNIX环境高级编程）和TLPI（The Linux Programming Interface）来看才能比较清晰，所以笔记整理会穿插很多这两本书的内容 引申知识，作业控制以及相关命令  . . .">
+<meta name="twitter:image" content="https://hulinhong.com/img/unp_chapter_thirdteen_to_thirty_one_note_first_part/daemon_command.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>重读UNP（UNIX网络编程）13章到31章笔记整理（结合TLPI和APUE两书的笔记整理）(一) | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/07/28/unp_chapter_thirdteen_to_thirty_one_note_first_part/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">重读UNP（UNIX网络编程）13章到31章笔记整理（结合TLPI和APUE两书的笔记整理）(一)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-28T19:01:21+00:00">
+                2017-07-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NP/" itemprop="url" rel="index">
+                    <span itemprop="name">NP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/noodle/" rel="tag"><i class="fa fa-tag"></i> noodle</a>
+              
+                <a href="/tags/UNP/" rel="tag"><i class="fa fa-tag"></i> UNP</a>
+              
+                <a href="/tags/TLPI/" rel="tag"><i class="fa fa-tag"></i> TLPI</a>
+              
+                <a href="/tags/APUE/" rel="tag"><i class="fa fa-tag"></i> APUE</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/09/crontab笔记整理/" rel="next" title="crontab笔记整理">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  crontab笔记整理
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/29/unp_chapter_thirdteen_to_thirty_one_note_second_part/" rel="prev" title="重读UNP（UNIX网络编程）13章到31章笔记整理（结合TLPI和APUE两书的笔记整理）(二)">
+              <p class="post-nav-pre-next-title">
+                  重读UNP（UNIX网络编程）13章到31章笔记整理（结合TLPI和APUE两书的笔记整理）(二)
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <p>因为UNP第三部分（第三版13-31章）的内容结合APUE（UNIX环境高级编程）和TLPI（The Linux Programming Interface）来看才能比较清晰，所以笔记整理会穿插很多这两本书的内容</p>
+<h1 id="引申知识，作业控制以及相关命令"><a href="#引申知识，作业控制以及相关命令" class="headerlink" title="引申知识，作业控制以及相关命令"></a>引申知识，作业控制以及相关命令</h1><p> <img src="/img/unp_chapter_thirdteen_to_thirty_one_note_first_part/daemon_command.jpg" alt="daemon_command"></p>
+<p><strong>. . .</strong><a id="more"></a></p>
+<p><strong>注:</strong> 但是如上方到后台执行的进程，其父进程还是当前终端shell的进程，而一旦父进程退出，则会发送hangup信号给所有子进程，子进程收到hangup以后也会退出。</p>
+<h1 id="13-4节"><a href="#13-4节" class="headerlink" title="13.4节"></a>13.4节</h1><p>本节主要讲守护进程的相关知识</p>
+<h2 id="创建守护进程的步骤"><a href="#创建守护进程的步骤" class="headerlink" title="创建守护进程的步骤"></a>创建守护进程的步骤</h2><p>自定义一个daemon_init函数，涉及到知识点为“如何创建一个daemon（守护进程）”，实现步骤如下(两fork一set, u工文dev)：</p>
+<!--
+1．执行‘个fork()，之后父进程退出，子进程继续执行。（结果是daemon成为了init进程的
+  子进程。）之所以要做这步是因为下面两个原因。
+    假设daemon是从命令行启动的，父进程的终止会被shell发现，shell在发现之后会显
+    示m另’个she[l提示符并让子进程继续在后台运行。
+    子进程被确保不会成为+个进程组首进程，因为它从其父进程那里继承了进程组ID
+    并且拥有了白己的唯的进程ID，而这个进程LD与继承而来的进程组ID是不同的，
+    这样才能够成功地执行下面。个步骤。
+2．子进程调用setsid()（参见34.3节）开启‘个新会话并释放它与控制终端之间的所有关联
+  关系。
+3．如果daemon从来没有打开过终端设备，那么就无需担心daemon会重新请求一个控制终
+  端了。如果daemon后面可能会打开个终端设备，那么必须要采取措施来确保这个设备
+  不会成为控制终端。这可以通过下面两种方式实现。
+  一在所有可能应用到一个终端设备L的open()调用中指定O NOCTTY标记。
+    或者更简单地说，在setsid()调用之后执行第：个fork0，然后再次让父进程退m并让
+    孙子进程继续执行。这样就确保了子进程不会成为会话组饫，因此根据SystemV中获
+    取终端的规则（Linux也遵循了这个规则），进程永远不会重新请求一个控制终端（参
+    见34.4仃）。
+
+    4．清除进程的umask（参见15.4.6节）以确保当daemon创建文件和目录时拥有所需的权限。
+S．修改进程的当前工作目录，通常会改为根日录(／)。这样做是有必耍的，因为daemon通
+  常会一直运行商垒系统关闭为止。如果daemon的当前】．作目录为可i包含／的文件系统，那
+  么就无法卸载该文件系统（参见14.8.2节）。或者daemon可以将工作目录改为完成任务
+  时所在的目录或在配置文件中定义的一个目录，只要包含这个口录的文件系统永远小会被
+  卸载即可。如cron会将自身放在/var/spool/cron日录下。
+6．关闭daemon从其父进程继承而来的所有打开着的文件描述符。（daemon可能需要保
+  持继承而柬的文件描述的打开状态，因此这步是町选的或者是可变更的。）之所以
+  需要这样做的原因有很多。由J。daemon失去了控制终端并且是在后台运行的，因此
+  让daemon保持文件描述符0、1和2的打开状态毫无意义，因为它们指向的就是控
+  制终端。此外，无法卸载长时间运行的daemon打开的文件所在的文件系统。因此，
+  通常的做法是关闭所有无用的打开着的文件描述符，因为文件描述符是一种有限的
+  资源。
+
+  7．在关闭了文件描述符0、1和2之后，daemon通常会打开/dev/null并使用dup2()（或类似
+  的函数）使所有这些描述符指向这个设备。之所以要这样做是因为下面两个原因。
+    它确保了当daemon调用了在这些描述符上执行I/O的库函数时不会出乎意料地
+    失败。
+    一它防止了daemon后面使用描述符1或2打开…个文件的情况，因为库函数会将这些
+    描述符当做标准输出和标准错误来写入数据（进而破坏了原有的数据）。
+-->
+<p><strong>(1)首先要做的是调用<a href="#umask介绍">umask</a>将文件模式创建屏蔽字设置为一个已知值(通常是0)。</strong><br>由继承得来的文件模式创建屏蔽字可能会被设置为拒绝某些权限。如果守护进程要创建文件，那么它可能要设置特定的权限。例如，若守护进程要创建组可读、组可写的文件，继承的文件模式创建屏蔽字可能会屏蔽上述两种权限中的一种，而使其无法发挥作用。另一方面，如果守护进程调用的库函数创建了文件，那么将文件模式创建屏蔽字设置为一个限制性更强的值（如007）可能会更明智，因为库函数可能不允许调用者通过一个显式的函数参数来设置权限。</p>
+<p><strong>(2)调用fork，然后使父进程exit。</strong><br>这样做实现了下面几点。第一，如果该守护进程是作为一条简单的shell命令启动的，那么父进程终止会让shell认为这条命令已经执行完毕。<br>第二，虽然子进程继承了父进程的<a href="#进程组">进程组</a>ID，但获得了一个新的进程ID，这就保证了子进程不是一个进程组的组长进程。这是下面将要进行的setsid调用的先决条件。</p>
+<p><strong>(3)调用setsid创建一个新会话。</strong><br>使调用进程：(a)成为新<a href="#会话">会话</a>的首进程，(b)成为一个新进程组的组长进程．(c)没有控制终端。也可概括为 : 开启一个新会话并释放它与控制终端之间的所有关联关系</p>
+<p><strong>(4)再次fork并杀掉首进程.</strong><br>这样就确保了子进程不是一个会话首进程， 根据linux中获取终端的规则（只有会话首进程才能请求一个控制终端）， 这样进程永远不会重新请求一个控制终端</p>
+<p><strong>(5)将当前工作目录更改为根目录。</strong><br>从父进程处继承过来的当前工作目录可能在一个挂载的文件系统中。因为守护进程通常在系统再引导之前是一直存在的，所以如果守护进程的当前工作目录在一个挂载文件系统中，那么该文件系统就不能被卸载。<br>或者，某些守护进程还可能会把、与前工作目录更改到某个指定位置，并在此位置进行它们的<br>全部工作。例如，如果守护进程的当前工作目录是/usr/home目录，那么管理员在卸载/usr分区时会报错的。为了避免这个问题，可以调用chdir()函数将工作目录设置为根目录/。</p>
+<p><strong>(6)关闭不再需要的文件描述符。</strong><br>这使守护进程不再持有从其父进程继承来的任何文件描述符（父进程可能是shell进程，或某个其他进程）。<br>可以使用open_max函数（见2.17节）或<br>getrlimit函数（见7.11节）来判定最高文件描述符值，并关闭直到该值的所有描述符。</p>
+<p><strong>(7) (这一步不是必要的)某些守护进程打开/dev/null使其具有文件描述符0、l和2．这样，任何一个试图读标准输入、写标准输出或标准错误的库例程都不会产生任何效果。</strong><br>因为守护进程并不与终端设备相关联，所以其输出无处显示，也无处从交互式用户那里接收输入。<br>即使守护进程是从交互式会话启动的，但是守护进程是在后台运行的，所以登录会话的终止并不影响守护进程。如果其他用户在同一终端设备上登录，我们不希望在该终端上见到守护进程的输出，用户也不期望他们在终端上的输入被守护进程读取。<br>(</p>
+<p>在关闭了文件描述符0、1和2之后，daemon通常会打开/dev/null并使用dup2()（或类似<br>的函数）使所有这些描述符指向这个设备。之所以要这样做是因为下面两个原因 :</p>
+<ul>
+<li>它确保了当daemon调用了在这些描述符上执行I/O的库函数时不会出乎意料地<br>  失败。</li>
+<li>它防止了daemon后面使用描述符1或2打开…个文件的情况，因为库函数会将这些<br>  描述符当做标准输出和标准错误来写入数据（进而破坏了原有的数据）。</li>
+</ul>
+<p>)</p>
+<h2 id="进程组与会话"><a href="#进程组与会话" class="headerlink" title="进程组与会话"></a>进程组与会话</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">                   会      话</span><br><span class="line">                 /     |      \</span><br><span class="line">               /       |       \</span><br><span class="line">             /         |         \</span><br><span class="line">     前台进程组     后台进程组1     后台进程组2 ...</span><br><span class="line">   /    |   \     /    |   \      /    |   \</span><br><span class="line">进程1 进程2 ...  进程3 进程4 ...       ...</span><br></pre></td></tr></table></figure>
+<h3 id="进程组"><a href="#进程组" class="headerlink" title="进程组"></a>进程组</h3><p>　　进程组就是一系列相互关联的进程集合，系统中的每一个进程也必须从属于某一个进程组；每个进程组中都会有一个唯一的 ID(process group id)，简称 PGID；PGID 一般等同于进程组的创建进程的 Process ID，而这个进进程一般也会被称为进程组先导 (process group leader)，同一进程组中除了进程组先导外的其他进程都是其子进程；<br>　　进程组的存在，方便了系统对多个相关进程执行某些统一的操作，例如，我们可以一次性发送一个信号量给同一进程组中的所有进程。</p>
+<p>又例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ps -o pid,pgid,ppid,comm | cat</span><br><span class="line">    PID  PGID  PPID  COMMAND</span><br><span class="line">    10179  10179 10177 bash</span><br><span class="line">    10263  10263 10179 ps</span><br><span class="line">    10264  10263 10179 cat</span><br></pre></td></tr></table></figure></p>
+<p>下边通过简单的示例来理解进程组</p>
+<p>bash：进程和进程组ID都是 10179，父进程其实是 sshd(10177)<br>ps：进程和进程组ID都是 10263，父进程是 bash(10179)，因为是在 Shell 上执行的命令<br>cat：进程组 ID 与 ps 的进程组 ID 相同，父进程同样是 bash(10179)</p>
+<h3 id="会话"><a href="#会话" class="headerlink" title="会话"></a>会话</h3><p>　　会话（session）是一个若干进程组的集合，同样的，系统中每一个进程组也都必须从属于某一个会话；一个会话只拥有最多一个控制终端（也可以没有），该终端为会话中所有进程组中的进程所共用。一个会话中前台进程组只会有一个，只有其中的进程才可以和控制终端进行交互；除了前台进程组外的进程组，都是后台进程组；和进程组先导类似，会话中也有会话先导 (session leader) 的概念，用来表示建立起到控制终端连接的进程。在拥有控制终端的会话中，session leader 也被称为控制进程(controlling process)，一般来说控制进程也就是登入系统的 shell 进程(login shell)；  </p>
+<p><img src="/img/about_sighup_sigpipe/1.png" alt><br>执行睡眠后台进程 sleep 50 &amp; 之后，通过　ps 命令查看该进程及 shell 信息如上图：</p>
+<ul>
+<li>PPID 指父进程 id；</li>
+<li>PID 指进程 id；</li>
+<li>PGID 指进程组 id</li>
+<li>SID 指会话 id；</li>
+<li>TTY 指会话的控制终端设备；</li>
+<li>COMMAND 指进程所执行的命令</li>
+<li>TPGID 指前台进程组的 PGID。</li>
+</ul>
+<h2 id="dup介绍"><a href="#dup介绍" class="headerlink" title="dup介绍"></a>dup介绍</h2><p>函数原型 : <code>int dup( int oldfd )</code></p>
+<p>dup() 调用复制一个打开的文件描述符 oldfd , 并返回一个新描述符, 二者都指向同一打开的文件句柄. 系统会保证新描述符一定是编号值最低的未用文件描述符.</p>
+<p>假设发起如下调用 : </p>
+<p><code>newfd = dup(1);</code></p>
+<p>再假定在正常情况下, shell已经代表程序打开了文件描述符0, 1和2, 且没有其他描述符在用, dup()调用会创建文件描述符1的副本, 返回的文件描述符编号值为3.</p>
+<p>如果希望返回的文件描述符为2, 可以使用如下技术 :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">close(<span class="number">2</span>);</span><br><span class="line">newfd = dup(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<p>只有当描述符 0 已经打开时, 这段代码方可工作. </p>
+<h2 id="dup2介绍"><a href="#dup2介绍" class="headerlink" title="dup2介绍"></a>dup2介绍</h2><p>如果想进一步简化上述代码, 同时总是能获得所期望的文件描述符, 可以调用dup2().</p>
+<p>函数原型 : <code>int dup2( int oldfd, int newfd )</code></p>
+<p>dup2函数跟dup函数相似，但dup2函数允许调用者规定一个有效描述符和目标描述符的id</p>
+<p>。dup2函数成功返回时，目标描述符（dup2函数的第二个参数）将变成源描述符（dup2函数的</p>
+<p>第一个参数）的复制品，换句话说，两个文件描述符现在都指向同一个文件，并且是函数第一</p>
+<p>个参数指向的文件。</p>
+<p>下面我们用一段代码加以说明：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> oldfd;   </span><br><span class="line">oldfd = open(<span class="string">"app_log"</span>, (O_RDWR | O_CREATE), <span class="number">0644</span> );    </span><br><span class="line">dup2( oldfd, <span class="number">1</span> );    </span><br><span class="line">close( oldfd );</span><br></pre></td></tr></table></figure></p>
+<p>本例中，我们打开了一个新文件，称为“app_log”，并收到一个文件描述符，该描述符</p>
+<p>叫做fd1。我们调用dup2函数，参数为oldfd和1，这会导致用我们新打开的文件描述符替换掉</p>
+<p>由1代表的文件描述符（即stdout，因为标准输出文件的id为1）。任何写到stdout的东西，现</p>
+<p>在都将改为写入名为“app_log”的文件中。</p>
+<h2 id="umask介绍"><a href="#umask介绍" class="headerlink" title="umask介绍"></a>umask介绍</h2><p>当我们登录系统之后创建一个文件总是有一个默认权限的，那么这个权限是怎么来的呢？这就是umask干的事情。umask设置了用户创建文件的默认 权限，它与chmod的效果刚好相反，umask设置的是权限“补码”，而chmod设置的是文件权限码。</p>
+<h3 id="如何计算umask"><a href="#如何计算umask" class="headerlink" title="如何计算umask"></a>如何计算umask</h3><p>umask 命令允许你设定文件创建时的缺省模式，对应每一类用户(文件属主、同组用户、其他用户)存在一个相应的umask值中的数字。对于文件来说，这一数字的最 大值分别是6。系统不允许你在创建一个文本文件时就赋予它执行权限，必须在创建后用chmod命令增加这一权限。目录则允许设置执行权限，这样针对目录来 说，umask中各个数字最大可以到7。</p>
+<p>例如，对于umask值0 0 2，相应的文件和目录缺省创建权限是什么呢？</p>
+<p>第一步，我们首先写下目录具有全部权限的模式，即777 (所有用户都具有读、写和执行权限)。<br>第二步，在下面一行按照umask值写下相应的位，在本例中是0 0 2。<br>第三步，在接下来的一行中记下上面两行中没有匹配的位。这就是目录的缺省创建权限。<br>稍加练习就能够记住这种方法。<br>第四步，对于文件来说，在创建时不能具有执行权限，只要拿掉相应的执行权限比特即可。<br>这就是上面的例子， 其中umask值为0 0 2：<br>1) 文件的最大权限 rwx rwx rwx (777)<br>2) umask值为0 0 2 — — -w-<br>3) 目录权限 rwx rwx r-x (775) 这就是目录创建缺省权限<br>4) 文件权限 rw- rw- r– (664) 这就是文件创建缺省权限</p>
+<p>下面是另外一个例子，假设这次u m a s k值为0 2 2：<br>1) 文件的最大权限 rwx rwx rwx (777)<br>2 ) u m a s k值为0 2 2 — -w- -w-<br>3) 目录权限 rwx r-x r-x (755) 这就是目录创建缺省权限<br>4) 文件权限 rw- r– r– (644) 这就是文件创建缺省权限</p>
+<h2 id="创建守护进程的例子程序"><a href="#创建守护进程的例子程序" class="headerlink" title="创建守护进程的例子程序"></a>创建守护进程的例子程序</h2><p>下面是becomeDaemon()函数的实现，becomeDaeomon()函数接收一个位掩码参数flags，它允许调用者有选择地执行其中的步<br>骤，具体可参考注释。</p>
+<figure class="highlight c"><figcaption><span>become_daemon.h</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> BECOME_DAEMON_H             <span class="comment">/* Prevent double inclusion */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BECOME_DAEMON_H</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Bit-mask values for 'flags' argument of becomeDaemon() */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BD_NO_CHDIR           01    <span class="comment">/* Don't chdir("/") */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BD_NO_CLOSE_FILES     02    <span class="comment">/* Don't close all open files */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BD_NO_REOPEN_STD_FDS  04    <span class="comment">/* Don't reopen stdin, stdout, and</span></span></span><br><span class="line"><span class="meta"><span class="comment">                                       stderr to /dev/null */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BD_NO_UMASK0         010    <span class="comment">/* Don't do a umask(0) */</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BD_MAX_CLOSE  8192          <span class="comment">/* Maximum file descriptors to close if</span></span></span><br><span class="line"><span class="meta"><span class="comment">                                       sysconf(_SC_OPEN_MAX) is indeterminate */</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">becomeDaemon</span><span class="params">(<span class="keyword">int</span> flags)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><figcaption><span>become_daemon.c</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"become_daemon.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"tlpi_hdr.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>                                     <span class="comment">/* Returns 0 on success, -1 on error */</span></span><br><span class="line">becomeDaemon(<span class="keyword">int</span> flags)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> maxfd, fd;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (fork()) &#123;                   <span class="comment">/* Become background process */</span></span><br><span class="line">    <span class="keyword">case</span> <span class="number">-1</span>: <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span>:  <span class="keyword">break</span>;                     <span class="comment">/* Child falls through... */</span></span><br><span class="line">    <span class="keyword">default</span>: _exit(EXIT_SUCCESS);       <span class="comment">/* while parent terminates */</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (setsid() == <span class="number">-1</span>)                 <span class="comment">/* Become leader of new session */</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (fork()) &#123;                   <span class="comment">/* Ensure we are not session leader */</span></span><br><span class="line">    <span class="keyword">case</span> <span class="number">-1</span>: <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span>:  <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>: _exit(EXIT_SUCCESS);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!(flags &amp; BD_NO_UMASK0))</span><br><span class="line">        umask(<span class="number">0</span>);                       <span class="comment">/* Clear file mode creation mask */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!(flags &amp; BD_NO_CHDIR))</span><br><span class="line">        chdir(<span class="string">"/"</span>);                     <span class="comment">/* Change to root directory */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!(flags &amp; BD_NO_CLOSE_FILES)) &#123; <span class="comment">/* Close all open files */</span></span><br><span class="line">        maxfd = sysconf(_SC_OPEN_MAX);</span><br><span class="line">        <span class="keyword">if</span> (maxfd == <span class="number">-1</span>)                <span class="comment">/* Limit is indeterminate... */</span></span><br><span class="line">            maxfd = BD_MAX_CLOSE;       <span class="comment">/* so take a guess */</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (fd = <span class="number">0</span>; fd &lt; maxfd; fd++)</span><br><span class="line">            close(fd);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!(flags &amp; BD_NO_REOPEN_STD_FDS)) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// /* Standard file descriptors. */</span></span><br><span class="line">        <span class="comment">// #define STDIN_FILENO 0 /* Standard input. */</span></span><br><span class="line">        <span class="comment">// #define STDOUT_FILENO 1 /* Standard output. */</span></span><br><span class="line">        <span class="comment">// #define STDERR_FILENO 2 /* Standard error output. */</span></span><br><span class="line"></span><br><span class="line">        close(STDIN_FILENO);            <span class="comment">/* Reopen standard fd's to /dev/null */</span></span><br><span class="line"></span><br><span class="line">        fd = open(<span class="string">"/dev/null"</span>, O_RDWR); <span class="comment">// open 返回的文件描述符一定是最小的未被使用的描述符。</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (fd != STDIN_FILENO)         <span class="comment">/* 'fd' should be 0 */</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">if</span> (dup2(STDIN_FILENO, STDOUT_FILENO) != STDOUT_FILENO)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">if</span> (dup2(STDIN_FILENO, STDERR_FILENO) != STDERR_FILENO)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="nohup和setsid用法"><a href="#nohup和setsid用法" class="headerlink" title="nohup和setsid用法"></a>nohup和setsid用法</h1><p>如果我们要在退出shell的时候继续运行进程，则需要</p>
+<ul>
+<li>setsid将父进程设为init进程</li>
+<li>使用nohup忽略SIGHUP信号</li>
+</ul>
+<p>注: (SIGHUP 信号在 用户终端连接 (正常或非正常) 结束 时发出, 通常是在终端的控制进程结束时, 通知同一 session 内的各个作业, 这时它们与控制终端不再关联. 系统对 SIGHUP 信号的默认处理是终止收到该信号的进程。所以若程序中没有捕捉该信号，当收到该信号时，进程就会退出。)，</p>
+<p><img src="/img/unp_chapter_thirdteen_to_thirty_one_note_first_part/setid.jpg" alt="setid"></p>
+<h2 id="nohup详解"><a href="#nohup详解" class="headerlink" title="nohup详解"></a>nohup详解</h2><p>nohup介绍用途: 不挂断地运行命令。</p>
+<p>语法：nohup Command [Arg …] [　&amp; ] </p>
+<ul>
+<li>无论是否将 nohup 命令的输出重定向到终端，输出都将附加到当前目录的 nohup.out 文件中。 </li>
+<li>如果当前目录的 nohup.out 文件不可写，输出重定向到 $HOME/nohup.out 文件中。 </li>
+<li>如果没有文件能创建或打开以用于追加，那么 Command 参数指定的命令不可调用。</li>
+</ul>
+<p>退出状态：该命令返回下列出口值： </p>
+<ul>
+<li>126 可以查找但不能调用 Command 参数指定的命令。 </li>
+<li>127 nohup 命令发生错误或不能查找由 Command 参数指定的命令。否则 nohup 命令的退出状态是 Command 参数指定命令的退出状态。</li>
+</ul>
+<h3 id="nohup和-amp-的关系"><a href="#nohup和-amp-的关系" class="headerlink" title="nohup和&amp;的关系"></a>nohup和&amp;的关系</h3><p>使用nohup 运行程序:</p>
+<ul>
+<li>输出重定向，默认重定向到当前目录下 nohup.out 文件</li>
+<li>使用 Ctrl + C 发送 SIGINT 信号，程序关闭</li>
+<li>关闭 Shell Session 发送 SIGHUP 信号，程序免疫使用</li>
+</ul>
+<p>&amp; 运行程序：</p>
+<ul>
+<li>程序转入后台运行</li>
+<li>结果会输出到终端<br>-使用 Ctrl + C 发送 SIGINT 信号，程序免疫</li>
+<li>关闭 Shell session 发送 SIGHUP 信号，程序关闭</li>
+</ul>
+<h3 id="nohup和-amp-使用实例"><a href="#nohup和-amp-使用实例" class="headerlink" title="nohup和&amp;使用实例"></a>nohup和&amp;使用实例</h3><p>一般两个一起组合使用不会受 Ctrl C 和 Shell 关闭的影响：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 最简单的后台运行</span><br><span class="line">nohup command &amp;</span><br><span class="line"># 输出默认重定向到当前目录下 nohup.out 文件</span><br><span class="line">nohup python main.py &amp;  </span><br><span class="line"># 自定义输出文件(标准输出和错误输出合并到 main.log)</span><br><span class="line">nohup python main.py &gt;&gt; main.log 2&gt;&amp;1 &amp; </span><br><span class="line"># 与上一个例子相同作用的简写方法</span><br><span class="line">nohup python main.py &amp;&gt; main.log &amp;</span><br><span class="line"># 不记录输出信息</span><br><span class="line">nohup python main.py &amp;&gt; /dev/null &amp;</span><br><span class="line"># 不记录输出信息并将程序的进程号写入 pidfile.txt 文件中，方便后续杀死进程</span><br><span class="line">nohup python main.py &amp;&gt; /dev/null &amp; echo $! &gt; pidfile.txt</span><br></pre></td></tr></table></figure>
+<p>由于使用 nohup 时，会自动将输出写入 nohup.out 文件中，如果文件很大的话，nohup.out 就会不停的增大，<br>我们可以利用 Linux 下一个特殊的文件 /dev/null 来解决这个问题，这个文件就相当于一个黑洞，任何输出到这个文件的东西都将消失 只保留输出错误信息 nohup command &gt;/dev/null 2&gt;log &amp; 所有信息都不要 nohup command &gt;/dev/null 2&gt;&amp;1 &amp;</p>
+<p>这里解释一下后面的 2&gt;&amp;1 。参考<a href="#重定向知识">重定向知识</a></p>
+<h3 id="其他相关命令"><a href="#其他相关命令" class="headerlink" title="其他相关命令"></a>其他相关命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 结束当前任务</span><br><span class="line">ctrl+c</span><br><span class="line"># 将一个正在前台执行的命令放到后台，并且处于暂停状态</span><br><span class="line">ctrl+z</span><br><span class="line"># 查看任务，返回任务编号 和 进程号</span><br><span class="line">jobs -l</span><br><span class="line"># 将一个在后台暂停的命令，变成在后台继续执行。如果后台中有多个命令，可以用 bg %jobnumber 将选中的命令调出。</span><br><span class="line">bg %jobnumber</span><br><span class="line"># 将后台中的命令调至前台继续运行。如果后台中有多个命令，可以用 fg %jobnumber（是命令编号，不是进程号）将选中的命令调出</span><br><span class="line">fg %jobnumber</span><br></pre></td></tr></table></figure>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">b@b-VirtualBox:~/my_temp_test$ nohup ./o_multi_thread_process &amp;</span><br><span class="line">[1] 3487</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ nohup: ignoring input and appending output to ‘nohup.out’</span><br><span class="line">^C</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ <span class="built_in">jobs</span></span><br><span class="line">[1]+  Running                 nohup ./o_multi_thread_process &amp;</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ ps -ef | grep multi</span><br><span class="line">b         3487  3004  0 20:05 pts/3    00:00:00 ./o_multi_thread_process</span><br><span class="line">b         3488  3487  0 20:05 pts/3    00:00:00 ./o_multi_thread_process</span><br><span class="line">b         3491  3004  0 20:05 pts/3    00:00:00 grep --color=auto multi</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ <span class="built_in">bg</span> %1</span><br><span class="line">bash: <span class="built_in">bg</span>: job 1 already <span class="keyword">in</span> background</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ <span class="built_in">fg</span> %1</span><br><span class="line">nohup ./o_multi_thread_process</span><br><span class="line">^Z</span><br><span class="line">[1]+  Stopped                 nohup ./o_multi_thread_process</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ <span class="built_in">bg</span> %1</span><br><span class="line">[1]+ nohup ./o_multi_thread_process &amp;</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ <span class="built_in">jobs</span> -l</span><br><span class="line">[1]+  3487 Running                 nohup ./o_multi_thread_process &amp;</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ <span class="built_in">fg</span> %1</span><br><span class="line">nohup ./o_multi_thread_process</span><br><span class="line">^C</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ <span class="built_in">jobs</span></span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ ps -ef | grep multi</span><br><span class="line">b         3499  3004  0 20:11 pts/3    00:00:00 grep --color=auto multi</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ setsid ./o_multi_thread_process &amp;</span><br><span class="line">[1] 3502</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ ProcessA: 3503 step1</span><br><span class="line">ProcessA: 3503 thread 139947724490496 step2</span><br><span class="line">ProcessA: 3503 thread 139947724490496 step3</span><br><span class="line">ProcessB: 3504 step1</span><br><span class="line">ProcessB: 3504 step2</span><br><span class="line">ProcessB: 3504 step3</span><br><span class="line">^C</span><br><span class="line">[1]+  Done                    setsid ./o_multi_thread_process</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ ps -ef | grep multi</span><br><span class="line">b         3503  1256  0 20:12 ?        00:00:00 ./o_multi_thread_process</span><br><span class="line">b         3504  3503  0 20:12 ?        00:00:00 ./o_multi_thread_process</span><br><span class="line">b         3507  3004  0 20:12 pts/3    00:00:00 grep --color=auto multi</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ <span class="built_in">jobs</span></span><br></pre></td></tr></table></figure>
+<h1 id="disown用法"><a href="#disown用法" class="headerlink" title="disown用法"></a>disown用法</h1><p>那么对于已经在后台运行的进程，如果我们要在退出shell的时候继续运行进程, 该怎么办呢？可以使用disown命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">b@b-VirtualBox:~/my_temp_test$ ./o_multi_thread_process &amp;</span><br><span class="line">[1] 3523</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ ProcessA: 3523 step1</span><br><span class="line">ProcessA: 3523 thread 140501901821696 step2</span><br><span class="line">ProcessA: 3523 thread 140501901821696 step3</span><br><span class="line">ProcessB: 3524 step1</span><br><span class="line">ProcessB: 3524 step2</span><br><span class="line">ProcessB: 3524 step3</span><br><span class="line">^C</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ <span class="built_in">jobs</span> -l</span><br><span class="line">[1]+  3523 Running                 ./o_multi_thread_process &amp;</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ <span class="built_in">disown</span> -h %1</span><br><span class="line">b@b-VirtualBox:~/my_temp_test$ <span class="built_in">jobs</span></span><br><span class="line">[1]+  Running                 ./o_multi_thread_process &amp;</span><br></pre></td></tr></table></figure>
+<h1 id="重定向知识"><a href="#重定向知识" class="headerlink" title="重定向知识"></a>重定向知识</h1><p>在 shell 脚本中，默认情况下，总是有三个文件处于打开状态，标准输入 (键盘输入)、标准输出（输出到屏幕）、标准错误（也是输出到屏幕），它们分别对应的<strong>文件描述符</strong>是 0，1，2 。</p>
+<ul>
+<li><blockquote>
+<p> 的意思是把标准输出重定向，与 1&gt; 相同  </p>
+</blockquote>
+</li>
+<li>2&gt;&amp;1  的意思是把 标准错误输出 重定向到 标准输出.</li>
+<li>&amp;&gt;file  的意思是把<strong>标准输出</strong> 和 <strong>标准错误输出</strong> 都重定向到文件 file 中</li>
+<li>/dev/null 是一个文件，这个文件比较特殊，所有传给它的东西它都丢弃掉</li>
+</ul>
+<p><strong>举例说明:</strong></p>
+<p>当前目录只有一个文件 a.txt.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@redhat box]# ls  </span><br><span class="line">a.txt  </span><br><span class="line">[root@redhat box]# ls a.txt b.txt  </span><br><span class="line">ls: b.txt: No such file or directory</span><br></pre></td></tr></table></figure></p>
+<p>由于没有 b.txt 这个文件, 于是返回错误值, 这就是所谓的 2 输出<br>a.txt 而这个就是所谓的 1 输出</p>
+<p><strong>再接着看:</strong></p>
+<p><code>[root@redhat box]# ls a.txt b.txt 1&gt;file.out 2&gt;file.err</code><br>执行后, 没有任何返回值. 原因是, 返回值都重定向到相应的文件中了, 而不再前端显示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@redhat box]# cat file.out  </span><br><span class="line">a.txt  </span><br><span class="line">[root@redhat box]# cat file.err  </span><br><span class="line">ls: b.txt: No such file or directory</span><br></pre></td></tr></table></figure></p>
+<p>一般来说, “1&gt;” 通常可以省略成 “&gt;”.<br>即可以把如上命令写成: <code>ls a.txt b.txt &gt;file.out 2&gt;file.err</code><br>有了这些认识才能理解 “1&gt;&amp;2” 和 “2&gt;&amp;1”.  </p>
+<p><strong>1&gt;&amp;2 正确返回值传递给 2 输出通道 &amp;2 表示 2 输出通道</strong><br>如果此处错写成 1&gt;2, 就表示把 1 输出重定向到文件 2 中.<br><strong>2&gt;&amp;1 错误返回值传递给 1 输出通道, 同样 &amp; 1 表示 1 输出通道.</strong><br>举个例子.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@redhat box]# ls a.txt b.txt 1&gt;file.out 2&gt;&amp;1</span><br><span class="line">[root@redhat box]# cat file.out  </span><br><span class="line">ls: b.txt: No such file or directory  </span><br><span class="line">a.txt</span><br></pre></td></tr></table></figure></p>
+<p>现在, 正确的输出和错误的输出都定向到了 file.out 这个文件中, 而不显示在前端.<br>补充下, 输出不只 1 和 2, 还有其他的类型, 这两种只是最常用和最基本的.</p>
+<p>例如：<br><code>rm -f $(find / -name core) &amp;&gt; /dev/null，</code></p>
+<p><strong>/dev/null 是一个文件，这个文件比较特殊，所有传给它的东西它都丢弃掉。</strong></p>
+<p>例如：<br>注意，为了方便理解，必须设置一个环境使得执行 grep da * 命令会有正常输出和错误输出，然后分别使用下面的命令生成三个文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">grep da * &gt; greplog1  </span><br><span class="line">grep da * &gt; greplog2 1&gt;&amp;2     </span><br><span class="line">grep da * &gt; greplog3 2&gt;&amp;1</span><br><span class="line">grep da * 2&gt; greplog4 1&gt;&amp;2</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>查看 greplog1 会发现里面只有正常输出内容  </li>
+<li>查看 greplog2 会发现里面什么都没有</li>
+<li>查看 greplog3 会发现里面既有正常输出内容又有错误输出内容</li>
+<li>查看 greplog4 会发现里面既有正常输出内容又有错误输出内容</li>
+</ul>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/noodle/" rel="tag"><i class="fa fa-tag"></i> noodle</a>
+            
+              <a href="/tags/UNP/" rel="tag"><i class="fa fa-tag"></i> UNP</a>
+            
+              <a href="/tags/TLPI/" rel="tag"><i class="fa fa-tag"></i> TLPI</a>
+            
+              <a href="/tags/APUE/" rel="tag"><i class="fa fa-tag"></i> APUE</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2017/07/09/crontab笔记整理/" rel="next" title="crontab笔记整理">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    crontab笔记整理
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2017/07/29/unp_chapter_thirdteen_to_thirty_one_note_second_part/" rel="prev" title="重读UNP（UNIX网络编程）13章到31章笔记整理（结合TLPI和APUE两书的笔记整理）(二)">
+                <p class="post-nav-pre-next-title">
+                    重读UNP（UNIX网络编程）13章到31章笔记整理（结合TLPI和APUE两书的笔记整理）(二)
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引申知识，作业控制以及相关命令"><span class="nav-number">1.</span> <span class="nav-text">引申知识，作业控制以及相关命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-4节"><span class="nav-number">2.</span> <span class="nav-text">13.4节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建守护进程的步骤"><span class="nav-number">2.1.</span> <span class="nav-text">创建守护进程的步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程组与会话"><span class="nav-number">2.2.</span> <span class="nav-text">进程组与会话</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程组"><span class="nav-number">2.2.1.</span> <span class="nav-text">进程组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话"><span class="nav-number">2.2.2.</span> <span class="nav-text">会话</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dup介绍"><span class="nav-number">2.3.</span> <span class="nav-text">dup介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dup2介绍"><span class="nav-number">2.4.</span> <span class="nav-text">dup2介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#umask介绍"><span class="nav-number">2.5.</span> <span class="nav-text">umask介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何计算umask"><span class="nav-number">2.5.1.</span> <span class="nav-text">如何计算umask</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建守护进程的例子程序"><span class="nav-number">2.6.</span> <span class="nav-text">创建守护进程的例子程序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nohup和setsid用法"><span class="nav-number">3.</span> <span class="nav-text">nohup和setsid用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#nohup详解"><span class="nav-number">3.1.</span> <span class="nav-text">nohup详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nohup和-amp-的关系"><span class="nav-number">3.1.1.</span> <span class="nav-text">nohup和&amp;的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nohup和-amp-使用实例"><span class="nav-number">3.1.2.</span> <span class="nav-text">nohup和&amp;使用实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他相关命令"><span class="nav-number">3.1.3.</span> <span class="nav-text">其他相关命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战"><span class="nav-number">3.1.4.</span> <span class="nav-text">实战</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#disown用法"><span class="nav-number">4.</span> <span class="nav-text">disown用法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重定向知识"><span class="nav-number">5.</span> <span class="nav-text">重定向知识</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

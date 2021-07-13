@@ -1,0 +1,1953 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="烫">
+<meta property="og:url" content="https://hulinhong.com/page/31/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="烫">
+<meta name="twitter:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>烫 - 烫烫烫烫烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/04/26/stll_set_map_tutorial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/26/stll_set_map_tutorial/" itemprop="url">stl关联容器的特性</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-26T01:32:47+00:00">
+                2016-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="概绍"><a href="#概绍" class="headerlink" title="概绍"></a>概绍</h1><p>关联容器和顺序容器有着<strong>根本的不同</strong> : 关联容器中的元素是按关键字来保存和访问的 。与之相对，顺序容器中的元素是按它们在容器中的位置来顺序保存和访问的 。</p>
+<p>关联容器支持高效的关键字查找和访问 。<br>两个主要的关联容器类型是 : </p>
+<ul>
+<li>map </li>
+<li>set</li>
+</ul>
+<h2 id="map概绍"><a href="#map概绍" class="headerlink" title="map概绍"></a>map概绍</h2><p>map 中 的元素是一些关键字一值 ( key-value )对 : 关键字起到索 引 的作用，值则表示与索引相关联的数据 。<br>字典则是一个很好的使用 map 的例子, 可以将单词作为关键字，将单词释义作为值 。</p>
+<h2 id="set概绍"><a href="#set概绍" class="headerlink" title="set概绍"></a>set概绍</h2><p>set 中每个元素只包含一个关键字 : set 支持高效的关键字检查一个给定关键字是否在 set 中 。<br>例如，在某些文本处理过程中，可以用一个 set 来保存想要忽略的单词。</p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/04/22/thread_local_storage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/22/thread_local_storage/" itemprop="url">线程局部存储</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-22T23:19:21+00:00">
+                2016-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <p>使用全局变量或者静态变量是导致多线程编程中非线程安全的常见原因。在多线程程序中，保障非线程安全的常用手段之一是使用互斥锁来做保护，这种方法带来了并发性能下降，同时也只能有一个线程对数据进行读写。</p>
+<p>如果程序中能避免使用全局变量或静态变量，那么这些程序就是线程安全的，性能也可以得到很大的提升。</p>
+<p>如果有些数据只能有一个线程可以访问，那么这一类数据就可以使用线程局部存储机制来处理，虽然使用这种机制会给程序执行效率上带来一定的影响，但对于使用锁机制来说，这些性能影响将可以忽略。</p>
+<p>还有一种大致相当的编程技术就是使用 线程特有数据(没 线程局部存储 易用, 也没 线程局部存储 高效) ，这将在 <a href="/2016/04/17/thread_specific_data/" title="线程特有数据">线程特有数据</a> 中讨论。</p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/04/17/thread_specific_data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/17/thread_specific_data/" itemprop="url">线程特有数据</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-17T18:51:26+00:00">
+                2016-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <p>在 Linux 系统中使用 C/C++ 进行多线程编程时，我们遇到最多的就是对同一变量的多线程读写问题，大多情况下遇到这类问题都是通过锁机制来处理，但这对程序的性能带来了很大的影响，</p>
+<p>当然对于那些系统原生支持原子操作的数据类型来说，我们可以使用原子操作来处理，这能对程序的性能会得到一定的提高。那么对于那些系统不支持原子操作的自定义数据类型，</p>
+<p>在不使用锁的情况下如何做到线程安全呢？本文将从线程特有数据方面，简单讲解处理这一类线程安全问题的方法。</p>
+<p>如果有些数据只能有一个线程可以访问，那么这一类数据就可以使用线程特有数据机制来处理，虽然使用这种机制会给程序执行效率上带来一定的影响，但对于使用锁机制来说，这些性能影响将可以忽略。</p>
+<p>还有一种大致相当的编程技术就是使用 <code>__thread</code> (比 线程特有数据 易用, 也比 线程特有数据 高效), 它是 GCC 内置的线程局部存储设施 ，这将在 <a href="/2016/04/22/thread_local_storage/" title="线程局部存储">线程局部存储</a> 中讨论。</p>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><p>在 C/C++ 程序中常存在全局变量、函数内定义的静态变量以及局部变量，对于局部变量来说，其不存在线程安全问题，因此不在本文讨论的范围之内。</p>
+<p>全局变量和函数内定义的静态变量，是同一进程中各个线程都可以访问的共享变量，因此它们存在多线程读写问题。</p>
+<p>在一个线程中修改了变量中的内容，其他线程都能感知并且能读取已更改过的内容，这对数据交换来说是非常快捷的，但是由于多线程的存在，对于同一个变量可能存在两个或两个以上的线程同时修改变量所在的内存内容，同时又存在多个线程在变量在修改的时去读取该内存值，如果没有使用相应的同步机制来保护该内存的话，那么所读取到的数据将是不可预知的，甚至可能导致程序崩溃。</p>
+<p>如果需要在一个线程内部的各个函数调用都能访问、但其它线程不能访问的变量，这就需要新的机制来实现，我们称之为 Static memory local to a thread (线程局部静态变量)，同时也可称之为线程特有数据（TSD: Thread-Specific Data）</p>
+<p>这一类型的数据，在程序中每个线程都会分别维护一份变量的副本 (copy)，并且长期存在于该线程中，对此类变量的操作不影响其他线程。<br>如下图：<br><img src="/img/thread_specific_data/20140521140749687.png" alt></p>
+<h1 id="一次性初始化"><a href="#一次性初始化" class="headerlink" title="一次性初始化"></a>一次性初始化</h1><p>在讲解线程特有数据之前，先让我们来了解一下一次性初始化。</p>
+<p>多线程程序有时有这样的需求：不管创建多少个线程，有些数据的初始化只能发生一次。</p>
+<p>列如：在 C++ 程序中某个类在整个进程的生命周期内只能存在一个实例对象，在多线程的情况下，为了能让该对象能够安全的初始化，一次性初始化机制就显得尤为重要了。</p>
+<p>——在设计模式中这种实现常常被称之为单例模式（Singleton）。<br>Linux 中提供了如下函数来实现一次性初始化：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Returns 0 on success, or a positive error number on error</span></span><br><span class="line">int pthread_once (pthread_once_t *once_control, void (*init) (void));</span><br><span class="line"><span class="comment">// 利用参数once_control的状态，函数pthread_once()可以确保无论有多少个线程调用多少次该函数，</span></span><br><span class="line"><span class="comment">// 也只会执行一次由init所指向的由调用者定义的函数。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// init所指向的函数没有任何参数，形式如下：</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span> <span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="comment">// some variables initializtion in here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外，参数 once_control 必须是 pthread_once_t 类型变量的指针，指向初始化为 PTHRAD_ONCE_INIT 的静态变量。<br>在 C++0x 以后提供了类似功能的函数 std::call_once ()，用法与该函数类似。<br>使用实例请参考 :<br><a href="https://github.com/ApusApp/Swift/blob/master/swift/base/singleton.hpp" target="_blank" rel="noopener">https://github.com/ApusApp/Swift/blob/master/swift/base/singleton.hpp</a><br>实现。</p>
+<h1 id="线程特有数据API介绍"><a href="#线程特有数据API介绍" class="headerlink" title="线程特有数据API介绍"></a>线程特有数据API介绍</h1><p>在 Linux 中提供了如下函数来对线程特有数据进行操作</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Returns 0 on success, or a positive error number on error</span></span><br><span class="line">int pthread_key_create (pthread_key_t *key, void (*destructor)(void *));</span><br><span class="line"></span><br><span class="line"><span class="comment">// Returns 0 on success, or a positive error number on error</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_key_delete</span> <span class="params">(<span class="keyword">pthread_key_t</span> key)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Returns 0 on success, or a positive error number on error</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_setspecific</span> <span class="params">(<span class="keyword">pthread_key_t</span> key, <span class="keyword">const</span> <span class="keyword">void</span> *value)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Returns pointer, or NULL if no thread-specific data is associated with key</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">pthread_getspecific</span> <span class="params">(<span class="keyword">pthread_key_t</span> key)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="pthread-key-create"><a href="#pthread-key-create" class="headerlink" title="pthread_key_create"></a>pthread_key_create</h2><pre><code>// Returns 0 on success, or a positive error number on error
+int pthread_key_create (pthread_key_t *key, void (*destructor)(void *));
+</code></pre><p>函数 pthread_key_create() 为线程特有数据创建一个新键，并通过 key 指向新创建的键缓冲区。</p>
+<p>因为所有线程都可以使用返回的新键，所以参数 key 可以是一个全局变量（在 C++ 多线程编程中一般不使用全局变量，而是使用单独的类对线程特有数据进行封装，每个变量使用一个独立的 pthread_key_t）。</p>
+<p>destructor 所指向的是一个自定义的函数，其格式如下：</p>
+<pre><code>void Dest (void *value)
+{
+    // Release storage pointed to by &apos;value&apos;
+}
+</code></pre><p>只要线程终止时与 key 关联的值不为 NULL，则 destructor 所指的函数将会自动被调用。</p>
+<p>如果一个线程中有多个线程特有数据变量，那么对各个变量所对应的 destructor 函数的调用顺序是不确定的，因此，每个变量的 destructor 函数的设计应该相互独立。</p>
+<h2 id="pthread-key-delete"><a href="#pthread-key-delete" class="headerlink" title="pthread_key_delete"></a>pthread_key_delete</h2><pre><code>// Returns 0 on success, or a positive error number on error
+int pthread_key_delete (pthread_key_t key);
+</code></pre><p>函数 pthread_key_delete() 并不检查当前是否有线程正在使用该线程特有数据变量，也不会调用清理函数 destructor，而只是将其释放以供下一次调用 pthread_key_create() 使用。</p>
+<p>在 Linux 线程中，它还会将与之相关的线程数据项设置为 NULL。</p>
+<blockquote>
+<p>由于系统对每个进程中 pthread_key_t 类型的个数是有限制的，所以进程中并不能创建无限个的 pthread_key_t 变量。Linux 中可以通过 PTHREAD_KEY_MAX（定义于 limits.h 文件中）或者系统调用 sysconf(_SC_THREAD_KEYS_MAX) 来确定当前系统最多支持多少个键。Linux 中默认是 1024 个键，这对于大多数程序来说已经足够了。如果一个线程中有多个线程特有数据变量，通常可以将这些变量封装到一个数据结构中，然后使封装后的数据结构与一个线程局部变量相关联，这样就能减少对键值的使用。</p>
+</blockquote>
+<h2 id="pthread-setspecific"><a href="#pthread-setspecific" class="headerlink" title="pthread_setspecific"></a>pthread_setspecific</h2><pre><code>// Returns 0 on success, or a positive error number on error
+int pthread_setspecific (pthread_key_t key, const void *value);
+</code></pre><p>函数 pthread_setspecific() 用于将 value 的副本存储于一数据结构中，并将其与调用线程以及 key 相关联。</p>
+<p>参数 value 通常指向由调用者分配的一块内存，当线程终止时，会将该指针作为参数传递给与 key 相关联的 destructor 函数。</p>
+<h2 id="pthread-getspecific"><a href="#pthread-getspecific" class="headerlink" title="pthread_getspecific"></a>pthread_getspecific</h2><pre><code>// Returns pointer, or NULL if no thread-specific data is associated with key
+void *pthread_getspecific (pthread_key_t key);
+</code></pre><p>当线程被创建时，会将所有的线程特有数据变量初始化为 NULL，因此第一次使用此类变量前必须先调用 pthread_getspecific() 函数来确认是否已经于对应的 key 相关联，如果没有，那么 pthread_getspecific() 会分配一块内存并通过 pthread_setspecific() 函数保存指向该内存块的指针。</p>
+<blockquote>
+<p>参数 value 的值也可以不是一个指向调用者分配的内存区域，而是任何可以强制转换为 void * 的变量值，在这种情况下，先前的 pthread_key<em>create() 函数应将参数</em> _destructor 设置为 NULL</p>
+</blockquote>
+<p>函数 pthread_getspecific() 正好与 pthread_setspecific() 相反，其是将 pthread_setspecific() 设置的 value 取出。在使用取出的值前最好是将 void * 转换成原始数据类型的指针。</p>
+<h1 id="使用线程特有数据API"><a href="#使用线程特有数据API" class="headerlink" title="使用线程特有数据API"></a>使用线程特有数据API</h1><p>我们先讨论一下非线程安全的 <code>stderror()</code> 的实现, 接着说明如何使用线程特有数据来实现该函数的线程安全.</p>
+<h2 id="非线程安全的stderror"><a href="#非线程安全的stderror" class="headerlink" title="非线程安全的stderror()"></a>非线程安全的stderror()</h2><p>An implementation of strerror() that is not thread-safe.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*************************************************************************\</span></span><br><span class="line"><span class="comment">*                  Copyright (C) Michael Kerrisk, 2017.                   *</span></span><br><span class="line"><span class="comment">*                                                                         *</span></span><br><span class="line"><span class="comment">* This program is free software. You may use, modify, and redistribute it *</span></span><br><span class="line"><span class="comment">* under the terms of the GNU General Public License as published by the   *</span></span><br><span class="line"><span class="comment">* Free Software Foundation, either version 3 or (at your option) any      *</span></span><br><span class="line"><span class="comment">* later version. This program is distributed without any warranty.  See   *</span></span><br><span class="line"><span class="comment">* the file COPYING.gpl-v3 for details.                                    *</span></span><br><span class="line"><span class="comment">\*************************************************************************/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Listing 31-1 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* strerror.c</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   An implementation of strerror() that is not thread-safe.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _GNU_SOURCE                 <span class="comment">/* Get '_sys_nerr' and '_sys_errlist'</span></span></span><br><span class="line"><span class="meta"><span class="comment">                                       declarations from &lt;stdio.h&gt; */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;                 /* Get declaration of strerror() */</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_ERROR_LEN 256           <span class="comment">/* Maximum length of string</span></span></span><br><span class="line"><span class="meta"><span class="comment">                                       returned by strerror() */</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">char</span> buf[MAX_ERROR_LEN];     <span class="comment">/* Statically allocated return buffer */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> *</span><br><span class="line">strerror(<span class="keyword">int</span> err)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (err &lt; <span class="number">0</span> || err &gt;= _sys_nerr || _sys_errlist[err] == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">snprintf</span>(buf, MAX_ERROR_LEN, <span class="string">"Unknown error %d"</span>, err);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">strncpy</span>(buf, _sys_errlist[err], MAX_ERROR_LEN - <span class="number">1</span>);</span><br><span class="line">        buf[MAX_ERROR_LEN - <span class="number">1</span>] = <span class="string">'\0'</span>;          <span class="comment">/* Ensure null termination */</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> buf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="线程安全的stderror"><a href="#线程安全的stderror" class="headerlink" title="线程安全的stderror()"></a>线程安全的stderror()</h2><p>这是使用线程特有数据技术实现的线程安全的stderror().</p>
+<p>如果对使用线程局部存储技术实现的线程安全的stderror()感兴趣,<br>请转 <a href="/2016/04/22/thread_local_storage/" title="线程局部存储">线程局部存储</a></p>
+<p>An implementation of strerror() that is made thread-safe through the use of thread-specific data.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*************************************************************************\</span></span><br><span class="line"><span class="comment">*                  Copyright (C) Michael Kerrisk, 2017.                   *</span></span><br><span class="line"><span class="comment">*                                                                         *</span></span><br><span class="line"><span class="comment">* This program is free software. You may use, modify, and redistribute it *</span></span><br><span class="line"><span class="comment">* under the terms of the GNU General Public License as published by the   *</span></span><br><span class="line"><span class="comment">* Free Software Foundation, either version 3 or (at your option) any      *</span></span><br><span class="line"><span class="comment">* later version. This program is distributed without any warranty.  See   *</span></span><br><span class="line"><span class="comment">* the file COPYING.gpl-v3 for details.                                    *</span></span><br><span class="line"><span class="comment">\*************************************************************************/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Listing 31-3 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* strerror_tsd.c</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   An implementation of strerror() that is made thread-safe through</span></span><br><span class="line"><span class="comment">   the use of thread-specific data.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   See also strerror_tls.c.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _GNU_SOURCE                 <span class="comment">/* Get '_sys_nerr' and '_sys_errlist'</span></span></span><br><span class="line"><span class="meta"><span class="comment">                                       declarations from &lt;stdio.h&gt; */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;                 /* Get declaration of strerror() */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"tlpi_hdr.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">pthread_once_t</span> once = PTHREAD_ONCE_INIT;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">pthread_key_t</span> strerrorKey;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_ERROR_LEN 256           <span class="comment">/* Maximum length of string in per-thread</span></span></span><br><span class="line"><span class="meta"><span class="comment">                                       buffer returned by strerror() */</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span>                         <span class="comment">/* Free thread-specific data buffer */</span></span><br><span class="line">destructor(<span class="keyword">void</span> *buf)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">free</span>(buf);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span>                         <span class="comment">/* One-time key creation function */</span></span><br><span class="line">createKey(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> s;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Allocate a unique thread-specific data key and save the address</span></span><br><span class="line"><span class="comment">       of the destructor for thread-specific data buffers */</span></span><br><span class="line"></span><br><span class="line">    s = pthread_key_create(&amp;strerrorKey, destructor);</span><br><span class="line">    <span class="keyword">if</span> (s != <span class="number">0</span>)</span><br><span class="line">        errExitEN(s, <span class="string">"pthread_key_create"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> *</span><br><span class="line">strerror(<span class="keyword">int</span> err)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> s;</span><br><span class="line">    <span class="keyword">char</span> *buf;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Make first caller allocate key for thread-specific data */</span></span><br><span class="line"></span><br><span class="line">    s = pthread_once(&amp;once, createKey);</span><br><span class="line">    <span class="keyword">if</span> (s != <span class="number">0</span>)</span><br><span class="line">        errExitEN(s, <span class="string">"pthread_once"</span>);</span><br><span class="line"></span><br><span class="line">    buf = pthread_getspecific(strerrorKey);</span><br><span class="line">    <span class="keyword">if</span> (buf == <span class="literal">NULL</span>) &#123;          <span class="comment">/* If first call from this thread, allocate</span></span><br><span class="line"><span class="comment">                                   buffer for thread, and save its location */</span></span><br><span class="line">        buf = <span class="built_in">malloc</span>(MAX_ERROR_LEN);</span><br><span class="line">        <span class="keyword">if</span> (buf == <span class="literal">NULL</span>)</span><br><span class="line">            errExit(<span class="string">"malloc"</span>);</span><br><span class="line"></span><br><span class="line">        s = pthread_setspecific(strerrorKey, buf);</span><br><span class="line">        <span class="keyword">if</span> (s != <span class="number">0</span>)</span><br><span class="line">            errExitEN(s, <span class="string">"pthread_setspecific"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (err &lt; <span class="number">0</span> || err &gt;= _sys_nerr || _sys_errlist[err] == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">snprintf</span>(buf, MAX_ERROR_LEN, <span class="string">"Unknown error %d"</span>, err);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">strncpy</span>(buf, _sys_errlist[err], MAX_ERROR_LEN - <span class="number">1</span>);</span><br><span class="line">        buf[MAX_ERROR_LEN - <span class="number">1</span>] = <span class="string">'\0'</span>;          <span class="comment">/* Ensure null termination */</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> buf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="深入理解线程特有数据机制"><a href="#深入理解线程特有数据机制" class="headerlink" title="深入理解线程特有数据机制"></a>深入理解线程特有数据机制</h1><p><strong>深入理解线程特有数据的实现有助于对其 API 的使用。</strong></p>
+<p>在典型的实现中包含以下数组：</p>
+<ul>
+<li><p>一个全局（进程级别）的数组，用于存放线程特有数据的键值信息<br>pthread_key_create() 返回的 pthread_key_t 类型值只是对全局数组的索引，该全局数组标记为 pthread_keys，其格式大概如下：<br><img src="/img/thread_specific_data/20140521141540062.png" alt></p>
+<p>数组的每个元素都是一个包含两个字段的结构，第一个字段标记该数组元素是否在用，第二个字段用于存放针对此键、线程特有数据变的解构函数的一个副本，即 destructor 函数。</p>
+</li>
+<li><p>每个线程还包含一个数组，存有为每个线程分配的线程特有数据块的指针（通过调用 pthread_setspecific() 函数来存储的指针，即参数中的 value）</p>
+</li>
+</ul>
+<p><strong>在常见的存储 pthread_setspecific()函数参数 value 的实现中，大多数都类似于下图的实现。</strong></p>
+<p>图中假设 pthread_keys[1]分配给 func1()函数，pthread API 为每个函数维护指向线程特有数据数据块的一个指针数组，<br>其中每个数组元素都与图线程特有数据键的实现 (上图) 中的全局 pthread_keys 中元素一一对应。</p>
+<p><img src="/img/thread_specific_data/20140521141742921.png" alt></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li>[1] Linux/UNIX 系统编程手册（上） </li>
+<li>[2] <a href="http://www.groad.net/bbs/thread-2182-1-1.html" target="_blank" rel="noopener">http://www.groad.net/bbs/thread-2182-1-1.html</a> </li>
+<li>[3] <a href="http://baike.baidu.com/view/598128.htm" target="_blank" rel="noopener">http://baike.baidu.com/view/598128.htm</a></li>
+</ul>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/04/12/git_tutorial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/12/git_tutorial/" itemprop="url">Git深入浅出</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-12T23:26:16+00:00">
+                2016-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Misc/" itemprop="url" rel="index">
+                    <span itemprop="name">Misc</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <p>之前有一份私人git笔记老长老长了, 今天得空, 把它浓缩成5分钟版本.<br>感觉纯基础性的东西整理成博客差也差不多了, 还有很多凌乱的工作笔记慢慢在一点一点整理放上来吧,<br>估计下面几篇博客就开始游戏服务器的开发心得之类的了.</p>
+<p>本篇博客因为要5分钟撸完git, 所以语言尽量精简, 只说新人必须知道的, 如果要git进阶的, 后面再另写博客说明, 不该说的废话就不说了</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>sudo apt-get install git</p>
+<h1 id="通过SSH的key来push到Github"><a href="#通过SSH的key来push到Github" class="headerlink" title="通过SSH的key来push到Github"></a>通过SSH的key来push到Github</h1><p>Create a repo. Make sure there is at least one file in it (even just the README) Generate ssh key:</p>
+<p><code>ssh-keygen -t rsa -C &quot;your_email@example.com&quot;</code></p>
+<p>Copy the contents of the file ~/.ssh/id_rsa.pub to your SSH keys in your GitHub account settings. Test SSH key:</p>
+<p><code>ssh -T git@github.com</code></p>
+<p>clone the repo:</p>
+<p><code>git clone git://github.com/username/your-repository</code></p>
+<p>Now cd to your git clone folder and do:</p>
+<p><code>git remote set-url origin git@github.com:username/your-repository.git</code></p>
+<p>Now try editing a file (try the README) and then do:</p>
+<ul>
+<li><code>git add -A</code></li>
+<li><code>git commit -am &quot;my update msg&quot;</code></li>
+<li><code>git push</code></li>
+</ul>
+<h1 id="Git概念图"><a href="#Git概念图" class="headerlink" title="Git概念图"></a>Git概念图</h1><p><img src="/img/git_tutorial/git_svn_diff.jpg" alt></p>
+<ul>
+<li>集中式版本控制只有中心服务器拥有一份代码，而分布式版本控制每个人的电脑上就有一份完整的代码。</li>
+<li>集中式版本控制有安全性问题，当中心服务器挂了所有人都没办法工作了。</li>
+<li>集中式版本控制需要连网才能工作，如果网速过慢，那么提交一个文件会慢的无法让人忍受。而分布式版本控制不需要连网就能工作。</li>
+<li>分布式版本控制新建分支、合并分支操作速度非常快，而集中式版本控制新建一个分支相当于复制一份完整代码。</li>
+</ul>
+<p><img src="/img/git_tutorial/git_2.png" alt></p>
+<ul>
+<li>Workspace：工作区</li>
+<li>Index / Stage：暂存区</li>
+<li>Repository：仓库区（或本地仓库）</li>
+<li>Remote：远程仓库</li>
+</ul>
+<p>新建一个仓库之后，当前目录就成为了工作区，工作区下有一个隐藏目录 .git，它属于 Git 的版本库。<br>Git 的版本库有一个称为 Stage 的暂存区以及最后的 History 版本库，History 存储所有分支信息，使用一个 HEAD 指针指向当前分支。<br><img src="/img/git_tutorial/git_3.jpg" alt></p>
+<h1 id="查看状态"><a href="#查看状态" class="headerlink" title="查看状态"></a>查看状态</h1><ul>
+<li>比如查看当前分支的状态 : <code>git status</code>, 这条命令也会给很多其他的git命令提示的喔</li>
+<li>查看当前在哪个分支 : <code>git branch</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">b@b-VirtualBox:~/git_test_link/Flock-AI-Fish-Unreal-VR$ git branch</span><br><span class="line">  master</span><br><span class="line">  new_test_branch</span><br><span class="line">* old_demo</span><br><span class="line">  plugin</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>标记为*的那个就是当前分支, 也就是old_demo分支</p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/01/06/Source引擎多人游戏网络设计/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/06/Source引擎多人游戏网络设计/" itemprop="url">Source引擎多人游戏网络设计</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-06T20:37:38+00:00">
+                2016-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GS/" itemprop="url" rel="index">
+                    <span itemprop="name">GS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking" target="_blank" rel="noopener">原文出处</a></p>
+<p>原文标题 : <strong>Source Multiplayer Networking</strong></p>
+<hr>
+<p>Multiplayer games based on the <a href="/wiki/Source_Engine" title="Source Engine" class="mw-redirect">Source Engine</a> use a <a href="http://en.wikipedia.org/wiki/Client-server" class="extiw" title="wikipedia:Client-server" target="_blank" rel="noopener">Client-Server</a> networking architecture. Usually a server is a dedicated host that runs the game and is authoritative about world simulation, game rules, and player input processing. A client is a player’s computer connected to a game server. The client and server communicate with each other by sending small data packets at a high frequency (usually 20 to 30 packets per second). A client receives the current world state from the server and generates video and audio output based on these updates. The client also samples data from input devices (keyboard, mouse, microphone, etc.) and sends these input samples back to the server for further processing. Clients only communicate with the game server and not between each other (like in a peer-to-peer application). In contrast with a single player game, a multiplayer game has to deal with a variety of new problems caused by packet-based communication.<br></p><p>Network bandwidth is limited, so the server can’t send a new update packet to all clients for every single world change. Instead, the server takes snapshots of the current world state at a constant rate and broadcasts these snapshots to the clients. Network packets take a certain amount of time to travel between the client and the server (i.e. half the ping time). This means that the client time is always a little bit behind the server time. Furthermore, client input packets are also delayed on their way back, so the server is processing temporally delayed user commands. In addition, each client has a different network delay which varies over time due to other background traffic and the client’s framerate. These time differences between server and client causes logical problems, becoming worse with increasing network latencies. In fast-paced action games, even a delay of a few milliseconds can cause a laggy gameplay feeling and make it hard to hit other players or interact with moving objects. Besides bandwidth limitations and network latencies, information can get lost due to network packet loss.<br></p>
+
+<img src="/2016/01/06/Source引擎多人游戏网络设计/source_multiplayer_networking_img_1.gif">
+<p>To cope with the issues introduced by network communication, the Source engine server employs techniques such as data compression and lag compensation which are invisible to the client. The client then performs prediction and interpolation to further improve the experience.<br></p><br><h2 id="Basic_networking">Basic networking</h2><br><p>The server simulates the game in discrete time steps called ticks. By default, the timestep is 15ms, so 66.666… ticks per second are simulated, but mods can specify their own <a href="/wiki/Tickrate" title="Tickrate" class="mw-redirect">tickrate</a>. During each tick, the server processes incoming user commands, runs a physical simulation step, checks the game rules, and updates all object states. After simulating a tick, the server decides if any client needs a world update and takes a snapshot of the current world state if necessary. A higher tickrate increases the simulation precision, but also requires more CPU power and available bandwidth on both server and client. The server admin may override the default tickrate with the <code>-tickrate</code> command line parameter, though tickrate changes done this way are not recommended because the mod may not work as designed if its tickrate is changed.<br></p><br><div title="Information" style="margin:0.4em 1em 0.5em;"><strong style="display:table-cell;text-align:right;white-space:nowrap;padding-right:0.3em;">Note:</strong><span style="display:table-cell;">The <code>-tickrate</code> command line parameter is not available on CSS, DoD S, TF2, L4D and L4D2 because changing tickrate causes server timing issues. The tickrate is set to 66 in CSS, DoD S and TF2, and 30 in L4D and L4D2.</span></div><br><p>Clients usually have only a limited amount of available bandwidth. In the worst case, players with a modem connection can’t receive more than 5 to 7 KB/sec. If the server tried to send them updates with a higher data rate, packet loss would be unavoidable. Therefore, the client has to tell the server its incoming bandwidth capacity by setting the console variable <code>rate</code> (in bytes/second). This is the most important network variable for clients and it has to be set correctly for an optimal gameplay experience. The client can request a certain snapshot rate by changing <code>cl_updaterate</code> (default 20), but the server will never send more updates than simulated ticks or exceed the requested client <code>rate</code> limit. Server admins can limit data rate values requested by clients with <code>sv_minrate</code> and <code>sv_maxrate</code> (both in bytes/second). Also the snapshot rate can be restricted with <code>sv_minupdaterate</code> and <code>sv_maxupdaterate</code> (both in snapshots/second).<br></p><p>The client creates <i>user commands</i> from sampling input devices with the same tick rate that the server is running with. A user command is basically a snapshot of the current keyboard and mouse state. But instead of sending a new packet to the server for each user command, the client sends command packets at a certain rate of packets per second (usually 30). This means two or more user commands are transmitted within the same packet. Clients can increase the command rate with <code>cl_cmdrate</code>. This will increase responsiveness but requires more outgoing bandwidth, too.<br></p><p>Game data is compressed using <i>delta compression</i> to reduce network load. That means the server doesn’t send a full world snapshot each time, but rather only changes (a delta snapshot) that happened since the last acknowledged update. With each packet sent between the client and server, acknowledge numbers are attached to keep track of their data flow. Usually full (non-delta) snapshots are only sent when a game starts or a client suffers from heavy packet loss for a couple of seconds. Clients can request a full snapshot manually with the <code>cl_fullupdate</code> command.<br></p><p>Responsiveness, or the time between user input and its visible feedback in the game world, are determined by lots of factors, including the server/client CPU load, simulation tickrate, data rate and snapshot update settings, but mostly by the network packet traveling time. The time between the client sending a user command, the server responding to it, and the client receiving the server’s response is called the <i>latency</i> or <i>ping</i> (or round trip time). Low latency is a significant advantage when playing a multiplayer online game. Techniques like prediction and lag compensation try to minimize that advantage and allow a fair game for players with slower connections. Tweaking networking setting can help to gain a better experience if the necessary bandwidth and CPU power is available. We recommend keeping the default settings, since improper changes may cause more negative side effects than actual benefits.<br></p><br><h2 id="Servers_that_Support_Tickrate">Servers that Support Tickrate</h2><br><p>The tickrate can be altered by using the <code>-tickrate</code> parameter<br></p><br><ul><br><li>Counter Strike: Global Offensive<br></li><br><li>Half-Life 2: Deathmatch<br></li><br></ul><br><p><br><br>The following servers tickrate cannot be altered as changing this causes server timing issues.<br></p><p><br><br>Tickrate 66<br></p><br><ul><br><li>Counter Strike: Source<br></li><br><li>Day of Defeat: Source<br></li><br><li>Team Fortress 2<br></li><br></ul><br><p>Tickrate 30<br></p><br><ul><br><li>Left 4 Dead<br></li><br><li>Left 4 Dead 2<br></li><br></ul><br><h2 id="Entity_interpolation">Entity interpolation</h2><br><p>By default, the client receives about 20 snapshot per second. If the objects (entities) in the world were only rendered at the positions received by the server, moving objects and animation would look choppy and jittery. Dropped packets would also cause noticeable glitches. The trick to solve this problem is to go back in time for rendering, so positions and animations can be continuously interpolated between two recently received snapshots. With 20 snapshots per second, a new update arrives about every 50 milliseconds. If the client render time is shifted back by 50 milliseconds, entities can be always interpolated between the last received snapshot and the snapshot before that.<br></p><p>Source defaults to an interpolation period (‘lerp’) of 100-milliseconds (<code>cl_interp 0.1</code>); this way, even if one snapshot is lost, there are always two valid snapshots to interpolate between. Take a look at the following figure showing the arrival times of incoming world snapshots:<br></p>
+
+<img src="/2016/01/06/Source引擎多人游戏网络设计/source_multiplayer_networking_img_2.gif">
+<p>The last snapshot received on the client was at tick 344 or 10.30 seconds. The client time continues to increase based on this snapshot and the client frame rate. If a new video frame is rendered, the rendering time is the current client time 10.32 minus the view interpolation delay of 0.1 seconds. This would be 10.22 in our example and all entities and their animations are interpolated using the correct fraction between snapshot 340 and 342.<br></p><p>Since we have an interpolation delay of 100 milliseconds, the interpolation would even work if snapshot 342 were missing due to packet loss. Then the interpolation could use snapshots 340 and 344. If more than one snapshot in a row is dropped, interpolation can’t work perfectly because it runs out of snapshots in the history buffer. In that case the renderer uses extrapolation (<code>cl_extrapolate 1</code>) and tries a simple linear extrapolation of entities based on their known history so far. The extrapolation is done only for 0.25 seconds of packet loss (<code>cl_extrapolate_amount</code>), since the prediction errors would become too big after that.<br></p><p><b>Entity interpolation causes a constant view “lag” of 100 milliseconds by default (<code>cl_interp 0.1</code>), even if you’re playing on a listenserver</b> (server and client on the same machine). This doesn’t mean you have to lead your aiming when shooting at other players since the server-side lag compensation knows about client entity interpolation and corrects this error.<br></p><br><div style="margin:0.4em 1em 0.5em;"><strong style="display:table-cell;text-align:right;white-space:nowrap;padding-right:0.3em;">Tip:</strong><span style="display:table-cell;">More recent Source games have the <code>cl_interp_ratio</code> cvar. With this you can easily and safely decrease the interpolation period by setting <code>cl_interp</code> to 0, then increasing the value of <code>cl_updaterate</code> (the useful limit of which depends on server tickrate). You can check your final lerp with <code>net_graph 1</code>.</span></div><br><div title="Information" style="margin:0.4em 1em 0.5em;"><strong style="display:table-cell;text-align:right;white-space:nowrap;padding-right:0.3em;">Note:</strong><span style="display:table-cell;">If you turn on <code>sv_showhitboxes</code> (not available in Source 2009) you will see player hitboxes drawn in server time, meaning they are ahead of the rendered player model by the lerp period. This is perfectly normal!</span></div><br><h2 id="Input_prediction">Input prediction</h2><br><p>Lets assume a player has a network latency of 150 milliseconds and starts to move forward. The information that the <code>+FORWARD</code> key is pressed is stored in a user command and send to the server. There the user command is processed by the movement code and the player’s character is moved forward in the game world. This world state change is transmitted to all clients with the next snapshot update. So the player would see his own change of movement with a 150 milliseconds delay after he started walking. This delay applies to all players actions like movement, shooting weapons, etc. and becomes worse with higher latencies.<br></p><p>A delay between player input and corresponding visual feedback creates a strange, unnatural feeling and makes it hard to move or aim precisely. Client-side input prediction (<code>cl_predict 1</code>) is a way to remove this delay and let the player’s actions feel more instant. Instead of waiting for the server to update your own position, the local client just predicts the results of its own user commands. Therefore, the client runs exactly the same code and rules the server will use to process the user commands. After the prediction is finished, the local player will move instantly to the new location while the server still sees him at the old place.<br></p><p>After 150 milliseconds, the client will receive the server snapshot that contains the changes based on the user command he predicted earlier. Then the client compares the server position with his predicted position. If they are different, a prediction error has occurred. This indicates that the client didn’t have the correct information about other entities and the environment when it processed the user command. Then the client has to correct its own position, since the server has final authority over client-side prediction. If <code>cl_showerror 1</code> is turned on, clients can see when prediction errors happen. Prediction error correction can be quite noticeable and may cause the client’s view to jump erratically. By gradually correcting this error over a short amount of time (<code>cl_smoothtime</code>), errors can be smoothly corrected. Prediction error smoothing can be turned off with <code>cl_smooth 0</code>.<br></p><p>Prediction is only possible for the local player and entities affected only by him, since prediction works by using the client’s keypresses to make a “best guess” of where the player will end up. Predicting other players would require literally predicting the future with no data, since there’s no way to instantaneously get keypresses from them.<br></p><br><h2 id="Lag_compensation">Lag compensation</h2><br><dl><br><dd><i>All source code for lag compensation and view interpolation is available in the Source SDK. See<br><br><br><br> for implementation details.</i><br></dd><br></dl><br><p>Let’s say a player shoots at a target at client time 10.5. The firing information is packed into a user command and sent to the server. While the packet is on its way through the network, the server continues to simulate the world, and the target might have moved to a different position. The user command arrives at server time 10.6 and the server wouldn’t detect the hit, even though the player has aimed exactly at the target. This error is corrected by the server-side lag compensation.<br></p><p>The lag compensation system keeps a history of all recent player positions for one second. If a user command is executed, the server estimates at what time the command was created as follows:<br></p><p><br><br>    <strong>Command Execution Time</strong> = <strong>Current Server Time</strong> - <strong>Packet Latency</strong> - <strong>Client View</strong> <a href="/wiki/Interpolation" title="Interpolation"><strong>Interpolation</strong></a><br><br></p><p>Then the server moves all other players - <i>only</i> players - back to where they were at the command execution time. The user command is executed and the hit is detected correctly. After the user command has been processed, the players revert to their original positions.<br></p><br><div title="Information" style="margin:0.4em 1em 0.5em;"><strong style="display:table-cell;text-align:right;white-space:nowrap;padding-right:0.3em;">Note:</strong><span style="display:table-cell;">Since entity interpolation is included in the equation, failing to have it on can cause undesired results.</span></div><br><p>On a listen server you can enable <code>sv_showimpacts 1</code> to see the different server and client hitboxes:<br></p>
+
+<img src="/2016/01/06/Source引擎多人游戏网络设计/source_multiplayer_networking_img_3.jpg">
+<p>This screenshot was taken on a listen server with 200 milliseconds of lag (using <code>net_fakelag</code>), right after the server confirmed the hit. The red hitbox shows the target position on the client where it was 100ms + interp period ago. Since then, the target continued to move to the left while the user command was travelling to the server. After the user command arrived, the server restored the target position (blue hitbox) based on the estimated command execution time. The server traces the shot and confirms the hit (the client sees blood effects).<br></p><p>Client and server hitboxes don’t exactly match because of small precision errors in time measurement. Even a small difference of a few milliseconds can cause an error of several inches for fast-moving objects. Multiplayer hit detection is not pixel perfect and has known precision limitations based on the tickrate and the speed of moving objects.<br></p><p>The question arises, why is hit detection so complicated on the server? Doing the back tracking of player positions and dealing with precision errors while hit detection could be done client-side way easier and with pixel precision. The client would just tell the server with a “hit” message what player has been hit and where. We can’t allow that simply because a game server can’t trust the clients on such important decisions. Even if the client is “clean” and protected by <a href="/wiki/Valve_Anti-Cheat" title="Valve Anti-Cheat">Valve Anti-Cheat</a>, the packets could be still modified on a 3rd machine while routed to the game server. These “cheat proxies” could inject “hit” messages into the network packet without being detected by VAC (a “man-in-the-middle” attack).<br></p><p>Network latencies and lag compensation can create paradoxes that seem illogical compared to the real world. For example, you can be hit by an attacker you can’t even see anymore because you already took cover. What happened is that the server moved your player hitboxes back in time, where you were still exposed to your attacker. This inconsistency problem can’t be solved in general because of the relatively slow packet speeds. In the real world, you don’t notice this problem because light (the packets) travels so fast and you and everybody around you sees the same world as it is right now.<br></p><br><h2 id="Net_graph">Net graph</h2><br><p>The Source engine offers a couple of tools to check your client connection speed and quality. The most popular one is the net graph, which can be enabled with <code>net_graph 2</code> (or <code>+graph</code>). Incoming packets are represented by small lines moving from right to left. The height of each line reflects size of a packet. If a gap appears between lines, a packet was lost or arrived out of order. The lines are color-coded depending on what kind of data they contain.<br></p><p>Under the net graph, the first line shows your current rendered frames per second, your average latency, and the current value of <code>cl_updaterate</code>. The second line shows the size in bytes of the last incoming packet (snapshots), the average incoming bandwidth, and received packets per second. The third line shows the same data just for outgoing packets (user commands).<br></p>
+
+<img src="/2016/01/06/Source引擎多人游戏网络设计/source_multiplayer_networking_img_4.jpg">
+<p></p><h2 id="Optimizations">Optimizations</h2><p></p>
+<p></p><p>The default networking settings are designed for playing on dedicated server on the Internet. The settings are balanced to work well for most client/server hardware and network configurations. For Internet games the only console variable that should be adjusted on the client is “rate”, which defines your available bytes/second bandwidth of your network connection. Good values for “rate” is 4500 for modems, 6000 for ISDN, 10000 DSL and above.<br></p><p>In an high-performance network environment, where the server and all clients have the necessary hardware resources available, it’s possible to tweak bandwidth and tickrate settings to gain more gameplay precision. Increasing the server tickrate generally improves movement and shooting precision but comes with a higher CPU cost. A Source server running with tickrate 100 generates about 1.5x more CPU load than a default tickrate 66. That can cause serious calculation lags, especially when lots of people are shooting at the same time. It’s not suggested to run a game server with a higher tickrate than 66 to reserve necessary CPU resources for critical situations.<br></p><p></p>
+<div title="Information" style="margin:0.4em 1em 0.5em;"><strong style="display:table-cell;text-align:right;white-space:nowrap;padding-right:0.3em;">Note:</strong><span style="display:table-cell;">It is not possible to change tickrate on CSS, DoD S TF2, L4D and L4D2 because changing tickrate causes server timing issues. The tickrate is set to 66 in CSS, DoD S and TF2, and 30 in L4D and L4D2.</span></div><br><p>If the game server is running with a higher tickrate, clients can increase their snapshot update rate (cl_updaterate) and user command rate (cl_cmdrate), if the necessary bandwidth (rate) is available. The snapshot update rate is limited by the server tickrate, a server can’t send more then one update per tick. So for a tickrate 66 server, the highest client value for cl_updaterate would be 66. If you increase the snapshot rate and encounter packet loss or choke, you have to turn it down again. With an increased cl_updaterate you can also lower the view interpolation delay (cl_interp). The default interpolation delay is 0.1 seconds, which derives from the default cl_updaterate 20. View interpolation delay gives a moving player a small advantage over a stationary player since the moving player can see his target a split second earlier. This effect is unavoidable, but it can be reduced by decreasing the view interpolation delay. If both players are moving, the view lag delay is affecting both players and nobody has an advantage.<br></p><p>This is the relation between snapshot rate and view interpolation delay is the following:<br></p><p><span style="text-align:center; font-weight:bold; font-family:monospace;display:block;font-size:1.2em;">interpolation period = max( cl_interp, cl_interp_ratio / cl_updaterate )</span><br></p><p>“Max(x,y)” means “whichever of these is higher”. You can set <code>cl_interp</code> to 0 and still have a safe amount of interp. You can then increase cl_updaterate to decrease your interp period further, but don’t exceed tickrate (66) or flood your connection with more data than it can handle.<br></p><br><h3 id="Tips">Tips</h3><br><dl><br>    <dt>Don’t change console settings unless you are 100% sure what you are doing</dt><br>    <code>Most &quot;high-performance&quot; setting cause exactly the opposite effect, if the server or network can&#39;t handle the load.</code><br><br>    <dt>Don’t turn off view interpolation and/or lag compensation</dt><br>    <code>It will not improve movement or shooting precision.</code><br><br>    <dt>Optimized setting for one client may not work for other clients</dt><br>    <code>Do not just use settings from other clients without verifing them for your system.</code><br><br>    <dt>If you follow a player in “First-Person” as a spectator in a game or <a href="/wiki/SourceTV" title="SourceTV">SourceTV</a>, you don’t exactly see what the player sees</dt><br>    <code>Spectators see the game world without lag compensation.</code><br></dl><br><br><br><h1 id="译文">译文</h1><br><br><a href="http://gad.qq.com/program/translateview/7168875" target="_blank" rel="noopener">译文出处</a><br><br><div class="WordSection1"> 翻译：pluswu，审校：pluswu<div><span style="font-weight: normal;"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">Source</span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">引擎的多人游戏使用基于<span>UDP</span>通信的<span>C/S</span>架构。游戏以服务器逻辑作为世界权威，客户端和服务器通过<span>UDP</span>协议<span>(20~30packet/s</span>）通信。客户端从服务器接收信息并基于当前世界状态渲染画面和输出音频。客户端以固定频率发送操作输入到服务器。客户端仅与游戏服务器，而不是彼此之间通信。多人游戏必须处理基于网络消息同步所带来的一系列问题。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">网络的带宽是有限的，所以服务器不能为每一个世界的变化发送新的更新数据包发送到所有客户端。相反，服务器以固定的频率取当前世界状态的快照并广播这些快照到客户端。网络数据包需要一定的时间量的客户端和服务器（<span>RTT</span>的一半）来往。这意味着客户端时间相对服务器时间总是稍有滞后。此外，客户端输入数据包同步到服务器也有一定网络传输时间，所以服务器处理客户端输入也存在延迟的。不同的客户端因为网络带宽和通信线路不同也会存在不同的网络延时。随着服务器和客户端之间的这些网络延迟增大<span>, </span>网络延迟可能会导致逻辑问题。比如在快节奏的动作游戏中，在几毫秒的延迟甚至就会导致游戏卡顿的感觉，玩家会觉得很难打到对方玩家或运动的物体。此外除了带宽限制和网络延迟还要考虑网络传输中会有消息丢失的情况。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><img width="554" height="193" id="图片 2" src="http://gameweb-img.qq.com/gad/20160826/image001.1472207636.gif" alt="Source引擎多人模式网络同步模型"></span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">为了解决网络通信引入的一系列问题，<span>Source</span>引擎在服务器同步时采用了数据压缩和延迟补偿的逻辑，客户端采用了预测运行和插值平滑处理等技术来获得更好的游戏体验。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></p><h2 id="基本网络模型">基本网络模型</h2><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">服务器以一个固定的时间间隔更新模拟游戏世界。默认情况下，时间步长为<span>15ms</span>，以<span>66.66</span>次每秒的频率更新模拟游戏世界，但不同游戏可以指定更新频率。在每个更新周期内服务器处理传入的用户命令，运行物理模拟步，检查游戏规则，并更新所有的对象状态。每一次模拟更新<span>tick</span>之后服务器会决定是否更新当前时间快照以及每个客户端当前是否需更新。较高的<span>tickrate</span>增加了模拟精度，需要服务器和客户端都有更多可用的<span>CPU</span>和带宽资源。客户通常只能提供有限的带宽。在最坏的情况下，玩家的调制解调器连接不能获得超过<span>5-7KB /</span>秒的流量。如果服务器的数据更新发送频率超过了客户端的带宽处理限制，丢包是不可避免的。因此客户端可以通过在控制台设置接受带宽限制，以告诉服务器其收到的带宽容量。这是客户最重要的网络参数，想要获得最佳的游戏体验的话必须正确的设置此参数。客户端可以通过设置<span>cl_updaterate</span>（默认<span>20</span>）来改变获得快照平的频率，但服务器永远不会发送比<span>tickerate</span>更多的更新或超过请求的客户端带宽限制。服务器管理员可以通过<span>sv_minrate</span>和<span>sv_maxrate(byte/s)</span>限制客户端的上行请求频率。当然快照更新同步频率都受到<span>sv_minupdaterate</span>和<span>sv_maxupdaterate</span>（快照<span>/</span>秒）的限制。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">客户端使用与服务端<span>tickrate</span>一样的频率采样操作输入创建用户命令。用户命令基本上是当前的键盘和鼠标状态的快照。客户端不会把每个用户命令都立即发送到服务器而是以每秒（通常是<span>30</span>）的速率发送命令包。这意味着两个或更多个用户的命令在同一包内传输。客户可以增加与的<span>cl_cmdrate</span>命令速率。这可以提高响应速度，但需要更多的出口带宽。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">游戏数据使用增量更新压缩来减少网络传输。服务器不会每次都发送一个完整的世界快照，而只会更新自上次确认更新<span>(</span>通过<span>ACK</span>确认<span>)</span>之后所发生的变化（增量快照<span>)</span>。客户端和服务器之间发送的每个包都会带有<span>ACK</span>序列号来跟踪网络数据流。当游戏开始时或客户端在发生非常严重的数据包丢失时<span>, </span>客户可以要求全额快照同步。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">用户操作的响应速度<span>(</span>操作到游戏世界中的可视反馈之间的时间<span>)</span>是由很多因素决定的，包括服务器<span>/</span>客户端的<span>CPU</span>负载，更新频率，网络速率和快照更新设置，但主要是由网络包的传输时间确定。从客户端发送命令到服务器响应<span>, </span>再到客户端接收此命令对应的服务器响应被称为延迟或<span>ping</span>（或<span>RTT</span>）。低延迟在玩多人在线游戏时有显著的优势。客户端本地预测和服务器的延迟补偿技术可以尽量为网络较差的游戏玩家提供相对公平的体验。如果有良好的带宽和<span>CPU</span>可用，可以通过调整网络设置以获得更好的体验<span>, </span>反之我们建议保持默认设置，因为不正确的更改可能导致负面影响大于实际效益。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></p><h2 id="Enitiy插值平滑">Enitiy插值平滑</h2><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">通常情况下客户端接收每秒约<span>20</span>个快照更新。如果世界中的对象（实体）直接由服务器同步的位置呈现，物体移动和动画会看起来很诡异。网络通信的丢包也将导致明显的毛刺。解决这个问题的关键是要延迟渲染，玩家位置和动画可以在两个最近收到快照之间的连续插值。以每秒<span>20</span>快照为例，一个新的快照更新到达时大约每<span>50</span>毫秒。如果客户端渲染延迟<span>50</span>毫秒，客户端收到一个快照，并在此之前的快照之间内插<span>(Source</span>默认为<span>100</span>毫秒的插补周期<span>)</span>；这样一来，即使一个快照丢失，总是可以在两个有效快照之间进行平滑插值。如下图显示传入世界快照的到达时间：</span></p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">         </span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><img width="491" height="191" id="图片 3" src="http://gameweb-img.qq.com/gad/20160826/image002.1472207636.gif" alt="Source引擎多人模式网络同步模型"></span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">在客户端接收到的最后一个快照是在<span>tick 344</span>或<span>10.30</span>秒。客户的时间将继续在此快照的基础上基于客户端的帧率增加。下一个视图帧渲染时间是当前客户端的时间<span>10.32</span>减去<span>0.1</span>秒的画面插值延迟<span>10.20</span>。在我们的例子下一个渲染帧的时间是<span>10.22</span>和所有实体及其动画都可以基于快照<span>340</span>和<span>342</span>做正确的插值处理。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">既然我们有一个<span>100</span>毫秒的延迟插值，如果快照<span>342</span>由于丢包缺失，插值可以使用快照<span>340</span>和<span>344</span>来进行平滑处理。如果连续多个快照丢失，插值处理可能表现不会很好，因为插值是基于缓冲区的历史快照进行的。在这种情况下，渲染器会使用外推法（<span>cl_extrapolate 1</span>），并尝试基于其已知的历史，为实体做一个基于目前为止的一个简单线性外推。外推只会快照更新包连续丢失（<span>cl_extrapolate_amount</span>）<span>0.25</span>秒才会触发，因为该预测之后误差将变得太大。实体内会插导致<span>100</span>毫秒默认（<span>cl_interp 0.1</span>）的恒定视图“滞后”，就算你在<span>listenserver</span>（服务器和客户端在同一台机器上）上玩游戏。这并不是说你必须提前预判动画去瞄准射击，因为服务器端的滞后补偿知道客户端实体插值并纠正这个误差。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">最近<span>Source</span>引擎的游戏有<span>cl_interp_ratioCVaR</span>的。有了这个，你可以轻松，安全地通过设置<span>cl_interp</span>为<span>0</span>，那么增加的<span>cl_updaterate</span>的值（这同时也会受限于服务器<span>tickrate</span>）来减少插补周期。你可以用<span>net_graph 1</span>检查您的最终线性插值。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果打开<span>sv_showhitboxes</span>，你会看到在服务器时间绘制的玩家包围盒，这意味着他们在前进的线性插值时期所呈现的播放器模式。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></p><h2 id="输入预测">输入预测</h2><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">让我们假设一个玩家有<span>150</span>毫秒的网络延迟，并开始前进。前进键被按下的信息被存储在用户命令，并发送至服务器。用户命令是由移动代码逻辑处理，玩家的角色将在游戏世界中向前行走。这个世界状态的变化传送到所有客户端的下一个快照的更新。因此玩家看到自己开始行动的响应会有<span>150</span>毫秒延迟，这种延迟对于高频动作游戏<span>(</span>体育，设计类游戏<span>)</span>会有明显的延迟感。玩家输入和相应的视觉反馈之间的延迟会产生一种奇怪的，不自然的感觉，使得玩家很难移动或精确瞄准。客户端的输入预测（<span>cl_predict 1</span>）执行是一种消除这种延迟的方法，让玩家的行动感到更即时。与其等待服务器来更新自己的位置，在本地客户端只是预测自己的用户命令的结果。因此，客户端准确运行相同的代码和规则服务器将使用来处理用户命令。预测完成后，当地的玩家会移动到新位置，而服务器仍然可以看到他在老地方。<span>150</span>毫秒后，客户会收到包含基于他早期预测用户命令更改服务器的快照。客户端会将预测位置同服务器的位置对比。如果它们是不同的，则发生了预测误差。这表明，在客户端没有关于其他实体的正确信息和环境时，它处理用户命令。然后，客户端必须纠正自己的位置，因为服务器拥有客户端预测最终决定权。如果<span>cl_showerror 1</span>开启，客户端可以看到，当预测误差发生。预测误差校正可以是相当明显的，并且可能导致客户端的视图不规则跳动。通过在一定时间（<span>cl_smoothtime</span>）逐渐纠正这个错误，错误可以顺利解决。预测误差平滑处理可以通过设置<span>cl_smooth 0</span>来关闭。预测只对本地玩家以及那些只收它影响的实体有效，因为预测的工作原理是使用客户端的操作来预测的。对于其他玩家没法做有效预测<span>, </span>因为没有办法立即从他们身上得到操作信息。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></p><h2 id="延迟补偿">延迟补偿</h2><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">       比方说，一个玩家在<span>10.5s</span>的时刻射击了一个目标。射击信息被打包到用户命令，该命令通过网络的方式发送至服务器。服务器持续模拟游戏世界，目标可能已经移动到一个不同的位置。用户命令到达服务器时间<span>10.6</span>时服务器就无法检测到射击命中，即使玩家已经在目标准确瞄准。这个错误需要由服务器侧进行延迟补偿校正。延迟补偿系统使所有玩家最近位置的历史一秒。如果在执行用户的命令，服务器预计在命令创建什么时间如下：</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">命令执行时间<span>=</span>当前服务器时间<span> - </span>数据包延迟<span> - </span>客户端查看插值</span></p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">然后服务器会将所有其他玩家回溯到命令执行时的位置，他们在命令执行时间。用户指令被执行，并正确地检测命中。用户命令处理完成后，玩家将会恢复到原来的位置。由于实体插值包含在公式中，可能会导致意外的结果。服务器端可以启用<span>sv_showimpacts 1</span>，显示服务器和客户端射击包围盒位置差异：</span></p><p class="MsoNormal"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><img width="554" height="299" id="图片 4" src="http://gameweb-img.qq.com/gad/20160826/image003.1472207636.jpg" alt="Source引擎多人模式网络同步模型"></span></p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">该画面在主机上设置延迟<span>200</span>毫秒<span>(net_fakelag</span>设置<span>)</span>时获取的，射击真实命中玩家。红色命中包围盒显示了客户端那里是<span>100</span>毫秒<span>+</span>插补周期前的目标位置。此后，目标继续向左移动，而用户命令被行进到服务器。用户命令到达后，服务器恢复基于所述估计的命令执行时间目标位置（蓝色击中盒）。服务器回溯演绎，并确认命中（客户端看到流血效果）。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">因为在时间测量精度的误差客户端和服务器命中包围盒不完全匹配。对于快速移动的物体甚至几毫秒的误差也会导致几英寸的误差。多人游戏击中检测不是基于像素的完美匹配，此外基于<span>tickrate</span>模拟的运动物体的速度也有精度的限制。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">既然击中检测服务器上的逻辑如此复杂为什么不把命中检查放在客户端呢？如果在客户端进行命中检查<span>, </span>玩家位置和像素命中处理检测都可以精准的进行。客户端将只告诉服务器用“打”的消息一直打到什么样的玩家。因为游戏服务器不能信任客户端这种重要决定。因为即使客户端是“干净”的，并通过了<span>Valve</span>反作弊保护，但是报文可以被截获修改然后发送到游戏服务器。这些“作弊代理”可以注入“打”的消息到网络数据包而不被<span>VAC</span>被检测。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">网络延迟和滞后补偿可能会引起真实的世界不可能的逻辑。例如，您可能被你看不到的目标所击中。服务器移到你的命中包围盒时光倒流，你仍然暴露给了攻击者。这种不一致问题不能通过一般化的防范解决，因为相对网络包传输的速度。在现实世界中，因为光传播如此之快，你，每个人都在你身边看到同一个世界，所以你才你没有注意到这个问题。</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></p><h2 id="网络视图">网络视图</h2><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">Source</span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">引擎提供了一些工具来检查您的客户端连接速度和质量。使用<span>net_graph 2</span>可以启用相关的视图。下面的曲线图中，第一行显示每秒当前的渲染的帧，您的平均延迟时间，以及的<span>cl_updaterate</span>的当前值。第二行显示在最后进来的数据包（快照），平均传入带宽和每秒接收的数据包的字节大小。第三行显示刚刚传出的数据包（用户命令）相同的数据。</span></p><p class="MsoNormal"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><img width="554" height="219" id="图片 5" src="http://gameweb-img.qq.com/gad/20160826/image004.1472207636.jpg" alt="Source引擎多人模式网络同步模型"></span><span class="3Char"><span style="font-size:13.5pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><h2 id="优化">优化</h2></span></span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">默认的网络设置是专门为通过互联网连接的游戏服务器设计的。可以适用大多数客户机<span>/</span>服务器的硬件和网络配置工作。对于网络游戏，应该在客户端上进行调整，唯一的控制台变量是“<span>rate</span>”，它定义客户端可用的字节<span>/</span>网络连接带宽。</span></p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"> </span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">在一个良好的网络环境中，服务器和所有客户端都具有必要的硬件资源可用，可以调整带宽和更新频率设置，来获得更多的游戏精度。增加<span>tickrate</span>通常可以提高运动和射击精度，但会消耗更多的服务器<span>CPU</span>资源。<span>tickrate 100</span>运行的服务器的负载大概是<span>tickrate 66</span>运行时的约<span>1.5</span>倍<span>, </span>因此如果<span>CPU</span>性能不足可能会导致严重的计算滞后，尤其是在玩家数量比较多的时候。建议对具有更高<span>tickrate</span>超的游戏服务器预留必要的<span>CPU</span>资源。</span></p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"> </span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果游戏服务器使用较高<span>tickrate</span>运行时，客户端可以在带宽可用的情况下增加他们的快照更新率（的<span>cl_updaterate</span>）和用户命令速率（的<span>cl_cmdrate</span>）。快照更新速率由服务器<span>tickrate</span>限制，一台服务器无法发送每个时钟周期的一个以上的更新。因此，对于一个<span>tickrate66</span>服务器，为的<span>cl_updaterate</span>最高的客户价值，将是<span>66</span>。如果你增加快照率遇到，你必须再次打开它。与增加的<span>cl_updaterate</span>你也可以降低画面插值延迟（<span>cl_interp</span>）。默认的插值延迟为<span>0.1</span>秒<span>(</span>默认的<span>cl_updaterate</span>为<span>20) </span>视图内插延迟会导致移动的玩家会比静止不动的玩家更早发现对方。这种效果是不可避免的，但可以通过减小视图内插值延迟来减小。如果双方玩家正在移动，画面滞后会延迟影响双方玩家<span>,</span>双方玩家都不能获利。快照速率和视图延迟插值之间的关系如下：</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">插补周期<span>= MAX(cl_interp</span>，<span>cl_interp_ratio /cl_updaterate)</span></span></p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">可以设置<span>cl_interp</span>为<span>0</span>，仍然有插值的安全量。也可以把<span>cl_updaterate</span>增加，进一步降低你的插补周期，但不会超过更新<span>tickrate(66)</span>或客户端的网络处理能力。</span></p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></p><h3 id="小贴士">小贴士</h3><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">不要瞎改终端配置除非你完全确定你在干嘛</span></p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">       </span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果客户端和服务器没有足够<span>CPU</span>和网络资源，绝大多数所所谓高性能优化都是起负面作用</span></p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">不要关闭画面插值和延迟补偿</span></p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">       </span><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">这样并不能代理移动和设计精准度提升</span></p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">优化设置可能不会对每个客户端都有效</span></p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">如果是你是在游戏里或者<span>SourceTv</span>里第一视角观看你看到的画面和玩家可能不一样</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">观战者的画面没有延迟补偿</span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></p><p class="MsoNormal" style="box-sizing: content-box; margin-top: 24px; margin-bottom: 0px; padding: 0px; color: rgb(51, 51, 51); line-height: 24px;"><span style="box-sizing: content-box; margin: 0px; padding: 0px;"><span style="box-sizing: content-box; margin: 0px; padding: 0px; line-height: 24px;"><span style="font-family:微软雅黑;font-size:medium;">【版权声明】</span></span></span></p><p class="MsoNormal" style="box-sizing: content-box; margin-top: 24px; margin-bottom: 0px; padding: 0px; color: rgb(51, 51, 51); line-height: 24px;"><span style="box-sizing: content-box; margin: 0px; padding: 0px;"><span style="font-family:微软雅黑;font-size:medium;">原文作者未做权利声明，视为共享知识产权进入公共领域，自动获得授权；</span></span></p><p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><br></span></p></div>                    <br>                
+
+
+
+
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

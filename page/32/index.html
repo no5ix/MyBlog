@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="烫">
+<meta property="og:url" content="https://hulinhong.com/page/32/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="烫">
+<meta name="twitter:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>烫 - 烫烫烫烫烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2016/01/06/latency_compensating_methods_in_client_server_in_game_protocol_design_and_optimization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/06/latency_compensating_methods_in_client_server_in_game_protocol_design_and_optimization/" itemprop="url">C/S游戏架构中延迟补偿的设计和优化方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-06T20:37:38+00:00">
+                2016-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GS/" itemprop="url" rel="index">
+                    <span itemprop="name">GS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="自我总结"><a href="#自我总结" class="headerlink" title="自我总结"></a>自我总结</h1><p>注 : V社这篇文章相当有价值, 所以会有尽可能详细的注解以及对原译文各种翻译纰漏的修正.</p>
+<p>广义的延迟补偿主要包括两个方面 :</p>
+<ul>
+<li><strong>A 如何显示目标</strong><ul>
+<li><strong>a. 对于本玩家自己</strong><ul>
+<li><strong>客户端预表现</strong>(本文翻译为”客户端预测”) : 比如对于玩家移动的预测, 可以把服务器确认过的movement信息作为开始, 然后使用自己本地的movement input来进行预表现, 服务器跟客户端共享同一套move代码, 当服务器的确认信息过来之后就直接使用服务器发过来的from state进行修正并以from state为基础执行之后的预测.</li>
+</ul>
+</li>
+<li><strong>b. 对于其他玩家</strong><ul>
+<li><strong>i. 外推法</strong> : 即航位推测法, 外推法把其它玩家/物体看作一个点，这个点开始的位置、方向、速度已知，沿着自己的弹道向前移动。因此，假设延时是100ms，最新的协议通知客户端这个玩家奔跑速度是500单位每秒，方向垂直于玩家视线，客户端就可以假设事实上这个玩家当前实际的位置已经向前移动了50个单位。客户端可以在这个外推的位置渲染这个玩家. 这个方法不适用于FPS游戏, 因为大部分FPS游戏采用非现实的玩家系统，玩家可以随时转弯，可以在任意角度作用不现实的加速度，因此外推法得到的结果经常是错误地</li>
+<li><strong>ii. 内推法</strong> : 即影子跟随法, 这种方法是用延时来换取平滑, 客户端物体实际移动位置总是滞后一段时间。举个例子，如果服务器每秒同步10次世界信息，客户端渲染的时候会有100ms滞后。这样，每一帧渲染的时候，我们通过最新收到的位置信息和前100ms的位置信息（或者上一帧渲染位置）进行差值得到结果.<ul>
+<li><strong>如果一个更新包没有收到，有2种处理方法</strong> : <ul>
+<li>用上面介绍的外推法（有可能产生较大误差）；</li>
+<li>保持玩家位于当前位置直到收到下一个更新包(会导致玩家移动顿挫)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>B. 延迟补偿</strong>, 步骤如下 : </p>
+<ol>
+<li>为玩家计算一个相当精确的延迟时间</li>
+<li>对每个玩家，从服务器历史信息中找一个已发送给这个玩家并且这个玩家已收到的的world update, 这个world update是在这个玩家将要执行这个movement command之前的world update</li>
+<li>对于每一个玩家，将其从上述的world update处拉回到这个玩家生成此user command的更新时间中执行用户命令。这个回退时间需要考虑到命令执行的时候的网络延时和插值量</li>
+<li>执行玩家命令（包括武器开火等。）</li>
+<li>将所有移动的、错位的玩家移动到他们当前正确位置</li>
+</ol>
+</li>
+</ul>
+<h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="https://developer.valvesoftware.com/wiki/Latency_Compensating_Methods_in_Client/Server_In-game_Protocol_Design_and_Optimization" target="_blank" rel="noopener">原文出处</a></p>
+<p>原文标题 : <strong>Latency Compensating Methods in Client/Server In-game Protocol Design and Optimization</strong></p>
+<hr>
+<div id="toc" class="toc" style="display:none"><br>    <div id="toctitle"><br>        <h2 id="Contents">Contents</h2><br>    </div><br>    <ul><br>        <li class="toclevel-1 tocsection-1"><a href="#Overview"><span class="tocnumber">1</span> <span class="toctext">Overview</span></a></li><br>        <li class="toclevel-1 tocsection-2"><a href="#Basic_Architecture_of_a_Client_.2F_Server_Game"><span class="tocnumber">2</span> <span class="toctext">Basic Architecture of a Client / Server Game</span></a></li><br>        <li class="toclevel-1 tocsection-3"><a href="#Contents_of_the_User_Input_messages"><span class="tocnumber">3</span> <span class="toctext">Contents of the User Input messages</span></a></li><br>        <li class="toclevel-1 tocsection-4"><a href="#Client_Side_Prediction"><span class="tocnumber">4</span> <span class="toctext">Client Side Prediction</span></a></li><br>        <li class="toclevel-1 tocsection-5"><a href="#Client-Side_Prediction_of_Weapon_Firing"><span class="tocnumber">5</span> <span class="toctext">Client-Side Prediction of Weapon Firing</span></a></li><br>        <li class="toclevel-1 tocsection-6"><a href="#Umm.2C_This_is_a_Lot_of_Work"><span class="tocnumber">6</span> <span class="toctext">Umm, This is a Lot of Work</span></a></li><br>        <li class="toclevel-1 tocsection-7"><a href="#Display_of_Targets"><span class="tocnumber">7</span> <span class="toctext">Display of Targets</span></a></li><br>        <li class="toclevel-1 tocsection-8"><a href="#Lag_Compensation"><span class="tocnumber">8</span> <span class="toctext">Lag Compensation</span></a></li><br>        <li class="toclevel-1 tocsection-9"><a href="#Game_Design_Implications_of_Lag_Compensation"><span class="tocnumber">9</span> <span class="toctext">Game Design Implications of Lag Compensation</span></a></li><br>        <li class="toclevel-1 tocsection-10"><a href="#Conclusion"><span class="tocnumber">10</span> <span class="toctext">Conclusion</span></a></li><br>        <li class="toclevel-1 tocsection-11"><a href="#Footnotes"><span class="tocnumber">11</span> <span class="toctext">Footnotes</span></a></li><br>    </ul><br></div>
+
+<p></p><h2 id="Overview">Overview</h2><p></p>
+<p>Dsigning first-person action games for Internet play is a challenging process. Having robust on-line gameplay in your action title, however, is becoming essential to the success and longevity of the title. In addition, the PC space is well known for requiring developers to support a wide variety of customer setups. Often, customers are running on less than state-of-the-art hardware. The same holds true for their network connections.<br></p><p>While broadband has been held out as a panacea for all of the current woes of on-line gaming, broadband is not a simple solution allowing developers to ignore the implications of latency and other network factors in game designs. It will be some time before broadband truly becomes adopted in the United States, and much longer before it can be assumed to exist for your clients in the rest of the world. In addition, there are a lot of poor broadband solutions, where users may occasionally have high bandwidth, but more often than not also have significant latency and packet loss in their connections.<br></p><p>Your game must behave well in this world. This discussion will give you a sense of some of the tradeoffs required to deliver a cutting-edge action experience on the Internet. The discussion will provide some background on how client / server architectures work in many on-line action games. In addition, the discussion will show how predictive modeling can be used to mask the effects of latency. Finally, the discussion will describe a specific mechanism, lag compensation, for allowing the game to compensate for connection quality.<br></p>
+
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/12/09/cplusplus_confused_points_two/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/09/cplusplus_confused_points_two/" itemprop="url">C++很基础的易混淆点二</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-12-09T13:35:25+00:00">
+                2015-12-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="位操作运算符的问题"><a href="#位操作运算符的问题" class="headerlink" title="位操作运算符的问题"></a>位操作运算符的问题</h1><p>二进制的100 的第0位是 0<br>1(第2位)  0(第1位)  0(第0位)，<br>所以把一个数的第三位进行清零、置位(把某个bit置为1)、取反的操作如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Bit3 (0X01&lt;&lt;3)</span></span><br><span class="line"><span class="comment">/*对一个数的第三位进行清零、置位、取反*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a=<span class="number">15</span> ;      <span class="comment">// 0000 1111</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"原大小：%d\n"</span>, a);</span><br><span class="line"></span><br><span class="line">	a &amp;= ~Bit3;     <span class="comment">//清零, 0000 0111</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"清零后：%d\n"</span>, a);</span><br><span class="line"></span><br><span class="line">	a |= Bit3;     <span class="comment">//置位, 0000 1111</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"置位后：%d\n"</span>, a);</span><br><span class="line"></span><br><span class="line">	a ^= Bit3;     <span class="comment">//取反, 0000 0111</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"取反后：%d\n"</span>, a);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/12/09/cpp_vargs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/09/cpp_vargs/" itemprop="url">C++可变参数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-12-09T13:35:25+00:00">
+                2015-12-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="可变参数的宏"><a href="#可变参数的宏" class="headerlink" title="可变参数的宏"></a>可变参数的宏</h1><p>一般在调试打印Debug信息的时候, 需要可变参数的宏. 从C99开始可以使编译器标准支持可变参数宏(variadic macros), 另外GCC也支持可变参数宏, 但是两种在细节上可能存在区别.</p>
+<p><code>__VA_ARGS__</code> 将 “…” 传递给宏 . 如</p>
+<p><code>#define debug(format, ...) fprintf(stderr, format, __VA_ARGS__)</code></p>
+<p>GCC使用一种不同的语法,从而可以给可变参数一个名字,如同其它参数一样.</p>
+<p><code>#define debug(format, args...) fprintf (stderr, format, args)</code></p>
+<p>这和第一条的宏例子是完全一样的,但是这么写可读性更强并且更容易进行描述.</p>
+<p>上面两个定义的宏,如果出现 debug(“A Message”)的时候,由于宏展开后有个多余的逗号,所以在GCC中将导致编译错误, 而VS则不会. 所以移植性更好的写法是<br>使用一个特殊的”##”操作,格式如下:</p>
+<p><code>#define debug(format, ...) fprintf (stderr, format, ## __VA_ARGS__)</code></p>
+<p>这里,如果可变参数被忽略或为空,”##”操作将使预处理器(preprocessor)去除掉它前面的那个逗号.</p>
+<h1 id="什么是可变形参函数"><a href="#什么是可变形参函数" class="headerlink" title="什么是可变形参函数"></a>什么是可变形参函数</h1><p>　　在 c++ 编程中，有时我们需要编写一些在源代码编写阶段无法确定参数个数，有时甚至无法确定参数类型的函数。</p>
+<p>　　例如，一个求和函数。可以通过重载实现若干个数的和。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int sum(int i1, int i2);</span><br><span class="line">int sum(int i1, int i2, int i3);</span><br><span class="line">...//还可以重载更多类似函数</span><br><span class="line"></span><br><span class="line">double sum(double d1, double d2);</span><br><span class="line">double sum(double d1, double d2, double d3);</span><br><span class="line">...//还可以重载更多类似函数</span><br></pre></td></tr></table></figure>
+<p>　　以上代码通过重载机制来解决变参问题。但很快我们就会发现这种方法存在的问题：必须确保所有可能的实参列表都有对应的重载声明和定义，如果上述方法如果参与运算的参数个数可能从 2——20 个不等，那么我们就需要重载 19 次同一个函数。</p>
+<p>　　我们需要的是这样一类函数：它们可以在运行时取任意的实参个数并根据实参的个数自动处理不同实参的情形，或者至少可以在运行时指定任意的实参个数。</p>
+<h1 id="实现变参函数的三种方法"><a href="#实现变参函数的三种方法" class="headerlink" title="实现变参函数的三种方法"></a>实现变参函数的三种方法</h1><p>　　在 C++ 中实现一个变参函数的方法有三种：第一种方法，将函数形参声明为 C++11 新标准中的 initializer_list 标准库类型；第二种方法继承自 C 语言，形参声明为省略符，函数实现时用参数列表宏访问参数；最后一种方法利用 C++ 泛型特性，声明一个可变参数模板来实现。</p>
+<p>　　<strong>1. 可变参数宏</strong><br>　　实现步骤如下：<br>　　　　１. 函数原型中使用省略号；<br>　　　　２. 函数定义中创建一个 va_list 变量；<br>　　　　 3. 初始化 va_list 变量；<br>　　　　 4. 访问参数列表；<br>　　　　 5. 完成清理工作；<br>　　上述步骤的实现需要使用到四个宏：<strong>_va_list、va_start(va_list, arg)、va_arg(va_list, type)、va_end(va<em>list)</em></strong> 这些宏在<strong>头文件 stdarg.h</strong> 中声明定义。因此使用时需要包含该头文件。</p>
+<p>　　以下代码使用可变参数宏实现一个函数 sum，该函数接受任意个数的整形实参，返回这些实参的和。（忽略可能存在的整形溢出）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/* --sum.cpp-- 可变参数宏实现求任意个整形值得和 */</span><br><span class="line">#include &lt;stdarg.h&gt;</span><br><span class="line"></span><br><span class="line">int sum(int count, ...);    　　//原型中使用省略号</span><br><span class="line"></span><br><span class="line">int sum(int count, ...)&#123;    　　//count 表示可变参数个数</span><br><span class="line">    va_list ap;　　　　　　　　　　//声明一个va_list变量</span><br><span class="line">    va_start(ap, count);　　 　　//初始化，第二个参数为最后一个确定的形参</span><br><span class="line"></span><br><span class="line">    int sum = 0;  </span><br><span class="line">    for(int i = 0; i &lt; count; i++)          </span><br><span class="line">        sum += va_arg(ap, int); //读取可变参数，的二个参数为可变参数的类型</span><br><span class="line"></span><br><span class="line">    va_end(ap);          　　　　//清理工作 </span><br><span class="line">    return sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　使用这种方法需要注意一下几点：<br>　　1. 函数原型中，<strong>省略号必须在参数列表的末尾</strong>：也就是说，在函数原型中参数列表省略号的右边不能再出现确定参数；<br>　　2. 运行时，函数必须能够根据已有信息（既有约定，或确定实参）<strong>确定可变参数的具体个数与类型</strong>：函数定义需要知道可变参数的具体类型、个数，这些信息是在运行时确定的，那么显然应该由实参来确定。在上面的例子中 count 传递了可变参数的个数，而参数类型则是既有约定（整形）；<br>　　3. 使用完成时需要<strong>用 va_end() 做清理工作</strong>，可变参数宏可能使用了动态分配的内存，忘记执行清理操作有可能导致内存泄漏等问题；<br>　　4. 可变参数宏只能实现顺序访问可变参数，无法后退访问，但是可以在清理操作完成后重新使用 va_start 初始化 va_list 变量，重新遍历形参表；<br>　　5. 该方法是<strong>极不安全</strong>的，宏本身无法提供任何安全性保证，他总是按照既定代码 “自作多情” 的认为实参就应该是那么多，即使实参并不是那么多。这就要求所有安全性必须由程序员来保证。例如，在以上的示例代码中，如果调用时指定 count 为 10，但实际上只给出 9 个可变形参，那么函数还是会读取 10 个参数，显然第十次读取是多余的，多余的操作一般不会有什么好结果，当然如果实参过多，多余的实参也不会被读取而是被忽略。</p>
+<p>　　使用这种方法的一个实例是 printf() 函数。printf() 函数通过分析第一个字符串参数中的占位符个数来确定形参的个数；通过占位符的不同来确定参数类型（%d 表示 int 类型、%s 表示 char *）；它也有上述提到的安全问题，如果不小心少提供了个实参，那么越界访问就会发生。</p>
+<p>　　<strong>2. initializer_list 标准库类型</strong><br>　　实现步骤如下：<br>　　　　１. 函数原型中使用实例化 <strong>initializer_list</strong> 模板代表可变参数列表；<br>　　　　２. 使用迭代器访问 initializer_list 中的参数；<br>　　　　 3. 传入实参写在 {} 之内。<br>　　以上步骤中使用到 initializer_list。这是 C++11 新标准中引入的一个标准库类型，与 vector 等容器一样 initializer_list 也支持 <strong>begin() 和 end()</strong> 操作，返回指向首元素的迭代器和尾后迭代器。initializer_list 在同名头文件中声明，其实现由编译器支持。<br>　　以下代码使用 initializer_list 实现函数 sum。（忽略可能存在的整形溢出）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/* --sum.cpp-- 利用initializer_list模板实现求人一个整形值得和 */</span><br><span class="line">#include &lt;initializer_list&gt;</span><br><span class="line"></span><br><span class="line">int sum(initializer_list&lt;int&gt; il);  //函数原型用int实例化initializer_list作为形参</span><br><span class="line"></span><br><span class="line">int sum(inttializer_list&lt;int&gt; il)&#123;</span><br><span class="line">    int sum = 0;</span><br><span class="line">    for(auto p = il.begin(); p != il.end(); p++)   //使用迭代器访问参数</span><br><span class="line">        sum += *p;</span><br><span class="line">    return sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　使用这种方法需要注意一下几点：<br>　　１. initializer_list 在 C++11 中才被引入，这意味着在编译时可能需要加上这个选项 <strong>-std=c++11</strong> 才能成功编译。上述代码中的 auto 关键字也是 C++11 的一部分；<br>　　 2. 参数必须<strong>放在一组‘{}’（大括号）内</strong>，编译器通过大括号来将这组参数转化为 initializer_list. 大括号的的一组实参与 initializer_list 形参对应；<br>　　 3. 函数原型 initializer_list 与普通形参无异。这表明形参列表中可以包含其他类型参数且位置不限，以下函数原型是正确的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void func(char c, initializer_list&lt;int&gt; il, double d);</span><br></pre></td></tr></table></figure>
+<p>　　４. 同一个 initializer_list 中的参数具有相同的类型。本质上来说 initializer_list 是一个编译器支持的容器类模板，同其他容器一样，容器中的<strong>元素具有相同的类型</strong>。</p>
+<p>　　使用这种方法的一个实例是 C++11 中 vector 的列表初始化构造函数。</p>
+<p>　　<strong>3. 可变参数模板</strong><br>　　在介绍这种方法之前需要先介绍两个并不常用的概念：模板参数包和函数参数包。<br>　　<strong>模板参数包</strong>是零个或多个类型参数的集合。模板参数列表中，class… 或 typename… 表明其后的类型参数表示一个模板参数包；<br>　　<strong>函数参数包</strong>是零个或多个非类型参数的集合。函数形参列表中类型名加省略号表明其后的参数表示一个函数参数包；另外，类型为模板参数包的函数形参是一个函数参数包。<br>　　以下引用参考书目 2 中的示例代码来直观展现这两个概念：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//args是一个模板参数包；rest是一个函数参数包</span><br><span class="line">//args表示零个或多个模板类型参数</span><br><span class="line">//rest表示零个或多个函数参数</span><br><span class="line">template&lt;typename T, typename... args&gt;</span><br><span class="line">void foo(const T &amp;t, const args&amp;... rest);</span><br></pre></td></tr></table></figure>
+<p>　　与 sizeof() 运算符类似，sizeof…() 运算符用于参数包。<strong>sizeof…() 将返回参数包中参数个数</strong>。</p>
+<p>　　利用可变参数模板实现可变参数函数的步骤如下：<br>　　１. 编写含有模板参数包和函数参数包的模板函数；<br>　　 2. 函数定义<strong>递归</strong>调用自己，每一步递归参数包中参数减一；<br>　　 3. 编写处理<strong>边界情况</strong>（参数包含有零个参数）的模板。<br>　　以下引用参考书目２中示例代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//用来终止递归并答应最后一个元素的函数</span><br><span class="line">//此函数必须在可变参数版本的print定义之前声明</span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">std::ostream &amp;print(std::ostream &amp;os, const T &amp;t)&#123;</span><br><span class="line">    return os &lt;&lt; t;                //包中最后一个元素</span><br><span class="line">&#125;</span><br><span class="line">//包中除最后一个元素之外的其他元素都会调用这个版本的pirnt</span><br><span class="line">template &lt;typename T, typename... Args&gt;</span><br><span class="line">std::ostream &amp;print(std::ostream &amp;os, const T &amp;t, cosnt Args &amp;... rest)&#123;</span><br><span class="line">    os &lt;&lt; t &lt;&lt; &quot;,&quot;;               //打印第一个实参，包中元素减一</span><br><span class="line">    return print(os, rest...);    //递归调用，打印剩余实参</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　使用这种方法需要注意的是：<br>　　1. 必须处理边界情况。且如代码注释所示：应当首先定义处理边界情况的模板。<br>　　2. 参数包在参数列表最右侧，参数包只能从左至右展开？<br>　　3. 参数包能够实现更加复杂的模板，更多内容参考 C++ Primer(第五版) 第 16 章相关内容。</p>
+<p>　　这种实现方式的根本原理实际上与最初提到的重载是一致的。通过定义模板，让编译器根据实参类型自动生成对应的重载函数。</p>
+<h1 id="三种实现方法的比较"><a href="#三种实现方法的比较" class="headerlink" title="三种实现方法的比较"></a>三种实现方法的比较</h1><p>　　以上提到的三种方法都可以实现变参函数。但三种方法都有其各自的有点和局限性，在选择时可以从以下几个方面考虑：<br>　　1. <strong>若非必要，不要使用可变参数函数</strong>。应该首先考虑函数重载等其他方法。<br>　　2. <strong>除非需要兼容 C 语言编译器，否则不要使用可变参数宏</strong>。应为这种方法最不安全；尤其是当参数为对象时这种方法易产生各种问题。毕竟这些宏是为 C 语言设计的，C 语言中没有对象。<br>　　3. 如果参数类型相同且 C++11 可用，则通过声明形参为 <strong>initializer_list 往往是最简单、最有效的办法</strong>。<br>　　4. 变参模板看似最为强大。参数的类型可以不同、比可变参数宏更加安全并且可以自动推断参数类型和参数个数。但考虑到模板会为每一个不同的实例生成代码，如果函数的实例过多可能会<strong>使代码体积增大</strong>。另外，依靠<strong>递归</strong>使得功能<strong>具有局限性</strong>，并且<strong>效率</strong>也会受到影响。</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/11/11/lua_cpp_bind/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/11/11/lua_cpp_bind/" itemprop="url">C++与Lua本质原始交互API</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-11-11T19:29:22+00:00">
+                2015-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Script/" itemprop="url" rel="index">
+                    <span itemprop="name">Script</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <p>我们用一个例子来说明.</p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/11/11/lua_cpp_toluapp_tutorial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/11/11/lua_cpp_toluapp_tutorial/" itemprop="url">tolua++安装</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-11-11T19:29:22+00:00">
+                2015-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Script/" itemprop="url" rel="index">
+                    <span itemprop="name">Script</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <p>我们用一个例子来说明.</p>
+<p>本文环境为 : </p>
+<ul>
+<li>ubuntu1404</li>
+<li>g++ 4.8.4</li>
+<li>python</li>
+<li>git</li>
+<li>lua5.1( 因为tolua++只支持到5.1, 安装5.1教程看 <a href="/2015/11/08/lua_install_tutorial/" title="Lua的win和linux环境简单安装">Lua的win和linux环境简单安装</a> )</li>
+</ul>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/31/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><span class="page-number current">32</span><a class="page-number" href="/page/33/">33</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/33/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

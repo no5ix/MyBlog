@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Self-cultivation,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Redisredis 数据结构有哪些？分别怎么实现的？ String:  全是整数的时候用整数编码int 当有字符串的时候用简单动态字符串sds编码   HashTable:  元素比较少或者元素比较短的时候用压缩表ziplist(key1|val1|key2|val2|…这样存储),  其他时候就用字典ht   Set:  元素全是整数的时候用整数集合编码(一种特殊的编码, 会使用各种规则来利用">
+<meta name="keywords" content="Self-cultivation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器开发自我修养专栏-Redis实现原理">
+<meta property="og:url" content="https://hulinhong.com/2021/04/20/self_cultivation_redis/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="Redisredis 数据结构有哪些？分别怎么实现的？ String:  全是整数的时候用整数编码int 当有字符串的时候用简单动态字符串sds编码   HashTable:  元素比较少或者元素比较短的时候用压缩表ziplist(key1|val1|key2|val2|…这样存储),  其他时候就用字典ht   Set:  元素全是整数的时候用整数集合编码(一种特殊的编码, 会使用各种规则来利用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/redis/bgsave.png">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/redis/aof.png">
+<meta property="og:image" content="https://hulinhong.com/img/noodle_plan/redis/lru_cache_algo.jpg">
+<meta property="og:image" content="https://hulinhong.com/img/cache_db_consistency/cache_db_consistency_9.png">
+<meta property="og:image" content="https://hulinhong.com/img/cache_db_consistency/cache_db_consistency_1.png">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.070Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="服务器开发自我修养专栏-Redis实现原理">
+<meta name="twitter:description" content="Redisredis 数据结构有哪些？分别怎么实现的？ String:  全是整数的时候用整数编码int 当有字符串的时候用简单动态字符串sds编码   HashTable:  元素比较少或者元素比较短的时候用压缩表ziplist(key1|val1|key2|val2|…这样存储),  其他时候就用字典ht   Set:  元素全是整数的时候用整数集合编码(一种特殊的编码, 会使用各种规则来利用">
+<meta name="twitter:image" content="https://hulinhong.com/img/noodle_plan/redis/bgsave.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>服务器开发自我修养专栏-Redis实现原理 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2021/04/20/self_cultivation_redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">服务器开发自我修养专栏-Redis实现原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-20T19:08:06+00:00">
+                2021-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self-cultivation/" itemprop="url" rel="index">
+                    <span itemprop="name">Self-cultivation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Self-cultivation/" rel="tag"><i class="fa fa-tag"></i> Self-cultivation</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/04/18/self_cultivation_encoding/" rel="next" title="服务器开发自我修养专栏-编码知识">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  服务器开发自我修养专栏-编码知识
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/05/08/python_reload_func_closure/" rel="prev" title="python的reload对于func_closure的处理踩坑">
+              <p class="post-nav-pre-next-title">
+                  python的reload对于func_closure的处理踩坑
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="redis-数据结构有哪些？分别怎么实现的？"><a href="#redis-数据结构有哪些？分别怎么实现的？" class="headerlink" title="redis 数据结构有哪些？分别怎么实现的？"></a>redis 数据结构有哪些？分别怎么实现的？</h2><ul>
+<li>String: <ul>
+<li>全是整数的时候用<code>整数编码int</code></li>
+<li>当有字符串的时候用<code>简单动态字符串sds</code>编码</li>
+</ul>
+</li>
+<li>HashTable: <ul>
+<li>元素比较少或者元素比较短的时候用<code>压缩表ziplist</code>(key1|val1|key2|val2|…这样存储), </li>
+<li>其他时候就用<code>字典ht</code></li>
+</ul>
+</li>
+<li>Set: <ul>
+<li>元素全是整数的时候用<code>整数集合</code>编码(一种特殊的编码, 会使用各种规则来利用位空间, 来节省内存), </li>
+<li>其他时候用<code>字典ht</code>编码(键为Set的元素, 值都为Null)</li>
+</ul>
+</li>
+<li>List: <ul>
+<li>元素比较少或者元素比较短的时候用<code>压缩表ziplist</code>,</li>
+<li>其他时候就用<code>双端列表LinkedList</code>编码</li>
+</ul>
+</li>
+<li>ZSet: <ul>
+<li>参考 <a href="http://redisbook.com/preview/object/sorted_set.html" target="_blank" rel="noopener">http://redisbook.com/preview/object/sorted_set.html</a></li>
+<li>参考 <a href="https://redisbook.readthedocs.io/en/latest/datatype/sorted_set.html" target="_blank" rel="noopener">https://redisbook.readthedocs.io/en/latest/datatype/sorted_set.html</a></li>
+<li>元素比较少或者元素比较短的时候用<code>压缩表ziplist</code>(member1|score1|member2|score2|…, 按照score从小到大排列), </li>
+<li>其他时候就用<code>跳跃表SkipList编码</code>, 这个编码里包含一个字典结构和一个跳表结构, 但这两种数据结构都会通过指针来共享相同元素的成员和分值， 所以同时使用跳跃表和字典来保存集合元素不会产生任何重复成员或者分值， 也不会因此而浪费额外的内存:  <ul>
+<li>字典用于快速查找, 如<code>ZScore</code>查询member成员的 score 值, 或者快速确定是否有某个member</li>
+<li>跳表用于<code>zrank</code>/<code>zrange</code>等</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="zset各种问题"><a href="#zset各种问题" class="headerlink" title="zset各种问题"></a>zset各种问题</h2><h3 id="为什么zset用跳表不用红黑树"><a href="#为什么zset用跳表不用红黑树" class="headerlink" title="为什么zset用跳表不用红黑树"></a>为什么zset用跳表不用红黑树</h3><p>现在我们看看，对于这个问题，Redis的作者 @antirez 是怎么说的：</p>
+<p>There are a few reasons:</p>
+<ul>
+<li>They are not very memory intensive. It’s up to you basically. Changing parameters about the probability of a node to have a given number of levels will make then less memory intensive than btrees.</li>
+<li>A sorted set is often target of many ZRANGE or ZREVRANGE operations, that is, traversing the skip list as a linked list. With this operation the cache locality of skip lists is at least as good as with other kind of balanced trees.</li>
+<li>They are simpler to implement, debug, and so forth. For instance thanks to the skip list simplicity I received a patch (already in Redis master) with augmented skip lists implementing ZRANK in O(log(N)). It required little changes to the code.</li>
+</ul>
+<p>可参考:  本博客文章<a href="/2018/10/23/algo_newbie/#跳表">跳表</a><br>总结:<br><!-- * 在做范围查找的时候，平衡树比skiplist操作要复杂。在平衡树上，我们找到指定范围的小值之后，还需要以中序遍历的顺序继续寻找其它不超过大值的节点。如果不对平衡树进行一定的改造，这里的中序遍历并不容易实现。而在skiplist上进行范围查找就非常简单，只需要在找到小值之后，对第1层链表进行若干步的遍历就可以实现。 --></p>
+<ul>
+<li>平衡树的插入和删除操作可能引发子树的调整，逻辑复杂，而skiplist的插入和删除只需要修改相邻节点的指针，操作简单又快速。</li>
+<li>从内存占用上来说，skiplist比平衡树更灵活一些。一般来说，平衡树每个节点包含2个指针（分别指向左右子树），而skiplist每个节点包含的指针数目平均为1/(1-p)，具体取决于参数p的大小。如果像Redis里的实现一样，取p=1/4，那么平均每个节点包含1.33个指针，比平衡树更有优势。</li>
+<li>从算法实现难度上来比较，skiplist比平衡树要简单得多。</li>
+</ul>
+<h3 id="zset是怎么支持查询排名的"><a href="#zset是怎么支持查询排名的" class="headerlink" title="zset是怎么支持查询排名的"></a>zset是怎么支持查询排名的</h3><p><a href="/2018/10/23/algo_newbie/#跳表怎么支持查询排名的">跳表怎么支持查询排名的</a></p>
+<h3 id="延时队列用redis怎么做"><a href="#延时队列用redis怎么做" class="headerlink" title="延时队列用redis怎么做"></a>延时队列用redis怎么做</h3><p>用zset，拿时间戳作为score，消息内容作为key调用zadd来生产消息，消费者轮询zset用zrangebyscore指令获取N秒之前的数据轮询进行处理。</p>
+<h3 id="ZSET做排行榜时要实现分数相同时按时间顺序排序怎么实现"><a href="#ZSET做排行榜时要实现分数相同时按时间顺序排序怎么实现" class="headerlink" title="ZSET做排行榜时要实现分数相同时按时间顺序排序怎么实现"></a>ZSET做排行榜时要实现分数相同时按时间顺序排序怎么实现</h3><p>说了一个将 score 拆成高 32 位和低 32 位，高 32 位存分数，低 32 位存时间的方法。</p>
+<h2 id="哈希表渐进式rehash"><a href="#哈希表渐进式rehash" class="headerlink" title="哈希表渐进式rehash"></a>哈希表渐进式rehash</h2><ul>
+<li><p>当以下条件中的任意一个被满足时， 程序会自动开始对哈希表执行扩展操作：  </p>
+<ul>
+<li>服务器目前没有在执行 BGSAVE 命令或者 BGREWRITEAOF 命令， 并且哈希表的负载因子大于等于 1 ；</li>
+<li><p>服务器目前正在执行 BGSAVE 命令或者 BGREWRITEAOF 命令， 并且哈希表的负载因子大于等于 5 ；</p>
+<p>根据 BGSAVE 命令或 BGREWRITEAOF 命令是否正在执行， 服务器执行扩展操作所需的负载因子并不相同， 这是因为在执行 BGSAVE 命令或 BGREWRITEAOF 命令的过程中， Redis 需要创建当前服务器进程的子进程， 所以在子进程存在期间， 服务器会提高执行扩展操作所需的负载因子， 从而尽可能地避免在子进程存在期间进行哈希表扩展操作， 这可以避免不必要的内存写入操作， 最大限度地节约内存。</p>
+</li>
+</ul>
+</li>
+<li>另一方面， 当哈希表的负载因子小于 0.1 时， 程序自动开始对哈希表执行收缩操作。</li>
+</ul>
+<p>以下是哈希表渐进式 rehash 的详细步骤：  </p>
+<ol>
+<li>为 <code>ht[1]</code> 分配空间， 让字典同时持有 <code>ht[0]</code> 和 <code>ht[1]</code> 两个哈希表。</li>
+<li>在字典中维持一个索引计数器变量 rehashidx ， 并将它的值设置为 0 ， 表示 rehash 工作正式开始。</li>
+<li>在 rehash 进行期间， 每次对字典执行删除、查找或者更新操作时， 程序除了执行指定的操作以外， 还会顺带将 <code>ht[0]</code> 哈希表在 rehashidx 索引上的所有键值对 rehash 到 <code>ht[1]</code> ， 当 rehash 工作完成之后， 程序将 rehashidx 属性的值增一。</li>
+<li>随着字典操作的不断执行， 最终在某个时间点上， <code>ht[0]</code> 的所有键值对都会被 rehash 至 <code>ht[1]</code> ， 这时程序将 rehashidx 属性的值设为 -1 ， 表示 rehash 操作已完成。</li>
+</ol>
+<p>渐进式 rehash 的好处在于它采取分而治之的方式， 将 rehash 键值对所需的计算工作均滩到对字典的每个添加、删除、查找和更新操作上， 从而避免了集中式 rehash 而带来的庞大计算量。</p>
+<p>因为在进行渐进式 rehash 的过程中， 字典会同时使用 <code>ht[0]</code> 和 <code>ht[1]</code> 两个哈希表， 所以在渐进式 rehash 进行期间， 字典的删除（delete）、查找（find）、更新（update）等操作会在两个哈希表上进行： 比如说， 要在字典里面查找一个键的话， 程序会先在 <code>ht[0]</code> 里面进行查找， 如果没找到的话， 就会继续到 <code>ht[1]</code> 里面进行查找， 诸如此类。</p>
+<p>另外， 在渐进式 rehash 执行期间， 新添加到字典的键值对一律会被保存到 <code>ht[1]</code> 里面， 而 <code>ht[0]</code> 则不再进行任何添加操作： 这一措施保证了 <code>ht[0]</code> 包含的键值对数量会只减不增， 并随着 rehash 操作的执行而最终变成空表。</p>
+<h2 id="redis-持久化有哪几种方式，怎么选？"><a href="#redis-持久化有哪几种方式，怎么选？" class="headerlink" title="redis 持久化有哪几种方式，怎么选？"></a>redis 持久化有哪几种方式，怎么选？</h2><ul>
+<li>混合持久化<ul>
+<li>原因: 重启 Redis 时，我们很少使用 rdb 来恢复内存状态，因为会丢失大量数据。如果使用 AOF 日志重放，性能则相对 rdb 来说要慢很多，这样在 Redis 实例很大的情况下，启动的时候需要花费很长的时间。</li>
+<li>原理: 混合持久化同样也是通过bgrewriteaof完成的，不同的是当开启混合持久化时，fork出的子进程先将共享的内存副本全量的以RDB方式写入aof文件，然后在将aof_rewrite_buf重写缓冲区的增量命令以AOF方式写入到文件，写入完成后通知主进程更新统计信息，并将新的含有RDB格式和AOF格式的AOF文件替换旧的的AOF文件。</li>
+<li>简单的说：新的AOF文件前半段是RDB格式的全量数据后半段是AOF格式的增量数据，</li>
+</ul>
+</li>
+<li>rdb<ul>
+<li>优势: <ul>
+<li>RDB文件紧凑，全量备份，非常适合用于进行备份和灾难恢复。</li>
+<li>生成RDB文件的时候，redis主进程会fork()一个子进程来处理所有保存工作，主进程不需要进行任何磁盘IO操作。</li>
+<li>RDB 在恢复大数据集时的速度比 AOF 的恢复速度要快。</li>
+</ul>
+</li>
+<li>劣势:<ul>
+<li>当进行快照持久化时，会开启一个子进程专门负责快照持久化，子进程会拥有父进程的内存数据，父进程修改内存子进程不会反应出来，所以在快照持久化期间修改的数据不会被保存，可能丢失数据。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>aof<ul>
+<li>优势: <ul>
+<li>AOF可以更好的保护数据不丢失，一般AOF会每隔1秒，通过一个<strong>后台刷盘线程</strong>执行一次fsync操作(这种一秒刷盘一次的策略, 可能会造成<strong>追加阻塞</strong>: 当硬盘资源繁忙时，即主线程发现距离上次fsync时间超过2秒, 为了数据安全性, 主线程会阻塞直到后台刷盘线程执行fsync操作完成)，保证最多丢失1秒钟的数据。所以这也是redis重启优先加载aof的理由</li>
+<li>AOF日志文件没有任何磁盘寻址的开销，写入性能非常高，文件不容易破损。</li>
+<li>AOF日志文件即使过大的时候，出现后台重写操作，也不会影响客户端的读写。</li>
+<li>AOF日志文件的命令通过可读的方式进行记录，这个特性非常适合做灾难性的误删除的紧急恢复。比如某人不小心用flushall命令清空了所有数据，只要这个时候后台rewrite还没有发生，那么就可以立即拷贝AOF文件，将最后一条flushall命令给删了，然后再将该AOF文件放回去，就可以通过恢复机制，自动恢复所有数据</li>
+</ul>
+</li>
+<li>劣势:<ul>
+<li>对于同一份数据来说，AOF日志文件通常比RDB数据快照文件更大</li>
+<li>AOF开启后，支持的写QPS会比RDB支持的写QPS低，因为AOF一般会配置成每秒fsync一次日志文件，当然，每秒一次fsync，性能也还是很高的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="bgsave流程说一下"><a href="#bgsave流程说一下" class="headerlink" title="bgsave流程说一下"></a>bgsave流程说一下</h3><p><img src="/img/noodle_plan/redis/bgsave.png" alt></p>
+<p>子进程创建RDB文件, 根据父进程内存生成临时快照文件, 完成后对原有RDB文件进行<a href="#如何做rdb和aof的原子替换的">原子替换</a>. 然后子进程发送信号给父进程表示完成</p>
+<h3 id="aof流程说一下以及aof追加阻塞是啥"><a href="#aof流程说一下以及aof追加阻塞是啥" class="headerlink" title="aof流程说一下以及aof追加阻塞是啥"></a>aof流程说一下以及aof追加阻塞是啥</h3><p><img src="/img/noodle_plan/redis/aof.png" alt></p>
+<p>追加阻塞: </p>
+<p>AOF可以更好的保护数据不丢失，一般AOF会每隔1秒，通过一个后台刷盘线程执行一次fsync操作(这种一秒刷盘一次的策略, 可能会造成追加阻塞: 当硬盘资源繁忙时，即主线程发现距离上次fsync时间超过2秒, 为了数据安全性, 主线程会阻塞直到后台刷盘线程执行fsync操作完成)，保证最多丢失1秒钟的数据。</p>
+<h3 id="AOF重写的实现"><a href="#AOF重写的实现" class="headerlink" title="AOF重写的实现"></a>AOF重写的实现</h3><ul>
+<li><strong>所谓的“重写”其实是一个有歧义的词语, AOF重写并不需要对原有AOF文件进行任何的读取，写入，分析等操作，这个功能是通过读取服务器当前的数据库状态来实现的。</strong></li>
+<li>如当前列表键list在数据库中的值就为<code>[&quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;F&quot;, &quot;G&quot;]</code>。要使用尽量少的命令来记录list键的状态，最简单的方式不是去读取和分析现有AOF文件的内容，，而是直接读取list键在数据库中的当前值，然后用一条<code>RPUSH list &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot;</code>代替前面的6条命令</li>
+</ul>
+<p>AOF 重写程序可以很好地完成创建一个新 AOF 文件的任务， 但是， 在执行这个程序的时候， 调用者线程会被阻塞。很明显， 作为一种辅佐性的维护手段， Redis 不希望 AOF 重写造成服务器无法处理请求， 所以 Redis 决定将 AOF 重写程序放到（后台）子进程里执行， 这样处理的最大好处是：  </p>
+<ul>
+<li>子进程进行 AOF 重写期间，主进程可以继续处理命令请求。</li>
+<li>子进程带有主进程的数据副本，使用子进程而不是线程，可以在避免锁的情况下，保证数据的安全性。</li>
+</ul>
+<p>不过， 使用子进程也有一个问题需要解决： 因为子进程在进行 AOF 重写期间， 主进程还需要继续处理命令， 而新的命令可能对现有的数据进行修改， 这会让当前数据库的数据和重写后的 AOF 文件中的数据不一致。为了解决这个问题， <strong>Redis 增加了一个 AOF 重写缓存， 这个缓存在 fork 出子进程之后开始启用， Redis 主进程在接到新的写命令之后， 除了会将这个写命令的协议内容追加到现有的 AOF 文件之外， 还会追加到这个重写缓存中</strong>, 换言之， 当子进程在执行 AOF 重写时， 主进程需要执行以下三个工作：  </p>
+<ol>
+<li>处理命令请求。</li>
+<li>将写命令追加到现有的 AOF 文件中。</li>
+<li>将写命令追加到 AOF 重写缓存中。</li>
+</ol>
+<p>当子进程完成 AOF 重写之后， 它会向父进程发送一个完成信号， 父进程在接到完成信号之后， 会调用一个信号处理函数， 并完成以下工作：  </p>
+<ol>
+<li>将 AOF 重写缓存中的内容全部写入到新 AOF 文件中。</li>
+<li>对新的 AOF 文件进行改名<code>rename</code>，覆盖原有的 AOF 文件。这就是aof的<a href="#如何做rdb和aof的原子替换的">原子替换</a>.</li>
+</ol>
+<p>在整个 AOF 后台重写过程中， 只有最后的写入缓存和改名操作会造成主进程阻塞， 在其他时候， AOF 后台重写都不会对主进程造成阻塞， 这将 AOF 重写对性能造成的影响降到了最低。以上就是 AOF 后台重写， 也即是 BGREWRITEAOF 命令的工作原理。</p>
+<h3 id="如何做rdb和aof的原子替换的"><a href="#如何做rdb和aof的原子替换的" class="headerlink" title="如何做rdb和aof的原子替换的"></a>如何做rdb和aof的原子替换的</h3><p>比如想要将temp文件原子替换origin文件, 则直接<code>rename</code> tmp文件到origin文件即可实现.<br><code>rename</code>通过来说, 直接修改 file system metadata, 如inode信息. <strong>在posix标准里, <code>rename</code>实现是原子的</strong>, 即:  </p>
+<ul>
+<li><code>rename</code>成功, 原文件名 指向 temp 文件; 原文件内容被删除.</li>
+<li><code>rename</code>失败, 原文件名 仍指向原来的文件内容.</li>
+</ul>
+<h2 id="redis-主从同步是怎样的过程？"><a href="#redis-主从同步是怎样的过程？" class="headerlink" title="redis 主从同步是怎样的过程？"></a>redis 主从同步是怎样的过程？</h2><ol>
+<li>从redis发出sync要求</li>
+<li>主redis开始bgsave(并且一边开启指令buffer来存储bgsave过程中的写指令们记为<code>cmd</code>)</li>
+<li>主redis把bgsave生成的rdb发给从redis</li>
+<li>把<code>cmd</code>发送给从redis</li>
+<li>从服务器完成对快照的载入，开始接收命令请求，并执行来自主服务器缓冲区的写命令</li>
+</ol>
+<p>总结:<br>主从刚刚连接的时候，进行全量同步；全量同步结束后，进行增量同步。当然，如果有需要，slave 在任何时候都可以发起全量同步。redis 策略是，无论如何，首先会尝试进行增量同步，如不成功，要求从机进行全量同步。</p>
+<h2 id="redis-key-的过期策略"><a href="#redis-key-的过期策略" class="headerlink" title="redis key 的过期策略"></a>redis key 的过期策略</h2><p>Redis键的过期策略，是有定期删除+惰性删除两种。</p>
+<ul>
+<li>定期好理解，默认100ms就 随机 抽一些设置了过期时间的key，去检查是否过期，过期了就删了。</li>
+<li>惰性删除，查询时再判断是否过期，过期就删除键不返回值。</li>
+</ul>
+<h2 id="内存淘汰机制"><a href="#内存淘汰机制" class="headerlink" title="内存淘汰机制"></a>内存淘汰机制</h2><p>当新增数据发现内存达到限制时，Redis触发内存淘汰机制。</p>
+<ul>
+<li>lru</li>
+<li>lfu(least frequency used, redis 4新增)</li>
+<li>random</li>
+<li>ttl</li>
+</ul>
+<h3 id="redis的LRU算法说一下"><a href="#redis的LRU算法说一下" class="headerlink" title="redis的LRU算法说一下"></a>redis的LRU算法说一下</h3><ul>
+<li><strong>普通的LRU算法</strong>:<br>  <strong>一般是用哈希表+双向链表来实现的</strong>:<br>  <img src="/img/noodle_plan/redis/lru_cache_algo.jpg" alt><br>  基于 HashMap 和 双向链表实现 LRU 的整体的设计思路是，可以使用 HashMap 存储 key，这样可以做到 save 和 get key的时间都是 O(1)，而 HashMap 的 Value 指向双向链表实现的 LRU 的 Node 节点. 其核心操作的步骤是:  <ul>
+<li>save(key, value):<br>首先在 HashMap 找到 Key 对应的节点，如果节点存在，更新节点的值，并把这个节点移动队头。如果不存在，需要构造新的节点，并且尝试把节点塞到队头，如果LRU空间不足，则通过 tail 淘汰掉队尾的节点，同时在 HashMap 中移除 Key。</li>
+<li>get(key):<br>通过 HashMap 找到 LRU 链表节点，因为根据LRU 原理，这个节点是最新访问的，所以要把节点插入到队头，然后返回缓存的值。</li>
+</ul>
+</li>
+<li><strong>Redis的LRU实现</strong>:<ul>
+<li>如果按照HashMap和双向链表实现，需要额外的存储存放 next 和 prev 指针，牺牲比较大的存储空间，显然是不划算的。所以Redis采用了一个近似的做法，就是定时每隔一段时间就随机取出若干个key，然后按照访问时间排序后，淘汰掉最不经常使用的.  </li>
+<li>Redis 3.0之后又改善了算法的性能，会提供一个待淘汰候选key的pool，里面默认有16个key，按照空闲时间排好序。更新时从Redis键空间随机选择N个key，分别计算它们的空闲时间 idle，key只会在pool不满或者空闲时间大于pool里最小的时，才会进入pool，然后从pool中选择空闲时间最大的key淘汰掉。</li>
+</ul>
+</li>
+</ul>
+<h2 id="redis哨兵"><a href="#redis哨兵" class="headerlink" title="redis哨兵"></a>redis哨兵</h2><ul>
+<li>Redis Sentinel是Redis的高可用实现方案：故障发现、故障自动转移、配置中心 客户端通知。 </li>
+<li>Redis Sentinel从Redis 2.8版本开始才正式生产可用，之前版本生产不可用。 </li>
+<li>尽可能在不同物理机上部署Redis Sentinel所有节点。 </li>
+<li><strong>Redis Sentinel中的Sentinel节点个数应该为大于等于3且最好为奇数。</strong></li>
+<li>Redis Sentinel中的数据节点与普通数据节点没有区别。</li>
+<li><strong>哨兵是一个配置提供者，而不是代理。在引入哨兵之后，客户端会先连接哨兵，再获取到主节点之后，客户端会和主节点直接通信。如果发生了故障转移，哨兵会通知到客户端。所以这也需要客户端的实现对哨兵的显式支持。</strong> </li>
+<li>Redis Sentinel通过三个定时任务实现了Sentinel节点对于主节点、从节点、其余 Sentinel节点的监控。</li>
+<li><strong>Redis Sentinel在对节点做失败判定时分为主观下线和客观下线。</strong></li>
+<li>Redis Sentinel实现读写分离高可用可以依赖Sentinel节点的消息通知，获取Redis 数据节点的状态变化。 </li>
+</ul>
+<p>用文字描述一下故障切换（failover）的过程:</p>
+<ul>
+<li>假设主服务器宕机，哨兵1先检测到这个结果，系统并不会马上进行failover过程，仅仅是哨兵1主观的认为主服务器不可用，这个现象成为<strong>主观下线</strong>。</li>
+<li>当后面的哨兵也检测到主服务器不可用，并且数量达到一定值时，就对这个主节点故障达成一致, 这个过程称为<strong>客观下线</strong>。</li>
+<li>这样对于客户端而言，一切都是透明的。然后通过<strong>raft算法</strong>从哨兵中选出一个哨兵来执行<strong>故障转移</strong></li>
+</ul>
+<h2 id="redis集群"><a href="#redis集群" class="headerlink" title="redis集群"></a>redis集群</h2><p>redis集群是一个由多个主从节点群组成的分布式服务器群，它具有复制、高可用和分片特性。Redis集群不需要sentinel哨兵也能完成节点移除和故障转移的功能。需要将每个节点设置成集群模式，这种集群模式没有中心节点，可水平扩展，据官方文档称可以线性扩展到上万个节点(官方推荐不超过1000个节点)。redis集群的性能和高可用性均优于之前版本的哨兵模式，且集群配置非常简单。<br>集群模式有以下几个特点：</p>
+<ul>
+<li>由多个Redis服务器组成的分布式网络服务集群；</li>
+<li>集群之中有多个Master主节点，每一个主节点都可读可写；</li>
+<li>节点之间会互相通信，两两相连, 采用gossip协议来通信；</li>
+<li>Redis集群无中心节点。</li>
+<li>集群的伸缩本质是: 槽数据在节点中的移动</li>
+</ul>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>在哨兵模式中，仍然只有一个Master节点。当并发写请求较大时，哨兵模式并不能缓解写压力。 我们知道只有主节点才具有写能力，那如果在一个集群中，能够配置多个主节点，缓解写压力，redis-cluster集群模式能达到此类要求。</p>
+<p>在Redis-Cluster集群中，可以给每一个主节点添加从节点，主节点和从节点直接遵循主从模型的特性。<br>当用户需要处理更多读请求的时候，添加从节点开启read-only来读写分离可以扩展系统的读性能。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>Redis 集群不支持那些需要同时处理多个键的 Redis 命令， 因为执行这些命令需要在多个 Redis 节点之间移动数据， 并且在高负载的情况下， 这些命令将降低 Redis 集群的性能， 并导致不可预测的行为。</li>
+<li>不能用redis事务机制(不过就算不用redis集群一般也不推荐用redis的事务, 毕竟假事务无法回滚嘛, 比如multi之后那些在 EXEC 命令执行之后所产生的错误， 并没有对它们进行特别处理： 即使事务中有某个/某些命令在执行时产生了错误， 事务中的其他命令仍然会继续执行。)。因为一个事务中有涉及到多个key操作的时候，这多个key不一定都存储在同一个redis-server上。</li>
+</ul>
+<h3 id="故障转移"><a href="#故障转移" class="headerlink" title="故障转移"></a>故障转移</h3><p>Redis集群的主节点内置了类似Redis Sentinel的节点故障检测和自动故障转移功能，当集群中的某个主节点下线时，集群中的其他在线主节点会注意到这一点，并对已下线的主节点进行故障转移。<br>集群进行故障转移的方法和Redis Sentinel进行故障转移的方法基本一样(也有<code>主观下线</code>和<code>客观下线</code>)，不同的是，在集群里面，故障转移的过程是:</p>
+<ol>
+<li>在集群内广播选举消息</li>
+<li>集群中其他在线的持有槽的主节点投票到故障主节点的从节点们</li>
+<li>被选出来的从节点变成主节点</li>
+</ol>
+<p>所以集群不必另外使用Redis Sentinel。</p>
+<h3 id="集群分片策略"><a href="#集群分片策略" class="headerlink" title="集群分片策略"></a>集群分片策略</h3><p>常见的集群分片算法有：</p>
+<ul>
+<li>一般哈希算法</li>
+<li>一致性哈希算法</li>
+<li>Hash Slot算法</li>
+</ul>
+<p>Redis采用的是Hash Slot</p>
+<h4 id="一般哈希算法"><a href="#一般哈希算法" class="headerlink" title="一般哈希算法"></a>一般哈希算法</h4><p>计算方式：hash(key)%N<br>缺点：如果增加一个redis，映射公式变成了 hash(key)%(N+1)<br>​     如果一个redis宕机了，映射公式变成了 hash(key)%(N-1)<br>​     在以上两种情况下，几乎所有的缓存都失效了。</p>
+<h4 id="一致性哈希算法"><a href="#一致性哈希算法" class="headerlink" title="一致性哈希算法"></a>一致性哈希算法</h4><p>先构造出一个长度为2^32整数环，根据节点名称的hash值（分布在[0,2^32-1]）放到这个环上。现在要存放资源，根据资源的Key的Hash值（也是分布在[0,2^32-1]），在环上顺时针的找到离它最近的一个节点，就建立了资源和节点的映射关系。</p>
+<ul>
+<li>优点：一个节点宕机时，上面的数据转移到顺时针的下一个节点中，新增一个节点时，也只需要将部分数据迁移到这个节点中，对其他节点的影响很小</li>
+<li>缺点：由于数据在环上分布不均，可能存在某个节点存储的数据比较多，那么当他宕机的时候，会导致大量数据涌入下一个节点中，把另一个节点打挂了，然后所有节点都挂了</li>
+<li>改进：引进了虚拟节点的概念，想象在这个环上有很多“虚拟节点”，数据的存储是沿着环的顺时针方向找一个虚拟节点，每个虚拟节点都会关联到一个真实节点</li>
+</ul>
+<h4 id="HashSlot算法"><a href="#HashSlot算法" class="headerlink" title="HashSlot算法"></a>HashSlot算法</h4><p>Redis采用的是Hash Slot分片算法，用来计算key存储位置的。集群将整个数据库分为16384个槽位slot，所有key-value数据都存储在这些slot中的某一个上。一个slot槽位可以存放多个数据，key的槽位计算公式为：slot_number=CRC16(key)%16384，其中CRC16为16位的循环冗余校验和函数。<br><strong>客户端可能会挑选任意一个redis实例去发送命令，每个redis实例接收到命令，都会计算key对应的hash slot，如果在本地就在本地处理，否则返回moved给客户端，让客户端进行重定向到对应的节点执行命令(实现得好一点的smart客户端会缓存键-slot-节点的映射关系来获得性能提升).</strong></p>
+<p><strong>那为什么是16384个槽呢?</strong></p>
+<p>ps:CRC16算法产生的hash值有16bit，该算法可以产生2^16-=65536个值。换句话说，值是分布在0~65535之间。那作者在做mod运算的时候，为什么不mod65536，而选择mod16384？<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fgithub.com%2Fantirez%2Fredis%2Fissues%2F2576" target="_blank" rel="noopener">作者解答</a></p>
+<p>在redis节点发送心跳包时需要把所有的槽放到这个心跳包里，以便让节点知道当前集群信息，16384=16k，在发送心跳包时使用char进行bitmap压缩后是<code>2k（2 * 8 (8 bit) * 1024(1k) = 2K）</code>，也就是说使用2k的空间创建了16k的槽数。</p>
+<p>虽然使用CRC16算法最多可以分配65535（2^16-1）个槽位，65535=65k，压缩后就是<code>8k（8 * 8 (8 bit) * 1024(1k) = 8K）</code>，也就是说需要需要8k的心跳包，作者认为这样做不太值得；并且一般情况下一个redis集群不会有超过1000个master节点，所以16k的槽位是个比较合适的选择。</p>
+<h2 id="Cache和DB如何一致"><a href="#Cache和DB如何一致" class="headerlink" title="Cache和DB如何一致"></a>Cache和DB如何一致</h2><p>详细的请参考: <a href="https://segmentfault.com/a/1190000015804406" target="_blank" rel="noopener">https://segmentfault.com/a/1190000015804406</a><br>本博客也有一份: <a href="/2018/09/25/cache_db_consistency/" title="Cache和DB一致性">Cache和DB一致性</a></p>
+<p>总结:</p>
+<ul>
+<li>使用<code>cache aside pattern</code><ul>
+<li>对于读请求<br>  <img src="/img/cache_db_consistency/cache_db_consistency_9.png" alt title="读请求"><br>  先读 cache，再读 db<br>  如果，cache hit，则直接返回数据<br>  如果，cache miss，则访问 db，并将数据 set 回缓存</li>
+<li>对于写请求<br>  <img src="/img/cache_db_consistency/cache_db_consistency_1.png" alt title="写请求"><br>  先操作数据库，再淘汰缓存（淘汰缓存，而不是更新缓存, 如果更新缓存，在并发写时，可能出现数据不一致。）</li>
+</ul>
+</li>
+<li>Cache Aside Pattern 方案存在什么问题？<ul>
+<li><strong>问题1</strong>: 如果先写数据库，再淘汰缓存，在原子性被破坏时：<ol>
+<li>修改数据库成功了</li>
+<li>淘汰缓存失败了<br>导致，数据库与缓存的数据不一致。</li>
+</ol>
+<ul>
+<li>如何解决问题1?<ul>
+<li>在淘汰缓存的时候，如果失败，则重试一定的次数。如果失败一定次数还不行，那就是其他原因了。比如说 redis 故障、内网出了问题。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>问题2</strong>: 主从同步延迟导致的缓存和数据不一致问题<ul>
+<li>问题: 发生写请求后（不管是先操作 DB，还是先淘汰 Cache），在主从数据库同步完成之前，如果有读请求，都可能发生读 Cache Miss，读从库把旧数据存入缓存的情况。此时怎么办呢？</li>
+<li>解决思路: 在主从时延的时间段内，读取修改过的数据的话，强制读主，并且更新缓存，这样子缓存内的数据就是最新。在主从时延过后，这部分数据继续读从库，从而继续利用从库提高读取能力。</li>
+<li>具体解决方案: <ul>
+<li>写请求发生的时候: 将哪个库，哪个表，哪个主键三个信息拼装一个 key 设置到 cache 里，这条记录的超时时间，设置为 “主从同步时延”, PS：key 的格式为 “db:table:PK”，假设主从延时为 1s，这个 key 的 cache 超时时间也为 1s。</li>
+<li>当读请求发生时：这是要读哪个库，哪个表，哪个主键的数据呢，也将这三个信息拼装一个 key，到 cache 里去查询，如果，<ul>
+<li>（1）cache 里有这个 key，说明 1s 内刚发生过写请求，数据库主从同步可能还没有完成，此时就应该去主库查询。并且把主库的数据 set 到缓存中，防止下一次 cache miss。</li>
+<li>（2）cache 里没有这个 key，说明最近没有发生过写请求，此时就可以去从库查询</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="缓存雪崩是啥-咋处理"><a href="#缓存雪崩是啥-咋处理" class="headerlink" title="缓存雪崩是啥?咋处理?"></a>缓存雪崩是啥?咋处理?</h2><p>是指<strong>大面积的缓存失效，打崩了DB.</strong></p>
+<p>如果缓存挂掉，所有的请求会压到数据库，如果未提前做容量预估，可能会把数据库压垮（在缓存恢复之前，数据库可能一直都起不来），导致系统整体不可服务。<br>又或者打个比方, 如果所有首页的Key失效时间都是12小时，中午12点刷新的，我零点有个秒杀活动大量用户涌入，假设当时每秒 6000 个请求，本来缓存在可以扛住每秒 5000 个请求，但是缓存当时所有的Key都失效了。此时 1 秒 6000 个请求全部落数据库，数据库必然扛不住.</p>
+<p>处理方案: </p>
+<ul>
+<li>key随机过期</li>
+<li>key永不过期, 比如开个单独线程去定时更新缓存</li>
+<li>高可用, 如果Redis是集群部署，将热点数据均匀分布在不同的Redis库中也能避免全部失效的问题</li>
+<li>隔离服务, 限流降级</li>
+</ul>
+<h2 id="缓存穿透是啥-咋处理"><a href="#缓存穿透是啥-咋处理" class="headerlink" title="缓存穿透是啥?咋处理?"></a>缓存穿透是啥?咋处理?</h2><p>是指<strong>缓存和数据库中都没有的数据，而用户不断发起请求，严重会击垮数据库</strong> </p>
+<p>我们数据库的 id 都是1开始自增上去的，如发起为id值为 -1 的数据或 id 为特别大不存在的数据。这时的用户很可能是攻击者，攻击会导致数据库压力过大，严重会击垮数据库。</p>
+<p>处理方案:</p>
+<ul>
+<li>缓存穿透我会在接口层增加校验，比如用户鉴权校验，参数做校验，不合法的参数直接代码Return，比如：id 做基础校验，id &lt;=0的直接拦截等。</li>
+<li>布隆过滤器, 把存在的key提前存放好在布隆过滤器中, 当查询的时候快速判断出你这个Key是否在数据库中存在, 不存在则直接return</li>
+</ul>
+<h2 id="缓存击穿是啥-咋处理"><a href="#缓存击穿是啥-咋处理" class="headerlink" title="缓存击穿是啥?咋处理?"></a>缓存击穿是啥?咋处理?</h2><p>是指<strong>持续的大并发的访问一个热点数据, 当这个Key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库</strong></p>
+<p>这个跟缓存雪崩有点像，但是又有一点不一样，缓存雪崩是因为大面积的缓存失效，打崩了DB，而缓存击穿不同的是缓存击穿是指一个Key非常<strong>热点</strong>，在不停的扛着大并发，大并发集中对这一个点进行访问，当这个Key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库，就像在一个完好无损的桶上凿开了一个洞。</p>
+<p>处理方案:</p>
+<ul>
+<li>key永不过期, 比如开个单独线程去定时更新缓存</li>
+<li>互斥锁, 在key失效的瞬间, 只允许一个查询操作的线程A去查询数据库并重建缓存并上互斥锁, 其他的查询操作线程全部等待线程A操作完了再从缓存里取数据</li>
+</ul>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Self-cultivation/" rel="tag"><i class="fa fa-tag"></i> Self-cultivation</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2021/04/18/self_cultivation_encoding/" rel="next" title="服务器开发自我修养专栏-编码知识">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    服务器开发自我修养专栏-编码知识
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2021/05/08/python_reload_func_closure/" rel="prev" title="python的reload对于func_closure的处理踩坑">
+                <p class="post-nav-pre-next-title">
+                    python的reload对于func_closure的处理踩坑
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis"><span class="nav-number">1.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis-数据结构有哪些？分别怎么实现的？"><span class="nav-number">1.1.</span> <span class="nav-text">redis 数据结构有哪些？分别怎么实现的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zset各种问题"><span class="nav-number">1.2.</span> <span class="nav-text">zset各种问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么zset用跳表不用红黑树"><span class="nav-number">1.2.1.</span> <span class="nav-text">为什么zset用跳表不用红黑树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zset是怎么支持查询排名的"><span class="nav-number">1.2.2.</span> <span class="nav-text">zset是怎么支持查询排名的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#延时队列用redis怎么做"><span class="nav-number">1.2.3.</span> <span class="nav-text">延时队列用redis怎么做</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ZSET做排行榜时要实现分数相同时按时间顺序排序怎么实现"><span class="nav-number">1.2.4.</span> <span class="nav-text">ZSET做排行榜时要实现分数相同时按时间顺序排序怎么实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希表渐进式rehash"><span class="nav-number">1.3.</span> <span class="nav-text">哈希表渐进式rehash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis-持久化有哪几种方式，怎么选？"><span class="nav-number">1.4.</span> <span class="nav-text">redis 持久化有哪几种方式，怎么选？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bgsave流程说一下"><span class="nav-number">1.4.1.</span> <span class="nav-text">bgsave流程说一下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#aof流程说一下以及aof追加阻塞是啥"><span class="nav-number">1.4.2.</span> <span class="nav-text">aof流程说一下以及aof追加阻塞是啥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AOF重写的实现"><span class="nav-number">1.4.3.</span> <span class="nav-text">AOF重写的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何做rdb和aof的原子替换的"><span class="nav-number">1.4.4.</span> <span class="nav-text">如何做rdb和aof的原子替换的</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis-主从同步是怎样的过程？"><span class="nav-number">1.5.</span> <span class="nav-text">redis 主从同步是怎样的过程？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis-key-的过期策略"><span class="nav-number">1.6.</span> <span class="nav-text">redis key 的过期策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存淘汰机制"><span class="nav-number">1.7.</span> <span class="nav-text">内存淘汰机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis的LRU算法说一下"><span class="nav-number">1.7.1.</span> <span class="nav-text">redis的LRU算法说一下</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis哨兵"><span class="nav-number">1.8.</span> <span class="nav-text">redis哨兵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis集群"><span class="nav-number">1.9.</span> <span class="nav-text">redis集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优点"><span class="nav-number">1.9.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点"><span class="nav-number">1.9.2.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#故障转移"><span class="nav-number">1.9.3.</span> <span class="nav-text">故障转移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群分片策略"><span class="nav-number">1.9.4.</span> <span class="nav-text">集群分片策略</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一般哈希算法"><span class="nav-number">1.9.4.1.</span> <span class="nav-text">一般哈希算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一致性哈希算法"><span class="nav-number">1.9.4.2.</span> <span class="nav-text">一致性哈希算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashSlot算法"><span class="nav-number">1.9.4.3.</span> <span class="nav-text">HashSlot算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache和DB如何一致"><span class="nav-number">1.10.</span> <span class="nav-text">Cache和DB如何一致</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存雪崩是啥-咋处理"><span class="nav-number">1.11.</span> <span class="nav-text">缓存雪崩是啥?咋处理?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存穿透是啥-咋处理"><span class="nav-number">1.12.</span> <span class="nav-text">缓存穿透是啥?咋处理?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存击穿是啥-咋处理"><span class="nav-number">1.13.</span> <span class="nav-text">缓存击穿是啥?咋处理?</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

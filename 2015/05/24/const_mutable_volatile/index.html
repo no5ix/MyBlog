@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="CPP,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="const关键字const 是比较常见的关键字, 也是非常好的预防错误的手段. const 修饰普通变量和指针const 修饰变量，一般有两种写法： const TYPE value;  TYPE const value; 这两种写法在本质上是一样的。它的含义是：const 修饰的类型为 TYPE 的变量 value 是不可变的。对于一个非指针的类型 TYPE，无论怎么写，都是一个含义，即 val">
+<meta name="keywords" content="CPP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="const和volatile和mutable讲解">
+<meta property="og:url" content="https://hulinhong.com/2015/05/24/const_mutable_volatile/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="const关键字const 是比较常见的关键字, 也是非常好的预防错误的手段. const 修饰普通变量和指针const 修饰变量，一般有两种写法： const TYPE value;  TYPE const value; 这两种写法在本质上是一样的。它的含义是：const 修饰的类型为 TYPE 的变量 value 是不可变的。对于一个非指针的类型 TYPE，无论怎么写，都是一个含义，即 val">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.038Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="const和volatile和mutable讲解">
+<meta name="twitter:description" content="const关键字const 是比较常见的关键字, 也是非常好的预防错误的手段. const 修饰普通变量和指针const 修饰变量，一般有两种写法： const TYPE value;  TYPE const value; 这两种写法在本质上是一样的。它的含义是：const 修饰的类型为 TYPE 的变量 value 是不可变的。对于一个非指针的类型 TYPE，无论怎么写，都是一个含义，即 val">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>const和volatile和mutable讲解 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/05/24/const_mutable_volatile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">const和volatile和mutable讲解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-05-24T17:56:12+00:00">
+                2015-05-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/CPP/" rel="tag"><i class="fa fa-tag"></i> CPP</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/20/关系型数据库与NoSQL的爱恨情仇/" rel="next" title="关系型数据库与NoSQL的爱恨情仇">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  关系型数据库与NoSQL的爱恨情仇
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/06/22/epoll扼要总结/" rel="prev" title="epoll扼要总结">
+              <p class="post-nav-pre-next-title">
+                  epoll扼要总结
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="const关键字"><a href="#const关键字" class="headerlink" title="const关键字"></a>const关键字</h1><p>const 是比较常见的关键字, 也是非常好的预防错误的手段.</p>
+<h2 id="const-修饰普通变量和指针"><a href="#const-修饰普通变量和指针" class="headerlink" title="const 修饰普通变量和指针"></a><u><strong>const</strong> <strong>修饰普通变量和指针</strong></u></h2><p>const 修饰变量，一般有两种写法：</p>
+<pre><code>const TYPE value;
+
+TYPE const value;
+</code></pre><p>这两种写法在本质上是一样的。它的含义是：const 修饰的类型为 TYPE 的变量 value 是不可变的。对于一个非指针的类型 TYPE，无论怎么写，都是一个含义，即 value 值不可变。 例如：</p>
+<pre><code>const int nValue；    //nValue 是 const
+
+int const nValue；    //nValue 是 const
+</code></pre><p>. . . <a id="more"></a></p>
+<p>但是对于指针类型的 TYPE，不同的写法会有不同情况：</p>
+<ul>
+<li><p>（1） 指针本身是常量不可变</p>
+<pre><code>(char*) const pContent;
+</code></pre></li>
+<li><p>（2）指针所指向的内容是常量不可变</p>
+<pre><code>const (char) *pContent;
+
+(char) const *pContent;
+</code></pre></li>
+<li><p>（3） 两者都不可变</p>
+<pre><code>const char* const pContent;
+</code></pre></li>
+</ul>
+<p>识别 const 到底是修饰指针还是指针所指的对象，还有一个较为简便的方法，也就是沿着 * 号划一条线：</p>
+<ul>
+<li><p>如果 const 位于 * 的左侧，则 const 就是用来修饰指针所指向的变量，即指针指向为常量；</p>
+</li>
+<li><p>如果 const 位于 * 的右侧，const 就是修饰指针本身，即指针本身是常量。</p>
+</li>
+</ul>
+<h2 id="const-修饰函数参数"><a href="#const-修饰函数参数" class="headerlink" title="const 修饰函数参数"></a><u><strong>const</strong> <strong>修饰函数参数</strong></u></h2><p>const 修饰函数参数是它最广泛的一种用途，它表示在函数体中不能修改参数的值 (包括参数本身的值或者参数其中包含的值)：</p>
+<pre><code>void function(const int Var);     // 传递过来的参数在函数内不可以改变 (无意义，该函数以传值的方式调用)
+
+void function(const char* Var);   // 参数指针所指内容为常量不可变
+
+void function(char* const Var);   // 参数指针本身为常量不可变 (也无意义，var 本身也是通过传值的形式赋值的)
+
+void function(const Class&amp; Var); // 引用参数在函数内不可以改变
+</code></pre><p>参数 const 通常用于参数为指针或引用的情况，若输入参数采用 “值传递” 方式，由于函数将自动产生临时变量用于复制该参数，该参数本就不需要保护，所以不用 const 修饰。</p>
+<p><u style="color: red;"><strong>const</strong> <strong>修饰类对象</strong> <strong>/</strong> <strong>对象指针</strong> <strong>/</strong> <strong>对象引用</strong></u></p>
+<p>const 修饰类对象表示该对象为常量对象，其中的任何成员都不能被修改。对于对象指针和对象引用也是一样。</p>
+<p>const 修饰的对象，该对象的任何非 const 成员函数都不能被调用，因为任何非 const 成员函数会有修改成员变量的企图。</p>
+<p>例如：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AAA</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">func1</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func2</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> AAA aObj;</span><br><span class="line"></span><br><span class="line">aObj.func1(); 错误</span><br><span class="line"></span><br><span class="line">aObj.func2(); 正确</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> AAA* aObj = <span class="keyword">new</span> AAA();</span><br><span class="line"></span><br><span class="line">aObj-&gt;func1(); 错误</span><br><span class="line"></span><br><span class="line">aObj-&gt;func2(); 正确</span><br></pre></td></tr></table></figure></p>
+<p><u style="color: red; background-color: yellow;"><strong>const</strong></u> <pangu></pangu> <u style="color: red;"><strong>修饰数据成员</strong></u></p>
+<p>const 数据成员只在某个对象生存期内是常量，而对于整个类而言却是可变的。因为类可以创建多个对象，不同的对象其 const 数据成员的值可以不同。所以不能在类声明中初始化 const 数据成员，因为类的对象未被创建时，编译器不知道 const 数据成员的值是什么，例如：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> size = <span class="number">100</span>; <span class="comment">// 正确</span></span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">array</span>[size];       <span class="comment">// 错误，未知的 size</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>const 数据成员的初始化只能在类的构造函数的初始化列表中进行。要想建立在整个类中都恒定的常量，可以用类中的枚举常量来实现，例如：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"></span><br><span class="line">…</span><br><span class="line">　　<span class="keyword">enum</span> &#123;size1=<span class="number">100</span>, size2 = <span class="number">200</span>&#125;;</span><br><span class="line">　　<span class="keyword">int</span> array1[size1];</span><br><span class="line">　　<span class="keyword">int</span> array2[size2];</span><br><span class="line"></span><br><span class="line">…</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>枚举常量不会占用对象的存储空间，他们在编译时被全部求值。但是枚举常量的隐含数据类型是整数，其最大值有限，且不能表示浮点数。</p>
+<h2 id="const-修饰成员函数"><a href="#const-修饰成员函数" class="headerlink" title="const 修饰成员函数"></a><u><strong>const</strong> <strong>修饰成员函数</strong></u></h2><p>const 修饰类的成员函数，用 const 修饰的成员函数不能改变对象的成员变量。一般把 const 写在成员函数的最后：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"></span><br><span class="line">   …</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">()</span><span class="keyword">const</span></span>; <span class="comment">// 常成员函数, 它不改变对象的成员变量. 也不能调用类中任何非 const 成员函数。</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>对于 const 类对象 / 指针 / 引用，只能调用类的 const 成员函数。</p>
+<h2 id="const-修饰成员函数的返回值"><a href="#const-修饰成员函数的返回值" class="headerlink" title="const 修饰成员函数的返回值"></a><strong><u>const 修饰成员函数的返回值</u></strong></h2><ul>
+<li><p>１、一般情况下，函数的返回值为某个对象时，如果将其声明为 const 时，多用于操作符的重载。通常，不建议用 const 修饰函数的返回值类型为某个对象或对某个对象引用的情况。原因如下：如果返回 const 对象，或返回 const 对象的引用，则返回值具有 const 属性，返回实例只能访问类 A 中的公有（保护）数据成员和 const 成员函数，并且不允许对其进行赋值操作，这在一般情况下很少用到。</p>
+</li>
+<li><p>2、如果给采用 “指针传递” 方式的函数返回值加 const 修饰，那么函数返回值（即指针所指的内容）不能被修改，该返回值只能被赋给加 const 修饰的同类型指针：</p>
+<pre><code>const char * GetString(void);
+</code></pre><p>  如下语句将出现编译错误：</p>
+<pre><code>char *str=GetString();
+</code></pre><p>  正确的用法是：</p>
+<pre><code>const char *str=GetString();
+</code></pre></li>
+<li><p>3、函数返回值采用 “引用传递” 的场合不多，这种方式一般只出现在类的赙值函数中，目的是为了实现链式表达。如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span>…</span><br><span class="line">    A &amp;operate= (<span class="keyword">const</span> A &amp;other); <span class="comment">// 赋值函数</span></span><br><span class="line">&#125;</span><br><span class="line">A a,b,c; <span class="comment">//a,b,c 为 A 的对象</span></span><br><span class="line">…</span><br><span class="line">a=b=c;   <span class="comment">// 正常</span></span><br><span class="line">(a=B)=c; <span class="comment">// 不正常，但是合法</span></span><br></pre></td></tr></table></figure>
+<p>  若赋值函数的返回值加 const 修饰，那么该返回值的内容不允许修改，上例中 a=b=c 依然正确。(a=b)=c 就不正确了。</p>
+</li>
+</ul>
+<h2 id="const-常量与-define-宏定义的区别"><a href="#const-常量与-define-宏定义的区别" class="headerlink" title="const 常量与 define 宏定义的区别"></a><u><strong>const</strong> <strong>常量与</strong> <strong>define</strong> <strong>宏定义的区别</strong></u></h2><ul>
+<li><p>（1） 编译器处理方式不同</p>
+<p>  define 宏是在预处理阶段展开。</p>
+<p>  const 常量是编译运行阶段使用。</p>
+</li>
+<li><p>（2）类型和安全检查不同</p>
+<p>  define 宏没有类型，不做任何类型检查，仅仅是展开。</p>
+<p>  const 常量有具体的类型，在编译阶段会执行类型检查。</p>
+</li>
+<li><p>（3） 存储方式不同</p>
+<p>  define 宏仅仅是展开，有多少地方使用，就展开多少次，不会分配内存。</p>
+<p>  const 常量会在内存中分配 (可以是堆中也可以是栈中)。</p>
+</li>
+</ul>
+<h1 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h1><p>volatile 的本意是 “易变的”,volatile 关键字是一种类型修饰符，用它声明的类型变量表示可以被某些编译器未知的因素更改，比如操作系统、硬件或者其它线程等。遇到这个关键字声明的变量，编译器对访问该变量的代码就不再进行优化，从而可以提供对特殊地址的稳定访问。</p>
+<p>当要求使用 volatile 声明的变量的值的时候，系统总是重新从它所在的内存读取数据，即使它前面的指令刚刚从该处读取过数据。而且读取的数据立刻被寄存。例如：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="keyword">int</span> i=<span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = i;</span><br><span class="line"></span><br><span class="line">。。。<span class="comment">// 其他代码，并未明确告诉编译器，对 i 进行过操作</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> b = i;</span><br></pre></td></tr></table></figure></p>
+<p>volatile 指出 i 是随时可能发生变化的，每次使用它的时候必须从 i 的地址中读取，因而编译器生成的汇编代码会重新从 i 的地址读取数据放在 b 中。而优化做法是，由于编译器发现两次从 i 读数据的代码之间的代码没有对 i 进行过操作，它会自动把上次读的数据放在 b 中。而不是重新从 i 里面读。这样以来，如果 i 是一个寄存器变量或者表示一个端口数据就容易出错，所以说 volatile 可以保证对特殊地址的稳定访问。</p>
+<p>注意，在 vc6 中，一般调试模式没有进行代码优化，所以这个关键字的作用看不出来。下面通过插入汇编代码，测试有无 volatile 关键字，对程序最终代码的影响。首先用 classwizard 建一个 win32 console 工程，插入一个 voltest.cpp 文件，输入下面的代码：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> i=<span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = i;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"i= %d/n"</span>,a);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 下面汇编语句的作用就是改变内存中 i 的值，但是又不让编译器知道</span></span><br><span class="line"></span><br><span class="line">__asm &#123;</span><br><span class="line"></span><br><span class="line"> mov dword ptr [ebp<span class="number">-4</span>], <span class="number">20</span>h</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> b = i;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"i= %d/n"</span>,b);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后，在调试版本模式运行程序，输出结果如下：</p>
+<pre><code>i = 10
+
+i = 32
+</code></pre><p>然后，在 release 版本模式运行程序，输出结果如下：</p>
+<pre><code>i = 10
+
+i = 10
+</code></pre><p>输出的结果明显表明，release 模式下，编译器对代码进行了优化，第二次没有输出正确的 i 值。下面，我们把 i 的声明加上 volatile 关键字，看看有什么变化：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">volatile</span> <span class="keyword">int</span> i=<span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = i;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"i= %d/n"</span>,a);</span><br><span class="line"></span><br><span class="line">__asm &#123;</span><br><span class="line"></span><br><span class="line"> mov dword ptr [ebp<span class="number">-4</span>], <span class="number">20</span>h</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> b = i;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"i= %d/n"</span>,b);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>分别在调试版本和 release 版本运行程序，输出都是：</p>
+<pre><code>i = 10
+
+i = 32
+</code></pre><p>这说明这个关键字发挥了它的作用！</p>
+<h2 id="关于-volatile-的补充信息"><a href="#关于-volatile-的补充信息" class="headerlink" title="关于 volatile 的补充信息"></a><strong>关于</strong> <strong>volatile</strong> <strong>的补充信息</strong></h2><p>一个定义为 volatile 的变量是说这变量可能会被意想不到地改变，这样，编译器就不会去假设这个变量的值了。精确地说就是，优化器在用到这个变量时必须每次都小心地重新读取这个变量的值，而不是使用保存在寄存器里的备份。下面是 volatile 变量的几个例子：</p>
+<ul>
+<li><p>1). 并行设备的硬件寄存器（如：状态寄存器）</p>
+</li>
+<li><p>2). 一个中断服务子程序中会访问到的非自动变量 (Non-automatic variables)</p>
+</li>
+<li><p>3). 多线程应用中被几个任务共享的变量</p>
+</li>
+</ul>
+<p>我认为这是区分 C 程序员和嵌入式系统程序员的最基本的问题。嵌入式系统程序员经常同硬件、中断、RTOS 等等打交道，所用这些都要求 volatile 变量。不懂得 volatile 内容将会带来灾难。假设被面试者正确地回答了这是问题（嗯，怀疑这否会是这样），我将稍微深究一下，看一下这家伙是不是直正懂得 volatile 的重要性：</p>
+<ul>
+<li><p>1). 一个参数既可以是 const 还可以是 volatile 吗？解释为什么。</p>
+</li>
+<li><p>2). 一个指针可以是 volatile 吗？解释为什么。</p>
+</li>
+<li><p>3). 下面的函数有什么错误：</p>
+<pre><code>int square(volatile int *ptr)
+
+{
+
+     return *ptr * *ptr;
+
+}
+</code></pre></li>
+</ul>
+<p>下面是答案：</p>
+<ul>
+<li><p>1). 是的。一个例子是只读的状态寄存器。它是 volatile 因为它可能被意想不到地改变。它是 const 因为程序不应该试图去修改它。</p>
+</li>
+<li><p>2). 是的。尽管这并不很常见。一个例子是当一个中服务子程序修该一个指向一个 buffer 的指针时。</p>
+</li>
+<li><p>3). 这段代码的有个恶作剧。这段代码的目的是用来返指针 <em>ptr 指向值的平方，但是，由于 </em>ptr 指向一个 volatile 型参数，编译器将产生类似下面的代码：</p>
+<pre><code>int square(volatile int *ptr)
+
+{
+
+     int a,b;
+
+     a = *ptr;
+
+        b = *ptr;
+
+     return a * b;
+
+ }
+</code></pre><p>  由于 *ptr 的值可能被意想不到地该变，因此 a 和 b 可能是不同的。结果，这段代码可能返不是你所期望的平方值！正确的代码如下：</p>
+<pre><code>long square(volatile int *ptr)
+
+{
+
+       int a;
+
+       a = *ptr;
+
+       return a * a;
+
+}
+</code></pre></li>
+</ul>
+<h1 id="mutable关键字"><a href="#mutable关键字" class="headerlink" title="mutable关键字"></a>mutable关键字</h1><p>mutalbe 的中文意思是 “可变的，易变的”，跟 constant（既 C++ 中的 const）是反义词。在 C++ 中，mutable 也是为了突破 const 的限制而设置的。被 mutable 修饰的变量 (mutable 只能由于修饰类的非静态数据成员)，将永远处于可变的状态，即使在一个 const 函数中。</p>
+<p>我们知道，假如类的成员函数不会改变对象的状态，那么这个成员函数一般会声明为 const。但是，有些时候，我们需要在 const 的函数里面修改一些跟类状态无关的数据成员，那么这个数据成员就应该被 mutalbe 来修饰。下面是一个小例子：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClxTest</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"></span><br><span class="line">　<span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">　　<span class="function"><span class="keyword">void</span> <span class="title">Output</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> ClxTest::Output() <span class="keyword">const</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">　<span class="built_in">cout</span> &lt;&lt; <span class="string">"Output for test!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OutputTest</span><span class="params">(<span class="keyword">const</span> ClxTest&amp; lx)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">　lx.Output();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>类 ClxTest 的成员函数 Output 是用来输出的，不会修改类的状态，所以被声明为 const。</p>
+<p>函数 OutputTest 也是用来输出的，里面调用了对象 lx 的 Output 输出方法，为了防止在函数中调用成员函数修改任何成员变量，所以参数也被 const 修饰。</p>
+<p>假如现在，我们要增添一个功能：计算每个对象的输出次数。假如用来计数的变量是普通的变量的话，那么在 const 成员函数 Output 里面是不能修改该变量的值的；而该变量跟对象的状态无关，所以应该为了修改该变量而去掉 Output 的 const 属性。这个时候，就该我们的 mutable 出场了，只要用 mutalbe 来修饰这个变量，所有问题就迎刃而解了。下面是修改过的代码：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClxTest</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"></span><br><span class="line">　<span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">　　ClxTest();</span><br><span class="line"></span><br><span class="line">　　~ClxTest();</span><br><span class="line"></span><br><span class="line">　　<span class="function"><span class="keyword">void</span> <span class="title">Output</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line"></span><br><span class="line">　　<span class="function"><span class="keyword">int</span> <span class="title">GetOutputTimes</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line"></span><br><span class="line">　<span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">　　<span class="keyword">mutable</span> <span class="keyword">int</span> m_iTimes;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ClxTest::ClxTest()</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">　m_iTimes = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ClxTest::~ClxTest()</span><br><span class="line"></span><br><span class="line">&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> ClxTest::Output() <span class="keyword">const</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">　<span class="built_in">cout</span> &lt;&lt; <span class="string">"Output for test!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">　m_iTimes++;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> ClxTest::GetOutputTimes() <span class="keyword">const</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">　<span class="keyword">return</span> m_iTimes;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OutputTest</span><span class="params">(<span class="keyword">const</span> ClxTest&amp; lx)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">　<span class="built_in">cout</span> &lt;&lt;lx.GetOutputTimes() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">　lx.Output();</span><br><span class="line"></span><br><span class="line">　<span class="built_in">cout</span> &lt;&lt;lx.GetOutputTimes() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>计数器 m_iTimes 被 mutable 修饰，那么它就可以突破 const 的限制，在被 const 修饰的函数里面也能被修改。</p>
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/CPP/" rel="tag"><i class="fa fa-tag"></i> CPP</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2015/05/20/关系型数据库与NoSQL的爱恨情仇/" rel="next" title="关系型数据库与NoSQL的爱恨情仇">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    关系型数据库与NoSQL的爱恨情仇
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2015/06/22/epoll扼要总结/" rel="prev" title="epoll扼要总结">
+                <p class="post-nav-pre-next-title">
+                    epoll扼要总结
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#const关键字"><span class="nav-number">1.</span> <span class="nav-text">const关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#const-修饰普通变量和指针"><span class="nav-number">1.1.</span> <span class="nav-text">const 修饰普通变量和指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const-修饰函数参数"><span class="nav-number">1.2.</span> <span class="nav-text">const 修饰函数参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const-修饰成员函数"><span class="nav-number">1.3.</span> <span class="nav-text">const 修饰成员函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const-修饰成员函数的返回值"><span class="nav-number">1.4.</span> <span class="nav-text">const 修饰成员函数的返回值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const-常量与-define-宏定义的区别"><span class="nav-number">1.5.</span> <span class="nav-text">const 常量与 define 宏定义的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#volatile关键字"><span class="nav-number">2.</span> <span class="nav-text">volatile关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-volatile-的补充信息"><span class="nav-number">2.1.</span> <span class="nav-text">关于 volatile 的补充信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mutable关键字"><span class="nav-number">3.</span> <span class="nav-text">mutable关键字</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

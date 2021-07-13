@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="烫">
+<meta property="og:url" content="https://hulinhong.com/page/35/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="烫">
+<meta name="twitter:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>烫 - 烫烫烫烫烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/08/23/putty_config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/08/23/putty_config/" itemprop="url">Putty配置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-08-23T15:11:26+00:00">
+                2015-08-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Misc/" itemprop="url" rel="index">
+                    <span itemprop="name">Misc</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <div class="con editor-preview-side"><p>平时工作学习必须要使用Windows，在SSH远程连接软件里Putty算是用得比较顺手的，而且很小巧。</p><p><a href="/img/putty_auto_login_ssh/113555117.png" target="_blank"><img src="/img/putty_auto_login_ssh/113555117.png" style="float:none;" title="2013-12-05_111750.png" alt="113555117.png"></a></p><p><br></p><p>但是每次输入密码很麻烦，还容易输错，OpenSSH可以利用密钥来自动登陆，如此一来方便了不少。配置过程分为三步：</p><p><strong>1、生成公钥和私钥</strong></p><p>先要下载一个叫puttygen的软件（下载见附件），在Windows端生成公钥和私钥。</p><p>点击Generate开始生成</p><p><a href="/img/putty_auto_login_ssh/113555442.png" target="_blank"><img src="/img/putty_auto_login_ssh/113555442.png" style="float:none;" title="2013-12-05_111133.png" alt="113555442.png"></a></p><p>在生成过程中用鼠标在进度条下面的<span style="color:#ff0000;">空白处乱晃</span>几下，产生随机性：</p><p><a href="/img/putty_auto_login_ssh/113555424.png" target="_blank"><img src="/img/putty_auto_login_ssh/113555424.png" title="2013-12-05_111207.png" style="float:none;" alt="113555424.png"></a></p><p>生成完毕，将私钥保存起来：</p><p><a href="/img/putty_auto_login_ssh/131658317.png" target="_blank"><img src="/img/putty_auto_login_ssh/131658317.png" title="67.png" alt="131658317.png"></a></p><p>然后将公钥全选复制。<br></p><p><a href="/img/putty_auto_login_ssh/131248930.png" target="_blank"><img src="/img/putty_auto_login_ssh/131248930.png" title="78.png" alt="131248930.png"></a></p><p><br></p><p><strong>2、远程主机配置</strong></p><p>我这里使用的是CentOS6.4，已经安装了OpenSSH，如果远程主机没有安装的，先要安装。</p><p>先连接上远程主机，然后输入命令</p><pre class="brush:bash;toolbar:false;">mkdir .ssh</pre><pre class="brush:bash;toolbar:false;">chmod 700 .ssh</pre><pre class="brush:bash;toolbar:false;">vim ~/.ssh/authorized_keys</pre><p>按“i”键进入编辑模式（用过vi/vim的都应该知道吧），然后点鼠标右键将刚才复制的公钥粘贴进去，然后按“Esc”，输入wq&lt;Enter&gt;保存。</p><p><a href="/img/putty_auto_login_ssh/131401631.png" target="_blank"><img src="/img/putty_auto_login_ssh/131401631.png" title="89.png" alt="131401631.png"></a></p><p>安全起见，设置验证文件为只读：</p><p><br></p><pre class="brush:bash;toolbar:false;">chmod 400 ~/.ssh/authorized_keys</pre><p><span style="font-family:consolas, 'bitstream vera sans mono', 'courier new', courier, monospace;"><span style="line-height:17.59375px;"><br></span></span></p><p><strong><span style="font-family:consolas, 'bitstream vera sans mono', 'courier new', courier, monospace;"><span style="line-height:17.59375px;">3、Putty端配置</span></span></strong></p><p><strong><span style="font-family:consolas, 'bitstream vera sans mono', 'courier new', courier, monospace;"><span style="line-height:17.59375px;"><br></span></span></strong></p><p><span style="line-height:17.59375px;font-family:consolas, 'bitstream vera sans mono', 'courier new', courier, monospace;">先到Connection-Data项设置自己的登陆用户名，如图（我的是root）：</span></p><p><span style="line-height:17.59375px;font-family:consolas, 'bitstream vera sans mono', 'courier new', courier, monospace;"></span></p><p><a href="/img/putty_auto_login_ssh/131535572.png" style="font-family:consolas, 'bitstream vera sans mono', 'courier new', courier, monospace;line-height:17.59375px;" target="_blank"><img src="/img/putty_auto_login_ssh/131535572.png" title="99.png" alt="131535572.png" style="float:none;"></a></p><p><br></p><p><span style="line-height:17.59375px;font-family:consolas, 'bitstream vera sans mono', 'courier new', courier, monospace;">再点SSH项下面的Auth，添加第一步保存的私钥</span></p><p><span style="line-height:17.59375px;font-family:consolas, 'bitstream vera sans mono', 'courier new', courier, monospace;"><a href="/img/putty_auto_login_ssh/131534643.png" target="_blank"><img src="/img/putty_auto_login_ssh/131534643.png" title="100.png" alt="131534643.png" style="float:none;"></a></span></p><p><br></p><p><span style="line-height:17.59375px;font-family:consolas, 'bitstream vera sans mono', 'courier new', courier, monospace;">然后很重要的是要回去Session项里<span style="line-height:17.59375px;font-family:consolas, 'bitstream vera sans mono', 'courier new', courier, monospace;color:#ff0000;">保存！！！</span>不然下次又得重新添加一遍</span></p><p><span style="line-height:17.59375px;font-family:consolas, 'bitstream vera sans mono', 'courier new', courier, monospace;"><a href="/img/putty_auto_login_ssh/132022649.png" target="_blank"><img src="/img/putty_auto_login_ssh/132022649.png" title="110.png" alt="132022649.png"></a></span></p><p><br></p><p>然后再双击Default Settings里保存的任务，就直接登陆进去了：</p><p><a href="http://s3.51cto.com/wyfs02/M01/12/E8/wKiom1MP7Wfh2XdgAABhqqyu7f4525.png" target="_blank"><img src="http://s3.51cto.com/wyfs02/M01/12/E8/wKiom1MP7Wfh2XdgAABhqqyu7f4525.png" title="捕获.PNG" alt="wKiom1MP7Wfh2XdgAABhqqyu7f4525.png"></a></p><p>是不是很棒~</p><p><br></p><p>最后再优化一下显示设置（转过来的）：</p><div style="font-family:'microsoft yahei ui', 'microsoft yahei', simsun, 'segoe ui', tahoma, helvetica, sans-serif, 'microsoft yahei', georgia, helvetica, arial, sans-serif, '宋体', pmingliu, serif;font-size:14px;line-height:21px;"><span style="font-size:14px;">字体大小设置</span></div><div style="font-family:'microsoft yahei ui', 'microsoft yahei', simsun, 'segoe ui', tahoma, helvetica, sans-serif, 'microsoft yahei', georgia, helvetica, arial, sans-serif, '宋体', pmingliu, serif;font-size:14px;line-height:21px;"></div><div style="font-family:'microsoft yahei ui', 'microsoft yahei', simsun, 'segoe ui', tahoma, helvetica, sans-serif, 'microsoft yahei', georgia, helvetica, arial, sans-serif, '宋体', pmingliu, serif;font-size:14px;line-height:21px;"><span style="font-size:14px;">Window-&gt;Appearance-&gt;Font settings—&gt;Change按钮设置（我的设置为12）</span></div><div style="font-family:'microsoft yahei ui', 'microsoft yahei', simsun, 'segoe ui', tahoma, helvetica, sans-serif, 'microsoft yahei', georgia, helvetica, arial, sans-serif, '宋体', pmingliu, serif;font-size:14px;line-height:21px;"></div><div style="font-family:'microsoft yahei ui', 'microsoft yahei', simsun, 'segoe ui', tahoma, helvetica, sans-serif, 'microsoft yahei', georgia, helvetica, arial, sans-serif, '宋体', pmingliu, serif;font-size:14px;line-height:21px;"><span style="font-size:14px;">字体颜色设置</span></div><div style="font-family:'microsoft yahei ui', 'microsoft yahei', simsun, 'segoe ui', tahoma, helvetica, sans-serif, 'microsoft yahei', georgia, helvetica, arial, sans-serif, '宋体', pmingliu, serif;font-size:14px;line-height:21px;"></div><div style="font-family:'microsoft yahei ui', 'microsoft yahei', simsun, 'segoe ui', tahoma, helvetica, sans-serif, 'microsoft yahei', georgia, helvetica, arial, sans-serif, '宋体', pmingliu, serif;font-size:14px;line-height:21px;"><span style="font-size:14px;">Window-&gt;Colours-&gt;Default Foreground-&gt;Modify设置（我喜欢绿色设置：R:0 G:255 B:64）</span></div><div style="font-family:'microsoft yahei ui', 'microsoft yahei', simsun, 'segoe ui', tahoma, helvetica, sans-serif, 'microsoft yahei', georgia, helvetica, arial, sans-serif, '宋体', pmingliu, serif;font-size:14px;line-height:21px;"></div><div style="font-family:'microsoft yahei ui', 'microsoft yahei', simsun, 'segoe ui', tahoma, helvetica, sans-serif, 'microsoft yahei', georgia, helvetica, arial, sans-serif, '宋体', pmingliu, serif;font-size:14px;line-height:21px;"><span style="font-size:14px;">此外在默认的黑色背景下 蓝色看不太清楚，可以把Window-&gt;Colours-&gt;ANSI Blue 更改一下设置（我设置为R：255 G：0 B：128）</span></div><div style="font-family:'microsoft yahei ui', 'microsoft yahei', simsun, 'segoe ui', tahoma, helvetica, sans-serif, 'microsoft yahei', georgia, helvetica, arial, sans-serif, '宋体', pmingliu, serif;font-size:14px;line-height:21px;"></div><div style="font-family:'microsoft yahei ui', 'microsoft yahei', simsun, 'segoe ui', tahoma, helvetica, sans-serif, 'microsoft yahei', georgia, helvetica, arial, sans-serif, '宋体', pmingliu, serif;font-size:14px;line-height:21px;"><span style="font-size:14px;">全屏/退出全屏的快捷键设置</span></div><div style="font-family:'microsoft yahei ui', 'microsoft yahei', simsun, 'segoe ui', tahoma, helvetica, sans-serif, 'microsoft yahei', georgia, helvetica, arial, sans-serif, '宋体', pmingliu, serif;font-size:14px;line-height:21px;"></div><div style="font-family:'microsoft yahei ui', 'microsoft yahei', simsun, 'segoe ui', tahoma, helvetica, sans-serif, 'microsoft yahei', georgia, helvetica, arial, sans-serif, '宋体', pmingliu, serif;font-size:14px;line-height:21px;"><span style="font-size:14px;">Window-&gt;Behaviour最下面有个Full screen on Alt-Enter 勾上就可以了。</span></div>
+
+<h1 id="putty配置导出的方法"><a href="#putty配置导出的方法" class="headerlink" title="putty配置导出的方法"></a>putty配置导出的方法</h1><p>PuTTY 是一款小巧的开源 Telnet/SSH 客户端，但是它不提供设置的导入导出工具，PuTTY 将设置都保存在注册表中，所以要备份主要就是要备份注册表里的资料。</p>
+<p>下面是备份步骤，实质上就是导出相应的注册表键值：</p>
+<ol>
+<li>开始-&gt;运行(Win+R)-&gt;regedit</li>
+<li>找到 HKEY_CURRENT_USER\Software\SimonTatham</li>
+<li>在 SimonTatham 这个节点上点击右键，选择导出，保存。</li>
+</ol>
+<p>如果你想恢复配置信息，只需要双击保存的这个文件，导入注册表信息即可。</p>
+<p>说明：注册表PuTTY下的Sessions中保存设置连接的项目和设定值，SshHostKeys保存设置过的Remote Host Public Key。</p>
+<h1 id="KeepAlive"><a href="#KeepAlive" class="headerlink" title="KeepAlive"></a>KeepAlive</h1><p>很多远程主机当你一段时间没有输入, 他就会把你踢下线, 所以需要 KeepAlive 功能, </p>
+<p><img src="/img/putty_auto_login_ssh/keep_alive.jpg" alt="KeepAlive"></p>
+<p>如果填写 0 , 就表示不需要 KeepAlive 功能,<br>填写大于 0 的数, 比如 4, 就意味着每 4 秒就会发送一个空包到远程主机来 KeepAlive .<br>所以建议填写8秒左右的数.</p>
+<h1 id="SSH-证书登陆配置"><a href="#SSH-证书登陆配置" class="headerlink" title="SSH 证书登陆配置"></a>SSH 证书登陆配置</h1><p><code>sudo vi /etc/ssh/sshd_config</code></p>
+<p>取消注释 : #AuthorizedKeysFile .ssh/authorized_keys<br>禁止密码登录 : 修改yes-&gt;no : <code>PasswordAuthentication no</code></p>
+<p>然后重启ssh : <code>sudo service sshd restart</code></p>
+<h1 id="Putty-server-refused-our-key的三种原因和解决方法"><a href="#Putty-server-refused-our-key的三种原因和解决方法" class="headerlink" title="Putty server refused our key的三种原因和解决方法"></a>Putty server refused our key的三种原因和解决方法</h1><p>server refused our key 是非常容易遇到的错误</p>
+<h2 id="1、-ssh文件夹权限错或authorized-keys权限错"><a href="#1、-ssh文件夹权限错或authorized-keys权限错" class="headerlink" title="1、.ssh文件夹权限错或authorized_keys权限错"></a>1、.ssh文件夹权限错或authorized_keys权限错</h2><p>.ssh 以及其父文件夹（root为/root，普通用户为Home目录）都应该设置为只有该用户可写（比如700）。<br>且 设置 authorized_keys 的权限为 400</p>
+<pre><code>chmod 700 .ssh
+chmod 400 ~/.ssh/authorized_keys
+</code></pre><p>以下为原因：<br>ssh服务器的key方式登录对权限要求严格。</p>
+<ul>
+<li>对于客户端: 私钥必须为600权限或者更严格权限(400), 一旦其他用户可读, 私钥就不起作用(如640), 表现为系统认为不存在私钥</li>
+<li>对于服务器端: 要求必须公钥其他用户不可写, 一旦其他用户可写(如660), 就无法用key登录, 表现为:Permission denied (publickey).</li>
+</ul>
+<p>同时要求.ssh目录其他用户不可写,一旦其他用户可写(如770), 就无法使用key登录, 表现为:Permission denied (publickey).</p>
+<h2 id="2、SElinux导致"><a href="#2、SElinux导致" class="headerlink" title="2、SElinux导致"></a>2、SElinux导致</h2><p>密钥文件不能通过SElinux认证，解决方法如下：</p>
+<p><code># restorecon -R -v /home #root用户为/root</code></p>
+<p>我遇到的就是这种情况，找了好久还找到是这个原因，因为是新装的虚拟机，SElinux还没关闭。<br>这篇博文详细得说明了原因：<a href="http://www.toxingwang.com/linux-unix/linux-basic/846.html" target="_blank" rel="noopener">http://www.toxingwang.com/linux-unix/linux-basic/846.html</a></p>
+<h2 id="3、sshd配置不正确"><a href="#3、sshd配置不正确" class="headerlink" title="3、sshd配置不正确"></a>3、sshd配置不正确</h2><p>正确配置方法如下：<br>/etc/ssh/sshd_config </p>
+<p>1、找到 #StrictModes yes 改成 StrictModes no （去掉注释后改成 no） </p>
+<p>2、找到 #PubkeyAuthentication yes 改成 PubkeyAuthentication yes （去掉注释） </p>
+<p>3、找到 #AuthorizedKeysFile .ssh/authorized_keys 改成 AuthorizedKeysFile .ssh/authorized_keys （去掉注释） </p>
+<p>4、保存 5、/etc/rc.d/init.d/sshd reload 重新加载</p>
+</div>
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/08/04/Linux 常用SIG信号及其键值/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/08/04/Linux 常用SIG信号及其键值/" itemprop="url">Linux 常用SIG信号及其键值</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-08-04T13:08:56+00:00">
+                2015-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>01 SIGHUP 挂起（hangup）</li>
+<li>02 SIGINT 中断，当用户从键盘按^c键或^break键时</li>
+<li>03 SIGQUIT 退出，当用户从键盘按quit键时</li>
+<li>04 SIGILL 非法指令</li>
+<li>05 SIGTRAP 跟踪陷阱（trace trap），启动进程，跟踪代码的执行</li>
+<li>06 SIGIOT IOT指令</li>
+<li>07 SIGEMT EMT指令</li>
+<li>08 SIGFPE 浮点运算溢出</li>
+<li>09 SIGKILL 杀死、终止进程 </li>
+<li>10 SIGBUS 总线错误</li>
+<li>11 SIGSEGV 段违例（segmentation  violation），进程试图去访问其虚地址空间以外的位置</li>
+<li>12 SIGSYS 系统调用中参数错，如系统调用号非法</li>
+<li>13 SIGPIPE 向某个非读管道中写入数据</li>
+<li>14 SIGALRM 闹钟。当某进程希望在某时间后接收信号时发此信号</li>
+<li>15 SIGTERM 软件终止（software  termination）</li>
+<li>16 SIGUSR1 用户自定义信号1</li>
+<li>17 SIGUSR2 用户自定义信号2</li>
+<li>18 SIGCLD 某个子进程死</li>
+<li>19 SIGPWR 电源故障</li>
+</ul>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/07/19/cplusplus_how_to_use_extern_static_const/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/07/19/cplusplus_how_to_use_extern_static_const/" itemprop="url">C++链接性之extern和static和const的用法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-07-19T17:24:19+00:00">
+                2015-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="基本解释"><a href="#基本解释" class="headerlink" title="基本解释"></a>基本解释</h1><p>基本解释：extern可以置于变量或者函数前，以标示变量或者函数的定义在别的文件中，提示编译器遇到此变量和函数时在其他模块中寻找其定义。此外extern也可用来进行链接指定。</p>
+<p>也就是说extern有两个作用:</p>
+<ul>
+<li><p>当它与”C”一起连用时，如: extern “C” void fun(int a, int b);则告诉编译器在编译fun这个函数名时按着C的规则去翻译相应的函数名而不是C++的，C++的规则在翻译这个函数名时会把fun这个名字变得面目全非，可能是fun@aBc_int_int#%$也可能是别的，这要看编译器的”脾气”了(不同的编译器采用的方法不一样)，为什么这么做呢，因为C++支持函数的重载啊，在这里不去过多的论述这个问题，如果你有兴趣可以去网上搜索，相信你可以得到满意的解释!</p>
+</li>
+<li><p>当extern不与”C”在一起修饰变量或函数时，如在头文件中: extern int g_Int; 它的作用就是声明函数或全局变量的作用范围的关键字，其声明的函数和变量可以在本模块或其他模块中使用，记住它是一个声明不是定义!也就是说B模块(编译单元)要是引用模块(编译单元)A中定义的全局变量或函数时，它只要包含A模块的头文件即可,在编译阶段，模块B虽然找不到该函数或变量，但它不会报错，它会在链接时从模块A生成的目标代码中找到此函数。</p>
+</li>
+</ul>
+<h1 id="extern-变量"><a href="#extern-变量" class="headerlink" title="extern 变量"></a>extern 变量</h1><p>在一个源文件里定义了一个数组：char a[6];<br>在另外一个文件里用下列语句进行了声明：extern char *a；<br>请问，这样可以吗？<br>答案与分析：</p>
+<ul>
+<li>不可以，程序运行时会告诉你非法访问。原因在于，指向类型T的指针并不等价于类型T的数组。extern char *a声明的是一个指针变量而不是字符数组，因此与实际的定义不同，从而造成运行时非法访问。应该将声明改为extern char a[ ]。</li>
+<li>例子分析如下，如果a[] = “abcd”,则外部变量a=0x61626364 (abcd的ASCII码值)，*a显然没有意义显然a指向的空间（0x61626364）没有意义，易出现非法内存访问。</li>
+<li>这提示我们，在使用extern时候要严格对应声明时的格式，在实际编程中，这样的错误屡见不鲜。</li>
+<li>extern用在变量声明中常常有这样一个作用，你在<em>.c文件中声明了一个全局的变量，这个全局的变量如果要被引用，就放在</em>.h中并用extern来声明。</li>
+</ul>
+<h1 id="extern-“c”"><a href="#extern-“c”" class="headerlink" title="extern “c”"></a>extern “c”</h1><p>在C++环境下使用C函数的时候，常常会出现编译器无法找到obj模块中的C函数定义，从而导致链接失败的情况，应该如何解决这种情况呢<br>答案与分析：</p>
+<p>C++语言在编译的时候为了解决函数的多态问题，会将函数名和参数联合起来生成一个中间的函数名称，而C语言则不会，因此会造成链接时找不到对应函数的情况，此时C函数就需要用extern “C”进行链接指定，这告诉编译器，请保持我的名称，不要给我生成用于链接的中间函数名。<br>下面是一个标准的写法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在.h文件的头上</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span>&#123;</span><br><span class="line">　<span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">　<span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* __cplusplus */</span> </span></span><br><span class="line">　…</span><br><span class="line">　…</span><br><span class="line">　<span class="comment">//.h文件结束的地方</span></span><br><span class="line">　<span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line">　<span class="meta">#<span class="meta-keyword">if</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* __cplusplus */</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="定义放在头文件还是源文件中"><a href="#定义放在头文件还是源文件中" class="headerlink" title="定义放在头文件还是源文件中?"></a>定义放在头文件还是源文件中?</h1><p>常常见extern放在函数的前面成为函数声明的一部分，那么，C语言的关键字extern在函数的声明中起什么作用？<br>答案与分析：</p>
+<p>如果函数的声明中带有关键字extern，仅仅是暗示这个函数可能在别的源文件里定义，没有其它作用。即下述两个函数声明没有明显的区别：<br>extern int f(); 和int f();<br>当然，这样的用处还是有的，就是在程序中取代include “*.h”来声明函数，在一些复杂的项目中，我比较习惯在所有的函数声明前添加extern修饰。关于这样做的原因和利弊可见下面的这个例子：“用extern修饰的全局变量”</p>
+<p><strong>(1)</strong>在test1.h中有下列声明 :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> TEST1H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TEST1H</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">char</span> g_str[]; <span class="comment">// 声明全局变量g_str</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span></span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>(2)</strong>在test1.cpp中 :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"test1.h"</span></span></span><br><span class="line"><span class="keyword">char</span> g_str[] = <span class="string">"123456"</span>; <span class="comment">// 定义全局变量g_str</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span> </span>&#123; <span class="built_in">cout</span> &lt;&lt; g_str &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>(3)</strong>以上是test1模块， 它的编译和链接都可以通过,如果我们还有test2模块也想使用g_str,只需要在原文件中引用就可以了 :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"test1.h"</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun2</span><span class="params">()</span>    </span>&#123; <span class="built_in">cout</span> &lt;&lt; g_str &lt;&lt; <span class="built_in">endl</span>;    &#125;</span><br></pre></td></tr></table></figure>
+<p>以上test1和test2可以同时编译链接通过，如果你感兴趣的话可以用ultraEdit打开test1.obj,你可以在里面找到”123456”这个字符串,但是你却不能在test2.obj里面找到，这是因为g_str是整个工程的全局变量，在内存中只存在一份,test2.obj这个编译单元不需要再有一份了，不然会在链接时报告重复定义这个错误!</p>
+<p><strong>(4) </strong>有些人喜欢把全局变量的声明和定义放在一起，这样可以防止忘记了定义，如把上面test1.h改为</p>
+<p><code>extern char g_str[] = &quot;123456&quot;; // 这个时候相当于没有extern</code></p>
+<p>然后把test1.cpp中的g_str的定义去掉,这个时候再编译链接test1和test2两个模块时，会报链接错误，这是因为你把全局变量g_str的定义放在了头文件之后，</p>
+<p>test1.cpp这个模块包含了test1.h所以定义了一次g_str,而test2.cpp也包含了test1.h所以再一次定义了g_str,这个时候链接器在链接test1和test2时发现两个g_str。如果你非要把g_str的定义放在test1.h中的话，那么就把test2的代码中#include “test1.h”去掉 换成:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">char</span> g_str[];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun2</span><span class="params">()</span>   </span>&#123;  <span class="built_in">cout</span> &lt;&lt; g_str &lt;&lt; <span class="built_in">endl</span>;   &#125;</span><br></pre></td></tr></table></figure>
+<p>这个时候编译器就知道g_str是引自于外部的一个编译模块了，不会在本模块中再重复定义一个出来，但是我想说这样做非常糟糕，因为你由于无法在test2.cpp中使用#include “test1.h”,那么test1.h中声明的其他函数你也无法使用了，除非也用都用extern修饰，这样的话你光声明的函数就要一大串，而且头文件的作用就是要给外部提供接口使用的，所以 请记住， 只在头文件中做声明，真理总是这么简单。</p>
+<h1 id="extern-和-static"><a href="#extern-和-static" class="headerlink" title="extern 和 static"></a>extern 和 static</h1><ul>
+<li>extern 表明该变量在别的地方已经定义过了,在这里要使用那个变量.</li>
+<li>static 表示静态的变量，分配内存的时候, 存储在静态区,不存储在栈上面.</li>
+</ul>
+<p>static 作用范围是内部链接的关系, 和extern有点相反.它和对象本身是分开存储的,extern也是分开存储的,但是extern可以被其他的对象用extern 引用,而static 不可以,只允许对象本身用它. 具体差别首先，static与extern是一对“水火不容”的家伙，也就是说extern和static不能同时修饰一个变量；其次，static修饰的全局变量声明与定义同时进行，也就是说当你在头文件中使用static声明了全局变量后，它也同时被定义了；最后，static修饰全局变量的作用域只能是本身的编译单元，也就是说它的“全局”只对本编译单元有效，其他编译单元则看不到它,如:</p>
+<p><strong>(1)</strong>test1.h :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> TEST1H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TEST1H</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">char</span> g_str[] = <span class="string">"123456"</span>; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span></span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>(2)</strong>test1.cpp :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"test1.h"</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span>  </span>&#123;   <span class="built_in">cout</span> &lt;&lt; g_str &lt;&lt; <span class="built_in">endl</span>;  &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>(3)</strong>test2.cpp :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"test1.h"</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun2</span><span class="params">()</span>  </span>&#123;   <span class="built_in">cout</span> &lt;&lt; g_str &lt;&lt; <span class="built_in">endl</span>;  &#125;</span><br></pre></td></tr></table></figure>
+<p>以上两个编译单元可以链接成功, 当你打开test1.obj时，你可以在它里面找到字符串”123456”,同时你也可以在test2.obj中找到它们，它们之所以可以链接成功而没有报重复定义的错误是因为虽然它们有相同的内容，但是存储的物理地址并不一样，就像是两个不同变量赋了相同的值一样，而这两个变量分别作用于它们各自的编译单元。 也许你比较较真，自己偷偷的跟踪调试上面的代码,结果你发现两个编译单元（test1,test2）的g_str的内存地址相同，于是你下结论static修饰的变量也可以作用于其他模块，但是我要告诉你，那是你的编译器在欺骗你，大多数编译器都对代码都有优化功能，以达到生成的目标程序更节省内存，执行效率更高，当编译器在链接各个编译单元的时候，它会把相同内容的内存只拷贝一份，比如上面的”123456”, 位于两个编译单元中的变量都是同样的内容，那么在链接的时候它在内存中就只会存在一份了，如果你把上面的代码改成下面的样子，你马上就可以拆穿编译器的谎言:</p>
+<p><strong>(1)</strong>test1.cpp:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"test1.h"</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    g_str[<span class="number">0</span>] = <span class="string">'a'</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; g_str &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>(2)</strong>test2.cpp :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"test1.h"</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun2</span><span class="params">()</span>  </span>&#123;  <span class="built_in">cout</span> &lt;&lt; g_str &lt;&lt; <span class="built_in">endl</span>;  &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>(3)</strong> : </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span>     </span>&#123;</span><br><span class="line">    fun1(); <span class="comment">// a23456</span></span><br><span class="line">    fun2(); <span class="comment">// 123456</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个时候你在跟踪代码时，就会发现两个编译单元中的<code>g_str</code>地址并不相同，因为你在一处修改了它，所以编译器被强行的恢复内存的原貌，在内存中存在了两份拷贝给两个模块中的变量使用。正是因为static有以上的特性，所以一般定义static全局变量时，都把它放在原文件中而不是头文件，这样就不会给其他模块造成不必要的信息污染，同样记住这个原则吧！</p>
+<h1 id="extern-和const"><a href="#extern-和const" class="headerlink" title="extern 和const"></a>extern 和const</h1><p>C++中const修饰的全局常量据有跟static相同的特性，即它们只能作用于本编译模块中，但是const可以与extern连用来声明该常量可以作用于其他编译模块中, 如extern const char g_str[];<br>然后在原文件中别忘了定义:     const char g_str[] = “123456”; </p>
+<p>所以当const单独使用时它就与static相同，而当与extern一起合作的时候，它的特性就跟extern的一样了！所以对const我没有什么可以过多的描述，我只是想提醒你，<code>const char* g_str = &quot;123456&quot;</code> 与 <code>const char g_str[] =&quot;123465&quot;</code>是不同的， 前面那个const 修饰的是</p>
+<p><code>char *</code></p>
+<p>而不是<code>g_str</code>,它的<code>g_str</code>并不是常量，它被看做是一个定义了的全局变量（可以被其他编译单元使用）， 所以如果你像让<code>char*g_str</code>遵守const的全局常量的规则，最好这么定义<code>const char* const g_str=&quot;123456&quot;</code>.</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/07/13/PHP的超级全局变量/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/07/13/PHP的超级全局变量/" itemprop="url">PHP的超级全局变量小结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-07-13T19:29:22+00:00">
+                2015-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Script/" itemprop="url" rel="index">
+                    <span itemprop="name">Script</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="PHP-超级全局变量概绍"><a href="#PHP-超级全局变量概绍" class="headerlink" title="PHP 超级全局变量概绍"></a>PHP 超级全局变量概绍</h1><blockquote>
+<p>PHP中预定义了几个超级全局变量（superglobals） ，</p>
+</blockquote>
+<p>这意味着它们在一个脚本的全部作用域中都可用。</p>
+<p> 你不需要特别说明，就可以在函数及类中使用。</p>
+<p>PHP 超级全局变量列表:</p>
+<ul>
+<li>$GLOBALS</li>
+<li>$_SERVER</li>
+<li>$_REQUEST</li>
+<li>$_POST</li>
+<li>$_GET</li>
+<li>$_FILES</li>
+<li>$_ENV</li>
+<li>$_COOKIE</li>
+<li>$_SESSION</li>
+</ul>
+<h1 id="GLOBALS"><a href="#GLOBALS" class="headerlink" title="$GLOBALS"></a>$GLOBALS</h1><p>$GLOBALS 是PHP的一个超级全局变量组，</p>
+<p>在一个PHP脚本的全部作用域中都可以访问。</p>
+<p>$GLOBALS 是一个包含了全部变量的全局组合数组。变量的名字就是数组的键。</p>
+<p>以下实例介绍了如何使用超级全局变量 $GLOBALS:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">$x = 75; </span><br><span class="line">$y = 25;</span><br><span class="line"> </span><br><span class="line">function addition() </span><br><span class="line">&#123; </span><br><span class="line">$GLOBALS[&apos;z&apos;] = $GLOBALS[&apos;x&apos;] + $GLOBALS[&apos;y&apos;]; </span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">addition(); </span><br><span class="line">echo $z; </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>以上实例中 z 是一个$GLOBALS数组中的超级全局变量，<br>该变量同样可以在函数外访问。</p>
+</blockquote>
+<h1 id="SERVER"><a href="#SERVER" class="headerlink" title="$_SERVER"></a>$_SERVER</h1><p>$_SERVER 是一个包含了诸如头信息(header)、路径(path)、以及脚本位置(script locations)等等信息的数组。</p>
+<p>这个数组中的项目由 Web 服务器创建。</p>
+<p>不能保证每个服务器都提供全部项目；服务器可能会忽略一些，或</p>
+<p>者提供一些没有在这里列举出来的项目。</p>
+<p>以下实例中展示了如何使用$_SERVER中的元素:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">echo $_SERVER[&apos;PHP_SELF&apos;];</span><br><span class="line">echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">echo $_SERVER[&apos;SERVER_NAME&apos;];</span><br><span class="line">echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">echo $_SERVER[&apos;HTTP_HOST&apos;];</span><br><span class="line">echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">echo $_SERVER[&apos;HTTP_REFERER&apos;];</span><br><span class="line">echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">echo $_SERVER[&apos;HTTP_USER_AGENT&apos;];</span><br><span class="line">echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">echo $_SERVER[&apos;SCRIPT_NAME&apos;];</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="REQUEST"><a href="#REQUEST" class="headerlink" title="$_REQUEST"></a>$_REQUEST</h1><p>PHP $_REQUEST 用于收集HTML表单提交的数据。</p>
+<p>以下实例显示了一个输入字段（input）及提交按钮(submit)的表单(form)。</p>
+<p> 当用户通过点击 “Submit” 按钮提交表单数据时, </p>
+<p> 表单数据将发送至<form>标签中 action 属性中指定的脚本文件。</form></p>
+<p> 在这个实例中，我们指定文件来处理表单数据。</p>
+<p> 如果你希望其他的PHP文件来处理该数据，你可以修改该指定的脚本文件名。</p>
+<p> 然后，我们可以使用超级全局变量 $_REQUEST 来收集表单中的 input 字段数据:</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> &lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;form method=&quot;post&quot; action=&quot;&lt;?php echo $_SERVER[&apos;PHP_SELF&apos;];?&gt;&quot;&gt;</span><br><span class="line">Name: &lt;input type=&quot;text&quot; name=&quot;fname&quot;&gt;</span><br><span class="line">&lt;input type=&quot;submit&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;?php </span><br><span class="line">$name = $_REQUEST[&apos;fname&apos;]; </span><br><span class="line">echo $name; </span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="POST"><a href="#POST" class="headerlink" title="$_POST"></a>$_POST</h1><p>PHP $_POST 被广泛应用于收集表单数据，</p>
+<p>在HTML form标签的指定该属性：”method=”post”。</p>
+<p>以下实例显示了一个输入字段（input）及提交按钮(submit)的表单(form)。</p>
+<p>当用户通过点击 “Submit” 按钮提交表单数据时, </p>
+<p>表单数据将发送至<form>标签中 action 属性中指定的脚本文件。 </form></p>
+<p>在这个实例中，我们指定文件来处理表单数据。</p>
+<p>如果你希望其他的PHP文件来处理该数据，你可以修改该指定的脚本文件名。</p>
+<p>然后，我们可以使用超级全局变量 $_POST 来收集表单中的 input 字段数据:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;form method=&quot;post&quot; action=&quot;&lt;?php echo $_SERVER[&apos;PHP_SELF&apos;];?&gt;&quot;&gt;</span><br><span class="line">Name: &lt;input type=&quot;text&quot; name=&quot;fname&quot;&gt;</span><br><span class="line">&lt;input type=&quot;submit&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;?php </span><br><span class="line">$name = $_POST[&apos;fname&apos;]; </span><br><span class="line">echo $name; </span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="GET"><a href="#GET" class="headerlink" title="$_GET"></a>$_GET</h1><p>PHP $_GET 同样被广泛应用于收集表单数据，</p>
+<p>在HTML form标签的指定该属性：”method=”get”。</p>
+<p>$_GET 也可以收集URL中发送的数据。</p>
+<p>假定我们有一个包含参数的超链接HTML页面：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;a href=&quot;test_get.php?subject=PHP&amp;web=runoob.com&quot;&gt;Test $GET&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>当用户点击链接 “Test $GET”, 参数 “subject” 和 “web” 将发送至”test_get.php”,</p>
+<p>你可以在 “test_get.php” 文件中使用 $_GET 变量来获取这些数据。</p>
+<p>以下实例显示了 “test_get.php” 文件的代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;?php </span><br><span class="line">echo &quot;Study &quot; . $_GET[&apos;subject&apos;] . &quot; at &quot; . $_GET[&apos;web&apos;];</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<h1 id="REQUEST、-POST、-GET的区别和联系小结"><a href="#REQUEST、-POST、-GET的区别和联系小结" class="headerlink" title="$_REQUEST、$_POST、$_GET的区别和联系小结"></a>$_REQUEST、$_POST、$_GET的区别和联系小结</h1><h2 id="1-REQUEST"><a href="#1-REQUEST" class="headerlink" title="1. $_REQUEST"></a>1. $_REQUEST</h2><p>php中$_REQUEST可以获取以POST方法和GET方法提交的数据，但是速度比较慢 </p>
+<h2 id="2-GET"><a href="#2-GET" class="headerlink" title="2. $_GET"></a>2. $_GET</h2><p>用来获取由浏览器通过GET方法提交的数据。GET方法他是通过把参数数据加在提交表单的action属性所指的URL中，值和表单内每个字段一一对应，然后在URL中可以看到，但是有如下缺点： </p>
+<ul>
+<li><ol>
+<li>安全性不好，在URL中可以看得到 </li>
+</ol>
+</li>
+<li><ol>
+<li>传送数据量较小，不能大于2KB。 </li>
+</ol>
+</li>
+</ul>
+<h2 id="3-POST"><a href="#3-POST" class="headerlink" title="3. $_POST"></a>3. $_POST</h2><p>用来获取由浏览器通过POST方法提交的数据。POST方法他是通过HTTP POST机制，将表单的各个字段放置在HTTP HEADER内一起传送到action属性所指的URL地址中，用户看不到这个过程。他提交的大小一般来说不受限制，但是具体根据服务器的不同，还是略有不同。相对于_GET方式安全性略高 </p>
+<h2 id="4-REQUEST、-POST、-GET-的区别和联系"><a href="#4-REQUEST、-POST、-GET-的区别和联系" class="headerlink" title="4. $_REQUEST、$_POST、$_GET 的区别和联系"></a>4. $_REQUEST、$_POST、$_GET 的区别和联系</h2><p>$_REQUEST[“参数”]具用$_POST[“参数”] $_GET[“参数”]的功能,但是$_REQUEST[“参数”]比较慢。通过post和get方法提交的所有数据都可以通过$_REQUEST数组[“参数”]获得</p>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2015/07/11/redis概要之数据类型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/07/11/redis概要之数据类型/" itemprop="url">redis概要之数据类型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-07-11T09:29:22+00:00">
+                2015-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DB/" itemprop="url" rel="index">
+                    <span itemprop="name">DB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="Redis简介要义"><a href="#Redis简介要义" class="headerlink" title="Redis简介要义"></a>Redis简介要义</h1><ul>
+<li><p>Redis运行在内存中但是可以持久化到磁盘, 重启的时候可以再次加载进行使用</p>
+</li>
+<li><p>Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行</p>
+</li>
+<li><p>Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作</p>
+</li>
+<li><p>Redis支持数据的备份，即master-slave模式的数据备份</p>
+</li>
+</ul>
+<h1 id="Redis数据类型"><a href="#Redis数据类型" class="headerlink" title="Redis数据类型"></a>Redis数据类型</h1><p>Redis的数据类型很重要, 这是他做很多事情的基础, 不理解的话很难用好</p>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/34/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><span class="page-number current">35</span><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/36/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

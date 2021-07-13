@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Base64,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="简单解释作者：郭无心链接：https://www.zhihu.com/question/36306744/answer/71626823来源：知乎著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。  我们知道在计算机中任何数据都是按ascii码存储的，而ascii码的128～255之间的值是不可见字符。而在网络上交换数据时，比如说从A地传到B地，往往要经过多个路由设备，由于不同的">
+<meta name="keywords" content="Base64">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Base64编码原理与应用">
+<meta property="og:url" content="https://hulinhong.com/2017/10/13/Base64编码原理与应用/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="简单解释作者：郭无心链接：https://www.zhihu.com/question/36306744/answer/71626823来源：知乎著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。  我们知道在计算机中任何数据都是按ascii码存储的，而ascii码的128～255之间的值是不可见字符。而在网络上交换数据时，比如说从A地传到B地，往往要经过多个路由设备，由于不同的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.xiayf.cn/2016/01/24/base64-encoding/media/14542616644295.jpg">
+<meta property="og:image" content="http://blog.xiayf.cn/2016/01/24/base64-encoding/media/14542967158550.jpg">
+<meta property="og:image" content="http://blog.xiayf.cn/2016/01/24/base64-encoding/media/14542966298000.jpg">
+<meta property="og:image" content="http://blog.xiayf.cn/2016/01/24/base64-encoding/media/14543011032759.jpg">
+<meta property="og:image" content="http://blog.xiayf.cn/2016/01/24/base64-encoding/media/14543057568109.jpg">
+<meta property="og:updated_time" content="2021-07-13T06:13:16.026Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Base64编码原理与应用">
+<meta name="twitter:description" content="简单解释作者：郭无心链接：https://www.zhihu.com/question/36306744/answer/71626823来源：知乎著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。  我们知道在计算机中任何数据都是按ascii码存储的，而ascii码的128～255之间的值是不可见字符。而在网络上交换数据时，比如说从A地传到B地，往往要经过多个路由设备，由于不同的">
+<meta name="twitter:image" content="http://blog.xiayf.cn/2016/01/24/base64-encoding/media/14542616644295.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>Base64编码原理与应用 | 烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/10/13/Base64编码原理与应用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Base64编码原理与应用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-13T12:22:54+00:00">
+                2017-10-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Misc/" itemprop="url" rel="index">
+                    <span itemprop="name">Misc</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-tags">
+              
+                <a href="/tags/Base64/" rel="tag"><i class="fa fa-tag"></i> Base64</a>
+              
+            </div>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/10/多人快节奏游戏五之演示Demo/" rel="next" title="多人快节奏游戏五之演示Demo">
+                <i class="fa fa-chevron-left"></i> 
+                <p class="post-nav-pre-next-title">
+                  多人快节奏游戏五之演示Demo
+                </p> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/16/vscode配置与技巧/" rel="prev" title="vscode配置与技巧">
+              <p class="post-nav-pre-next-title">
+                  vscode配置与技巧
+              </p> 
+              <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+        <h1 id="简单解释"><a href="#简单解释" class="headerlink" title="简单解释"></a>简单解释</h1><p>作者：郭无心<br>链接：<a href="https://www.zhihu.com/question/36306744/answer/71626823" target="_blank" rel="noopener">https://www.zhihu.com/question/36306744/answer/71626823</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<blockquote>
+<p>我们知道在计算机中任何数据都是按ascii码存储的，而ascii码的128～255之间的值是不可见字符。而在网络上交换数据时，比如说从A地传到B地，往往要经过多个路由设备，由于不同的设备对字符的处理方式有一些不同，这样那些不可见字符就有可能被处理错误，这是不利于传输的。</p>
+<p>所以就先把数据先做一个Base64编码，统统变成可见字符，这样出错的可能性就大降低了。</p>
+<p>对证书来说，特别是根证书，一般都是作Base64编码的，因为它要在网上被许多人下载。</p>
+<p>电子邮件的附件一般也作Base64编码的，因为一个附件数据往往是有不可见字符的。</p>
+<p>那么Base64到底是怎样编码的呢？简单来说，任何一个数据无非可以看作一个比特流，如01000100010011101100111010111100011001010……那么我们取6个比特为一组，计算它的ascii值，得到一个字符，这个字符肯定是可见字符，好，把它对应的字符写出来，再取6个比特，计算…，如此下去，直到最后，就完成了编码。</p>
+<p>1.标准base64只有64个字符（英文大小写、数字和+、/）以及用作后缀等号；2.base64是把3个字节变成4个可打印字符，所以base64编码后的字符串一定能被4整除（不算用作后缀的等号）；3.等号一定用作后缀，且数目一定是0个、1个或2个。</p>
+<p>这是因为如果原文长度不能被3整除，base64要在后面添加\0凑齐3n位。</p>
+<p>为了正确还原，添加了几个\0就加上几个等号。</p>
+<p>显然添加等号的数目只能是0、1或2；4.严格来说base64不能算是一种加密，只能说是编码转换。</p>
+<p>使用base64的初衷。</p>
+<p>是为了方便把含有不可见字符串的信息用可见字符串表示出来，以便复制粘贴</p>
+</blockquote>
+<p><strong>. . .</strong><a id="more"></a></p>
+<h1 id="详细解释"><a href="#详细解释" class="headerlink" title="详细解释"></a>详细解释</h1><p>转自<a href="http://blog.xiayf.cn/2016/01/24/base64-encoding/" target="_blank" rel="noopener">Base64编码原理与应用</a></p>
+<p></p><h2>Base64编码原理</h2><p></p>
+<p>Base64编码之所以称为Base64，是因为其使用64个字符来对任意数据进行编码，同理有Base32、Base16编码。标准Base64编码使用的64个字符为：</p><br><p><img src="http://blog.xiayf.cn/2016/01/24/base64-encoding/media/14542616644295.jpg" height="600px"></p><br><p>这64个字符是各种字符编码（比如ASCII编码）所使用字符的子集，基本，并且可打印。唯一有点特殊的是最后两个字符，因对最后两个字符的选择不同，Base64编码又有很多变种，比如Base64 URL编码。</p><br><p>Base64编码本质上是一种将二进制数据转成文本数据的方案。对于非二进制数据，是先将其转换成二进制形式，然后每连续6比特（2的6次方=64）计算其十进制值，根据该值在上面的索引表中找到对应的字符，最终得到一个文本字符串。</p><br><p>假设我们要对 <code>Hello!</code> 进行Base64编码，按照ASCII表，其转换过程如下图所示：</p><br><p><img alt src="http://blog.xiayf.cn/2016/01/24/base64-encoding/media/14542967158550.jpg"></p><br><p>可知 <code>Hello!</code> 的Base64编码结果为 <code>SGVsbG8h</code> ，原始字符串长度为6个字符，编码后长度为8个字符，每3个原始字符经Base64编码成4个字符，编码前后长度比4/3，这个长度比很重要 - 比原始字符串长度短，则需要使用更大的编码字符集，这并不我们想要的；长度比越大，则需要传输越多的字符，传输时间越长。Base64应用广泛的原因是在字符集大小与长度比之间取得一个较好的平衡，适用于各种场景。</p><br><p>是不是觉得Base64编码原理很简单？</p><br><p>但这里需要注意一个点：Base64编码是每3个原始字符编码成4个字符，如果原始字符串长度不能被3整除，那怎么办？使用0值来补充原始字符串。</p><br><p>以 <code>Hello!!</code> 为例，其转换过程为：</p><br><p><img alt src="http://blog.xiayf.cn/2016/01/24/base64-encoding/media/14542966298000.jpg"></p><br><p><em>注：图表中蓝色背景的二进制0值是额外补充的。</em></p><br><p><code>Hello!!</code> Base64编码的结果为 <code>SGVsbG8hIQAA</code> 。最后2个零值只是为了Base64编码而补充的，在原始字符中并没有对应的字符，那么Base64编码结果中的最后两个字符 <code>AA</code> 实际不带有效信息，所以需要特殊处理，以免解码错误。</p><br><p>标准Base64编码通常用 <code>=</code> 字符来替换最后的 <code>A</code>，即编码结果为 <code>SGVsbG8hIQ==</code>。因为 <code>=</code> 字符并不在Base64编码索引表中，其意义在于结束符号，在Base64解码时遇到 <code>=</code> 时即可知道一个Base64编码字符串结束。</p><br><p>如果Base64编码字符串不会相互拼接再传输，那么最后的 <code>=</code> 也可以省略，解码时如果发现Base64编码字符串长度不能被4整除，则先补充 <code>=</code> 字符，再解码即可。</p><br><p>解码是对编码的逆向操作，但注意一点：<strong>对于最后的两个 <code>=</code> 字符，转换成两个 <code>A</code> 字符，再转成对应的两个6比特二进制0值，接着转成原始字符之前，需要将最后的两个6比特二进制0值丢弃，因为它们实际上不携带有效信息</strong>。</p><br><p>为了理解Base64编码解码过程，个人实现了一个非常简陋的Base64编码解码程序，见：<a href="https://github.com/youngsterxyf/xiaBase64" target="_blank" rel="noopener">youngsterxyf/xiaBase64</a>。</p><br><p>由于Base64应用广泛，所以很多编程语言的标准库都内置Base64编码解码包，如：</p><br><ul><br><li>PHP：<a href="http://php.net/manual/en/function.base64-encode.php" target="_blank" rel="noopener">base64_encode</a>、<a href="http://php.net/manual/en/function.base64-decode.php" target="_blank" rel="noopener">base64_decode</a> </li><br><li>Python：<a href="https://docs.python.org/2/library/base64.html" target="_blank" rel="noopener">base64包</a></li><br><li>Go：<a href="https://golang.org/pkg/encoding/base64/" target="_blank" rel="noopener">encoding/base64</a></li><br><li>…</li><br></ul><br><h2>Base64编码应用</h2><br><p>本文开始提到的青云应用例子只是Base64编码的应用场景之一。由于Base64编码在字符集大小与编码后数据长度之间做了较好的平衡，以及Base64编码变种形式的多样，使得Base64编码的应用场景非常广泛。下面举2个常用常见的例子。</p><br><h3>HTML内嵌Base64编码图片</h3><br><p>前端在实现页面时，对于一些简单图片，通常会选择将图片内容直接内嵌在页面中，避免不必要的外部资源加载，增大页面加载时间，但是图片数据是二进制数据，该怎么嵌入呢？<a href="http://caniuse.com/#search=Data%20URI" target="_blank" rel="noopener">绝大多数现代浏览器</a>都支持一种名为 <code>Data URLs</code> 的特性，允许使用Base64对图片或其他文件的二进制数据进行编码，将其作为文本字符串嵌入网页中。以百度搜索首页为例，其中语音搜索的图标是个背景图片，其内容以 <code>Data URLs</code> 形式直接写在css中，这个css内容又直接嵌在HTML页面中，如下图所示：</p><br><p><img alt src="http://blog.xiayf.cn/2016/01/24/base64-encoding/media/14543011032759.jpg"></p><br><p><code>Data URLs</code> 格式为：<code>url(data:文件类型;编码方式,编码后的文件内容)</code>。</p><br><p>当然，也可以直接基于image标签嵌入图片，如下所示：</p><br><div class="highlight"><pre><span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">&quot;Embedded Image&quot;</span> <span class="na">src=</span><span class="s">&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIA…&quot;</span> <span class="nt">/&gt;</span><br></pre></div><br><br><br><p>但请注意：如果图片较大，图片的色彩层次比较丰富，则不适合使用这种方式，因为其Base64编码后的字符串非常大，会明显增大HTML页面，影响加载速度。</p><br><h3>MIME（多用途互联网邮件扩展）</h3><br><p>我们的电子邮件系统，一般是使用SMTP（简单邮件传输协议）将邮件从客户端发往服务器端，邮件客户端使用POP3（邮局协议，第3版本）或IMAP（交互邮件访问协议）从服务器端获取邮件。</p><br><p>SMTP协议一开始是基于纯ASCII文本的，对于二进制文件（比如邮件附件中的图像、声音等）的处理并不好，所以后来新增MIME标准来编码二进制文件，使其能够通过SMTP协议传输。</p><br><p>举例来说，我给自己发封邮件，正文为空，带一个名为hello.txt的附件，内容为 <code>您好！世界！</code>。导出邮件源码，其关键部分如下图所示：</p><br><p><img src="http://blog.xiayf.cn/2016/01/24/base64-encoding/media/14543057568109.jpg" height="400px"></p><br><p><code>MIME-Version: 1.0</code>：表示当前使用MIME标准1.0版本。</p><br><p><code>Content-Type: text/plain; name=”hello.txt”</code>：表示附件文件名为 <code>hello.txt</code> ，格式为纯文本。</p><br><p><code>Content-Transfer-Encoding: base64</code>：表示附件文件内容使用base64编码后传输。</p><br><p><code>5oKo5aW977yM5LiW55WM77yB</code>：则是文件内容 <code>您好，世界！</code> Base64编码后的结果。</p><br><p>不过，MIME使用的不是标准Base64编码。</p><br><h2>切忌误用</h2><br><p>可能会有人在不理解Base64编码的情况下，将其误用于数据加密或数据校验。</p><br><p>Base64是一种数据编码方式，目的是让数据符合传输协议的要求。标准Base64编码解码无需额外信息即完全可逆，即使你自己自定义字符集设计一种类Base64的编码方式用于数据加密，在多数场景下也较容易破解。</p><br><p>对于数据加密应该使用专门的<strong>目前还没有有效方式快速破解的</strong>加密算法。比如：对称加密算法<code>AES-128-CBC</code>，对称加密需要密钥，只要密钥没有泄露，通常难以破解；也可以使用非对称加密算法，如 <code>RSA</code>，利用极大整数因数分解的计算量极大这一特点，使得使用公钥加密的数据，只有使用私钥才能快速解密。</p><br><p>对于数据校验，也应该使用专门的消息认证码生成算法，如 <code>HMAC</code> - 一种使用单向散列函数构造消息认证码的方法，其过程是不可逆的、唯一确定的，并且使用密钥来生成认证码，其目的是防止数据在传输过程中被篡改或伪造。将原始数据与认证码一起传输，数据接收端将原始数据使用相同密钥和相同算法再次生成认证码，与原有认证码进行比对，校验数据的合法性。</p><br><p>那么针对各大网站被脱库的问题，请问应该怎么存储用户的登录密码？</p><br><p>答案是：在注册时，根据用户设置的登录密码，生成其消息认证码，然后存储用户名和消息认证码，不存储原始密码。每次用户登录时，根据登录密码，生成消息认证码，与数据库中存储的消息认证码进行比对，以确认是否为有效用户，这样即使网站被脱库，用户的原始密码也不会泄露，不会为用户使用的其他网站带来账号风险。</p><br><p>当然，使用的消息认证码算法其哈希碰撞的概率应该极低才行，目前一般在HMAC算法中使用SHA256。对于这种方式需要注意一点：防止用户使用弱密码，否则也可能会被暴力破解。现在的网站一般要求用户密码6个字符以上，并且同时有数字和大小写字母，甚至要求有特殊字符。</p><br><p>另外，也可以使用加入随机salt的哈希算法来存储校验用户密码。这里暂不细述。</p><br><h2>总结</h2><br><p>Base64兼顾字符集大小和编码后数据长度，并且可以灵活替换字符集的最后两个字符，以应对多样的需求，使其适用场景非常广泛。</p><br><p>当然，很多场景下有多种编码方式可选择，并非Base64编码不可，视需求，权衡利弊而定。</p>
+
+
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Base64/" rel="tag"><i class="fa fa-tag"></i> Base64</a>
+            
+          </div>
+        
+
+        
+        
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2017/10/10/多人快节奏游戏五之演示Demo/" rel="next" title="多人快节奏游戏五之演示Demo">
+                  <i class="fa fa-chevron-left"></i> 
+                  <p class="post-nav-pre-next-title">
+                    多人快节奏游戏五之演示Demo
+                  </p> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2017/10/16/vscode配置与技巧/" rel="prev" title="vscode配置与技巧">
+                <p class="post-nav-pre-next-title">
+                    vscode配置与技巧
+                </p> 
+                <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单解释"><span class="nav-number">1.</span> <span class="nav-text">简单解释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#详细解释"><span class="nav-number">2.</span> <span class="nav-text">详细解释</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Base64%E7%BC%96%E7%A0%81%E5%8E%9F%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">Base64编码原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Base64%E7%BC%96%E7%A0%81%E5%BA%94%E7%94%A8"><span class="nav-number">2.2.</span> <span class="nav-text">Base64编码应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML%E5%86%85%E5%B5%8CBase64%E7%BC%96%E7%A0%81%E5%9B%BE%E7%89%87"><span class="nav-number">2.2.1.</span> <span class="nav-text">HTML内嵌Base64编码图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MIME%EF%BC%88%E5%A4%9A%E7%94%A8%E9%80%94%E4%BA%92%E8%81%94%E7%BD%91%E9%82%AE%E4%BB%B6%E6%89%A9%E5%B1%95%EF%BC%89"><span class="nav-number">2.2.2.</span> <span class="nav-text">MIME（多用途互联网邮件扩展）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%87%E5%BF%8C%E8%AF%AF%E7%94%A8"><span class="nav-number">2.3.</span> <span class="nav-text">切忌误用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>

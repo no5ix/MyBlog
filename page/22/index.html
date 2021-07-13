@@ -1,0 +1,2252 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+          // alert('此文章并不公开, 输入文章密码方可阅读');
+          var password = prompt('此文章并不公开, 输入文章密码方可阅读');
+          if (password !== ''){
+            if (password != null) // 如果用户点击了确认而且密码错误的时候, 因为当password == null的时候说明用户点了取消
+            {
+              alert('Error!');
+            }
+            if (history.length > 1)
+            {
+              history.back();
+            }
+            else
+            {
+              window.location.href = "about:blank";
+            }
+          }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/dist/jquery.fancybox.css?v=3.2.10" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="烫">
+<meta property="og:url" content="https://hulinhong.com/page/22/index.html">
+<meta property="og:site_name" content="烫">
+<meta property="og:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="烫">
+<meta name="twitter:description" content="推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"scrollpercent":true,"onmobile":true,"dimmer":true,"body_content_height":0,"display_duration":150},
+    local_search: {"enable":true,"trigger":"auto","top_n_per_article":1},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"duration":222,"transition":{"header":"slideDownIn","menu":"slideDownIn","logo":"slideDownIn","post_block_else":"slideDownIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideDownIn","footer":"slideDownIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+  <title>烫 - 烫烫烫烫烫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">烫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">烫烫烫烫烫</p>
+      
+  </div>
+
+  <div class="menu-item sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="menu-item site-search">
+    
+  
+  <form class="site-search-form">
+    <span class="search-icon fa fa-search"></span>
+    <input type="text" id="local-search-input" class="st-search-input">
+    <i id="local-search-close">×</i>
+  </form>
+
+
+<script type="text/javascript" id="local.search.active">
+var inputArea       = document.querySelector("#local-search-input");
+inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script>
+
+
+
+  </div>
+  <div id="local-search-result-pc" class="local-search-result-cls"></div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+       
+    </ul>
+  
+
+  
+    
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <div id="local-search-result-mobile" class="local-search-result-cls"></div>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/02/09/kbe_installation_tutorial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/02/09/kbe_installation_tutorial/" itemprop="url">kbe之1分钟完成安装</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-09T12:38:21+00:00">
+                2017-02-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Misc/" itemprop="url" rel="index">
+                    <span itemprop="name">Misc</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="KBEngine概绍"><a href="#KBEngine概绍" class="headerlink" title="KBEngine概绍"></a>KBEngine概绍</h1><p>根据之前的博文 <a href="/2016/07/11/%E6%B8%B8%E6%88%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%B8%B8%E7%94%A8%E6%9E%B6%E6%9E%84%E4%BA%8C/#第三代游戏服务器-2007">游戏服务端常用架构</a></p>
+<p>属于第三代服务端框架，可能类似于图10。（这个理解不确定）<br>Kbengine引擎应该是对图10中的Gate服务器和NODE和OBJ进行了细分。在功能上大体划分为与位置有关（在Kbengine中称为Cellapp）和与位置无关（在Kbengine中称为Baseapp）。类似于下面的示图架构。</p>
+<p><img src="/img/kbe_installation_tutorial/kbe_introduction.png" alt="kbe_introduction"></p>
+<h1 id="KBE安装介绍"><a href="#KBE安装介绍" class="headerlink" title="KBE安装介绍"></a>KBE安装介绍</h1><blockquote>
+<p>官方是有自动化的安装py脚本的, 不过还是有很多小坑的.<br>不过其实脚本主要也就是只做两件事, 其他都是可选的: </p>
+<ul>
+<li>配置环境变量</li>
+<li>安装mysql</li>
+</ul>
+</blockquote>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/02/08/多级指针与多维数组详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/02/08/多级指针与多维数组详解/" itemprop="url">多级指针与多维数组详解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-08T21:10:10+00:00">
+                2017-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPP/" itemprop="url" rel="index">
+                    <span itemprop="name">CPP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <p>指针与数组是 C/C++ 编程中非常重要的元素，同时也是较难以理解的。其中，多级指针与 “多维” 数组更是让很多人云里雾里，其实，只要掌握一定的方法，理解多级指针和 “多维” 数组完全可以像理解一级指针和一维数组那样简单。</p>
+<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><p>首先，先声明一些常识，如果你对这些常识还不理解，请先去弥补一下基础知识：</p>
+<ul>
+<li><p>实际上并不存在多维数组，所谓的多维数组本质上是用一维数组模拟的。</p>
+</li>
+<li><p>数组名是一个常量（意味着不允许对其进行赋值操作），其代表数组首元素的地址。</p>
+</li>
+<li><p>数组与指针的关系是因为数组下标操作符[]，比如，int a[3][2]相当于<em>(</em>(a+3)+2) 。</p>
+</li>
+<li><p>指针是一种变量，也具有类型，其占用内存空间大小和系统有关，一般32位系统下，sizeof(指针变量)=4。</p>
+</li>
+<li><p>指针可以进行加减算术运算，加减的基本单位是sizeof(指针所指向的数据类型)。</p>
+</li>
+<li><p>对数组的数组名进行取地址(&amp;)操作，其类型为整个数组类型。</p>
+</li>
+<li><p>对数组的数组名进行sizeof运算符操作，其值为整个数组的大小(以字节为单位)。</p>
+</li>
+<li><p>数组作为函数形参时会<strong>退化</strong>为指针。</p>
+</li>
+</ul>
+<h1 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h1><p>一个指针包含两方面：</p>
+<ul>
+<li>地址值；</li>
+<li>所指向的数据类型。</li>
+</ul>
+<p>解引用操作符（dereference operator）会根据指针当前的地址值，以及所指向的数据类型，访问一块连续的内存空间（大小由指针所指向的数据类型决定），将这块空间的内容转换成相应的数据类型，并返回左值。</p>
+<p>有时候，两个指针的值相同，但数据类型不同，解引用取到的值也是不同的，例如，<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> str[] =&#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;       <span class="comment">/* 以字符的 ASCII 码初始化 */</span>  </span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> * pc = &amp;str[<span class="number">0</span>];        <span class="comment">/* pc 指向 str[0]，即 0 */</span>  </span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> * pi = (<span class="keyword">int</span> *) pc;      <span class="comment">/* 指针的 “值” 是个地址，32 位。 */</span></span><br></pre></td></tr></table></figure></p>
+<p>此时，pc 和 pi 同时指向 str[0]，但 <em> pc 的值为 0（即，ASCII 码值为 0 的字符）；而 </em> pi 的值为 50462976。或许把它写成十六进制会更容易理解：0x03020100（4 个字节分别为 3,2,1,0）。我想你已经明白了，因为小端字节序, 且指针 pi 指向的类型为 int，因此在解引用时，需要访问 4 个字节的连续空间，并将其转换为 int 返回。</p>
+<h1 id="一维数组与数组指针"><a href="#一维数组与数组指针" class="headerlink" title="一维数组与数组指针"></a>一维数组与数组指针</h1><p>假如有一维数组如下：</p>
+<p><code>char a[3];</code></p>
+<p>该数组一共有 3 个元素，元素的类型为 char，如果想定义一个指针指向该数组，也就是如果想把数组名 a 赋值给一个指针变量，那么该指针变量的类型应该是什么呢？前文说过，一个数组的数组名代表其首元素的地址，也就是相当于 &amp; a[0]，而 a[0] 的类型为 char，因此 &amp; a[0] 类型为 <code>char *</code>，因此，可以定义如下的指针变量：  </p>
+<p><code>char * p = a;//相当于char * p = &amp;a[0]</code></p>
+<p>以上文字可用如下内存模型图表示。</p>
+<img src="/2017/02/08/多级指针与多维数组详解/1.png">
+<p>大家都应该知道，a 和 &amp; a[0] 代表的都是数组首元素的地址，而如果你将 &amp; a 的值打印出来，会发现<strong>该值也等于数组首元素的地址</strong>。请注意我这里的措辞，也就是说，&amp;a 虽然在数值上也等于数组首元素地址的值，但是其类型并不是数组首元素地址类型，也就是<code>char *p = &amp;a</code>是错误的。</p>
+<p>前文第 6 条常识已经说过，对数组名进行取地址操作，其类型为整个数组，因此，&amp;a 的类型是 char (*)[3]，所以正确的赋值方式如下: </p>
+<p><code>char (*p)[3] = &amp;a;</code></p>
+<p><strong>注意</strong>：</p>
+<ul>
+<li>很多人对类似于<code>a+1,&amp;a+1,&amp;a[0]+1,sizeof(a),sizeof(&amp;a)</code>等感到迷惑，其实只要搞清楚指针的类型就可以迎刃而解。比如在面对 a+1 和 &amp; a+1 的区别时，由于 a 表示数组首元素地址，其类型为 <code>char *</code>，因此 a+1 相当于数组首地址值 + sizeof(char)；而 &amp; a 的类型为<code>char (*)[3]</code>，代表整个数组，因此 &amp; a+1 相当于数组首地址值 + sizeof(a)。</li>
+<li>sizeof(a) 代表整个数组大小，前文第 7 条说明，但是无论数组大小如何，sizeof(&amp;a) 永远等于一个指针变量占用空间的大小，具体与系统平台有关</li>
+</ul>
+<h1 id="二维数组与数组指针"><a href="#二维数组与数组指针" class="headerlink" title="二维数组与数组指针"></a>二维数组与数组指针</h1><p>假如有如下二维数组：</p>
+<p><code>char a[3][2];</code></p>
+<p>由于实际上并不存在多维数组，因此，可以将 a[3][2] 看成是一个具有 3 个元素的一维数组，只是这三个元素分别又是一个一维数组。实际上，在内存中，该数组的确是按照一维数组的形式存储的，存储顺序为 (低地址在前)：a[0][0]、a[0][1]、a[1][0]、a[1][1]、a[2][0]、a[2][1]。(此种方式也不是绝对，也有按列优先存储的模式)</p>
+<p>为了方便理解，我画了一张逻辑上的内存图，之所以说是逻辑上的，是因为该图只是便于理解，并不是数组在内存中实际的存储模型（实际模型为前文所述）。</p>
+<img src="/2017/02/08/多级指针与多维数组详解/2.png">
+<p>如上图所示，我们可以将数组分成两个维度来看，首先是第一维，将 a[3][2] 看成一个具有三个元素的一维数组，元素分别为：a[0]、a[1]、a[2]，其中，a[0]、a[1]、a[2] 又分别是一个具有两个元素的一维数组 (元素类型为 char)。从第二个维度看，此处可以<strong>将 a[0]、a[1]、a[2] 看成自己代表” 第二维” 数组的数组名，</strong>以 a[0]为例，<code>a[0]</code>(数组名)代表的一维数组是一个具有两个 char 类型元素的数组，而 a[0]是这个数组的数组名 (代表数组首元素地址)，因此 a[0] 类型为 <code>char *</code>，同理 a[1]和 a[2]类型都是 <code>char *</code>。而 a 是第一维数组的数组名，代表首元素地址，而首元素是一个具有两个 char 类型元素的一维数组，因此 a 就是一个指向具有两个 char 类型元素数组的数组指针，也就是 char(*)[2]。</p>
+<p>也就是说，如下的赋值是正确的:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> (*p)[<span class="number">2</span>]  = a;  <span class="comment">//a为第一维数组的数组名，类型为char (*)[2]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> * p = a[<span class="number">0</span>];   <span class="comment">//a[0]维第二维数组的数组名，类型为char *</span></span><br></pre></td></tr></table></figure>
+<p>同样，对 a 取地址操作代表整个数组的首地址，类型为数组类型 (请允许我暂且这么称呼)，也就是 char (*)[3][2]，所以如下赋值是正确的：  </p>
+<p><code>char (*p)[3][2] = &amp;a;</code></p>
+<p>若做如下定义：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">3</span>][<span class="number">4</span>] = &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>&#125;;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> ** p;  </span><br><span class="line"></span><br><span class="line">p = (<span class="keyword">int</span>**)a;       <span class="comment">// 不做强制类型转换会报错</span></span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<ul>
+<li><p>p 是一个二级指针，它首先是一个指针，指向一个 int*；</p>
+</li>
+<li><p>a 是二维数组名，它首先是一个指针，指向一个含有 4 个元素的 int 数组；</p>
+</li>
+</ul>
+<p>由此可见，a 和 p 的类型并不相同，如果想将 a 赋值给 p，需要强制类型转换。</p>
+<h2 id="为什么二维数组名传递给二级指针是不安全的？"><a href="#为什么二维数组名传递给二级指针是不安全的？" class="headerlink" title="为什么二维数组名传递给二级指针是不安全的？"></a>为什么二维数组名传递给二级指针是不安全的？</h2><p>假如我们将 a 强制转换之后赋值给 p : </p>
+<p><code>p = (int**)a;</code></p>
+<p>既然 p 是二级指针，那么 当 <code>**p</code> 时会出什么问题呢？</p>
+<ul>
+<li><p>首先看一下 p 的值，p 指向 a[0][0]，即 p 的值为 a[0][0] 的地址；</p>
+</li>
+<li><p>再看一下 <em> p 的值，p 所指向的类型是 int</em>，占 4 字节，根据前面所讲的解引用操作符的过程：从 p 指向的地址开始，取连续 4 个字节的内容。 * p得到的正式 a[0][0] 的值，即 0。</p>
+</li>
+<li><p>再看一下 **p 的值，诶，报错了？当然报错了，因为你访问了地址为 0 的空间，而这个空间你是没有权限访问的。</p>
+</li>
+</ul>
+<h2 id="二维数组和二级指针相关的参数匹配"><a href="#二维数组和二级指针相关的参数匹配" class="headerlink" title="二维数组和二级指针相关的参数匹配"></a>二维数组和二级指针相关的参数匹配</h2><p><img src="http://img.blog.csdn.net/20160623113621428?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt></p>
+<h1 id="三维数组与数组指针"><a href="#三维数组与数组指针" class="headerlink" title="三维数组与数组指针"></a>三维数组与数组指针</h1><p>假设有三维数组：</p>
+<p><code>char a[3][2][2];</code></p>
+<p>同样，为了便于理解，特意画了如下的逻辑内存图。分析方法和二维数组类似，首先，从第一维角度看过去，a[3][2][2] 是一个具有三个元素 a[0]、a[1]、a[2] 的一维数组，只是这三个元素分别又是一个 “二维” 数组, a 作为第一维数组的数组名，代表数组首元素的地址，也就是一个指向一个二维数组的数组指针，其类型为 char (<em>)[2][2]。从第二维角度看过去，a[0]、a[1]、a[2] 分别是第二维数组的数组名，代表第二维数组的首元素的地址，也就是一个指向一维数组的数组指针，类型为 char(</em>)[2]；同理，从第三维角度看过去，a[0][0]、a[0][1]、a[1][0]、a[1][1]、a[2][0]、a[2][1] 又分别是第三维数组的数组名，代表第三维数组的首元素的地址，也就是一个指向 char 类型的指针，类型为 char *。</p>
+<img src="/2017/02/08/多级指针与多维数组详解/3.png">
+<p>由上可知，以下的赋值是正确的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> (*p)[<span class="number">3</span>][<span class="number">2</span>][<span class="number">2</span>] = &amp;a;<span class="comment">//对数组名取地址类型为整个数组</span></span><br><span class="line"><span class="keyword">char</span> (*p)[<span class="number">2</span>][<span class="number">2</span>]  = a;</span><br><span class="line"><span class="keyword">char</span> (*p) [<span class="number">2</span>]  = a[<span class="number">0</span>];<span class="comment">//或者a[1]、a[2]</span></span><br><span class="line"><span class="keyword">char</span> *p = a[<span class="number">0</span>][<span class="number">0</span>];<span class="comment">//或者a[0][1]、a[1][0]...</span></span><br></pre></td></tr></table></figure>
+<h1 id="多级指针"><a href="#多级指针" class="headerlink" title="多级指针"></a>多级指针</h1><p>所谓的多级指针，就是一个指向指针的指针，比如:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *p = <span class="string">"my name is chenyang."</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> **pp = &amp;p;<span class="comment">//二级指针</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> ***ppp = &amp;pp;<span class="comment">//三级指针</span></span><br></pre></td></tr></table></figure>
+<p>假设以上语句都位于函数体内，则可以使用下面的简化图来表达多级指针之间的指向关系。</p>
+<img src="/2017/02/08/多级指针与多维数组详解/4.png">
+<p>多级指针通常用来作为函数的形参，比如常见的 main 函数声明如下:</p>
+<p><code>int main(int argc,char ** argv)</code></p>
+<p>因为当数组用作函数的形参的时候，会退化为指针来处理，所以上面的形式和下面是一样的。</p>
+<p><code>int main(int argc,char* argv[])</code></p>
+<p>argv 用于接收用户输入的命令参数，这些参数会以字符串数组的形式传入，类似于:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//模拟用户传入的参数</span></span><br><span class="line"><span class="keyword">char</span> * parm[] = &#123;<span class="string">"parm1"</span>,<span class="string">"parm2"</span>,<span class="string">"parm3"</span>,<span class="string">"parm4"</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//模拟调用main函数，实际中main函数是由入口函数调用的(glibc中的入口函数默认为_start)</span></span><br><span class="line">main(<span class="keyword">sizeof</span>(parm)/<span class="keyword">sizeof</span>(<span class="keyword">char</span> *),parm);</span><br></pre></td></tr></table></figure>
+<p>多级指针的另一种常见用法是，假设用户想调用一个函数分配一段内存，那么分配的内存地址可以有两种方式拿到：第一种是通过函数的返回值，该种方式的函数声明如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> * <span class="title">get_memery</span><span class="params">(<span class="keyword">int</span> size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">void</span> *p = <span class="built_in">malloc</span>(size);</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第二种获取地址的方法是使用二级指针，代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_memery</span><span class="params">(<span class="keyword">int</span>** buf,<span class="keyword">int</span> size)</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    *buf = (<span class="keyword">int</span> *)<span class="built_in">malloc</span>(size);</span><br><span class="line">    <span class="keyword">if</span>(*buf == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> *p = <span class="literal">NULL</span>;</span><br><span class="line">get_memery(&amp;p,<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/01/27/ipc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/27/ipc/" itemprop="url">进程间的通信与同步</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-27T21:01:59+00:00">
+                2017-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="概绍"><a href="#概绍" class="headerlink" title="概绍"></a>概绍</h1><p>IPC 即 <strong>Inter Process Communication</strong>, 大概有以下几种方式(排序已打乱) :  </p>
+<ul>
+<li><p>6.<strong>共享内存</strong>( shared memory, 非常实用, 后文将说一下比较常用的两种方式, 分别是 <a href="#mmap">mmap</a> 和 <a href="#System-V共享内存">System V共享内存</a>  ) ：<br>共享内存就是映射一段能被其他进程所访问的内存，这段共享内存由一个进程创建，但多个进程都可以访问。共享内存是最快的 IPC 方式，它是针对其他进程间通信方式运行效率低而专门设计的。它往往与其他通信机制，如信号量，配合使用，来实现进程间的同步和通信。</p>
+</li>
+<li><p>3.<strong>信号量</strong>( semophore, 主要用来进程/线程间同步, 后文将会说 <a href="#System-V信号量">System V信号量</a>) ：<br>信号量是一个计数器，可以用来控制多个进程对共享资源的访问。它常作为一种锁机制，防止某进程正在访问共享资源时，其他进程也访问该资源。因此，主要作为进程间以及同一进程内不同线程之间的同步手段。</p>
+</li>
+<li><p>7.套接字( socket ) ：<br>套接字也是一种进程间通信机制，与其他通信机制不同的是，它可用于不同机器间的进程通信。</p>
+</li>
+<li><p>1.匿名管道( 英文为pipe, 这种IPC很原始 )：<br>匿名管道是一种半双工的通信方式，通常是在父子进程间使用。</p>
+</li>
+<li><p>2.命名管道 ( named pipe或FIFO, 这种IPC很原始 ) ：<br>命名管道也是半双工的通信方式，但是它允许无亲缘关系进程间的通信。</p>
+</li>
+<li><p>4.消息队列( message queue, 正在被淘汰 ) ：<br>消息队列是消息的链表，存放在内核中并由消息队列标识符标识。消息队列克服了信号传递信息少、管道只能承载无格式字节流以及缓冲区大小受限等缺点。</p>
+</li>
+<li><p>5.信号 ( sinal ) ：<br>信号是一种比较复杂的通信方式，用于通知接收进程某个事件已经发生。</p>
+</li>
+</ul>
+<h1 id="共享内存概绍"><a href="#共享内存概绍" class="headerlink" title="共享内存概绍"></a>共享内存概绍</h1><p>采用共享内存通信的一个显而易见的好处是效率高，因为进程可以直接读写内存，而不需要任何数据的拷贝。对于像管道和消息队列等通信方式，则需要在内核和用户空间进行四次的数据拷贝，而共享内存则只拷贝两次数据 [1]：一次从输入文件到共享内存区，另一次从共享内存区到输出文件。实际上，进程之间在共享内存时，并不总是读写少量数据后就解除映射，有新的通信时，再重新建立共享内存区域。而是保持共享区域，直到通信完毕为止，这样，数据内容一直保存在共享内存中，并没有写回文件。共享内存中的内容往往是在解除映射时才写回文件的。因此，采用共享内存的通信方式效率是非常高的。</p>
+<p>Linux 的 2.2.x 内核支持多种共享内存方式，如 mmap() 系统调用，Posix 共享内存，以及系统 V 共享内存。linux 发行版本如 Redhat 8.0 支持 mmap() 系统调用及系统 V 共享内存，但还没实现 Posix 共享内存，本文将主要介绍 mmap() 系统调用及系统 V 共享内存 API 的原理及应用。</p>
+<h2 id="内核怎样保证各个进程寻址到同一个共享内存区域的内存页面"><a href="#内核怎样保证各个进程寻址到同一个共享内存区域的内存页面" class="headerlink" title="内核怎样保证各个进程寻址到同一个共享内存区域的内存页面"></a>内核怎样保证各个进程寻址到同一个共享内存区域的内存页面</h2><ul>
+<li><p>1、page cache 及 swap cache 中页面的区分：一个被访问文件的物理页面都驻留在 page cache 或 swap cache 中，一个页面的所有信息由 struct page 来描述。struct page 中有一个域为指针 mapping ，它指向一个 struct address_space 类型结构。page cache 或 swap cache 中的所有页面就是根据 address_space 结构以及一个偏移量来区分的。</p>
+</li>
+<li><p>2、文件与 address_space 结构的对应：一个具体的文件在打开后，内核会在内存中为之建立一个 struct inode 结构，其中的 i_mapping 域指向一个 address_space 结构。这样，一个文件就对应一个 address_space 结构，一个 address_space 与一个偏移量能够确定一个 page cache 或 swap cache 中的一个页面。因此，当要寻址某个数据时，很容易根据给定的文件及数据在文件内的偏移量而找到相应的页面。</p>
+</li>
+<li><p>3、进程调用 mmap() 时，只是在进程空间内新增了一块相应大小的缓冲区，并设置了相应的访问标识，但并没有建立进程空间到物理页面的映射。因此，第一次访问该空间时，会引发一个缺页异常。</p>
+</li>
+<li><p>4、对于共享内存映射情况，缺页异常处理程序首先在 swap cache 中寻找目标页（符合 address_space 以及偏移量的物理页），如果找到，则直接返回地址；如果没有找到，则判断该页是否在交换区 (swap area)，如果在，则执行一个换入操作；如果上述两种情况都不满足，处理程序将分配新的物理页面，并把它插入到 page cache 中。进程最终将更新进程页表。<br>注：对于映射普通文件情况（非共享映射），缺页异常处理程序首先会在 page cache 中根据 address_space 以及数据偏移量寻找相应的页面。如果没有找到，则说明文件数据还没有读入内存，处理程序会从磁盘读入相应的页面，并返回相应地址，同时，进程页表也会更新。</p>
+</li>
+<li><p>5、所有进程在映射同一个共享内存区域时，情况都一样，在建立线性地址与物理地址之间的映射之后，不论进程各自的返回地址如何，实际访问的必然是同一个共享内存区域对应的物理页面。<br>注：一个共享内存区域可以看作是特殊文件系统 shm 中的一个文件，shm 的安装点在交换区上。</p>
+</li>
+</ul>
+<p>上面涉及到了一些数据结构，围绕数据结构理解问题会容易一些。</p>
+<h1 id="共享内存的优缺点"><a href="#共享内存的优缺点" class="headerlink" title="共享内存的优缺点"></a>共享内存的优缺点</h1><p>使用共享内存的优缺点如下所述 。</p>
+<ul>
+<li><p>优点：使用共享内存进行进程间的通信非常方便，而且函数的接口也简单，数据的<br>共享还使进程间的数据不用传送，而是直接访问内存，也加快了程序的效率。 同时，它也不<br>像无名管道那样要求通信的进程有一定的父子关系 。</p>
+</li>
+<li><p>缺点：共享 内存没有提供同步的机制，这使得在使用共享 内存进行进程间通信时，<br>往往要借助其他的手段来进行进程间的同步工作 。</p>
+</li>
+</ul>
+<h1 id="mmap"><a href="#mmap" class="headerlink" title="mmap"></a>mmap</h1><p>mmap() 系统调用使得进程之间通过映射同一个普通文件实现共享内存。普通文件被映射到进程地址空间后，进程可以向访问普通内存一样对文件进行访问，不必再调用 read()，write（）等操作。</p>
+<p>注：实际上，mmap() 系统调用并不是完全为了用于共享内存而设计的。它本身提供了不同于一般对普通文件的访问方式，进程可以像读写内存一样对普通文件的操作。而 Posix 或系统 V 的共享内存 IPC 则纯粹用于共享目的，当然 mmap() 实现共享内存也是其主要应用之一。</p>
+<h2 id="mmap-系统调用形式如下"><a href="#mmap-系统调用形式如下" class="headerlink" title="mmap() 系统调用形式如下"></a>mmap() 系统调用形式如下</h2><p><code>void* mmap (void * addr , size_t len , int prot , int flags , int fd , off_t offset)</code></p>
+<ul>
+<li>参数 fd 为即将映射到进程空间的文件描述字，一般由 open() 返回，同时，fd 可以指定为 - 1，此时须指定 flags 参数中的 MAP_ANON，表明进行的是匿名映射（不涉及具体的文件名，避免了文件的创建及打开，很显然只能用于具有亲缘关系的进程间通信）。</li>
+<li>len 是映射到调用进程地址空间的字节数，它从被映射文件开头 offset 个字节开始算起。</li>
+<li>prot 参数指定共享内存的访问权限。<br>可取如下几个值的或：PROT_READ（可读） , PROT_WRITE （可写）, PROT_EXEC （可执行）, PROT_NONE（不可访问）。</li>
+<li>flags 由以下几个常值指定：MAP_SHARED , MAP_PRIVATE , MAP_FIXED，其中，MAP_SHARED , MAP_PRIVATE 必选其一，而 MAP_FIXED 则不推荐使用。</li>
+<li>offset 参数一般设为 0，表示从文件头开始映射。</li>
+<li>参数 addr 指定文件应被映射到进程空间的起始地址，一般被指定一个空指针，此时选择起始地址的任务留给内核来完成。</li>
+</ul>
+<p>函数的返回值为最后文件映射到进程空间的地址，进程可直接操作起始地址为该值的有效地址。<br>这里不再详细介绍 mmap() 的参数，读者可参考 mmap() 手册页获得进一步的信息。</p>
+<h2 id="系统调用-mmap-用于共享内存的两种方式"><a href="#系统调用-mmap-用于共享内存的两种方式" class="headerlink" title="系统调用 mmap() 用于共享内存的两种方式"></a>系统调用 mmap() 用于共享内存的两种方式</h2><ul>
+<li><p>（1）使用普通文件提供的内存映射：适用于任何进程之间； 此时，需要打开或创建一个文件，然后再调用 mmap()；典型调用代码如下：</p>
+<p>  <code>fd=open(name, flag, mode);</code></p>
+<p>  ptr=mmap(NULL, len , PROT_READ|PROT_WRITE, MAP_SHARED , fd , 0); 通过 mmap() 实现共享内存的通信方式有许多特点和要注意的地方，我们将在范例中进行具体说明。</p>
+</li>
+<li><p>（2）使用特殊文件提供匿名内存映射：适用于具有亲缘关系的进程之间； 由于父子进程特殊的亲缘关系，在父进程中先调用 mmap()，然后调用 fork()。</p>
+<p>  那么在调用 fork() 之后，子进程继承父进程匿名映射后的地址空间，同样也继承 mmap() 返回的地址，这样，父子进程就可以通过映射区域进行通信了。<br>  注意，这里不是一般的继承关系。<br>  一般来说，子进程单独维护从父进程继承下来的一些变量。<br>  而 mmap() 返回的地址，却由父子进程共同维护。<br>  对于具有亲缘关系的进程实现共享内存最好的方式应该是采用匿名内存映射的方式。<br>  此时，不必指定具体的文件，只要设置相应的标志即可，参见范例 2。</p>
+</li>
+</ul>
+<h2 id="系统调用-munmap"><a href="#系统调用-munmap" class="headerlink" title="系统调用 munmap()"></a>系统调用 munmap()</h2><p><code>int munmap(void * addr, size_t len)</code><br>该调用在进程地址空间中解除一个映射关系，addr 是调用 mmap() 时返回的地址，len 是映射区的大小。当映射关系解除后，对原来映射地址的访问将导致段错误发生。</p>
+<h2 id="系统调用-msync"><a href="#系统调用-msync" class="headerlink" title="系统调用 msync()"></a>系统调用 msync()</h2><p><code>int msync (void * addr , size_t len, int flags)</code><br>一般说来，进程在映射空间的对共享内容的改变并不直接写回到磁盘文件中，往往在调用 munmap（）后才执行该操作。可以通过调用 msync() 实现磁盘上文件内容与共享内存区的内容一致。</p>
+<h2 id="mmap-范例"><a href="#mmap-范例" class="headerlink" title="mmap() 范例"></a>mmap() 范例</h2><p>下面将给出使用 mmap() 的两个范例：</p>
+<ul>
+<li>范例 1 给出两个进程通过映射普通文件实现共享内存通信；</li>
+<li>范例 2 给出父子进程通过匿名映射实现共享内存。</li>
+</ul>
+<p>系统调用 mmap() 有许多有趣的地方，下面是通过 mmap（）映射普通文件实现进程间的通信的范例，我们通过该范例来说明 mmap() 实现共享内存的特点及注意事项。</p>
+<h3 id="范例1两个进程通过映射普通文件实现共享内存通信"><a href="#范例1两个进程通过映射普通文件实现共享内存通信" class="headerlink" title="范例1两个进程通过映射普通文件实现共享内存通信"></a>范例1两个进程通过映射普通文件实现共享内存通信</h3><p>范例1 包含两个子程序：map_normalfile1.c 及 map_normalfile2.c。<br>编译两个程序，可执行文件分别为 map_normalfile1 及 map_normalfile2。<br>两个程序通过命令行参数指定同一个文件来实现共享内存方式的进程间通信。</p>
+<p>map_normalfile2 试图打开命令行参数指定的一个普通文件，把该文件映射到进程的地址空间，并对映射后的地址空间进行写操作。<br>map_normalfile1 把命令行参数指定的文件映射到进程地址空间，然后对映射后的地址空间执行读操作。<br>这样，两个进程通过命令行参数指定同一个文件来实现共享内存方式的进程间通信。</p>
+<p>下面是两个程序代码：</p>
+<figure class="highlight c"><figcaption><span>map_normalfile1.c</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*-------------map_normalfile1.c-----------*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">char</span> name[<span class="number">4</span>];</span><br><span class="line">  <span class="keyword">int</span>  age;</span><br><span class="line">&#125;people;</span><br><span class="line"></span><br><span class="line">main(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv) <span class="comment">// map a normal file as shared mem:</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> fd,i;</span><br><span class="line">    people *p_map;</span><br><span class="line">    <span class="keyword">char</span> temp;</span><br><span class="line">    </span><br><span class="line">    fd=open(argv[<span class="number">1</span>],O_CREAT|O_RDWR|O_TRUNC,<span class="number">00777</span>);</span><br><span class="line">    lseek(fd,<span class="keyword">sizeof</span>(people)*<span class="number">5</span><span class="number">-1</span>,SEEK_SET);</span><br><span class="line">    write(fd,<span class="string">""</span>,<span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    p_map = (people*) mmap( <span class="literal">NULL</span>,<span class="keyword">sizeof</span>(people)*<span class="number">10</span>,PROT_READ|PROT_WRITE,</span><br><span class="line">          MAP_SHARED,fd,<span class="number">0</span> );</span><br><span class="line">    close( fd );</span><br><span class="line">    temp = <span class="string">'a'</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        temp += <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">memcpy</span>( ( *(p_map+i) ).name, &amp;temp,<span class="number">2</span> );</span><br><span class="line">        ( *(p_map+i) ).age = <span class="number">20</span>+i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">" initialize over \n "</span>);</span><br><span class="line">    sleep(<span class="number">10</span>);</span><br><span class="line">    munmap( p_map, <span class="keyword">sizeof</span>(people)*<span class="number">10</span> );</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">"umap ok \n"</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><figcaption><span>map_normalfile2.c</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*-------------map_normalfile2.c-----------*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> name[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">int</span>  age;</span><br><span class="line">&#125;people;</span><br><span class="line"></span><br><span class="line">main(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)  <span class="comment">// map a normal file as shared mem:</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> fd,i;</span><br><span class="line">    people *p_map;</span><br><span class="line">    fd=open( argv[<span class="number">1</span>],O_CREAT|O_RDWR,<span class="number">00777</span> );</span><br><span class="line">    p_map = (people*)mmap(<span class="literal">NULL</span>,<span class="keyword">sizeof</span>(people)*<span class="number">10</span>,PROT_READ|PROT_WRITE,</span><br><span class="line">        MAP_SHARED,fd,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>;i&lt;<span class="number">10</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>( <span class="string">"name: %s age %d;\n"</span>,(*(p_map+i)).name, (*(p_map+i)).age );</span><br><span class="line">    &#125;</span><br><span class="line">    munmap( p_map,<span class="keyword">sizeof</span>(people)*<span class="number">10</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>map_normalfile1.c 首先定义了一个 people 数据结构，（在这里采用数据结构的方式是因为，共享内存区的数据往往是有固定格式的，这由通信的各个进程决定，采用结构的方式有普遍代表性）。map_normfile1 首先打开或创建一个文件，并把文件的长度设置为 5 个 people 结构大小。然后从 mmap() 的返回地址开始，设置了 10 个 people 结构。然后，进程睡眠 10 秒钟，等待其他进程映射同一个文件，最后解除映射。</p>
+<p>map_normfile2.c 只是简单的映射一个文件，并以 people 数据结构的格式从 mmap() 返回的地址处读取 10 个 people 结构，并输出读取的值，然后解除映射。</p>
+<p>分别把两个程序编译成可执行文件 map_normalfile1 和 map_normalfile2 后，在一个终端上先运行./map_normalfile2 /tmp/test_shm，程序输出结果如下：</p>
+<pre><code>initialize over
+umap ok
+</code></pre><p>在 map_normalfile1 输出 initialize over 之后，输出 umap ok 之前，在另一个终端上运行 map_normalfile2 /tmp/test_shm，将会产生如下输出 (为了节省空间，输出结果为稍作整理后的结果)：</p>
+<pre><code>name: b age 20;
+name: c age 21;
+name: d age 22;
+name: e age 23;
+name: f age 24;
+name: g age 25;
+name: h age 26;
+name: I age 27;
+name: j age 28;
+name: k age 29;
+</code></pre><p>在 map_normalfile1 输出 umap ok 后，运行 map_normalfile2 则输出如下结果：</p>
+<pre><code>name: b age 20;
+name: c age 21;
+name: d age 22;
+name: e age 23;
+name: f age 24;
+name:   age 0;
+name:   age 0;
+name:   age 0;
+name:   age 0;
+name:   age 0;
+</code></pre><p><strong>从程序的运行结果中可以得出的结论</strong></p>
+<ul>
+<li><p>1、 最终被映射文件的内容的长度不会超过文件本身的初始大小，即映射不能改变文件的大小；</p>
+</li>
+<li><p>2、 可以用于进程通信的有效地址空间大小大体上受限于被映射文件的大小，但不完全受限于文件大小。打开文件被截短为 5 个 people 结构大小，而在 map_normalfile1 中初始化了 10 个 people 数据结构，在恰当时候（map_normalfile1 输出 initialize over 之后，输出 umap ok 之前）调用 map_normalfile2 会发现 map_normalfile2 将输出全部 10 个 people 结构的值，<a href="#理解页式管理机制">后面</a>将给出详细讨论。</p>
+<pre><code>注：在 linux 中，内存的保护是以页为基本单位的，即使被映射文件只有一个字节大小，
+内核也会为映射分配一个页面大小的内存。当被映射文件小于一个页面大小时，
+进程可以对从 mmap() 返回地址开始的一个页面大小进行访问，
+而不会出错；但是，
+如果对一个页面以外的地址空间进行访问，
+则导致错误发生，
+后面将进一步描述。因此，
+可用于进程间通信的有效地址空间大小不会超过文件大小及一个页面大小的和。
+</code></pre></li>
+<li><p>3、 文件一旦被映射后，调用 mmap() 的进程对返回地址的访问是对某一内存区域的访问，暂时脱离了磁盘上文件的影响。所有对 mmap() 返回地址空间的操作只在内存中有意义，只有在调用了 munmap() 后或者 msync() 时，才把内存中的相应内容写回磁盘文件，所写内容仍然不能超过文件的大小。</p>
+</li>
+</ul>
+<h3 id="范例2父子进程通过匿名映射实现共享内存并用semaphore同步"><a href="#范例2父子进程通过匿名映射实现共享内存并用semaphore同步" class="headerlink" title="范例2父子进程通过匿名映射实现共享内存并用semaphore同步"></a>范例2父子进程通过匿名映射实现共享内存并用semaphore同步</h3><p>主要介绍下在多进程中使用信号量semaphore的方法。在上一文中，我们已经知道semaphore和mutex对临界区访问控制的一个最主要区别就是semaphore可以跨进程使用，而mutex只能在一个进程中使用。我们再来看下sem_init的原型，熟悉决定进程共享或者线程共享的方法：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sem_init</span><span class="params">(<span class="keyword">sem_t</span> *sem, <span class="keyword">int</span> pshared, <span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>通过设置pshared的值来控制信号量是属于进程间共享还是线程间共享，若pshared为0表明是多线程共享，否则就是多进程间共享。</p>
+<p>接下来我们实验思路是：创建两个进程，一个进程负责读取用户在界面输入的数据，然后存入本地的test.txt文件；另一个进程负责读取该文件，然后在标准输出上显示读取的内容。</p>
+<p>为此，我们需要创建两个个支持两个进程访问的信号量sem1和sem2，读文件时需要获取sem1信号，读取结束后释放sem2信号；写文件需要获取sem2信号，写文件结束后方式sem1信号。</p>
+<p>sem2的初始值为1，sem1的初始值为0，以保证先写入再进行读取，源代码如下，稍后挑关键内容进行解释：</p>
+<figure class="highlight c"><figcaption><span>mmap_fork_sync.c</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUF_SIZE 30</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">readfile</span><span class="params">(<span class="keyword">sem_t</span>* psem1,<span class="keyword">sem_t</span>* psem2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    FILE* fp;</span><br><span class="line">    <span class="keyword">char</span> buf[BUF_SIZE];</span><br><span class="line">    <span class="keyword">int</span> str_len,str_seek=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        sem_wait(psem1);</span><br><span class="line">        fp=fopen(<span class="string">"data.txt"</span>,<span class="string">"r+"</span>);</span><br><span class="line">        <span class="keyword">if</span>(fp==<span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">        <span class="built_in">memset</span>(buf,<span class="number">0</span>,<span class="keyword">sizeof</span>(BUF_SIZE));</span><br><span class="line">        fseek(fp,str_seek,SEEK_SET);</span><br><span class="line">        str_len=fread(buf,<span class="keyword">sizeof</span>(<span class="keyword">char</span>),BUF_SIZE<span class="number">-1</span>,fp);</span><br><span class="line">        buf[str_len]=<span class="number">0</span>;</span><br><span class="line">        str_seek+=str_len;</span><br><span class="line">        <span class="built_in">fputs</span>(<span class="string">"output:"</span>,<span class="built_in">stdout</span>);</span><br><span class="line">        <span class="built_in">puts</span>(buf);</span><br><span class="line">        fclose(fp);</span><br><span class="line">        sem_post(psem2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writefile</span><span class="params">(<span class="keyword">sem_t</span>* psem1,<span class="keyword">sem_t</span>* psem2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        FILE* fp;</span><br><span class="line">        <span class="keyword">char</span> buf[BUF_SIZE];</span><br><span class="line">        <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            sem_wait(psem2);</span><br><span class="line">            fp=fopen(<span class="string">"data.txt"</span>,<span class="string">"a"</span>);</span><br><span class="line">            <span class="keyword">if</span>(fp==<span class="literal">NULL</span>)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">            <span class="built_in">memset</span>(buf,<span class="number">0</span>,BUF_SIZE);</span><br><span class="line">            <span class="built_in">fputs</span>(<span class="string">"Input:"</span>,<span class="built_in">stdout</span>);</span><br><span class="line">            fgets(buf,BUF_SIZE,<span class="built_in">stdin</span>);</span><br><span class="line">            fwrite(buf,<span class="keyword">sizeof</span>(<span class="keyword">char</span>),<span class="built_in">strlen</span>(buf),fp);</span><br><span class="line">            fclose(fp);</span><br><span class="line">            sem_post(psem1);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> pid;</span><br><span class="line">    <span class="keyword">int</span> fd1,fd2;</span><br><span class="line">    <span class="keyword">void</span>* pv;</span><br><span class="line">    <span class="keyword">sem_t</span>* psem1;</span><br><span class="line">    <span class="keyword">sem_t</span>* psem2;</span><br><span class="line">    fd1=open(<span class="string">"data1"</span>,O_CREAT|O_RDWR|O_TRUNC,<span class="number">0666</span>);</span><br><span class="line">    fd2=open(<span class="string">"data2"</span>,O_CREAT|O_RDWR|O_TRUNC,<span class="number">0666</span>);\</span><br><span class="line">    ftruncate(fd1,<span class="number">8192</span>);</span><br><span class="line">    ftruncate(fd2,<span class="number">8192</span>);</span><br><span class="line">    <span class="comment">//lseek(fd,5000,SEEK_SET);</span></span><br><span class="line">    psem1=(<span class="keyword">sem_t</span>*)mmap(<span class="literal">NULL</span>,<span class="keyword">sizeof</span>(<span class="keyword">sem_t</span>),PROT_READ|PROT_WRITE,MAP_SHARED,fd1,<span class="number">0</span>);</span><br><span class="line">    psem2=(<span class="keyword">sem_t</span>*)mmap(<span class="literal">NULL</span>,<span class="keyword">sizeof</span>(<span class="keyword">sem_t</span>),PROT_READ|PROT_WRITE,MAP_SHARED,fd2,<span class="number">0</span>);</span><br><span class="line">    sem_init(psem1,<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    sem_init(psem2,<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">    pid=fork();</span><br><span class="line">    <span class="keyword">if</span>(pid==<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">"进入子进程"</span>);</span><br><span class="line">        writefile(psem1,psem2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">"进入父进程"</span>);</span><br><span class="line">        readfile(psem1,psem2);</span><br><span class="line">    &#125;</span><br><span class="line">    sem_destroy(psem1);</span><br><span class="line">    sem_destroy(psem2);</span><br><span class="line">    munmap(psem1,<span class="keyword">sizeof</span>(<span class="keyword">sem_t</span>));</span><br><span class="line">    munmap(psem2,<span class="keyword">sizeof</span>(<span class="keyword">sem_t</span>));</span><br><span class="line">    close(fd1);</span><br><span class="line">    close(fd2);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了能够跨进程使用 semaphore ，我们引入了跨进程的技术mmap,第61、第62行分别打开了两个mmap需要映射的文件，和我们平时用的open函数不同，这里面为程序赋予了该文件的666权限。这点很重要，因为mmap需要映射的本地文件必须明确赋予其可读写的权限，否则无法通信。</p>
+<ul>
+<li>第63行和第64行分别设置两个本地映射文件的大小，以保证有充分的空间在mmap中映射并容纳我们定义的sem_t变量。这点也很重要，如果空间不够会造成总线错误。</li>
+<li>第66行和第67行分别利用mmap在共享内存中映射了两个sem_t类型的指针，这就是我们需要sem_init的信号量。</li>
+<li>第68、69行开始初始化信号量。</li>
+<li>70行fork了两个进程，在子进程中我们进行写操作，在主进程中我们进行读操作。读写操作的代码比较简单，在这里不再多说。</li>
+<li>第81到86行在使用完信号量后分别是销毁信号量、释放共享内存、关闭文件操作符。</li>
+</ul>
+<p>程序写到这里基本上完成了这个实验，可以考察程序的输出结果，<br>编译命令 : <code>gcc mmap_fork_sync.c -o mmap_fork_sync -pthread</code> , 体会父子进程匿名共享内存：</p>
+<pre><code>b@b-VirtualBox:~/tc/mmap_test$ ./mmap_fork_sync
+进入父进程
+进入子进程
+Input:4
+output:4
+
+Input:5
+output:5
+
+Input:6
+output:6
+
+Input:7
+output:7
+
+Input:7
+output:7
+
+...
+</code></pre><p>我们可以顺便可以简单总结下在多进程中使用信号量的步骤：</p>
+<p>（1）open()用于进行mmap映射的文件，得到文件操作符fd；<br>（2）把映射文件用ftruncate或者fseek重新设置大小，以保证有足够的空间容纳我们需要传递的sem_t变量；<br>（3）利用mmap函数在共享内存中创建sen_t类型的指针。<br>（4）用sem_init()函数初始化第（3）步中创建的指针，也就得到了我们需要的信号量。<br>（5）用sem_wait()和sem_post()函数进行信号量的等待和释放。<br>（6）用sem_destroy()销毁信号量。<br>（7）用munmap()释放共享内存以及用close()函数关闭文件操作符。</p>
+<h2 id="理解页式管理机制"><a href="#理解页式管理机制" class="headerlink" title="理解页式管理机制"></a>理解页式管理机制</h2><p>前面对范例运行结构的讨论中已经提到，linux 采用的是页式管理机制。对于用 mmap() 映射普通文件来说，进程会在自己的地址空间新增一块空间，空间大小由 mmap() 的 len 参数指定，注意，进程并不一定能够对全部新增空间都能进行有效访问。进程能够访问的有效地址大小取决于文件被映射部分的大小。简单的说，能够容纳文件被映射部分大小的最少页面个数决定了进程从 mmap() 返回的地址开始，能够有效访问的地址空间大小。超过这个空间大小，内核会根据超过的严重程度返回发送不同的信号给进程。可用如下图示说明：</p>
+<p><img src="/img/ipc/mmap.jpg" alt></p>
+<p>注意：文件被映射部分而不是整个文件决定了进程能够访问的空间大小，另外，如果指定文件的偏移部分，一定要注意为页面大小的整数倍。下面是对进程映射地址空间的访问范例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> name[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">int</span>  age;</span><br><span class="line">&#125;people;</span><br><span class="line"></span><br><span class="line">main(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> fd,i;</span><br><span class="line">    <span class="keyword">int</span> pagesize,offset;</span><br><span class="line">    people *p_map;</span><br><span class="line">     </span><br><span class="line">    pagesize = sysconf(_SC_PAGESIZE);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"pagesize is %d\n"</span>,pagesize);</span><br><span class="line">    fd = open(argv[<span class="number">1</span>],O_CREAT|O_RDWR|O_TRUNC,<span class="number">00777</span>);</span><br><span class="line">    lseek(fd,pagesize*<span class="number">2</span><span class="number">-100</span>,SEEK_SET);</span><br><span class="line">    write(fd,<span class="string">""</span>,<span class="number">1</span>);</span><br><span class="line">    offset = <span class="number">0</span>; <span class="comment">//此处offset = 0编译成版本1；offset = pagesize编译成版本2</span></span><br><span class="line">    p_map = (people*)mmap(<span class="literal">NULL</span>,pagesize*<span class="number">3</span>,PROT_READ|PROT_WRITE,MAP_SHARED,fd,offset);</span><br><span class="line">    close(fd);</span><br><span class="line">     </span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>; i&lt;<span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        (*(p_map+pagesize/<span class="keyword">sizeof</span>(people)*i<span class="number">-2</span>)).age = <span class="number">100</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"access page %d over\n"</span>,i);</span><br><span class="line">        (*(p_map+pagesize/<span class="keyword">sizeof</span>(people)*i<span class="number">-1</span>)).age = <span class="number">100</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"access page %d edge over, now begin to access page %d\n"</span>,i, i+<span class="number">1</span>);</span><br><span class="line">        (*(p_map+pagesize/<span class="keyword">sizeof</span>(people)*i)).age = <span class="number">100</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"access page %d over\n"</span>,i+<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    munmap(p_map,<span class="keyword">sizeof</span>(people)*<span class="number">10</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如程序中所注释的那样，把程序编译成两个版本，两个版本主要体现在文件被映射部分的大小不同。文件的大小介于一个页面与两个页面之间（大小为：pagesize<em>2-99），版本 1 的被映射部分是整个文件，版本 2 的文件被映射部分是文件大小减去一个页面后的剩余部分，不到一个页面大小 (大小为：pagesize-99)。程序中试图访问每一个页面边界，两个版本都试图在进程空间中映射 pagesize</em>3 的字节数。</p>
+<p>版本 1 的输出结果如下：</p>
+<pre><code>pagesize is 4096
+access page 1 over
+access page 1 edge over, now begin to access page 2
+access page 2 over
+access page 2 over
+access page 2 edge over, now begin to access page 3
+Bus error       //被映射文件在进程空间中覆盖了两个页面，此时，进程试图访问第三个页面
+</code></pre><p>版本 2 的输出结果如下：</p>
+<pre><code>pagesize is 4096
+access page 1 over
+access page 1 edge over, now begin to access page 2
+Bus error       //被映射文件在进程空间中覆盖了一个页面，此时，进程试图访问第二个页面
+</code></pre><p>结论：采用系统调用 mmap() 实现进程间通信是很方便的，在应用层上接口非常简洁。内部实现机制区涉及到了 linux 存储管理以及文件系统等方面的内容，可以参考一下相关重要数据结构来加深理解。在本专题的后面部分，将介绍系统 v 共享内存的实现。</p>
+<h1 id="System-V共享内存"><a href="#System-V共享内存" class="headerlink" title="System V共享内存"></a>System V共享内存</h1><p>说一下System V共享内存.</p>
+<p>顾名思义，共享内存就是允许两个不相关的进程访问同一个逻辑内存。 共享内存是在两<br>个正在运行的进程之间共享和传递数据的一种非常有效的方式 。 不同进程之间共享的内存通<br>常安排在同－段物理内存中 。 进程可以将同一段共享内存连接到它们 自己 的地址空间中，所<br>有进程都可以访问共享内存中的地址，就好像它们是由用 C 语言 函数 malloc 分配的内存一<br>样。 而如果某个进程向共享内存写入数据，所做的改动将立即影响到可以访问同一段共享内<br>存的任何其他进程 。</p>
+<p>不过，共享内存并未提供同步机制，也就是说，在第一个进程对共享内存的写操作结束<br>之前，并无自动机制可以阻止第二个进程对它进行读取。 所以通常需要用其他的机制来同步<br>对共享内存的访问 。</p>
+<h2 id="shmget"><a href="#shmget" class="headerlink" title="shmget"></a>shmget</h2><p>在 Linux 中也提供了一组函数接口用于使用共享 内存， 首先常用的函数是 shmget ， 该函<br>数用来创建共享内存，它用到的头文件是 ：</p>
+<p><code>#include &lt;sys/shm .h&gt;</code></p>
+<p>函数原型是：<br><code>int shmget(key_ t key, int size , int flag) ;</code></p>
+<ul>
+<li><p>第一个参数，程序需要提供一个参数 key （非 0 整数），它有效地为共享内存段命名，<br>shmget 函数运行成功时会返回一个与 key 相关的共享内存标识符（非负整数），用于后续的共<br>享内存函数；调用失败返回－ 1 。<br>不相关的进程可以通过该函数的返回值访问同一共享内存，它代表程序可能要使用的某<br>个资源，程序对所有共享内存的访问都是间接的 。 程序先通过调用 shmget 函数并提供一个<br>键，再由系统生成一个相应的共享内存标识符（ shmget 函数的返回值） 。</p>
+</li>
+<li><p>第二个参数， size 以字节为单位指定需要共享的内存容量。</p>
+</li>
+<li><p>第三个参数， shmfl.g 是权限标志，它的作用与 open 函数的 mode 参数一样，如果要想在<br>key 标识的共享 内存不存在的条件下创建它的话，可以与 IPC_CREAT 做或操作 。 共享内存<br>的权限标志与文件的读写权限一样，举例来说， 0644 表示允许一个进程创建的共享内存被内<br>存创建者所拥有的进程向共享内存读取和写人数据，同时其他用户创建的进程只能读取共享<br>内存 。</p>
+</li>
+</ul>
+<h2 id="shmat"><a href="#shmat" class="headerlink" title="shmat"></a>shmat</h2><p>当共享 内存创建后，其余进程可以调用 shmat 将其连接到自身的地址空间中，它的函数<br>原型是 ：<br><code>void *shmat(int shmid , void *addr , int flag) ;</code></p>
+<p>shmid 为 shmget 函数返回的共享存储标识符， addr 和 flag 参数决定了以什么方式来确定<br>连接的地址，函数的返回值即是该进程数据段所连接的实际地址， 其他进程可以对此进程进<br>行读写操作 。</p>
+<h2 id="shmdt"><a href="#shmdt" class="headerlink" title="shmdt"></a>shmdt</h2><p>shmdt 函数用于将共享 内存从当前进程中分离 。 注意，将共享内存分离并不是删除它，<br>只是使该共享内存对当前进程不再可用 。 它的原型如下：<br><code>int shmdt(const void *shmaddr) ;</code></p>
+<p>参数 shmaddr 是 shmat 函数返回的地址指针，调用成功时返回 0 ，失败时返回－ 1 。</p>
+<h2 id="例子程序"><a href="#例子程序" class="headerlink" title="例子程序"></a>例子程序</h2><p>共享 内存是进程间通信的最快的方式，但是共享 内存的同步问题自身无法解决（即进<br>程该何时去共享内存取得数据，而何时不能取），但用信号量即可轻易解决这个问题 。 下<br>面使用例来说明如何使用信号量解决共享内存的同步问题 。 这个例子的主要功能是<br>writer 向 reader 传递数据，并且只有在 writer 发送完毕后， reader 才取数据，否则阻塞<br>等待 。</p>
+<figure class="highlight c++"><figcaption><span>reader.cpp</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/sem.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/shm.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SEM_KEY 4001</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SHM_KEY 5678</span></span><br><span class="line"><span class="keyword">union</span> semun &#123;</span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">	<span class="comment">/*create a shm*/</span></span><br><span class="line">	<span class="keyword">int</span> semid,shmid;</span><br><span class="line">	shmid = shmget(SHM_KEY,<span class="keyword">sizeof</span>(<span class="keyword">int</span>),IPC_CREAT|<span class="number">0666</span>);</span><br><span class="line">	<span class="keyword">if</span>(shmid&lt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"create shm error\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">void</span> * shmptr;</span><br><span class="line">	shmptr =shmat(shmid,<span class="literal">NULL</span>,<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">if</span>(shmptr == (<span class="keyword">void</span> *)<span class="number">-1</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"shmat error:%s\n"</span>,strerror(errno));</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> * data = (<span class="keyword">int</span> *)shmptr;	</span><br><span class="line">	semid = semget(SEM_KEY,<span class="number">2</span>,IPC_CREAT|<span class="number">0666</span>);<span class="comment">/*这里是创建一个semid，并且有两个信号量*/</span></span><br><span class="line">	<span class="keyword">union</span> semun semun1;<span class="comment">/*下面这四行就是初始化那两个信号量，一个val=0,另一个val=1*/</span></span><br><span class="line">	semun1.val=<span class="number">0</span>;</span><br><span class="line">	semctl(semid,<span class="number">0</span>,SETVAL,semun1);</span><br><span class="line">	semun1.val=<span class="number">1</span>;</span><br><span class="line">	semctl(semid,<span class="number">1</span>,SETVAL,semun1);</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sembuf</span> <span class="title">sembuf1</span>;</span></span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">	  sembuf1.sem_num=<span class="number">0</span>;<span class="comment">/*sem_num=0指的是下面操作指向第一个信号量，上面设置可知其 val=0*/</span></span><br><span class="line">	  sembuf1.sem_op=<span class="number">-1</span>; <span class="comment">/*初始化值为0，再-1的话就会等待*/</span></span><br><span class="line">	  sembuf1.sem_flg=SEM_UNDO;</span><br><span class="line">	  semop(semid,&amp;sembuf1,<span class="number">1</span>);<span class="comment">/*reader在这里会阻塞,直到收到信号*/</span></span><br><span class="line">	  <span class="built_in">printf</span>(<span class="string">"the NUM:%d\n"</span>,*data);<span class="comment">/*输出结果*/</span></span><br><span class="line">	  sembuf1.sem_num=<span class="number">1</span>;<span class="comment">/*这里让writer再次就绪，就这样循环*/</span></span><br><span class="line">	  sembuf1.sem_op=<span class="number">1</span>;</span><br><span class="line">	  sembuf1.sem_flg=SEM_UNDO;</span><br><span class="line">	  semop(semid,&amp;sembuf1,<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后是writer</p>
+<figure class="highlight c++"><figcaption><span>writer.cpp</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/sem.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/shm.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SEM_KEY 4001</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SHM_KEY 5678</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">union</span> semun </span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">int</span> val;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">/*create a shm*/</span></span><br><span class="line">  <span class="keyword">int</span> semid,shmid;</span><br><span class="line">  shmid = shmget(SHM_KEY,<span class="keyword">sizeof</span>(<span class="keyword">int</span>),IPC_CREAT|<span class="number">0666</span>);</span><br><span class="line">  <span class="keyword">if</span>(shmid&lt;<span class="number">0</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"create shm error\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">void</span> * shmptr;</span><br><span class="line">  shmptr =shmat(shmid,<span class="literal">NULL</span>,<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">if</span>(shmptr == (<span class="keyword">void</span> *)<span class="number">-1</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"shmat error:%s\n"</span>,strerror(errno));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">int</span> * data = (<span class="keyword">int</span> *)shmptr;	</span><br><span class="line">  semid = semget(SEM_KEY,<span class="number">2</span>,<span class="number">0666</span>);</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">sembuf</span> <span class="title">sembuf1</span>;</span></span><br><span class="line">  <span class="keyword">union</span> semun semun1;</span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    sembuf1.sem_num=<span class="number">1</span>;<span class="comment">//这里指向第2个信号量（sem_num=1）</span></span><br><span class="line">    sembuf1.sem_op=<span class="number">-1</span>;<span class="comment">//操作是-1，因为第2个信号量初始值为1，所以下面不会阻塞</span></span><br><span class="line">    sembuf1.sem_flg=SEM_UNDO;</span><br><span class="line">    semop(semid,&amp;sembuf1,<span class="number">1</span>);<span class="comment">/*继续*/</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,data);  <span class="comment">/*用户在终端输入数据*/</span></span><br><span class="line">    sembuf1.sem_num=<span class="number">0</span>;<span class="comment">/*这里指向第一个信号量*/</span></span><br><span class="line">    sembuf1.sem_op=<span class="number">1</span>;<span class="comment">/*操作加1*/</span>	</span><br><span class="line">    sembuf1.sem_flg=SEM_UNDO;</span><br><span class="line">    semop(semid,&amp;sembuf1,<span class="number">1</span>);</span><br><span class="line">    <span class="comment">//执行+1后，我们发现，reader阻塞正是由于第一个信号量为0，</span></span><br><span class="line">    <span class="comment">//无法减一，而现在writer先为其加1，那reader就绪！writer继续循环，</span></span><br><span class="line">    <span class="comment">//发现第二个信号量已经减为0，则阻塞了，我们回到reader*/</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>多打开几个终端，同时执行 writer 程序，看是否 reader 能够正确地读到数据</p>
+<p>writer :</p>
+<pre><code>[b@host 1105]$ ./writer
+51
+09
+977
+</code></pre><p>writer :</p>
+<pre><code>[b@host 1105]$ ./writer
+22
+11
+55
+55
+5
+</code></pre><p>reader :</p>
+<pre><code>[b@host 1105]$ ./reader
+the NUM:22
+the NUM:11
+the NUM:55
+the NUM:55
+the NUM:5
+the NUM:51
+the NUM:9
+the NUM:977
+</code></pre><p>要想让程序安全地执行，就要有一种进程同步的进制，保证在进入临界区的操作是原子<br>操作 。<br>例如，<strong>使用<a href="#System-V信号量">信号量</a>来进行进程的同步 。 因为对信号量的操作都是原子性的 。</strong></p>
+<h1 id="System-V信号量"><a href="#System-V信号量" class="headerlink" title="System V信号量"></a>System V信号量</h1><p>在 Linux 中提供了一组函数接口用于使用System V信号量 ，首先常用的函数是 semget，该函数用<br>来创建和打开信号量 ，它用到的头文件是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys / types . h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt; sys / ipc . h &gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/sem. h &gt;</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="semget"><a href="#semget" class="headerlink" title="semget"></a>semget</h2><p>函数原型是：<br><code>int semget( key_ t key , int nsems , int semflg) ;</code></p>
+<p>该函数执行成功返回信号量标示符，失败则返回－ 1 。 参数 key 是函数通过调用负ok 函<br>数得到的键值， nsems 代表创建信号量的个数，如果只是访问而不创建则可以指定该参数为<br>0 ；但一旦创建了该信号量 ，就不能更改其信号量个数。 只要不删除该信号量 ，就可以重新<br>调用该函数创建该键值的信号量 ，该函数只是返回以前创建的值，而不会重新创建。</p>
+<p>semflg指定该信号茸的读写权限， 当创建信号量时不许加 IPC<em>C阻AT ，若指定 IPC CREAT IIPC</em><br>EXCL 后创建时发现存在该信号量 ，创建失败 。</p>
+<h2 id="semop"><a href="#semop" class="headerlink" title="semop"></a>semop</h2><p>semop 函数，用于改变信号量的值，原型是：<br><code>int semop(int semid, struct sembuf *sops , unsigned nsops) ;</code></p>
+<p>sem_id 是 由 semget 返回的信号量标识符， sembuf 结构的定义如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sembuf</span> &#123;</span></span><br><span class="line">    <span class="keyword">short</span> sem_num;  <span class="comment">// 除非使用一组信号量，否则它为 O</span></span><br><span class="line">    <span class="keyword">short</span> sem_op ;  <span class="comment">// 信号量在一次操作中需要改变的数据，通常是两个数，</span></span><br><span class="line">                    <span class="comment">// 一个是－ 1 ，即 p （等待）操作，一个是＋ 1 ，即 v （发送信号）操作 。</span></span><br><span class="line">    <span class="keyword">short</span> sem_flg;  <span class="comment">// 通常为 SEM_UNDO ， 使操作系统跟踪信号，</span></span><br><span class="line">                    <span class="comment">// 并在进程没有释放该信号量而终止时 ， 操作系统释放信号量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="semctl"><a href="#semctl" class="headerlink" title="semctl"></a>semctl</h2><p>semctl 函数，该函数用来直接控制信号量信息，它的原型是：<br><code>int semctl (int semid, int semnum, int cmd , ... ) ;</code></p>
+<p>如果有第 4 个参数，它通常是一个 union semum 结构，定义如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">union</span> semun&#123;</span><br><span class="line">    <span class="keyword">int</span> val ;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">semid_ds</span> *<span class="title">buf</span>;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> *arry ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>前两个参数与前面一个函数中的一样， cmd 通常是 SETVAL 或 IPC RMID 。 SETVAL<br>用来把信号量初始化为一个己知的值 。 p 值通过 union semun 中的 val 成员设置，其作用是<br>在信号量第一次使用前对它进行设置 。 IPC_RMID 用于删除一个已经无须继续使用的信号量<br>标识符 </p>
+<h1 id="ipcs命令"><a href="#ipcs命令" class="headerlink" title="ipcs命令"></a>ipcs命令</h1><p>ipcs 是一个 UINX/Linux 的命令 ，用于报告系统的消息队列、信号量、共享内存等 。 下<br>面列举一些常用命令。</p>
+<ul>
+<li><p>ipcs -a 用于列出本用户所有相关的 ipcs 参数，结果如下所示 :</p>
+<pre><code>[b@host ~]$ ipcs -a
+
+------ Shared Memory Segments --------
+key        shmid      owner      perms      bytes      nattch     status
+0x000004d1 32768      b          666        2052       0
+0x000004d2 65537      b          666        2052       0
+
+------ Semaphore Arrays --------
+key        semid      owner      perms      nsems
+
+------ Message Queues --------
+key        msqid      owner      perms      used-bytes   messages
+</code></pre></li>
+<li><p>ipcs -l 用于列出系统的限额</p>
+<pre><code>[b@host ~]$ ipcs -l
+
+------ Shared Memory Limits --------
+max number of segments = 4096
+max seg size (kbytes) = 4194303
+max total shared memory (kbytes) = 1073741824
+min seg size (bytes) = 1
+
+------ Semaphore Limits --------
+max number of arrays = 32000
+max semaphores per array = 32000
+max semaphores system wide = 1024000000
+max ops per semop call = 500
+semaphore max value = 32767
+
+------ Messages: Limits --------
+max queues system wide = 32000
+max size of message (bytes) = 65536
+default max size of queue (bytes) = 65536
+</code></pre></li>
+<li><p>ipcs -u 用于列出当前的使用情况</p>
+<pre><code>[b@host ~]$ ipcs -u
+
+------ Shared Memory Status --------
+segments allocated 2
+pages allocated 2
+pages resident  2
+pages swapped   0
+Swap performance: 0 attempts     0 successes
+
+------ Semaphore Status --------
+used arrays = 3
+allocated semaphores = 3
+
+------ Messages: Status --------
+allocated queues = 0
+used headers = 0
+used space = 0 bytes
+</code></pre></li>
+<li><p>ipcs -t 用于列出最后的访问时间</p>
+<pre><code>[b@host ~]$ ipcs -t
+
+------ Shared Memory Attach/Detach/Change Times --------
+shmid      owner      attached             detached             changed
+32768      b          May 18 06:46:54      May 18 06:47:43      May 18 06:45:48
+65537      b          May 18 06:45:57      May 18 06:46:08      May 18 06:45:57
+
+------ Semaphore Operation/Change Times --------
+semid    owner      last-op                    last-changed
+
+------ Message Queues Send/Recv/Change Times --------
+msqid    owner      send                 recv                 change
+</code></pre></li>
+</ul>
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/01/26/state_synchronization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/26/state_synchronization/" itemprop="url">网络物理模拟六之状态同步</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-26T11:13:35+00:00">
+                2017-01-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GS/" itemprop="url" rel="index">
+                    <span itemprop="name">GS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          
+            <h1 id="自我总结"><a href="#自我总结" class="headerlink" title="自我总结"></a>自我总结</h1><p>状态同步的要点为 : </p>
+<ul>
+<li><strong>input+state</strong> : 既通过网络发送输入信息又会发送状态信息来进行同步</li>
+<li><strong>发送端</strong><ul>
+<li><strong>优先级累加器</strong> : 只发送一些重要的实体状态更新, 而不是所有都发. 如果遇到一个物体的状态更新信息不合适放到这个数据包里面，那么就跳过这个物体并尝试下一个。当你序列化完这个数据包以后，将那些已经在这帧更新过的物体在优先级累加器里面的值重置为0，但是那些没有在这帧更新过的物体在优先级累加器里面的值则保持不变。</li>
+</ul>
+</li>
+<li><strong>接收端</strong><ul>
+<li><strong>抗网络抖动</strong> : 做一个jitter buffer来缓冲数据, 然后以相同时间的间隔均匀取出</li>
+<li><strong>应用状态更新</strong> : 一旦你的数据包从抖动缓冲器里面出来，你该在状态更新直接应用这些信息进行仿真。</li>
+</ul>
+</li>
+<li><strong>对两边都量化(这里的量化指的是&lt;&lt;<a href="/2017/01/24/snapshot_compression/" title="网络物理模拟五之快照压缩">网络物理模拟五之快照压缩</a>&gt;&gt;说的量化压缩技术)</strong> : 如果只有接收端用了量化的数据, 那接收端模拟的结果很可能与发送端不同, 所以要对两边都量化来避免发送端和接收端模拟的差异</li>
+<li><strong>长时间丢包的平滑处理</strong> : 对于不同的网络断开时间用不同的平滑因子, 来自适应误差</li>
+<li><strong>增量压缩</strong> : <ul>
+<li><strong>相对编码</strong> : 在数据包的包头里面发送最近确认的数据包的序列号（这个数据是从可靠的确认系统里面得到的）然后对每个物体编码相对这个基准帧的偏移量</li>
+<li><strong>绝对编码</strong></li>
+</ul>
+</li>
+</ul>
+<h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="https://gafferongames.com/post/state_synchronization/" target="_blank" rel="noopener">原文出处</a></p>
+<p>原文标题 : <strong>State Synchronization</strong> (<em>Keeping simulations in sync by sending state</em>)</p>
+<hr>
+<p></p><h2 id="introduction">Introduction</h2><p></p>
+<p>Hi, I&rsquo;m <a href="https://gafferongames.com/about" target="_blank" rel="noopener">Glenn Fiedler</a> and welcome to <strong><a href="https://gafferongames.com/categories/networked-physics/" target="_blank" rel="noopener">Networked Physics</a></strong>.</p><br><p>In the <a href="https://gafferongames.com/post/snapshot_compression/" target="_blank" rel="noopener">previous article</a> we discussed techniques for compressing snapshots.</p><br><p>In this article we round out our discussion of networked physics strategies with <strong>state synchronization</strong>, the third and final strategy in this article series.</p><br><h2 id="state-synchronization">State Synchronization</h2><br><p>What is state synchronization? The basic idea is that, somewhat like deterministic lockstep, we run the simulation on both sides but, <em>unlike</em> deterministic lockstep, we don&rsquo;t just send input, we send both input <u>and</u> state.</p><br><p>This gives state synchronization interesting properties. Because we send state, we don&rsquo;t need perfect determinism to stay in sync, and because the simulation runs on both sides, objects continue moving forward between updates.</p><br><p>This lets us approach state synchronization differently to snapshot interpolation. Instead of sending state updates for every object in each packet, we can now send updates for only a few, and if we&rsquo;re smart about how we select the objects for each packet, we can save bandwidth by concentrating updates on the most important objects.</p><br><p>So what&rsquo;s the catch? State synchronization is an approximate and lossy synchronization strategy. In practice, this means you&rsquo;ll spend a lot of time tracking down sources of extrapolation divergence and pops. But other than that, it&rsquo;s a quick and easy strategy to get started with.</p><br><h2 id="implementation">Implementation</h2><br><p>Here&rsquo;s the state sent over the network per-object:</p><br><pre>struct StateUpdate<br>{<br>    int index;<br>    vec3f position;<br>    quat4f orientation;<br>    vec3f linear_velocity;<br>    vec3f angular_velocity;<br>};<br></pre><br><p>Unlike snapshot interpolation, we&rsquo;re not just sending visual quantities like position and orientation, we&rsquo;re also sending <em>non-visual</em> state such as linear and angular velocity. Why is this?</p><br><p>The reason is that state synchronization runs the simulation on both sides, so it&rsquo;s <em>always extrapolating</em> from the last state update applied to each object. If linear and angular velocity aren&rsquo;t synchronized, this extrapolation is done with incorrect velocities, leading to pops when objects are updated.</p><br><p>While we must send the velocities, there&rsquo;s no point wasting bandwidth sending (0,0,0) over and over while an object is at rest. We can fix this with a trivial optimization, like so:</p><br><pre>void serialize_state_update( Stream &amp; stream,<br>                             int &amp; index,<br>                             StateUpdate &amp; state_update )<br>{<br>    serialize_int( stream, index, 0, NumCubes - 1 );<br>    serialize_vector( stream, state_update.position );<br>    serialize_quaternion( stream, state_update.orientation );<br>    bool at_rest = stream.IsWriting() ? state_update.AtRest() : false;<br>    serialize_bool( stream, at_rest );<br>    if ( !at_rest )<br>    {<br>        serialize_vector( stream, state_update.linear_velocity );<br>        serialize_vector( stream, state_update.angular_velocity );<br>    }<br>    else if ( stream.IsReading() )<br>    {<br>        state_update.linear_velocity = vec3f(0,0,0);<br>        state_update.angular_velocity = vec3f(0,0,0);<br>    }<br>}<br></pre><br><p>What you see above is a <em>serialize function</em>. It&rsquo;s a trick I like to use to unify packet read and write. I like it because it&rsquo;s expressive while at the same time it&rsquo;s difficult to desync read and write. You can read more about them <a href="https://gafferongames.com/post/serialization_strategies/" target="_blank" rel="noopener">here</a>.</p><br><h2 id="packet-structure">Packet Structure</h2><br><p>Now let&rsquo;s look at the overall structure of packets being sent:</p><br><pre>const int MaxInputsPerPacket = 32;<br>const int MaxStateUpdatesPerPacket = 64;<br><br>struct Packet<br>{<br>    uint32_t sequence;<br>    Input inputs[MaxInputsPerPacket];<br>    int num_object_updates;<br>    StateUpdate state_updates[MaxStateUpdatesPerPacket];<br>};<br></pre><br><p>First we include a sequence number in each packet so we can determine out of order, lost or duplicate packets. I recommend you run the simulation at the same framerate on both sides (for example 60HZ) and in this case the sequence number can work double duty as the frame number.</p><br><p>Input is included in each packet because it&rsquo;s needed for extrapolation. Like deterministic lockstep we send multiple redundant inputs so in the case of packet loss it&rsquo;s very unlikely that an input gets dropped. Unlike deterministic lockstep, if don&rsquo;t have the next input we don&rsquo;t stop the simulation and wait for it, we continue extrapolating forward with the last input received.</p><br><p>Next you can see that we only send a maximum of 64 state updates per-packet. Since we have a total of 901 cubes in the simulation so we need some way to select the n most important state updates to include in each packet. We need some sort of prioritization scheme.</p><br><p>To get started each frame walk over all objects in your simulation and calculate their current priority. For example, in the cube simulation I calculate priority for the player cube as 1000000 because I always want it to be included in every packet, and for interacting (red cubes) I give them a higher priority of 100 while at rest objects have priority of 1.</p><br><p>Unfortunately if you just picked objects according to their current priority each frame you&rsquo;d only ever send red objects while in a katamari ball and white objects on the ground would never get updated. We need to take a slightly different approach, one that prioritizes sending important objects while also <em>distributing</em> updates across all objects in the simulation.</p><br><h2 id="priority-accumulator">Priority Accumulator</h2><br><p>You can do this with a priority accumulator. This is an array of float values, one value per-object, that is remembered from frame to frame. Instead of taking the immediate priority value for the object and sorting on that, each frame we add the current priority for each object to its priority accumulator value then sort objects in order from largest to smallest priority accumulator value. The first n objects in this sorted list are the objects you should send that frame.</p><br><p>You could just send state updates for all n objects but typically you have some maximum bandwidth you want to support like 256kbit/sec. Respecting this bandwidth limit is easy. Just calculate how large your packet header is and how many bytes of preamble in the packet (sequence, # of objects in packet and so on) and work out conservatively the number of bytes remaining in your packet while staying under your bandwidth target.</p><br><p>Then take the n most important objects according to their priority accumulator values and as you construct the packet, walk these objects in order and measure if their state updates will fit in the packet. If you encounter a state update that doesn&rsquo;t fit, skip over it and try the next one. After you serialize the packet, reset the priority accumulator to zero for objects that fit but leave the priority accumulator value alone for objects that didn&rsquo;t. This way objects that don&rsquo;t fit are first in line to be included in the next packet.</p><br><p>The desired bandwidth can even be adjusted on the fly. This makes it really easy to adapt state synchronization to changing network conditions, for example if you detect the connection is having difficulty you can reduce the amount of bandwidth sent (congestion avoidance) and the quality of state synchronization scales back automatically. If the network connection seems like it should be able to handle more bandwidth later on then you can raise the bandwidth limit.</p><br><h2 id="jitter-buffer">Jitter Buffer</h2><br><p>The priority accumulator covers the sending side, but on the receiver side there is much you need to do when applying these state updates to ensure that you don&rsquo;t see divergence and pops in the extrapolation between object updates.</p><br><p>The very first thing you need to consider is that network jitter exists. You don&rsquo;t have any guarantee that packets you sent nicely spaced out 60 times per-second arrive that way on the other side. What happens in the real world is you&rsquo;ll typically receive two packets one frame, 0 packets the next, 1, 2, 0 and so on because packets tend to clump up across frames. To handle this situation you need to implement a jitter buffer for your state update packets. If you fail to do this you&rsquo;ll have a poor quality extrapolation and pops in stacks of objects because objects in different state update packets are slightly out of phase with each other with respect to time.</p><br><p>All you do in a jitter buffer is hold packets before delivering them to the application at the correct time as indicated by the sequence number (frame number) in the packet. The delay you need to hold packets for in this buffer is a much smaller amount of time relative to interpolation delay for snapshot interpolation but it&rsquo;s the same basic idea. You just need to delay packets just enough (say 4-5 frames @ 60HZ) so that they come out of the buffer properly spaced apart.</p><br><h2 id="applying-state-updates">Applying State Updates</h2><br><p>Once the packet comes out of the jitter how do you apply state updates? My recommendation is that you should snap the physics state hard. This means you apply the values in the state update directly to the simulation.</p><br><p>I recommend against trying to apply some smoothing between the state update and the current state at the simulation level. This may sound counterintuitive but the reason for this is that the simulation extrapolates from the state update so you want to make sure it extrapolates from a valid physics state for that object rather than some smoothed, total bullshit made-up one. This is especially important when you are networking large stacks of objects.</p><br><p>Surprisingly, without any smoothing the result is already pretty good:</p><br><video preload="auto" controls="controls" width="100%"><br><source src="/img/state_synchronization_uncompressed_1.mp4" type="video/mp4"><br>Your browser does not support the video tag.<br></video><br><p>As you can see it&rsquo;s already looking quite good and barely any bandwidth optimization has been performed. Contrast this with the first video for snapshot interpolation which was at 18mbit/sec and you can see that using the simulation to extrapolate between state updates is a great way to use less bandwidth.</p><br><p>Of course we can do a lot better than this and each optimization we do lets us squeeze more state updates in the same amount of bandwidth. The next obvious thing we can do is to apply all the standard quantization compression techniques such as bounding and quantizing position, linear and angular velocity value and using the smallest three compression as described in <a href="https://gafferongames.com/post/snapshot_compression/" target="_blank" rel="noopener">snapshot compression</a>.</p><br><p>But here it gets a bit more complex. We are extrapolating from those state updates so if we quantize these values over the network then the state that arrives on the right side is slightly different from the left side, leading to a slightly different extrapolation and a pop when the next state update arrives for that object.</p><br><video preload="auto" controls="controls" width="100%"><br><source src="/img/state_synchronization_uncompressed_2.mp4" type="video/mp4"><br>Your browser does not support the video tag.<br></video><br><h2 id="quantize-both-sides">Quantize Both Sides</h2><br><p>The solution is to quantize the state on both sides. This means that on both sides before each simulation step you quantize the entire simulation state as if it had been transmitted over the network. Once this is done the left and right side are both extrapolating from quantized state and their extrapolations are very similar.</p><br><p>Because these quantized values are being fed back into the simulation, you&rsquo;ll find that much more precision is required than snapshot interpolation where they were just visual quantities used for interpolation. In the cube simulation I found it necessary to have 4096 position values per-meter, up from 512 with snapshot interpolation, and a whopping 15 bits per-quaternion component in smallest three (up from 9). Without this extra precision significant popping occurs because the quantization forces physics objects into penetration with each other, fighting against the simulation which tries to keep the objects out of penetration. I also found that softening the constraints and reducing the maximum velocity which the simulation used to push apart penetrating objects also helped reduce the amount of popping.</p><br><video preload="auto" controls="controls" width="100%"><br><source src="/img/state_synchronization_uncompressed_3.mp4" type="video/mp4"><br>Your browser does not support the video tag.<br></video><br><p>With quantization applied to both sides you can see the result is perfect once again. It may look visually about the same as the uncompressed version but in fact we&rsquo;re able to fit many more state updates per-packet into the 256kbit/sec bandwidth limit. This means we are better able to handle packet loss because state updates for each object are sent more rapidly. If a packet is lost, it&rsquo;s less of a problem because state updates for those objects are being continually included in future packets.</p><br><p>Be aware that when a burst of packet loss occurs like <sup>1</sup>&frasl;<sub>4</sub> a second with no packets getting through, and this is inevitable that eventually something like this will happen, you will probably get a different result on the left and the right sides. We have to plan for this. In spite of all effort that we have made to ensure that the extrapolation is as close as possible (quantizing both sides and so on) pops can and will occur if the network stops delivering packets.</p><br><h2 id="visual-smoothing">Visual Smoothing</h2><br><p>We can cover up these pops with smoothing.</p><br><p>Remember how I said earlier that you should not apply smoothing at the simulation level because it ruins the extrapolation? What we&rsquo;re going to do for smoothing instead is calculating and maintaining position and orientation error offsets that we reduce over time. Then when we render the cubes in the right side we don&rsquo;t render them at the simulation position and orientation, we render them at the simulation position + error offset, and orientation * orientation error.</p><br><p>Over time we work to reduce these error offsets back to zero for position error and identity for orientation error. For error reduction I use an exponentially smoothed moving average tending towards zero. So in effect, I multiply the position error offset by some factor each frame (eg. 0.9) until it gets close enough to zero for it to be cleared (thus avoiding denormals). For orientation, I slerp a certain amount (0.1) towards identity each frame, which has the same effect for the orientation error.</p><br><p>The trick to making this all work is that when a state update comes in you take the current simulation position and add the position error to that, and subtract that from the new position, giving the new position error offset which gives an identical result to the current (smoothed) visual position.</p><br><p>The same process is then applied to the error quaternion (using multiplication by the conjugate instead of subtraction) and this way you effectively calculate on each state update the new position error and orientation error relative to the new state such that the object appears to have not moved at all. Thus state updates are smooth and have no immediate visual effect, and the error reduction smoothes out any error in the extrapolation over time without the player noticing in the common case.</p><br><p>I find that using a single smoothing factor gives unacceptable results. A factor of 0.95 is perfect for small jitters because it smooths out high frequency jitter really well, but at the same time it is too slow for large position errors, like those that happen after multiple seconds of packet loss:</p><br><video preload="auto" controls="controls" width="100%"><br><source src="/img/state_synchronization_uncompressed_4.mp4" type="video/mp4"><br>Your browser does not support the video tag.<br></video><br><p>The solution I use is two different scale factors at different error distances, and to make sure the transition is smooth I blend between those two factors linearly according to the amount of positional error that needs to be reduced. In this simulation, having 0.95 for small position errors (25cms or less) while having a tighter blend factor of 0.85 for larger distances (1m error or above) gives a good result. The same strategy works well for orientation using the dot product between the orientation error and the identity matrix. I found that in this case a blend of the same factors between dot 0.1 and 0.5 works well.</p><br><p>The end result is smooth error reduction for small position and orientation errors combined with a tight error reduction for large pops. As you can see above you don&rsquo;t want to drag out correction of these large pops, they need to be fast and so they&rsquo;re over quickly otherwise they&rsquo;re really disorienting for players, but at the same time you want to have really smooth error reduction when the error is small hence the adaptive error reduction approach works really well.</p><br><video preload="auto" controls="controls" width="100%"><br><source src="/img/state_synchronization_uncompressed_5.mp4" type="video/mp4"><br>Your browser does not support the video tag.<br></video><br><h2 id="delta-compression">Delta Compression</h2><br><p>Even though I would argue the result above is probably good enough already it is possible to improve the synchronization considerably from this point. For example to support a world with larger objects or more objects being interacted with. So lets work through some of those techniques and push this technique as far as it can go.</p><br><p>There is an easy compression that can be performed. Instead of encoding absolute position, if it is within a range of the player cube center, encode position as a relative offset to the player center position. In the common cases where bandwidth is high and state updates need to be more frequent (katamari ball) this provides a large win.</p><br><p>Next, what if we do want to perform some sort of delta encoding for state synchronization? We can but it&rsquo;s quite different in this case than it is with snapshots because we&rsquo;re not including every cube in every packet, so we can&rsquo;t just track the most recent packet received and say, OK all these state updates in this packet are relative to packet X.</p><br><p>What you actually have to do is per-object update keep track of the packet that includes the base for that update. You also need to keep track of exactly the set of packets received so that the sender knows which packets are valid bases to encode relative to. This is reasonably complicated and requires a bidirectional ack system over UDP. Such a system is designed for exactly this sort of situation where you need to know exactly which packets definitely got through. You can find a tutorial on how to implement this in <a href="https://gafferongames.com/post/reliability_and_flow_control/" target="_blank" rel="noopener">this article</a>.</p><br><p>So assuming that you have an ack system you know with packet sequence numbers get through. What you do then is per-state update write one bit if the update is relative or absolute, if absolute then encode with no base as before, otherwise if relative send the 16 bit sequence number per-state update of the base and then encode relative to the state update data sent in that packet. This adds 1 bit overhead per-update as well as 16 bits to identify the sequence number of the base per-object update. Can we do better?</p><br><p>Yes. In turns out that of course you&rsquo;re going to have to buffer on the send and receive side to implement this relative encoding and you can&rsquo;t buffer forever. In fact, if you think about it you can only buffer up a couple of seconds before it becomes impractical and in the common case of moving objects you&rsquo;re going to be sending the updates for same object frequently (katamari ball) so practically speaking the base sequence will only be from a short time ago.</p><br><p>So instead of sending the 16 bit sequence base per-object, send in the header of the packet the most recent acked packet (from the reliability ack system) and per-object encode the offset of the base sequence relative to that value using 5 bits. This way at 60 packets per-second you can identify an state update with a base half a second ago. Any base older than this is unlikely to provide a good delta encoding anyway because it&rsquo;s old, so in that case just drop back to absolute encoding for that update.</p><br><p>Now lets look at the type of objects that are going to have these absolute encodings rather than relative. They&rsquo;re the objects at rest. What can we do to make them as efficient as possible? In the case of the cube simulation one bad result that can occur is that a cube comes to rest (turns grey) and then has its priority lowered significantly. If that very last update with the position of that object is missed due to packet loss, it can take a long time for that object to have its at rest position updated.</p><br><p>We can fix this by tracking objects which have recently come to rest and bumping their priority until an ack comes back for a packet they were sent in. Thus they are sent at an elevated priority compared with normal grey cubes (which are at rest and have not moved) and keep resending at that elevated rate until we know that update has been received, thus &ldquo;committing&rdquo; that grey cube to be at rest at the correct position.</p><br><h2 id="conclusion">Conclusion</h2><br><p>And that&rsquo;s really about it for this technique. Without anything fancy it&rsquo;s already pretty good, and on top of that another order of magnitude improvement is available with delta compression, at the cost of significant complexity!</p>
+
+
+
+
+<h1 id="译文">译文</h1>
+
+
+<p><a href="http://gad.qq.com/program/translateview/7164500" target="_blank" rel="noopener">译文出处</a></p>
+<div class="WordSection1"><b style="margin: 0cm 0cm 0.0001pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="font-size:12.0pt;line-height:240%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222;font-weight:normal">译者：陈敬凤（<span>nunu</span>）<span>    </span>审校：崔国军（飞扬<span>971</span>）</span> </b><p class="MsoNormal"><span> </span> </p><p class="MsoNormal" align="left"><br></p><h2 id="介绍">介绍</h2><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">大家好，我是格伦·菲德勒。欢迎阅读《网络物理模拟》的系列文章，这个系列文章的主题是关于如何将一个物理模拟通过网络通信进行同步。</span> <p></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">在这篇文章，我们将讨论第三种也是最后一种同步的策略：状态同步。</span> </p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left"><br></p><h2 id="状态同步概念">状态同步概念</h2><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">在我看来，这是最简单的同步策略也是最容易理解的同步策略。事实上，这是我开始实现《雇佣兵<span>2</span>：战火纷飞》的网络物理部分的时候我首先尝试的同步策略。这个同步策略的基本想法是我们在网络的两侧同时运行仿真，但是与具有确定性的帧同步不同的是帧同步会通过网络发送输入信息并且依赖完美的确定性来保持同步，这种同步策略是既通过网络发送输入信息又会发送状态信息来进行同步。</span> <p></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这就赋予了状态同步与之前的同步策略完全不同的属性。与具有确定性的帧同步不同，这种同步策略不需要要求确定性来保持同步，因为我们可以迅速的通过网络发送状态来纠正任何的偏差。这种同步策略也跟快照信息的插值不同，如果一个对象不在数据包里面的话，这个物体还是会继续移动，因为网络两侧的仿真都在持续的运行。</span> </p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">正是由于这一特性，状态同步的实现方法才会与快照信息的插值有差别。不再是在每个数据包里面发送每个物体的状态更新信息，我们可以只对几个对象进行更新。如果我们在每个数据包选择要同步的物体的时候方案比较聪明的话，我们可以更有效地利用带宽，把注意力主要集中在最重要的物体的更新上，而那些不那么重要的物体，他们的更新信息可以以一个较低的速率进行发送。这样的话，相比较快照信息插值这种要在一个快照里面包括所有物体的方法，状态同步这种方法使用的带宽可以减少一个数量级。此外，状态同步这种方法不会在网络延迟之上还要附加插值带来的延迟，因为它相比较于快照信息插值这种方法，延迟也更低。</span> </p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这样做的代价是状态同步是一个近似和有损的同步策略。如果推送信息的时候出现了一些问题导致大量的数据包丢失的话，远程的模拟仿真使用的是过期的数据进行预测。根据我的经验，如果使用这个同步策略的话，你会花很多时间追踪由于进行预测所带来的差异。如果使用这个同步策略的话，在大量物体堆叠的时候，会看到很多物体的移动不正常，并且很难精确地追查。在这篇文章中，我会告诉你如何追踪并通过网络发送量化和压缩的物理状态来减少分歧的根源。</span> </p><p class="MsoNormal" align="left"><br></p><h2 id="实现">实现</h2><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">让我们从实际的实现来看下这个同步策略。这里是每个发送的对象的网络状态：<br><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">StateUpdate</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> index;</span><br><span class="line">    vec3f position;</span><br><span class="line">    quat4f orientation;</span><br><span class="line">    vec3f linear_velocity;</span><br><span class="line">    vec3f angular_velocity;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br><br>需要注意的是，我们发送的不仅仅是一些像位置、方向这样的视觉信息，这个地方与快照信息插值那种方法相同，我们还发送了很多非视觉的物体状态信息，比如线性速度和角速度，这是与快照信息插值那种方法不同的地方。这么做是必要的是因为物理仿真需要对每个物体最近的状态进行外推。因此，状态更新需要提供所有进行外推所需的信息，以便能够正确的进行推测。如果一个物体的速度信息没有发送的话，在预测物体前进的时候，就会使用一个不正确的速度信息，这将导致下一次物体信息进行更新的时候有一个拉扯。</span> <p></p><p class="MsoNormal" align="left"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">当我们在网络上对状态更新进行序列化的时候，没有必要对不动的物体浪费网络带宽，为这些不动的物体发送什么<span>(0,0,0)</span>来表示线性速度和角速度。我们可以做一个简单的优化，通过把物体的静止状态包含在内来给每个静止的物体节省<span>24</span>字节的带宽：<br><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">serialize_state_update</span><span class="params">( Stream &amp; stream,</span></span></span><br><span class="line"><span class="function"><span class="params">                             <span class="keyword">int</span> &amp; index,</span></span></span><br><span class="line"><span class="function"><span class="params">                             StateUpdate &amp; state_update )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    serialize_int( stream, index, <span class="number">0</span>, NumCubes - <span class="number">1</span> );</span><br><span class="line">    serialize_vector( stream, state_update.position );</span><br><span class="line">    serialize_quaternion( stream, state_update.orientation );</span><br><span class="line">    <span class="keyword">bool</span> at_rest = stream.IsWriting() ? state_update.AtRest() : <span class="literal">false</span>;   </span><br><span class="line">    serialize_bool( stream, at_rest );</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> ( !at_rest )</span><br><span class="line">    &#123;</span><br><span class="line">        serialize_vector( stream, state_update.linear_velocity );</span><br><span class="line">        serialize_vector( stream, state_update.angular_velocity );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ( stream.IsReading() )</span><br><span class="line">    &#123;</span><br><span class="line">        state_update.linear_velocity = vec3f(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">        state_update.angular_velocity = vec3f(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><br>上面的代码就是我所谓的序列化功能。这里面有一个我喜欢的小技巧来统一位打包器的读取和写入函数，它们通常是分开实现的。这个函数会在两种不同的上下文中进行调用：写入的时候和读取的时候。你可以通过<span>IsReading/IsWriting</span>函数来知道自己目前处在哪个上下文。我喜欢这个技巧的原因是如何读取和写入功能统一在一个函数的时候，读取和写入的不同步就会很少发生。如果你希望读取和写入功能统一在一起并且像我这样进行数据包的数据，请参考</span><span><a rel="noopener" href="https://gafferongames.com/post/serialization_strategies/" target="_blank"><span><span>这里</span></span></a></span><span style="color: rgb(40, 40, 40);"></span><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">。</span> </p><span style="color: rgb(34, 34, 34);"><br><h2 id="数据包结构体">数据包结构体</h2><br><span style="font-family:微软雅黑;font-size:medium;">当把状态更新写入的时候，如果这个物体是静止不动的话，这个函数其实只序列化了一比特的信息而不会更新线性速度和角速度的信息。如果这个物体不是静止不动的话，会把线性速度和角速度的信息写入之前先写入一比特的信息。在从数据包进行读取的时候，代码会读取这个比特位，如果这个比特位是<span>0</span>的话，会从这个比特流里面读取线性速度和角速度的信息，否则的话，会把物体的线性速度和角速度全部清为（<span>0,0,0</span>）。这是一个非常简单而有效的无损带宽压缩策略能够针对静止不动的物体进行数据的压缩，能够节省将近一半的带宽。</span></span><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">接下来让我们看一下被发送的数据包的结构：<br><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MaxInputsPerPacket = <span class="number">32</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MaxStateUpdatesPerPacket = <span class="number">64</span>;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Packet</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">uint32_t</span> sequence;</span><br><span class="line">    Input inputs[MaxInputsPerPacket];</span><br><span class="line">    <span class="keyword">int</span> num_object_updates;</span><br><span class="line">    StateUpdate state_updates[MaxStateUpdatesPerPacket];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br><br>从上面的数据包结构中，你可以看到，首先登场的是我们在每个数据包包含的序列号，通过这个数据信息我们可以判断数据包是否出故障、丢失或者重复。我强烈建议你在网络两侧的运行都按照相同的帧速率（比如说<span>60fps</span>）进行仿真。在这种情况下，你还可以给序列号赋予另外一重任务：作为状态更新的帧号。</span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">输入信息被包含在每个数据包里面，这是因为仿真需要输入信息才能进行外推。当仿真在网络的另外一侧运行的时候，我们希望通过状态更新的信息以及运行玩家相同的输入信息来往前预测后续状态的信息，并且希望预测出来的状态能够和真实的状态尽可能的接近。就跟具有确定性的帧同步一样，我们发送了多个冗余输入信息，这样即使在有包丢失的情况下，输入信息也不太可能完全被丢弃而不能到达网络的另外一端，但是跟具有确定性的帧同步不一样的是，就算是最坏的情况下（也就是我们没有收到后续的输入信息的情况），我们本地的仿真也不会停止并且等待后续的输入信息的到来，我们还是会根据最后收到的输入信息继续往前模拟。</span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">接下来，你可以看到，在一个数据包里面我们最多发送<span>64</span>个状态更新。我们在仿真的场景中一共有<span>901</span>个立方体，所以我们需要一些方法来从这<span>901</span>个立方体里面选出一些最重要的立方体，在每一个数据包进行数据更新。我们需要某种优先级方案，这样我们才能找到最重要的物体，允许我们只会很频繁的发送最重要的物体的状态信息，而那些不怎么重要的物体的更新就会不那么的频繁，零零散散的更新，这样保证所有对象都有机会进行更新和发送，但是又能让最重要的那些物体始终得到更新。</span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">这样就要求在仿真的每一帧开始的时候遍历所有的物体并且计算它们当前的优先级。让我们举个简单的例子来说，在立方体模拟这个场景中，我把玩家立方体的优先级设为<span>100000</span>，因为我希望玩家立方体的更新信息能够包含在每个数据包里面，而对于发生交互的立方体（那些红色的立方体），我赋予它们的优先级为<span>100</span>，而所有静止不动的立方体，优先级为<span>1</span>。</span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">非常遗憾的是如果只有这一个机制的话，是不足以公平分配对象的更新的，这是因为如果你刚刚仅仅是在每一帧对物体的当前优先级进行了排序，这样的话，如果人物立方体和红色立方体有交互的话，那么就永远只有红色立方体的信息会被发送，而地面上的白色立方体则永远不会更新。我们需要一个稍微不同的方法，优先发送重要的对象，同时也会在仿真的过程让那些不重要的物体也有更新的机会。</span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><br><h2 id="优先级累加器">优先级累加器</h2><br><span style="font-family:微软雅黑;font-size:medium;">你可以通过优先级累加器做到这一点。这是一组浮点数值，每个对象都会有一个对应的浮点数值，在帧与帧之间会一直保留。有了这个值以后，不再是根据当前帧中这个物体的重要性进行排序，而是在每一帧中将每个物体的重要性加到这个优先级累加器中，然后对优先级累加器的值进行从大到小进行排序。这个排序的顺序中前面的物体就是这一帧中你应该发送的物体。</span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">你可以为所有的<span>N</span>个物体发送状态更新信息，但是通常情况下你的带宽会有一些限制，比如说你需要控制在<span>256k</span>比特每秒。尊重这个带宽限制是很容易的。只要计算出你的数据包Header有多大，并且计算下数据包的preamble部分有多大（这主要是指序号、标记哪些物体在这个数据包等信息），这样就能计算出来你的数据包还剩下多少字节，可以通过计划传递多少个物体的更新信息来确保带宽小于约定的最大带宽。</span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">然后根据它们的优先级累加器里面的值选取数目和上面计算相符合的<span>n</span>个最重要的物体，然后用这<span>n</span>个最重要的物体的更新信息来构建你的数据包。对这<span>n</span>个最重要的物体进行依次遍历并测试它们的数据更新信息是否应该放在这个数据包里面。如果遇到一个物体的状态更新信息不合适放到这个数据包里面，那么就跳过这个物体并尝试下一个。当你序列化完这个数据包以后，将那些已经在这帧更新过的物体在优先级累加器里面的值重置为<span>0</span>，但是那些没有在这帧更新过的物体在优先级累加器里面的值则保持不变。</span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">通过使用这个办法，刚才检测不合适放到数据包的物体的更新信息会被首先包含在下一帧的数据包里面。</span></span><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">使用这种同步策略，所需的带宽甚至可以动态调整。这使得这种同步策略可以很容易的根据不断变化的网络条件来调整状态同步的信息量，让我们举个简单的例子来说，如果你发现连接有困难，就可以减少发送所占的带宽（拥塞避免），这样状态同步的规模会逐步的自动回复回来。如果网络连接似乎可以处理更多的带宽，那么就可以把带宽限制提高。</span></span><span style="font-family:微软雅黑;font-size:medium;"><span style="color: rgb(34, 34, 34);">我们这里所做的处理主要是在网络发送这一端。</span></span></div><div class="WordSection1"><span style="font-family:微软雅黑;font-size:medium;"><span style="color: rgb(34, 34, 34);"><br></span></span></div><div class="WordSection1"><span style="font-family:微软雅黑;font-size:medium;"><span style="color: rgb(34, 34, 34);"><br></span></span></div><div class="WordSection1"><span style="font-family:微软雅黑;font-size:medium;"><br><h2 id="抖动缓冲区">抖动缓冲区</h2><br><span style="color: rgb(34, 34, 34);">对物体做了优先级的排序，并且在每帧里面更新物体在优先级累加器里面的值，并在每次发送数据包的时候只发送<span>n</span>个最重要的物体。但是在网络接收这一端，还有很多需要做的事情，比如当应用接收过来的状态更新信息的时候，如何避免与之前预测的物体状态信息之间的差异会被玩家感觉到。</span></span></div><div class="WordSection1"><span style="font-family:微软雅黑;font-size:medium;"><span><span style="color:#222222;"><br></span></span><span style="color: rgb(34, 34, 34);">你需要考虑的第一件事情是，网络抖动的存在。你没有任何办法来确保你发送的数据包就是完美的是每秒<span>60</span>次的频率抵达网络的另外一侧。在现实世界中会发生的事情是你可能在一帧中收到两个数据包，然后在下一帧一个数据包也收不到，然后下面几帧可能是<span>1</span>个，<span>2</span>个或者<span>0</span>个。为了处理这种情况，你需要实现一个抖动缓冲器来保存你的状态更新数据包。</span></span></div><div class="WordSection1"><span style="font-family:微软雅黑;font-size:medium;"><span style="color: rgb(34, 34, 34);"><br></span></span></div><div class="WordSection1"><span style="font-family:微软雅黑;font-size:medium;"><span style="color: rgb(34, 34, 34);">如果你不这样做，所做的推测质量就很难保证而且会出现对象堆叠的情况，这是因为在不同的状态更新数据包里面，每一个物体的信息都会有些轻微的变化。</span></span><span style="color: rgb(33, 33, 33);"><span style="font-family:微软雅黑;font-size:medium;"> </span></span><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">在抖动缓冲器你所要做的事情就是保存这些数据包，然后根据数据包里面的序号（其实也就是帧号了）来在正确的时间将数据包发给应用程序处理。你需要在这个缓冲区来保存数据包所导致的延迟相比较快照信息插值所带来的延迟是一段非常微小的时间，但是这两种同步策略的基本思想是一致的。你只要稍微延迟一下数据包让时间刚刚好就好（比如说每秒<span>60</span>次更新的情况延迟个<span>4-5</span>帧），这样数据包就能够以合适的间隔从缓冲区里面出来到达应用程序。</span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><br><h2 id="应用状态更新">应用状态更新</h2><br><span style="font-family:微软雅黑;font-size:medium;">一旦你的数据包从抖动缓冲器里面出来，你该如何使用数据包的信息进行状态更新呢？我的建议是，你要努力对齐这种状态。在状态更新直接应用这些信息进行仿真。我反对在状态更新和当前仿真的目前状态之间做一些平滑的更替。这听起来可能有悖常理，但这样做的原因是，当前有些物体的状态可能是根据之前状态推测出来的，所以你要保证这个物体的预测信息是从物体有效的物理状态出发，而不是一些平滑出来的完全是虚假的数据出发。这在你有大量的物体对象的时候会格外的重要。</span></span><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">到目前为止，我们已迅速建立了一个实用的同步策略而没做有太多的工作。事实上，这种同步策略已经足够好了，已经完全可以在互联网上进行游戏对战了，并且它对丢包、抖动和带宽限制都处理的相当不错。</span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">【视频1：</span></span><span style="color:#222222;font-family:微软雅黑;font-size:medium;">cube_state_sync_uncompressed</span>】</div><div class="WordSection1"><br><br><video preload="auto" loop="loop" width="100%" controls="controls"><br><source src="/img/state_synchronization_uncompressed_1.mp4" type="video/mp4"><br></video><br><br><br></div><div class="WordSection1"><br><span style="font-family:微软雅黑;font-size:medium;"><span style="color: rgb(34, 34, 34);">正如你可以看到的那样，这种同步策略已经看上去相当不错了，并且几乎没有做任何的带宽优化。与快照信息插值那种策略的第一次<span>18m</span>每秒的信息量相比，你可以看到在状态更新之间进行状态的推测是使用更少的带宽的好方法。</span><span><br></span><span style="color: rgb(34, 34, 34);">当然，我们可以做得比现在的状态好的多，每次我们做优化的时候我们都可以使用相同的带宽来传递更多的物体状态更新信息。我们可以做的下一个明显有效果的事情是应用所有的标准量化压缩技术，比如压缩边界和量化位置、线性速度和角速度的值以及如同《网络物理模拟五之快照压缩》里面的描述的<span>“</span>最小的三个变量<span>”</span>方法。</span></span><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">但在这里它变得更复杂一点。我们从这些状态更新向前进行推测，所以如果我们量化这些通过网络传递的值的话，那么到达右侧的状态将与左侧的状态稍有不同，这会让推测变得更加不准，并且当下一个状态更新到达的时候会出现一些拉扯现象。</span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">【视频2： </span></span><span style="color:#222222;font-family:微软雅黑;font-size:medium;">cube_state_sync_compressed</span>】</div><div class="WordSection1"><br><br><video preload="auto" loop="loop" width="100%" controls="controls"><br><source src="/img/state_synchronization_uncompressed_2.mp4" type="video/mp4"><br></video><br><br><br></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;"><br></span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><br><h2 id="对两边都量化">对两边都量化</h2><br><span style="font-family:微软雅黑;font-size:medium;">解决的办法是量化两侧的状态。这意味着，在每一个仿真进行一次更新之前，你要对网络的两侧同时量化整个模拟状态，就好像它们都已经在网络上传输了一样。一旦这样做了的话，左侧和右侧都是从量化的状态进行推测，这样它们的推测结果就会非常的接近。</span></span><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">由于这些量化以后的值会被反馈到仿真中去，你会发现这种方法对精确度的要求比快照信息插值的方法所要求的精确度要高的多，因为在快照信息插值的方法里面，使用的数据只是用来插值的视觉信息。在立方体模拟这个情况下，我发现有必要对于每米要有<span>4096</span>个位置的精度，而在快照信息插值的方法里每米只要有<span>512</span>个位置的精度就可以了，所以四元数最小的三个分量每个要<span>15</span>比特位（在快照信息插值的方法里四元数最小的三个分量每个只要<span>9</span>个比特位的信息就行）。如果没有这种额外的精度出现，就非常容易出现物体的拉扯的情况，这是因为量化以后的数据会迫使物理对象相互渗透，这与模拟要所求的尽量保持物理对象不相互渗透的努力是背道而驰的。我还发现，软化约束以及减少模拟用于推开相互渗透的物理对象的最大速度也有助于减少出现物体拉扯的情况。</span></span></div><div class="WordSection1"><span style="color: rgb(34, 34, 34);"><span style="font-family:微软雅黑;font-size:medium;">【视频3： </span></span><span style="color:#222222;font-family:微软雅黑;font-size:medium;">cube_state_sync_quantize_both_sides</span>】</div><div class="WordSection1"><br><br><video preload="auto" loop="loop" width="100%" controls="controls"><br><source src="/img/state_synchronization_uncompressed_3.mp4" type="video/mp4"><br></video><br><br><br></div><div class="WordSection1"><br><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">在量化应用于网络两侧的模拟以后，就可以再次看到结果是比较完美的。这种处理以后，看起来视觉效果与未压缩版本差不多，但事实上通过这种方案我们能够适应每个包进行更多的状态更新，同时还能满足每秒<span>256</span>比特的带宽限制。这意味着我们能够更好地处理数据包的丢失，因为每一个对象的状态更新可以更迅速的发送。如果出现数据包丢失的情况，对整个模拟来说也会引发更少的问题，这是因为通过未来到来的书包正在持续不断地对这些物体进行状态更新。</span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">请注意如果出现数据包的集中丢弃的情况，比如说在四分之一秒的时间没有数据包通过，这种情况是不可避免的，总是会发生一些这样的事情，你可能会在网络的两侧得到完全不同的结果。我们必须为这种情况进行规划。我们会尽一切努力来确保外推是尽可能与实际结果相接近的（采用在网络的两侧进行量化以及其他一些方案），但是由于网络停止传输数据包，还是会发生各种拉扯和不准确的情况。</span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><br></p><h2 id="视觉平滑">视觉平滑</h2><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">还记得我之前说过的那个事情么？你不应该对模拟这一侧使用平滑算法，因为它会对外推有不好的影响吗<span>? </span>我们要做的不是平滑而是计算和维护位置和方向的误差补偿，这个量会随着时间而减少。然后当我们在网络的右侧渲染立方体的时候，我们并不是用模拟的位置和方向对这些立方体进行渲染，我们是用模拟的位置和方向再加上误差补偿来对这些立方体进行渲染。位置信息是模拟位置信息加上误差补偿，方向信息是模拟的方向信息再乘以方向的误差补偿。</span> <p></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">随着时间的推移，我们努力减少这些误差补偿，让位置的误差补偿尽量趋近于<span>0</span>，而方向的误差补偿尽量趋近于<span>一致</span>。为了减少误差，我使用了一个指数平滑的移动，平均线趋近零。所以实际上，我用每一帧的位置误差乘以某个系数（比如说是<span>0.9</span>），直到它接近于零而被清除<span>(</span>这样就避免了突变<span>)</span>。对于方向而言，我用某一个固定的量（比如说是<span>0.1</span>）来对每一帧的标准向量进行球面插值，这个可以达到方向误差相同的效果。</span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">让所有事情都能够正常运行的诀窍在于当一个状态更新数据包到达的时候，你获取当前的模拟位置信息，并把位置误差添加上去，然后再从新的位置里面减去这个值，这样就可以让新位置的位置误差和当前的视觉位置比较一致（平滑）。然后把相同的过程应用于四元数误差（使用乘法的共轭而不是减法来与基准方向信息进行叠加），通过这种方法你就可以有效的计算在每个状态更新数据包到达的时候，相对于新的状态下新的位置误差和方向误差，这样处理的话物体看上去就根本没有进行任何的移动。因此状态更新的非常平滑，没有任何突然移动的视觉效果，而且可以随着时间慢慢减少由于推断带来的误差而通常情况下这么处理不会让玩家注意到。</span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">我发现只使用一个单独的平滑因子会产生不可接受的结果。平滑因子<span>0.95</span>对于那些小的抖动来说是非常完美的，因为它对那些高频抖动的平滑是非常完美的，但是它对于大的位置误差来说平滑的太慢了，比如说发生了好几秒数据包丢失以后，物体的位置和实际位置差的比较大，这时候用这个因子来平滑就太慢了：</span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">【视频4：</span><span style="color:#222222;font-family:&#39;微软雅黑, sans-serif&#39;;"><span style="font-size: 16px;">cube_state_sync_basic_smoothing</span></span><span style="color: rgb(34, 34, 34); font-family: 微软雅黑, sans-serif; font-size: 12pt;">】</span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><br><br><video preload="auto" loop="loop" width="100%" controls="controls"><br><source src="/img/state_synchronization_uncompressed_4.mp4" type="video/mp4"><br></video><br><br><span style="color: rgb(34, 34, 34); font-family: 微软雅黑, sans-serif; font-size: 12pt;"><br></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34); font-family: 微软雅黑, sans-serif; font-size: 12pt;"><br></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">我使用的解决方案是针对不同的误差距离使用两个不同的平滑因子，并且我会根据需要减少的位置误差的大小来对这两个平滑因子进行线性的混合来让过渡非常的平滑。在这个模拟中，我使用的是<span>0.95</span>来平滑小的位置误差<span>(</span>针对<span>25</span>厘米或者误差更小的情况<span>)</span>，而对于大一点的距离而言会使用一个更严格的混合系数<span>0.85(</span>针对<span>1</span>米或者误差更大的情况<span>)</span>，这给出了一个非常好的结果。对于方向而言，相同的策略适用于对方向误差和单位矩阵使用点积的情况。我发现在这种情况下，混合系数分别采用<span>0.1</span>和<span>0.5</span>的效果就非常的好。</span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">最终的结果是对小的位置误差和方向误差的平滑操作与对大的位置误差和方向误差的快速收敛很好的结合在了一起。正如你在上面看到的那样，你不想拖着一直不处理这些大的位置误差和方向误差，这些大的位置误差和方向误差需要被快速的解决否则它们会给玩家造成非常大的困扰，但是同时当位置误差和方向误差很小的时候你希望这个误差减少的过程能够非常的平滑，因此自适应误差减少方法效果很好。</span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">【视频5：</span><span style="color:#222222;font-family:&#39;微软雅黑, sans-serif&#39;;"><span style="font-size: 16px;">cube_state_sync_adaptive_smoothing.mp4</span></span><span style="color: rgb(34, 34, 34); font-family: 微软雅黑, sans-serif; font-size: 12pt;">】</span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><br><br><video preload="auto" loop="loop" width="100%" controls="controls"><br><source src="/img/state_synchronization_uncompressed_5.mp4" type="video/mp4"><br></video><br><br><span style="color: rgb(34, 34, 34); font-family: 微软雅黑, sans-serif; font-size: 12pt;"><br></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="color: rgb(34, 34, 34); font-family: 微软雅黑, sans-serif; font-size: 12pt;"><br></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><br></p><h2 id="增量压缩">增量压缩</h2><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">尽管我认为上述结果可能已经足够好了，从这一点上来看可以大大提高同步的质量。让我们举些简单的例子来说明，比如支持一个有大量对象的世界或者有更多的对象与之交互。所以让我们通过一些技术上的改进，来推动这项技术尽可能的完美。</span> <p></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">有一种简单的压缩，可以立刻执行。不再是编码绝对位置，如果位置是在玩家立方体中心的某个范围之内的话，就会以玩家的中心位置的偏移量来进行编码。如果是常见情况下，带宽很高而且状态更新需要非常的频繁（<span>katamari</span>球），通过这种方法就能节省下很多带宽。</span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">接下来，如果我们想对状态同步执行某种增量编码怎么办<span>? </span>我们可以做到但是具体的方法会和快照里面的增量编码方法差别很大，这是因为在这种情况下我们的每个数据包不会包含每一个立方体的信息，所以我们不能跟踪最新收到的数据包，并且自以为地觉得这个数据包的所有这些状态更新都是相对于<span>X</span>这个数据包的。</span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">你实际要做的就是逐对象的进行更新，对数据包进行跟踪包括更新的基础值。你还需要跟踪收到的数据包的准备的数量，这样发送方才能知道哪些数据包可以作为增量编码有效的基础值。这是相当复杂的，并且是需要通过<span>UDP</span>协议进行双向确认的系统。这样一个系统是专为这种情况设计的，因为你肯定需要知道哪些数据包确定是到达了另外一侧。你可以在这个<a href="http://gad.qq.com/college/articledetail/7161834" target="_blank" rel="noopener">教程</a>里面找到具体如何实现这个功能的指南。</span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">所以假设你有一个确认系统，这样你就知道已经发送到网络另外一侧的数据包的序列号。你所要做的就是在每个状态更新的时候，用一位数据来记录下这个更新到底是相对更新还是绝对更新，如果是绝对更新就没有针对基础编码这回事，否则就是一个相对更新，所以要发送<span>16</span>位序列号来标记每个状态相对应的基础状态，然后相对于基础状态对更新数据进行编码并通过数据包进行发送。这为每次更新增加了<span>1</span>比特开销，以及需要增加<span>16</span>位序列号的开销来标记每个物体更新的基准帧。我们可以做得更好吗<span>?</span></span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#2B2B2B;background:#F8F8F8"> </span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">是的。确实可以做的更好。你要在发送和接收端进行缓冲来实现这个相对编码机制，但是你不可能永远缓冲。事实上，如果你仔细想想，你只能缓冲几秒钟然后整个缓冲就变得不切实际，对于物体在移动这个常见的情况，你会经常发送相同对象的更新信息（比如说<span>katamari</span>球），所以实际上基准帧只能是很短时间之前的一帧状态。</span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">所以对每个物体发送<span>16</span>位的序列号来表明基准帧，在数据包的包头里面发送最近确认的数据包的序列号（这个数据是从可靠的确认系统里面得到的）然后对每个物体编码相对这个基准帧的偏移量，这个偏移量使用<span>5</span>位信息。通过这种方式在每秒<span>60</span>个数据包的情况下，你可以识别相对于基准帧半秒前的状态更新。任何比这个值更老的基准帧不太可能提供一个良好的增量编码的基准，主要是因为它们太老了，所以在这种情况下就要切回到绝对编码进行状态更新。</span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">现在让我们看看会使用这些绝对编码而不是相对编码的对象的类型。他们是静止的对象。我们能做什么来让他们的更新尽可能的高效<span>?</span>在这种立方体模拟的情况，一个可能发生的很糟糕的结果是一个立方体进行停止状态（变成灰色）然后它的优先级显著降低。如果由于数据包的丢失，导致最后对象的位置更新信息被错过的话，可能需要很长时间才会轮到这个物体来更新它的停止位置信息。</span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">我们可以通过跟踪哪些最近变成停止状态的对象来解决这个问题，并且会提高这些对象的优先级直到一个确认包返回来标记这些对象的位置更新信息已经被成功的发送了。因此他们的发送优先级会相对于正常的灰色立方体（那些处于静止状态没有移动的立方体）的发送优先级有一定的提高，并且会在这个提高后的优先级上一直发送，直到我们知道对这些立方体的更新信息已经收到，也就是网络的另外一侧会“承诺”把这些灰色的立方体放在正确的位置上停止。</span> </p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><br></p><h2 id="最后">最后</h2><br><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">这就是有关于这种技术的全部内容。它非常的有趣，不需要任何花哨的内容就已经足够好了，然后在此基础上可以做一个数量级的带宽节省（通过增量编码），但是这个方案的复杂性非常的高。</span> <p></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><br></p><p class="MsoNormal" align="left" style="line-height: 16.8pt; vertical-align: baseline;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222"><br></span></p><p class="MsoNormal" align="left" style="line-height: 18pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">【版权声明】</span> </p><p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:#222222">原文作者未做权利声明，视为共享知识产权进入公共领域，自动获得授权。</span> </p><p class="MsoNormal"><span style="font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"> </span> </p></div>                    <br>                
+
+          
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hulinhong.com/2017/01/24/snapshot_compression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="no5ix">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="烫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/24/snapshot_compression/" itemprop="url">网络物理模拟五之快照压缩</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-24T11:13:35+00:00">
+                2017-01-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GS/" itemprop="url" rel="index">
+                    <span itemprop="name">GS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+
+      
+      
+
+      
+        
+          <h1 id="自我总结"><a href="#自我总结" class="headerlink" title="自我总结"></a>自我总结</h1><p>快照压缩技术的要点为 : </p>
+<ul>
+<li><strong>压缩Orientation数据</strong> : 利用四元数的”最小的三个分量”性质:x^2+y^2+z^2+w^2 = 1 来在传输的时候丢弃一个分量并在网络的另外一端对整个四元数进行重建</li>
+<li><strong>压缩线性速度和Postion数据</strong> : 把他们限制在某个范围内, 就可以用这个范围的最大值所占用的比特位数来保存这两种数据了, 而不用一个超大的数来保证可以保存他们的最大值了(占用超多bit位)</li>
+<li><strong>增量压缩</strong></li>
+</ul>
+<p><strong>. . .</strong>
+          <!--noindex-->
+          
+          <!--/noindex-->
+        
+      
+
+
+      
+
+    
+      <footer class="post-footer">
+        
+
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </footer>
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/21/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/23/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  
+
+  <aside id="sidebar" class="sidebar">
+
+    
+      
+        <div id="sidebar-dimmer"></div>
+      
+    
+
+    <div class="sidebar-inner">
+    
+      <div class="sidebar-toggle-inside motion-element">
+        <div class="sidebar-toggle-line-wrap">
+          <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+          <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+        </div>
+      </div>
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <a href="/" class="site-author-image" rel="start" style="border:none">
+            <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="no5ix">
+          </a>
+          <p class="site-author-name" itemprop="name">no5ix</p>
+           
+              <p class="site-description motion-element" itemprop="description">推荐使用Chrome/Firefox/Safari阅读本博客. 以前的老笔记将会一篇一篇慢慢整理为博客, 这既启发了他人, 也锻炼了自己的描述交流能力.</p>
+          
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+          <div class="site-state-item site-state-about">
+            <a href="/about/">
+              <span class="site-state-item-about fa fa-fw fa-user"></span>
+              <span class="site-state-item-name">关于</span>
+            </a>
+          </div>
+          
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+          
+          <!-- 网易云音乐 -->
+            <!-- <div class="netease-cloud-music"> -->
+              <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=110 src="//music.163.com/outchain/player?type=0&id=992743594&auto=0&height=90"></iframe> -->
+            <!-- </div> -->
+          <!-- 网易云音乐 -->
+
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://119.23.17.57" title="ksun的博客" target="_blank">ksun的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://mp.weixin.qq.com/mp/homepage?__biz=MzU3MTUyNzg0NQ==&hid=1&sn=7a3ae61b7af714f75d68e7ae826a2d2c&scene=18#wechat_redirect" title="你有图么我有故事" target="_blank">你有图么我有故事</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">no5ix</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!--
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      
+        <span id="scrollpercent"><span>0</span>%</span>
+      
+    </div>
+    -->
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/dist/jquery.fancybox.js?v=3.2.10"></script>
+
+
+  
+
+
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+
+    var is_load_xml_finished = 0;
+
+    var searchFunc = function (path, search_id, content_id) {
+      // 0x00. environment initialization
+      'use strict';
+
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      // var datas = [];
+
+      /* loading css1 : Dot Css Loader*/
+      var DotLoader = "<div class='loader'>Loading...</div>";
+
+      /* loading css2 : Pure Css Loader - Square */
+      var SquareLoader = 
+        "<div class='loader'>" +
+          "<div class='square' ></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square'></div>" +
+          "<div class='square last'></div>" +
+          "<div class='square clear'></div>" +
+          "<div class='square '></div>" +
+          "<div class='square last'></div>" +
+        "</div>";
+
+      var ProgressBar = 
+          "<div class='progress-bar'>" +
+            "<div class='progress-bar-charge'></div>" +
+          "</div>";
+
+      var str = "";
+      var keywords = [];
+      var temp_keyword = "";
+
+      // 是否为第一个字母被键入的标志位
+      var first_char_flag = 0;
+
+      // 因为在移动设备上, 点击搜索之后会 scroll 到页面顶部, 所以需要记录之前的页面x, y坐标值, 以便于搜索完点击 close 按钮之后 scroll 回原来的页面坐标值.
+      var last_page_x = 0;
+      var last_page_y = 0;
+
+      var local_search_tips = 
+            "<span class='local-search-empty'>" + "第一次搜索可能较慢, 先思考一个经典算法问题, 跳台阶:" + "</span>" +
+            "<span class='local-search-empty'>" + "一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个6级的台阶总共有多少种跳法?n级呢?" + "</span>";
+
+      function CloseLocalSearch()
+      {
+        first_char_flag = 0;
+
+        $('#local-search-input').val('');
+        $('#local-search-close').hide();
+
+        // $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownOut', 200);
+
+        $('#' + content_id).attr("headroom_special_attr","true"); 
+        
+        if (isMobile())
+        {
+          // $('body').scrollTop(last_page_y);  // scrollTop 有兼容性问题
+          scrollTo(last_page_x, last_page_y);
+
+          $('#' + content_id).hide();
+        }
+        else
+        {
+          $('#' + content_id).velocity('stop').velocity( 'transition.bounceUpOut', 200 );
+        }
+
+        // $('#' + content_id).velocity('stop').velocity( isMobile() ? 'transition.fadeOut' : 'transition.bounceUpOut', {
+        //   // delay: isMobile() ? 50 : 0,
+        //   duration: isMobile() ? 500 : 200,
+        //   // begin: function() { 
+        //   //   if (isMobile())
+        //   //   {
+        //   //     $('body').scrollTop(last_page_y);
+        //   //   } 
+        //   // }
+        //   complete: function () {
+        //     if (isMobile())
+        //     {
+        //       if (last_page_y < 20000)
+        //       {
+        //         $('body').velocity('scroll', { offset: last_page_y+"px", duration: last_page_y < 10000 ? 1000 : 2000 });
+        //       }
+        //       else
+        //       {
+        //         $('body').scrollTop(last_page_y);
+        //       }
+        //       // $('body').velocity('scroll');
+
+        //       // $('html,body').animate({
+        //       //   scrollTop: last_page_y
+        //       // },400);
+        //       // $('body').velocity('transition.slideDownIn', 1000);
+        //       // $('body').velocity('scroll', { offset: last_page_y+"px", duration: document.body.scrollHeight < 20000 ? 1500 : 3000 });
+        //     }
+        //   }
+        // });
+      }
+
+      function handleSearch()
+      {
+        if (keywords.length <= 0) {
+          return;
+        }
+        $resultContent.innerHTML = "";
+        $('#local-search-close').show();
+
+        // 0x04. perform local searching
+        if (is_load_xml_finished == 0)
+        {
+          $resultContent.innerHTML = 
+            "<ul class='local-search-empty-ul'>" + 
+            local_search_tips +
+            ProgressBar;
+        }
+        else
+        {
+          // Retrieve the object from local storage
+          var xml_resp = retrieve_search_xml()
+
+          xml_resp.forEach(function (data) {
+          // datas.forEach(function (data) {
+            var isMatch = true;
+            var content_index = [];
+            if (!data.title || data.title.trim() === '') {
+              data.title = "Untitled";
+            }
+            var is_encrypted = data.encrypted.trim() == '1'
+            var is_sensitive = CONFIG.local_search.sensitive_word && data_content.indexOf(CONFIG.local_search.sensitive_word) >= 0
+            var orig_data_title = data.title.trim();
+            var data_title = orig_data_title.toLowerCase();
+            var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+            var data_content = orig_data_content.toLowerCase();
+            var data_url = decodeURIComponent(data.url);
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty contents
+            if (data_content !== '') {
+              keywords.forEach(function (keyword, i) {
+                index_title = data_title.indexOf(keyword);
+                index_content = (is_sensitive || is_encrypted) ? -1 : data_content.indexOf(keyword);
+
+                if (index_title < 0 && index_content < 0) {
+                  isMatch = false;
+                } else {
+                  if (index_content < 0) {
+                    index_content = 0;
+                  }
+                  if (i == 0) {
+                    first_occur = index_content;
+                  }
+                  // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+            // 0x05. show search results
+            if (isMatch) {
+              var content = orig_data_content;
+              if (first_occur >= 0) {
+                var match_content = "";
+                if (!is_sensitive && !is_encrypted)
+                {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  match_content = content.substr(start, end);
+                }
+
+                // highlight all keywords
+                var regS = "";
+                if (match_content != "")
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                else
+                {
+                  keywords.forEach(function (keyword) {
+                    regS = new RegExp(keyword, "gi");
+                    orig_data_title = orig_data_title.replace(regS, "<b class=\"search-keyword\">" + keyword + "</b>");
+                  });
+                }
+                str += "<li><a href='" + data_url + "' class='search-result-title' target='_blank'>" + orig_data_title + "</a>";
+                str += "<p class=\"search-result\">" + match_content + "...</p>"
+              }
+              str += "</li>";
+            }
+          });
+
+          str += "</ul>";
+          if (str.indexOf('<li>') === -1) {
+            return $resultContent.innerHTML = 
+              "<ul class='local-search-empty-ul'><span class='local-search-empty'>找不到, 换个搜索关键字试一哈.<span></ul>";
+          }
+          $resultContent.innerHTML = str;
+        }
+      }
+
+      $input.addEventListener('input', function () {
+        // 0x03. parse query to keywords list
+        str = '<ul class=\"search-result-list\">';
+        temp_keyword = this.value.trim();
+        if (temp_keyword.length <= 0) {
+          CloseLocalSearch();
+          return;
+        }
+
+        keywords = temp_keyword.toLowerCase().split(/[\s\-]+/);
+        handleSearch();
+
+        // 当用户键入第一个字母的时候的动画处理逻辑 : 
+        // 当 first_char_flag 为 0 的时候, 
+        // 要播放一个动画
+        if (first_char_flag == 0)
+        {
+            // $('body').scrollTop(0);
+          if (isMobile())
+          {
+            last_page_x = window.pageXOffset;
+            last_page_y = window.pageYOffset;
+            // $('body').scrollTop(0);
+            scrollTo(0,0);
+
+          }
+          first_char_flag = 1;
+          $('#' + content_id).removeAttr("headroom_special_attr");
+          
+          $('#' + content_id).velocity('stop').velocity('transition.slideDownIn', 300);
+
+          $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 1000);
+        }
+      });
+
+
+      var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+      if (!local_search_xml_data) {
+        $.ajax({
+          // 0x01. load xml file
+          url: path,
+          dataType: "xml",
+          success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+
+            // setTimeout(function(){
+            //   is_load_xml_finished = 1;
+
+            //   handleSearch();
+            //   $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+            // }, 2000);
+            
+            // is_load_xml_finished = 1;
+
+            handleSearch();
+            $('.local-search-result-cls ul li').velocity('stop').velocity('transition.slideDownIn', 800);
+          }
+        });
+      }
+
+      $(document).on('click', '#local-search-close', function() {
+        CloseLocalSearch();
+      });
+
+      $(document).keyup(function(event){
+        switch(event.keyCode) {
+          case 27:
+            // alert("ESC");
+            CloseLocalSearch();
+        }
+      });
+
+      // $(document).on('blur', '#local-search-input', function(e) {
+      //   // console.log(document.activeElement.getAttribute('class'));
+        
+      //   if (isMobile() == false)
+      //   {
+      //     CloseLocalSearch();
+      //   }
+      // });
+    }
+
+    function isMobile() {
+      // console.log(document.body.clientWidth);
+      return document.body.clientWidth < 768
+
+      // var userAgent = window.navigator.userAgent;
+
+      // var isiPad = userAgent.match(/iPad/i) !== null;
+      // var mobileUA = [
+      //   'iphone', 'android', 'phone', 'mobile',
+      //   'wap', 'netfront', 'x11', 'java', 'opera mobi',
+      //   'opera mini', 'ucweb', 'windows ce', 'symbian',
+      //   'symbianos', 'series', 'webos', 'sony',
+      //   'blackberry', 'dopod', 'nokia', 'samsung',
+      //   'palmsource', 'xda', 'pieplus', 'meizu',
+      //   'midp' ,'cldc' , 'motorola', 'foma',
+      //   'docomo', 'up.browser', 'up.link', 'blazer',
+      //   'helio', 'hosin', 'huawei', 'novarra',
+      //   'coolpad', 'webos', 'techfaith', 'palmsource',
+      //   'alcatel', 'amoi', 'ktouch', 'nexian',
+      //   'ericsson', 'philips', 'sagem', 'wellcom',
+      //   'bunjalloo', 'maui', 'smartphone', 'iemobile',
+      //   'spice', 'bird', 'zte-', 'longcos',
+      //   'pantech', 'gionee', 'portalmmm', 'jig browser',
+      //   'hiptop', 'benq', 'haier', '^lct',
+      //   '320x320', '240x320', '176x220'
+      // ];
+      // var pattern = new RegExp(mobileUA.join('|'), 'i');
+
+      // return !isiPad && userAgent.match(pattern);
+    }
+
+    function store_search_xml(xmlResponse) {
+        datas = $("entry", xmlResponse).map(function () {
+          return {
+            title: $("title", this).text(),
+            content: $("content", this).text(),
+            url: $("url", this).text(),
+            encrypted: $("encrypted", this).text(),
+          };
+        }).get();
+        // Put the object into storage
+        localStorage.setItem('local_search_xml_data', JSON.stringify(datas));
+        is_load_xml_finished = 1;
+
+        console.log("store search.xml finished.");
+    }
+
+    function ajax_store_search_xml() {
+      $.ajax({
+        url: "/search.xml",
+        dataType: "xml",
+        success: function (xmlResponse) {
+            store_search_xml(xmlResponse);
+        }
+      });
+    }
+
+    function retrieve_search_xml() {
+        // Retrieve the object from local storage
+        var retrievedObject = localStorage.getItem('local_search_xml_data');
+        var xml_resp = JSON.parse(retrievedObject)
+        return xml_resp
+    }
+
+    var getSearchFile = function(){
+      var path = "/search.xml";
+      var local_search_result_name = isMobile() ? "local-search-result-mobile" : "local-search-result-pc";
+      searchFunc(path, 'local-search-input', local_search_result_name);
+    }
+
+    var local_search_xml_data = localStorage.getItem('local_search_xml_data');
+    if (local_search_xml_data) {
+      is_load_xml_finished = 1;
+      console.log("load search.xml finished.");
+    }
+    var last_use_local_search_date = localStorage.getItem('last_use_local_search_date');
+    var curDate = new Date();
+    // 只有在 localStorage 没有 search.xml数据或者 距离上次使用local search已经超过一天了才去取search.xml
+    // 节省流量
+    if (last_use_local_search_date != curDate.getDate() || !local_search_xml_data) {
+      // preload search.xml
+      ajax_store_search_xml();
+    }
+
+    localStorage.setItem('last_use_local_search_date', curDate.getDate());
+    
+
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/lib/wobble_window/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+</body>
+</html>
+
+
+<!-- 页面点击小红心 -->
+
+
+
+
+
+<script type="text/javascript" src="/js/src/headroom.js"></script> 
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>
